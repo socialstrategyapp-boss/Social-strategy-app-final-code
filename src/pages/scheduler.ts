@@ -49,7 +49,7 @@ export function schedulerPage(): string {
         <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between">
           <div class="flex items-center gap-4">
             <button class="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800"><i class="fas fa-chevron-left"></i></button>
-            <h3 class="text-white font-bold text-lg">April 2025</h3>
+            <h3 class="text-white font-bold text-lg">April 2026</h3>
             <button class="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800"><i class="fas fa-chevron-right"></i></button>
           </div>
           <div class="flex items-center gap-3">

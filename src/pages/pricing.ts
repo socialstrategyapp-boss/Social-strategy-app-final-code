@@ -32,7 +32,7 @@ export function pricingPage(): string {
           <div class="text-gray-400 text-sm">Forever free</div>
         </div>
         <div class="bg-gray-800 rounded-xl p-3 mb-6 text-sm text-gray-300 leading-relaxed">
-          Perfect for trying out SOCIAL SYNC and small personal brands.
+          Perfect for trying out SOCIAL STRATEGY and small personal brands.
         </div>
         <ul class="space-y-3 mb-8">
           ${[

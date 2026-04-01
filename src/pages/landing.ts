@@ -4,7 +4,7 @@ export function landingPage(): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SOCIAL SYNC – One Scan. Complete Growth.</title>
+  <title>SOCIAL STRATEGY – One Scan. Complete Growth.</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -45,7 +45,7 @@ export function landingPage(): string {
         </div>
         <div class="flex items-baseline gap-1">
           <span class="font-black text-white text-xl">SOCIAL</span>
-          <span class="gradient-text font-black text-xl">SYNC</span>
+          <span class="gradient-text font-black text-xl">STRATEGY</span>
         </div>
       </a>
       <div class="hidden md:flex items-center gap-8">
@@ -117,7 +117,7 @@ export function landingPage(): string {
             <div class="w-3 h-3 rounded-full bg-red-500"></div>
             <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
             <div class="w-3 h-3 rounded-full bg-green-500"></div>
-            <div class="ml-2 text-xs text-gray-500 glass rounded-full px-3 py-1">socialsync.ai/dashboard</div>
+            <div class="ml-2 text-xs text-gray-500 glass rounded-full px-3 py-1">socialstrategy.app/dashboard</div>
           </div>
           <!-- Mini stats -->
           <div class="grid grid-cols-3 gap-3 mb-4">
@@ -304,7 +304,7 @@ export function landingPage(): string {
       </div>
       <div class="grid md:grid-cols-3 gap-6">
         ${[
-          {name:'Sarah M.', role:'E-commerce Owner', text:'SOCIAL SYNC tripled my engagement in 6 weeks. The AI content is so on-brand, my followers can\'t tell it\'s automated. Worth every penny.', rating:5, avatar:'SM'},
+          {name:'Sarah M.', role:'E-commerce Owner', text:'SOCIAL STRATEGY tripled my engagement in 6 weeks. The AI content is so on-brand, my followers can\'t tell it\'s automated. Worth every penny.', rating:5, avatar:'SM'},
           {name:'Jake R.', role:'Digital Agency CEO', text:'We manage 15 clients from one dashboard now. What used to take our team 40 hours/week is done automatically. ROI is insane.', rating:5, avatar:'JR'},
           {name:'Priya K.', role:'Fitness Influencer', text:'The website analysis gave me insights I never had before. My strategy is completely transformed. 127% engagement increase!', rating:5, avatar:'PK'}
         ].map(t => `
@@ -352,7 +352,7 @@ export function landingPage(): string {
         <div>
           <div class="flex items-center gap-3 mb-4">
             <div class="w-8 h-8 rounded-xl gradient-primary flex items-center justify-center"><i class="fas fa-bolt text-white text-xs"></i></div>
-            <span class="font-black text-white">SOCIAL SYNC</span>
+            <span class="font-black text-white">SOCIAL STRATEGY</span>
           </div>
           <p class="text-gray-400 text-sm">Analyze. Strategize. Automate. Grow.</p>
         </div>
@@ -378,14 +378,14 @@ export function landingPage(): string {
           <h4 class="font-semibold text-white mb-3">Support</h4>
           <ul class="space-y-2 text-sm text-gray-400">
             <li><a href="#" class="hover:text-cyan-400">Help Center</a></li>
-            <li><a href="mailto:support@socialsync.ai" class="hover:text-cyan-400">support@socialsync.ai</a></li>
+            <li><a href="mailto:contact_team@socialstrategyapp.com" class="hover:text-cyan-400">contact_team@socialstrategyapp.com</a></li>
             <li><a href="#" class="hover:text-cyan-400">Community</a></li>
             <li><a href="#" class="hover:text-cyan-400">Status</a></li>
           </ul>
         </div>
       </div>
       <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-        <p>© 2025 SOCIAL SYNC — Your All-in-One Marketing Genius</p>
+        <p>© 2026 SOCIAL STRATEGY — Your All-in-One Marketing Platform</p>
         <div class="flex gap-4 mt-4 md:mt-0">
           <a href="#" class="hover:text-cyan-400">Privacy</a>
           <a href="#" class="hover:text-cyan-400">Terms</a>
