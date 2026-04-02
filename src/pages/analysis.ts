@@ -3,154 +3,155 @@ import { layout } from './layout'
 export function analysisPage(): string {
   const content = `
   <!-- Top Bar -->
-  <div class="sticky top-0 z-30 bg-gray-950/80 backdrop-blur border-b border-gray-800 px-8 py-4 flex items-center justify-between">
+  <div style="position:sticky;top:0;z-index:30;background:rgba(3,8,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;">
     <div>
-      <h1 class="text-xl font-bold text-white">Website Analysis</h1>
-      <p class="text-gray-400 text-sm">AI-powered business intelligence in 2 minutes</p>
+      <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0;">Website Analysis</h1>
+      <p style="color:#9ca3af;font-size:13px;margin:2px 0 0;">AI-powered business intelligence in 2 minutes</p>
     </div>
-    <div class="flex items-center gap-2 text-sm text-gray-400">
-      <i class="fas fa-bolt text-cyan-400"></i>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#9ca3af;">
+      <i class="fas fa-bolt" style="color:#00E5FF;"></i>
       <span>Powered by AI</span>
     </div>
   </div>
 
-  <div class="p-8 max-w-5xl">
+  <div style="padding:28px;max-width:900px;">
+
     <!-- URL Input Card -->
-    <div class="glass rounded-3xl p-8 mb-8 border border-cyan-500/20 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full -translate-y-32 translate-x-32"></div>
-      <div class="relative">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
-            <i class="fas fa-search text-white"></i>
+    <div style="background:rgba(0,229,255,0.04);border:1px solid rgba(0,229,255,0.2);border-radius:20px;padding:28px;margin-bottom:28px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(0,229,255,0.04);border-radius:50%;pointer-events:none;"></div>
+      <div style="position:relative;">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+          <div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#00E5FF,#0070F3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="fas fa-search" style="color:#fff;font-size:18px;"></i>
           </div>
           <div>
-            <h2 class="text-white font-bold text-xl">Analyze Your Website</h2>
-            <p class="text-gray-400 text-sm">Get a complete business & marketing intelligence report</p>
+            <h2 style="font-size:20px;font-weight:800;color:#fff;margin:0;">Analyze Your Website</h2>
+            <p style="font-size:13px;color:#9ca3af;margin:4px 0 0;">Get a complete business &amp; marketing intelligence report</p>
           </div>
         </div>
-        <div class="flex gap-3 mt-6">
-          <div class="flex-1 flex items-center gap-3 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 focus-within:border-cyan-500 transition-colors">
-            <i class="fas fa-globe text-gray-400"></i>
-            <input id="urlInput" type="url" placeholder="https://yourbusiness.com" 
-              class="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
-              value="https://example-business.com">
+        <div style="display:flex;gap:12px;margin-bottom:14px;">
+          <div style="flex:1;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px 16px;transition:border-color 0.2s;" onfocus-within="this.style.borderColor='#00E5FF'">
+            <i class="fas fa-globe" style="color:#6b7280;font-size:14px;flex-shrink:0;"></i>
+            <input id="urlInput" type="url" placeholder="https://yourbusiness.com"
+              value="https://example-business.com"
+              style="flex:1;background:transparent;color:#fff;border:none;outline:none;font-size:14px;"
+              onfocus="this.parentElement.style.borderColor='#00E5FF'" onblur="this.parentElement.style.borderColor='rgba(255,255,255,0.12)'">
           </div>
-          <button id="analyzeBtn" onclick="runAnalysis()" class="btn-primary gradient-primary text-white font-bold px-6 py-3 rounded-xl flex items-center gap-2 whitespace-nowrap">
-            <i class="fas fa-search"></i>
-            Analyze Now
+          <button id="analyzeBtn" onclick="runAnalysis()" class="btn-primary" style="padding:12px 24px;border-radius:12px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;white-space:nowrap;cursor:pointer;">
+            <i class="fas fa-search"></i> Analyze Now
           </button>
         </div>
-        <div class="flex flex-wrap gap-3 mt-4">
-          <span class="flex items-center gap-1.5 text-xs text-gray-400"><i class="fas fa-check text-green-400"></i>SEO Audit</span>
-          <span class="flex items-center gap-1.5 text-xs text-gray-400"><i class="fas fa-check text-green-400"></i>Branding Review</span>
-          <span class="flex items-center gap-1.5 text-xs text-gray-400"><i class="fas fa-check text-green-400"></i>Growth Strategy</span>
-          <span class="flex items-center gap-1.5 text-xs text-gray-400"><i class="fas fa-check text-green-400"></i>Revenue Projections</span>
-          <span class="flex items-center gap-1.5 text-xs text-gray-400"><i class="fas fa-check text-green-400"></i>Content Ideas</span>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+          ${['SEO Audit', 'Branding Review', 'Growth Strategy', 'Revenue Projections', 'Content Ideas'].map(tag => `
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9ca3af;">
+            <i class="fas fa-check" style="color:#4ade80;font-size:10px;"></i>${tag}
+          </span>`).join('')}
         </div>
       </div>
     </div>
 
-    <!-- Loading State (hidden by default) -->
-    <div id="loadingState" class="hidden text-center py-16">
-      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full gradient-primary mb-6 animate-spin" style="animation-duration:2s">
-        <i class="fas fa-search text-white text-2xl" style="animation:none"></i>
+    <!-- Loading State -->
+    <div id="loadingState" style="display:none;text-align:center;padding:60px 0;">
+      <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#00E5FF,#0070F3,#7C3AED);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;animation:spin 2s linear infinite;">
+        <i class="fas fa-search" style="color:#fff;font-size:24px;animation:none;"></i>
       </div>
-      <h3 class="text-white text-xl font-bold mb-2">AI is Analyzing Your Website...</h3>
-      <p class="text-gray-400 mb-6">Scanning SEO, branding, usability, and growth opportunities</p>
-      <div class="max-w-sm mx-auto space-y-3">
-        <div class="flex items-center gap-3 text-sm text-gray-400">
-          <div class="w-4 h-4 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></div>
+      <h3 style="font-size:20px;font-weight:800;color:#fff;margin:0 0 10px;">AI is Analyzing Your Website...</h3>
+      <p style="font-size:14px;color:#9ca3af;margin-bottom:24px;">Scanning SEO, branding, usability, and growth opportunities</p>
+      <div style="max-width:360px;margin:0 auto;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;color:#9ca3af;">
+          <div style="width:16px;height:16px;border-radius:50%;border:2px solid #00E5FF;border-top-color:transparent;animation:spin 0.8s linear infinite;flex-shrink:0;"></div>
           <span id="loadStep">Scanning site structure...</span>
         </div>
-        <div class="bg-gray-800 rounded-full h-2">
-          <div id="loadProgress" class="gradient-primary h-2 rounded-full transition-all duration-500" style="width:0%"></div>
+        <div style="background:rgba(255,255,255,0.06);border-radius:999px;height:6px;overflow:hidden;">
+          <div id="loadProgress" style="background:linear-gradient(135deg,#00E5FF,#7C3AED);height:6px;border-radius:999px;transition:width 0.5s;width:0%;"></div>
         </div>
       </div>
     </div>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 
-    <!-- Results (hidden by default, shown after analysis) -->
-    <div id="resultsSection" class="space-y-6">
+    <!-- Results Section -->
+    <div id="resultsSection" style="display:flex;flex-direction:column;gap:20px;">
       <!-- Score Overview -->
-      <div class="glass rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-6">
+      <div class="glass-dark" style="border-radius:18px;padding:22px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
           <div>
-            <h3 class="text-white font-bold text-xl">Analysis Results</h3>
-            <p id="analyzedUrl" class="text-cyan-400 text-sm font-medium mt-1"></p>
+            <h3 style="font-size:18px;font-weight:800;color:#fff;margin:0;">Analysis Results</h3>
+            <p id="analyzedUrl" style="color:#00E5FF;font-size:13px;font-weight:600;margin:4px 0 0;"></p>
           </div>
-          <div class="text-right">
-            <div class="text-4xl font-black gradient-text" id="overallScore">--</div>
-            <div class="text-gray-400 text-sm">Overall Score</div>
+          <div style="text-align:right;">
+            <div id="overallScore" style="font-size:40px;font-weight:900;background:linear-gradient(135deg,#00E5FF,#7C3AED,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">--</div>
+            <div style="font-size:13px;color:#9ca3af;">Overall Score</div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-4">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
           ${[
-            {id:'seoScore', label:'SEO Score', icon:'fas fa-search', color:'cyan', tip:'Search engine optimization health'},
-            {id:'brandScore', label:'Brand Score', icon:'fas fa-star', color:'purple', tip:'Brand identity strength'},
-            {id:'usabilityScore', label:'Usability', icon:'fas fa-mouse-pointer', color:'green', tip:'User experience quality'},
+            { id: 'seoScore', label: 'SEO Score', icon: 'fas fa-search', color: '#00E5FF', bg: 'rgba(0,229,255,0.1)' },
+            { id: 'brandScore', label: 'Brand Score', icon: 'fas fa-star', color: '#A78BFA', bg: 'rgba(167,139,250,0.1)' },
+            { id: 'usabilityScore', label: 'Usability', icon: 'fas fa-mouse-pointer', color: '#4ade80', bg: 'rgba(74,222,128,0.1)' },
           ].map(s => `
-          <div class="bg-gray-800/50 rounded-xl p-4 text-center">
-            <div class="w-10 h-10 rounded-xl bg-${s.color}-500/20 flex items-center justify-center mx-auto mb-3">
-              <i class="${s.icon} text-${s.color}-400"></i>
+          <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:16px;text-align:center;">
+            <div style="width:40px;height:40px;border-radius:12px;background:${s.bg};display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+              <i class="${s.icon}" style="color:${s.color};font-size:15px;"></i>
             </div>
-            <div class="text-2xl font-black text-white mb-1" id="${s.id}">--</div>
-            <div class="text-gray-400 text-xs">${s.label}</div>
-            <div class="bg-gray-700 rounded-full h-1.5 mt-2">
-              <div id="${s.id}Bar" class="bg-${s.color}-500 h-1.5 rounded-full progress-bar" style="width:0%"></div>
+            <div id="${s.id}" style="font-size:24px;font-weight:900;color:#fff;margin-bottom:4px;">--</div>
+            <div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">${s.label}</div>
+            <div style="background:rgba(255,255,255,0.07);border-radius:999px;height:4px;overflow:hidden;">
+              <div id="${s.id}Bar" class="progress-bar" style="background:${s.color};height:4px;border-radius:999px;width:0%;"></div>
             </div>
           </div>`).join('')}
         </div>
       </div>
 
-      <div class="grid lg:grid-cols-2 gap-6">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
         <!-- Recommendations -->
-        <div class="glass rounded-2xl p-6">
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-9 h-9 rounded-xl bg-orange-500/20 flex items-center justify-center">
-              <i class="fas fa-lightbulb text-orange-400"></i>
+        <div class="glass-dark" style="border-radius:18px;padding:22px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+            <div style="width:38px;height:38px;border-radius:12px;background:rgba(251,146,60,0.12);display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-lightbulb" style="color:#fb923c;font-size:16px;"></i>
             </div>
-            <h3 class="text-white font-bold text-lg">AI Recommendations</h3>
+            <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0;">AI Recommendations</h3>
           </div>
-          <div id="recommendationsList" class="space-y-3"></div>
+          <div id="recommendationsList" style="display:flex;flex-direction:column;gap:10px;"></div>
         </div>
 
         <!-- Growth Strategy -->
-        <div class="glass rounded-2xl p-6">
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-9 h-9 rounded-xl bg-green-500/20 flex items-center justify-center">
-              <i class="fas fa-rocket text-green-400"></i>
+        <div class="glass-dark" style="border-radius:18px;padding:22px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+            <div style="width:38px;height:38px;border-radius:12px;background:rgba(74,222,128,0.12);display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-rocket" style="color:#4ade80;font-size:16px;"></i>
             </div>
-            <h3 class="text-white font-bold text-lg">Growth Strategy</h3>
+            <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0;">Growth Strategy</h3>
           </div>
-          <div class="space-y-4">
-            <div class="bg-gray-800/50 rounded-xl p-4">
-              <div class="text-xs text-gray-500 uppercase font-semibold mb-1">💰 Pricing Model</div>
-              <div id="pricingStrategy" class="text-white text-sm"></div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;">
+              <div style="font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:700;margin-bottom:6px;">💰 Pricing Model</div>
+              <div id="pricingStrategy" style="font-size:13px;color:#fff;"></div>
             </div>
-            <div class="bg-gray-800/50 rounded-xl p-4">
-              <div class="text-xs text-gray-500 uppercase font-semibold mb-1">📈 Revenue Outlook</div>
-              <div id="revenueOutlook" class="text-white text-sm"></div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;">
+              <div style="font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:700;margin-bottom:6px;">📈 Revenue Outlook</div>
+              <div id="revenueOutlook" style="font-size:13px;color:#fff;"></div>
             </div>
-            <div class="bg-gray-800/50 rounded-xl p-4">
-              <div class="text-xs text-gray-500 uppercase font-semibold mb-2">🎯 Action Plan</div>
-              <div id="actionPlan" class="space-y-2"></div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;">
+              <div style="font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:700;margin-bottom:8px;">🎯 Action Plan</div>
+              <div id="actionPlan" style="display:flex;flex-direction:column;gap:6px;"></div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Next Steps CTA -->
-      <div class="gradient-primary rounded-2xl p-6">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div style="background:linear-gradient(135deg,#00E5FF 0%,#0070F3 50%,#7C3AED 100%);border-radius:18px;padding:22px 28px;">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;">
           <div>
-            <h3 class="text-white font-bold text-xl">Ready to Act on These Insights?</h3>
-            <p class="text-white/80 text-sm mt-1">Let AI create a month of custom content based on your analysis.</p>
+            <h3 style="font-size:18px;font-weight:800;color:#fff;margin:0;">Ready to Act on These Insights?</h3>
+            <p style="font-size:13px;color:rgba(255,255,255,0.8);margin:6px 0 0;">Let AI create a month of custom content based on your analysis.</p>
           </div>
-          <div class="flex gap-3">
-            <a href="/content-studio" class="bg-white text-gray-900 font-bold px-6 py-3 rounded-xl text-sm hover:bg-gray-100 transition-all whitespace-nowrap">
-              <i class="fas fa-wand-magic-sparkles mr-2"></i>Create Content
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="/content-studio" style="background:#fff;color:#0a0f1e;font-weight:800;padding:11px 20px;border-radius:12px;text-decoration:none;font-size:14px;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+              <i class="fas fa-wand-magic-sparkles"></i>Create Content
             </a>
-            <a href="/scheduler" class="glass text-white font-semibold px-6 py-3 rounded-xl text-sm hover:bg-white/20 transition-all whitespace-nowrap border border-white/30">
-              <i class="fas fa-calendar mr-2"></i>Schedule Posts
+            <a href="/scheduler" style="background:rgba(255,255,255,0.15);color:#fff;font-weight:700;padding:11px 20px;border-radius:12px;text-decoration:none;font-size:14px;border:1px solid rgba(255,255,255,0.3);display:flex;align-items:center;gap:6px;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+              <i class="fas fa-calendar"></i>Schedule Posts
             </a>
           </div>
         </div>
@@ -160,88 +161,66 @@ export function analysisPage(): string {
 
   <script>
     let analysisRunning = false;
-
     async function runAnalysis() {
-      if(analysisRunning) return;
+      if (analysisRunning) return;
       const url = document.getElementById('urlInput').value.trim();
-      if(!url) { alert('Please enter a URL'); return; }
-
+      if (!url) { alert('Please enter a URL'); return; }
       analysisRunning = true;
-      document.getElementById('analyzeBtn').disabled = true;
-      document.getElementById('analyzeBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
-
-      // Hide results, show loading
-      document.getElementById('resultsSection').classList.add('opacity-30');
-      document.getElementById('loadingState').classList.remove('hidden');
-
-      // Animate loading steps
+      const btn = document.getElementById('analyzeBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+      document.getElementById('resultsSection').style.opacity = '0.3';
+      document.getElementById('loadingState').style.display = 'block';
       const steps = ['Scanning site structure...','Analyzing SEO signals...','Evaluating brand identity...','Generating growth strategy...','Compiling recommendations...'];
       let step = 0;
-      const stepInterval = setInterval(() => {
-        if(step < steps.length) {
+      const si = setInterval(() => {
+        if (step < steps.length) {
           document.getElementById('loadStep').textContent = steps[step];
-          document.getElementById('loadProgress').style.width = ((step+1)/steps.length*100) + '%';
+          document.getElementById('loadProgress').style.width = ((step + 1) / steps.length * 100) + '%';
           step++;
-        } else clearInterval(stepInterval);
+        } else clearInterval(si);
       }, 500);
-
       try {
-        const resp = await fetch('/api/analyze', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ url })
-        });
+        const resp = await fetch('/api/analyze', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ url }) });
         const data = await resp.json();
-
         setTimeout(() => {
-          clearInterval(stepInterval);
-          document.getElementById('loadingState').classList.add('hidden');
-          document.getElementById('resultsSection').classList.remove('opacity-30');
-
-          // Populate results
+          clearInterval(si);
+          document.getElementById('loadingState').style.display = 'none';
+          document.getElementById('resultsSection').style.opacity = '1';
           document.getElementById('analyzedUrl').textContent = '📊 ' + url;
           document.getElementById('overallScore').textContent = data.overallScore + '/100';
-          
-          const scores = {seoScore: data.seoScore, brandScore: data.brandScore, usabilityScore: data.usabilityScore};
-          Object.entries(scores).forEach(([id, val]) => {
+          [['seoScore', data.seoScore],['brandScore', data.brandScore],['usabilityScore', data.usabilityScore]].forEach(([id, val]) => {
             document.getElementById(id).textContent = val + '/100';
-            setTimeout(() => { document.getElementById(id+'Bar').style.width = val + '%'; }, 100);
+            setTimeout(() => { document.getElementById(id + 'Bar').style.width = val + '%'; }, 100);
           });
-
-          // Recommendations
           const recList = document.getElementById('recommendationsList');
           recList.innerHTML = data.recommendations.map((r, i) => \`
-            <div class="flex gap-3 p-3 bg-gray-800/50 rounded-xl">
-              <div class="w-6 h-6 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0 text-orange-400 text-xs font-bold">\${i+1}</div>
-              <p class="text-gray-300 text-sm leading-relaxed">\${r}</p>
+            <div style="display:flex;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:10px;">
+              <div style="width:22px;height:22px;border-radius:50%;background:rgba(251,146,60,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;color:#fb923c;">\${i+1}</div>
+              <p style="font-size:13px;color:#d1d5db;line-height:1.5;margin:0;">\${r}</p>
             </div>
           \`).join('');
-
-          // Strategy
           document.getElementById('pricingStrategy').textContent = data.strategy.pricing;
           document.getElementById('revenueOutlook').textContent = data.strategy.revenue;
-          const actionPlan = document.getElementById('actionPlan');
-          actionPlan.innerHTML = data.strategy.actions.map(a => \`
-            <div class="flex items-center gap-2 text-sm text-gray-300">
-              <i class="fas fa-arrow-right text-green-400 text-xs"></i>\${a}
+          document.getElementById('actionPlan').innerHTML = data.strategy.actions.map(a => \`
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#d1d5db;">
+              <i class="fas fa-arrow-right" style="color:#4ade80;font-size:11px;flex-shrink:0;"></i>\${a}
             </div>
           \`).join('');
-
           analysisRunning = false;
-          document.getElementById('analyzeBtn').disabled = false;
-          document.getElementById('analyzeBtn').innerHTML = '<i class="fas fa-search"></i> Analyze Now';
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-search"></i> Analyze Now';
         }, 3000);
       } catch(e) {
-        document.getElementById('loadingState').classList.add('hidden');
-        document.getElementById('resultsSection').classList.remove('opacity-30');
+        clearInterval(si);
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('resultsSection').style.opacity = '1';
         analysisRunning = false;
-        document.getElementById('analyzeBtn').disabled = false;
-        document.getElementById('analyzeBtn').innerHTML = '<i class="fas fa-search"></i> Analyze Now';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-search"></i> Analyze Now';
       }
     }
-
-    // Auto-run on page load to show demo
-    window.addEventListener('load', () => { setTimeout(runAnalysis, 500); });
+    window.addEventListener('load', () => { setTimeout(runAnalysis, 600); });
   </script>
   `
   return layout('Website Analysis', content, 'analysis')

@@ -39,13 +39,17 @@ export function landingPage(): string {
   <!-- Navbar -->
   <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center">
-          <i class="fas fa-bolt text-white text-sm"></i>
+      <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+        <!-- SS Logo -->
+        <div style="position:relative;width:40px;height:40px;flex-shrink:0;">
+          <div style="width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#1a3a5c 0%,#0a1a35 60%,#04091a 100%);border:2px solid rgba(0,229,255,0.6);box-shadow:0 0 16px rgba(0,229,255,0.4);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:15px;font-weight:900;color:#fff;letter-spacing:-1px;text-shadow:0 0 8px rgba(0,229,255,0.8);">SS</span>
+          </div>
+          <div style="position:absolute;bottom:-5px;right:-7px;width:16px;height:12px;background:linear-gradient(135deg,#FF2D78,#FF5fa0);border-radius:50% 50% 50% 0;transform:rotate(-15deg);box-shadow:0 0 8px rgba(255,45,120,0.6);"></div>
         </div>
-        <div class="flex items-baseline gap-1">
-          <span class="font-black text-white text-xl">SOCIAL</span>
-          <span class="gradient-text font-black text-xl">STRATEGY</span>
+        <div style="display:flex;align-items:baseline;gap:3px;">
+          <span style="font-weight:900;color:#fff;font-size:18px;">SOCIAL</span>
+          <span style="font-weight:900;font-size:18px;background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">STRATEGY</span>
         </div>
       </a>
       <div class="hidden md:flex items-center gap-8">
@@ -239,29 +243,29 @@ export function landingPage(): string {
   </section>
 
   <!-- Features -->
-  <section id="features" class="py-24 bg-gray-900">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <div class="inline-block glass rounded-full px-4 py-2 text-sm text-cyan-400 font-semibold mb-4">✨ Features</div>
-        <h2 class="text-4xl lg:text-5xl font-black mb-4">Everything You Need to <span class="gradient-text">Dominate</span></h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto">One platform replaces 5+ expensive tools. No technical knowledge required.</p>
+  <section id="features" style="padding:96px 0;background:#111827;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+      <div style="text-align:center;margin-bottom:60px;">
+        <div style="display:inline-block;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:8px 18px;font-size:14px;color:#00E5FF;font-weight:600;margin-bottom:16px;">✨ Features</div>
+        <h2 style="font-size:44px;font-weight:900;color:#fff;margin:0 0 16px;">Everything You Need to <span style="background:linear-gradient(135deg,#00E5FF,#7C3AED,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Dominate</span></h2>
+        <p style="color:#9ca3af;font-size:18px;max-width:600px;margin:0 auto;">One platform replaces 5+ expensive tools. No technical knowledge required.</p>
       </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
         ${[
-          {icon:'fas fa-search-plus', title:'Business Intelligence', color:'cyan', items:['SEO Analysis & Audit','Branding Review','Usability Report','Competitive Insights']},
-          {icon:'fas fa-chart-line', title:'Growth Strategy', color:'blue', items:['Custom Pricing Models','Revenue Projections','30/60/90 Day Plans','Expansion Ideas']},
-          {icon:'fas fa-images', title:'AI Content Studio', color:'purple', items:['Image Generation','Video Creation (Sora-2)','Caption Writing','Hashtag Research']},
-          {icon:'fas fa-clock', title:'Automation Engine', color:'pink', items:['Smart Scheduling','Multi-Platform Publish','Queue Management','Auto-Retry Failed Posts']},
-          {icon:'fas fa-chart-bar', title:'Analytics Dashboard', color:'green', items:['Engagement Tracking','Platform Comparison','Growth Monitoring','Best Time Analysis']},
-          {icon:'fas fa-lock', title:'Security & Privacy', color:'orange', items:['Bank-Level Encryption','GDPR Compliant','No Data Selling','Secure OAuth']}
+          { icon: 'fas fa-search-plus', title: 'Business Intelligence', iconColor: '#00E5FF', iconBg: 'rgba(0,229,255,0.1)', iconBorder: 'rgba(0,229,255,0.2)', checkColor: '#00E5FF', items: ['SEO Analysis & Audit', 'Branding Review', 'Usability Report', 'Competitive Insights'] },
+          { icon: 'fas fa-chart-line', title: 'Growth Strategy', iconColor: '#60A5FA', iconBg: 'rgba(96,165,250,0.1)', iconBorder: 'rgba(96,165,250,0.2)', checkColor: '#60A5FA', items: ['Custom Pricing Models', 'Revenue Projections', '30/60/90 Day Plans', 'Expansion Ideas'] },
+          { icon: 'fas fa-images', title: 'AI Content Studio', iconColor: '#A78BFA', iconBg: 'rgba(167,139,250,0.1)', iconBorder: 'rgba(167,139,250,0.2)', checkColor: '#A78BFA', items: ['Image Generation', 'Video Creation (Sora-2)', 'Caption Writing', 'Hashtag Research'] },
+          { icon: 'fas fa-clock', title: 'Automation Engine', iconColor: '#FF2D78', iconBg: 'rgba(255,45,120,0.1)', iconBorder: 'rgba(255,45,120,0.2)', checkColor: '#FF2D78', items: ['Smart Scheduling', 'Multi-Platform Publish', 'Queue Management', 'Auto-Retry Failed Posts'] },
+          { icon: 'fas fa-chart-bar', title: 'Analytics Dashboard', iconColor: '#4ade80', iconBg: 'rgba(74,222,128,0.1)', iconBorder: 'rgba(74,222,128,0.2)', checkColor: '#4ade80', items: ['Engagement Tracking', 'Platform Comparison', 'Growth Monitoring', 'Best Time Analysis'] },
+          { icon: 'fas fa-lock', title: 'Security & Privacy', iconColor: '#FB923C', iconBg: 'rgba(251,146,60,0.1)', iconBorder: 'rgba(251,146,60,0.2)', checkColor: '#FB923C', items: ['Bank-Level Encryption', 'GDPR Compliant', 'No Data Selling', 'Secure OAuth'] },
         ].map(f => `
-          <div class="glass rounded-2xl p-6 card-hover border border-gray-700/50 hover:border-${f.color}-500/30">
-            <div class="w-12 h-12 rounded-2xl bg-${f.color}-500/20 flex items-center justify-center mb-5 border border-${f.color}-500/30">
-              <i class="${f.icon} text-${f.color}-400 text-xl"></i>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:24px;transition:all 0.25s;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='${f.iconBorder}'" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='rgba(255,255,255,0.08)'">
+            <div style="width:48px;height:48px;border-radius:14px;background:${f.iconBg};border:1px solid ${f.iconBorder};display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+              <i class="${f.icon}" style="color:${f.iconColor};font-size:20px;"></i>
             </div>
-            <h3 class="text-white font-bold text-xl mb-4">${f.title}</h3>
-            <ul class="space-y-2">
-              ${f.items.map(item => `<li class="flex items-center gap-2 text-gray-400 text-sm"><i class="fas fa-check text-${f.color}-400 text-xs"></i>${item}</li>`).join('')}
+            <h3 style="font-size:18px;font-weight:800;color:#fff;margin:0 0 14px;">${f.title}</h3>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+              ${f.items.map(item => `<li style="display:flex;align-items:center;gap:8px;font-size:13px;color:#9ca3af;"><i class="fas fa-check" style="color:${f.checkColor};font-size:11px;flex-shrink:0;"></i>${item}</li>`).join('')}
             </ul>
           </div>`).join('')}
       </div>
@@ -350,9 +354,14 @@ export function landingPage(): string {
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div>
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 rounded-xl gradient-primary flex items-center justify-center"><i class="fas fa-bolt text-white text-xs"></i></div>
-            <span class="font-black text-white">SOCIAL STRATEGY</span>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <div style="position:relative;width:34px;height:34px;flex-shrink:0;">
+              <div style="width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#1a3a5c 0%,#0a1a35 60%,#04091a 100%);border:2px solid rgba(0,229,255,0.5);box-shadow:0 0 10px rgba(0,229,255,0.3);display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:12px;font-weight:900;color:#fff;letter-spacing:-0.5px;">SS</span>
+              </div>
+              <div style="position:absolute;bottom:-4px;right:-5px;width:13px;height:9px;background:linear-gradient(135deg,#FF2D78,#FF5fa0);border-radius:50% 50% 50% 0;transform:rotate(-15deg);"></div>
+            </div>
+            <span style="font-weight:900;font-size:15px;color:#fff;">SOCIAL <span style="background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">STRATEGY</span></span>
           </div>
           <p class="text-gray-400 text-sm">Analyze. Strategize. Automate. Grow.</p>
         </div>
@@ -368,28 +377,28 @@ export function landingPage(): string {
         <div>
           <h4 class="font-semibold text-white mb-3">Company</h4>
           <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="#" class="hover:text-cyan-400">About</a></li>
-            <li><a href="#" class="hover:text-cyan-400">Blog</a></li>
-            <li><a href="#" class="hover:text-cyan-400">Careers</a></li>
-            <li><a href="#" class="hover:text-cyan-400">Press</a></li>
+            <li><a href="/dashboard" class="hover:text-cyan-400">About</a></li>
+            <li><a href="/dashboard" class="hover:text-cyan-400">Blog</a></li>
+            <li><a href="/dashboard" class="hover:text-cyan-400">Careers</a></li>
+            <li><a href="/dashboard" class="hover:text-cyan-400">Press</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-white mb-3">Support</h4>
           <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="#" class="hover:text-cyan-400">Help Center</a></li>
+            <li><a href="/dashboard" class="hover:text-cyan-400">Help Center</a></li>
             <li><a href="mailto:contact_team@socialstrategyapp.com" class="hover:text-cyan-400">contact_team@socialstrategyapp.com</a></li>
-            <li><a href="#" class="hover:text-cyan-400">Community</a></li>
-            <li><a href="#" class="hover:text-cyan-400">Status</a></li>
+            <li><a href="/dashboard" class="hover:text-cyan-400">Community</a></li>
+            <li><a href="/dashboard" class="hover:text-cyan-400">Status</a></li>
           </ul>
         </div>
       </div>
       <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
         <p>© 2026 SOCIAL STRATEGY — Your All-in-One Marketing Platform</p>
         <div class="flex gap-4 mt-4 md:mt-0">
-          <a href="#" class="hover:text-cyan-400">Privacy</a>
-          <a href="#" class="hover:text-cyan-400">Terms</a>
-          <a href="#" class="hover:text-cyan-400">GDPR</a>
+          <a href="/dashboard" class="hover:text-cyan-400">Privacy</a>
+          <a href="/dashboard" class="hover:text-cyan-400">Terms</a>
+          <a href="/dashboard" class="hover:text-cyan-400">GDPR</a>
         </div>
       </div>
     </div>

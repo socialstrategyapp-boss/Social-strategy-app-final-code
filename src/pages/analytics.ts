@@ -1,126 +1,140 @@
 import { layout } from './layout'
 
 export function analyticsPage(): string {
+  const kpis = [
+    { label: 'Total Impressions', value: '245,320', change: '+18.4%', up: true, icon: 'fas fa-eye', color: '#00E5FF', bg: 'rgba(0,229,255,0.1)', border: 'rgba(0,229,255,0.2)' },
+    { label: 'Total Reach', value: '89,420', change: '+12.3%', up: true, icon: 'fas fa-users', color: '#60A5FA', bg: 'rgba(96,165,250,0.1)', border: 'rgba(96,165,250,0.2)' },
+    { label: 'Engagements', value: '15,847', change: '+23.1%', up: true, icon: 'fas fa-heart', color: '#FF2D78', bg: 'rgba(255,45,120,0.1)', border: 'rgba(255,45,120,0.2)' },
+    { label: 'Link Clicks', value: '3,204', change: '-2.1%', up: false, icon: 'fas fa-mouse-pointer', color: '#A78BFA', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.2)' },
+  ]
+  const platformRows = [
+    { platform: 'Instagram', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)', followers: '12,400', reach: '35,200', impressions: '89,000', eng: '5.2%', posts: 45, growth: '+8%', up: true },
+    { platform: 'TikTok', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)', followers: '34,500', reach: '28,400', impressions: '102,000', eng: '6.8%', posts: 32, growth: '+22%', up: true },
+    { platform: 'Facebook', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)', followers: '8,200', reach: '12,100', impressions: '24,000', eng: '2.1%', posts: 28, growth: '+3%', up: true },
+    { platform: 'YouTube', icon: 'fab fa-youtube', bg: 'linear-gradient(135deg,#FF0000,#cc0000)', followers: '5,600', reach: '8,900', impressions: '18,000', eng: '3.4%', posts: 12, growth: '+15%', up: true },
+    { platform: 'X (Twitter)', icon: 'fab fa-twitter', bg: 'linear-gradient(135deg,#1DA1F2,#0d7abc)', followers: '9,800', reach: '14,200', impressions: '28,000', eng: '1.8%', posts: 67, growth: '+5%', up: true },
+    { platform: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', followers: '4,200', reach: '6,800', impressions: '12,000', eng: '4.1%', posts: 18, growth: '+11%', up: true },
+  ]
+  const topPosts = [
+    { text: 'POV: Your entire marketing team runs on AI now 🤖', platform: 'TikTok', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)', likes: 3200, comments: 284, shares: 890 },
+    { text: '5 Morning Routines That Changed My Life [Thread]', platform: 'Instagram', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)', likes: 1840, comments: 127, shares: 320 },
+    { text: 'Why 68% of Projects Fail (not what you think)', platform: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', likes: 892, comments: 234, shares: 445 },
+    { text: 'Summer Sale — 40% off! Limited time offer 🎉', platform: 'Facebook', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)', likes: 642, comments: 89, shares: 201 },
+  ]
+
   const content = `
   <!-- Top Bar -->
-  <div class="sticky top-0 z-30 bg-gray-950/80 backdrop-blur border-b border-gray-800 px-8 py-4 flex items-center justify-between">
+  <div style="position:sticky;top:0;z-index:30;background:rgba(3,8,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;">
     <div>
-      <h1 class="text-xl font-bold text-white">Analytics</h1>
-      <p class="text-gray-400 text-sm">Track your growth and optimize your strategy</p>
+      <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0;">Analytics</h1>
+      <p style="color:#9ca3af;font-size:13px;margin:2px 0 0;">Track your growth and optimize your strategy</p>
     </div>
-    <div class="flex items-center gap-3">
-      <div class="flex gap-1 glass rounded-xl p-1">
-        ${['7D','30D','90D','1Y'].map((p,i) => `
-        <button onclick="setPeriod(this,'${p}')" class="period-btn px-3 py-1.5 rounded-lg text-xs font-semibold ${i===1?'bg-cyan-500/20 text-cyan-400':'text-gray-400 hover:text-white'}">${p}</button>`).join('')}
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="display:flex;gap:4px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:4px;">
+        ${['7D', '30D', '90D', '1Y'].map((p, i) => `
+        <button onclick="setPeriod(this,'${p}')" class="period-btn" style="padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;${i === 1 ? 'background:rgba(0,229,255,0.15);color:#00E5FF;' : 'background:transparent;color:#9ca3af;'}">${p}</button>`).join('')}
       </div>
-      <button class="glass px-4 py-2 rounded-xl text-sm text-gray-300 hover:text-white flex items-center gap-2">
-        <i class="fas fa-download text-cyan-400"></i> Export
+      <button style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 14px;color:#d1d5db;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+        <i class="fas fa-download" style="color:#00E5FF;"></i> Export
       </button>
     </div>
   </div>
 
-  <div class="p-8">
-    <!-- Top KPIs -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-      ${[
-        {label:'Total Impressions',value:'245,320',change:'+18.4%',up:true,icon:'fas fa-eye',color:'cyan'},
-        {label:'Total Reach',value:'89,420',change:'+12.3%',up:true,icon:'fas fa-users',color:'blue'},
-        {label:'Engagements',value:'15,847',change:'+23.1%',up:true,icon:'fas fa-heart',color:'pink'},
-        {label:'Link Clicks',value:'3,204',change:'-2.1%',up:false,icon:'fas fa-mouse-pointer',color:'purple'},
-      ].map(k => `
-      <div class="gradient-card rounded-2xl p-5 card-hover">
-        <div class="flex items-start justify-between mb-3">
-          <div class="w-10 h-10 rounded-xl bg-${k.color}-500/20 flex items-center justify-center border border-${k.color}-500/30">
-            <i class="${k.icon} text-${k.color}-400"></i>
+  <div style="padding:28px;">
+
+    <!-- KPI Cards -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;">
+      ${kpis.map(k => `
+      <div class="gradient-card card-hover" style="border-radius:18px;padding:20px;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:${k.bg};border:1px solid ${k.border};display:flex;align-items:center;justify-content:center;">
+            <i class="${k.icon}" style="color:${k.color};font-size:16px;"></i>
           </div>
-          <span class="text-xs font-semibold ${k.up?'text-green-400 bg-green-400/10':'text-red-400 bg-red-400/10'} px-2 py-1 rounded-full">${k.up?'↑':'↓'} ${k.change}</span>
+          <span style="font-size:11px;font-weight:700;color:${k.up ? '#4ade80' : '#f87171'};background:${k.up ? 'rgba(74,222,128,0.1)' : 'rgba(248,113,113,0.1)'};padding:4px 8px;border-radius:20px;">
+            ${k.up ? '↑' : '↓'} ${k.change}
+          </span>
         </div>
-        <div class="text-2xl font-black text-white mb-1">${k.value}</div>
-        <div class="text-gray-400 text-sm">${k.label}</div>
+        <div style="font-size:26px;font-weight:900;color:#fff;margin-bottom:4px;">${k.value}</div>
+        <div style="font-size:13px;color:#9ca3af;">${k.label}</div>
       </div>`).join('')}
     </div>
 
-    <!-- Main Charts Row -->
-    <div class="grid lg:grid-cols-3 gap-6 mb-8">
+    <!-- Charts Row -->
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:28px;">
       <!-- Growth Chart -->
-      <div class="lg:col-span-2 glass rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-6">
+      <div class="glass-dark" style="border-radius:18px;padding:22px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
           <div>
-            <h3 class="text-white font-bold text-lg">Growth Trends</h3>
-            <p class="text-gray-400 text-sm">Followers, Reach & Engagement over time</p>
+            <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0;">Growth Trends</h3>
+            <p style="font-size:13px;color:#9ca3af;margin:4px 0 0;">Followers, Reach &amp; Engagement over time</p>
           </div>
-          <div class="flex gap-3 text-xs">
-            <span class="flex items-center gap-1.5 text-gray-400"><span class="w-3 h-0.5 bg-cyan-400 inline-block rounded"></span>Followers</span>
-            <span class="flex items-center gap-1.5 text-gray-400"><span class="w-3 h-0.5 bg-purple-400 inline-block rounded"></span>Reach</span>
-            <span class="flex items-center gap-1.5 text-gray-400"><span class="w-3 h-0.5 bg-pink-400 inline-block rounded"></span>Engagement</span>
+          <div style="display:flex;gap:14px;font-size:12px;">
+            <span style="display:flex;align-items:center;gap:6px;color:#9ca3af;"><span style="width:14px;height:2px;background:#00E5FF;display:inline-block;border-radius:2px;"></span>Followers</span>
+            <span style="display:flex;align-items:center;gap:6px;color:#9ca3af;"><span style="width:14px;height:2px;background:#8B5CF6;display:inline-block;border-radius:2px;"></span>Reach</span>
+            <span style="display:flex;align-items:center;gap:6px;color:#9ca3af;"><span style="width:14px;height:2px;background:#EC4899;display:inline-block;border-radius:2px;"></span>Engagement</span>
           </div>
         </div>
-        <canvas id="growthChart" height="250"></canvas>
+        <canvas id="growthChart" height="220"></canvas>
       </div>
 
       <!-- Engagement Breakdown -->
-      <div class="glass rounded-2xl p-6">
-        <h3 class="text-white font-bold text-lg mb-2">Engagement Types</h3>
-        <p class="text-gray-400 text-sm mb-5">What your audience does</p>
-        <canvas id="engagementBreakdown" height="200"></canvas>
-        <div class="mt-4 space-y-2">
+      <div class="glass-dark" style="border-radius:18px;padding:22px;">
+        <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0 0 4px;">Engagement Types</h3>
+        <p style="font-size:13px;color:#9ca3af;margin:0 0 16px;">What your audience does</p>
+        <canvas id="engagementBreakdown" height="180"></canvas>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px;">
           ${[
-            {type:'Likes', val:52, color:'#EC4899'},
-            {type:'Comments', val:18, color:'#8B5CF6'},
-            {type:'Shares', val:15, color:'#06B6D4'},
-            {type:'Saves', val:10, color:'#10B981'},
-            {type:'Profile Visits', val:5, color:'#F59E0B'},
+            { type: 'Likes', val: 52, color: '#EC4899' },
+            { type: 'Comments', val: 18, color: '#8B5CF6' },
+            { type: 'Shares', val: 15, color: '#06B6D4' },
+            { type: 'Saves', val: 10, color: '#10B981' },
+            { type: 'Profile Visits', val: 5, color: '#F59E0B' },
           ].map(e => `
-          <div class="flex items-center gap-3">
-            <div class="w-2 h-2 rounded-full flex-shrink-0" style="background:${e.color}"></div>
-            <div class="flex-1 text-xs text-gray-400">${e.type}</div>
-            <div class="text-xs text-white font-semibold">${e.val}%</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:${e.color};flex-shrink:0;"></div>
+            <span style="flex:1;font-size:12px;color:#9ca3af;">${e.type}</span>
+            <span style="font-size:12px;color:#fff;font-weight:700;">${e.val}%</span>
           </div>`).join('')}
         </div>
       </div>
     </div>
 
     <!-- Platform Performance Table -->
-    <div class="glass rounded-2xl overflow-hidden mb-8">
-      <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between">
-        <h3 class="text-white font-bold text-lg">Platform Performance</h3>
-        <button class="text-cyan-400 text-sm hover:text-cyan-300 flex items-center gap-1"><i class="fas fa-table"></i> Detailed Report</button>
+    <div class="glass-dark" style="border-radius:18px;overflow:hidden;margin-bottom:28px;">
+      <div style="padding:16px 22px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
+        <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0;">Platform Performance</h3>
+        <button style="color:#00E5FF;font-size:13px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;">
+          <i class="fas fa-table"></i> Detailed Report
+        </button>
       </div>
-      <div class="overflow-x-auto">
-        <table class="w-full">
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;">
           <thead>
-            <tr class="border-b border-gray-800">
-              ${['Platform','Followers','Reach','Impressions','Eng. Rate','Posts','Growth'].map(h => `
-              <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">${h}</th>`).join('')}
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              ${['Platform', 'Followers', 'Reach', 'Impressions', 'Eng. Rate', 'Posts', 'Growth'].map(h => `
+              <th style="padding:12px 18px;text-align:left;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.8px;">${h}</th>`).join('')}
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-800">
-            ${[
-              {platform:'Instagram', icon:'fab fa-instagram', color:'from-pink-500 to-orange-500', followers:'12,400', reach:'35,200', impressions:'89,000', eng:'5.2%', posts:45, growth:'+8%', growthUp:true},
-              {platform:'TikTok', icon:'fab fa-tiktok', color:'from-gray-700 to-black', followers:'34,500', reach:'28,400', impressions:'102,000', eng:'6.8%', posts:32, growth:'+22%', growthUp:true},
-              {platform:'Facebook', icon:'fab fa-facebook', color:'from-blue-600 to-blue-700', followers:'8,200', reach:'12,100', impressions:'24,000', eng:'2.1%', posts:28, growth:'+3%', growthUp:true},
-              {platform:'YouTube', icon:'fab fa-youtube', color:'from-red-600 to-red-700', followers:'5,600', reach:'8,900', impressions:'18,000', eng:'3.4%', posts:12, growth:'+15%', growthUp:true},
-              {platform:'X (Twitter)', icon:'fab fa-twitter', color:'from-sky-500 to-sky-600', followers:'9,800', reach:'14,200', impressions:'28,000', eng:'1.8%', posts:67, growth:'+5%', growthUp:true},
-              {platform:'LinkedIn', icon:'fab fa-linkedin', color:'from-blue-700 to-blue-800', followers:'4,200', reach:'6,800', impressions:'12,000', eng:'4.1%', posts:18, growth:'+11%', growthUp:true},
-            ].map(p => `
-            <tr class="hover:bg-gray-800/30 transition-all cursor-pointer">
-              <td class="px-6 py-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl bg-gradient-to-br ${p.color} flex items-center justify-center">
-                    <i class="${p.icon} text-white text-sm"></i>
+          <tbody>
+            ${platformRows.map((p, i) => `
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.2s;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background='transparent'">
+              <td style="padding:14px 18px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:36px;height:36px;border-radius:10px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="${p.icon}" style="color:#fff;font-size:15px;"></i>
                   </div>
-                  <span class="text-white font-semibold text-sm">${p.platform}</span>
+                  <span style="font-size:13px;font-weight:700;color:#fff;">${p.platform}</span>
                 </div>
               </td>
-              <td class="px-6 py-4 text-white text-sm font-medium">${p.followers}</td>
-              <td class="px-6 py-4 text-white text-sm">${p.reach}</td>
-              <td class="px-6 py-4 text-white text-sm">${p.impressions}</td>
-              <td class="px-6 py-4">
-                <span class="text-sm font-semibold text-cyan-400">${p.eng}</span>
+              <td style="padding:14px 18px;font-size:13px;color:#fff;font-weight:600;">${p.followers}</td>
+              <td style="padding:14px 18px;font-size:13px;color:#d1d5db;">${p.reach}</td>
+              <td style="padding:14px 18px;font-size:13px;color:#d1d5db;">${p.impressions}</td>
+              <td style="padding:14px 18px;">
+                <span style="font-size:13px;font-weight:700;color:#00E5FF;">${p.eng}</span>
               </td>
-              <td class="px-6 py-4 text-gray-400 text-sm">${p.posts}</td>
-              <td class="px-6 py-4">
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${p.growthUp?'bg-green-500/20 text-green-400':'bg-red-500/20 text-red-400'}">${p.growth}</span>
+              <td style="padding:14px 18px;font-size:13px;color:#9ca3af;">${p.posts}</td>
+              <td style="padding:14px 18px;">
+                <span style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;${p.up ? 'background:rgba(74,222,128,0.12);color:#4ade80;' : 'background:rgba(248,113,113,0.12);color:#f87171;'}">${p.growth}</span>
               </td>
             </tr>`).join('')}
           </tbody>
@@ -128,32 +142,27 @@ export function analyticsPage(): string {
       </div>
     </div>
 
-    <!-- Bottom Row: Best Posts + Best Times -->
-    <div class="grid lg:grid-cols-2 gap-6">
+    <!-- Bottom Row -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
       <!-- Top Performing Posts -->
-      <div class="glass rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-5">
-          <h3 class="text-white font-bold text-lg">Top Performing Posts</h3>
-          <span class="text-xs text-gray-400">Last 30 days</span>
+      <div class="glass-dark" style="border-radius:18px;padding:22px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+          <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0;">Top Performing Posts</h3>
+          <span style="font-size:12px;color:#9ca3af;">Last 30 days</span>
         </div>
-        <div class="space-y-4">
-          ${[
-            {text:'POV: Your entire marketing team runs on AI now 🤖', platform:'TikTok', icon:'fab fa-tiktok', likes:3200, comments:284, shares:890, color:'from-gray-700 to-black'},
-            {text:'5 Morning Routines That Changed My Life [Thread]', platform:'Instagram', icon:'fab fa-instagram', likes:1840, comments:127, shares:320, color:'from-pink-500 to-orange-500'},
-            {text:'Why 68% of Projects Fail (not what you think)', platform:'LinkedIn', icon:'fab fa-linkedin', likes:892, comments:234, shares:445, color:'from-blue-700 to-blue-800'},
-            {text:'Summer Sale — 40% off! Limited time offer 🎉', platform:'Facebook', icon:'fab fa-facebook', likes:642, comments:89, shares:201, color:'from-blue-600 to-blue-700'},
-          ].map((p,i) => `
-          <div class="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-800/50 transition-all cursor-pointer group">
-            <div class="text-lg font-black text-gray-700 w-6 flex-shrink-0 group-hover:gradient-text">${i+1}</div>
-            <div class="w-8 h-8 rounded-lg bg-gradient-to-br ${p.color} flex items-center justify-center flex-shrink-0">
-              <i class="${p.icon} text-white text-xs"></i>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${topPosts.map((p, i) => `
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:12px;transition:background 0.2s;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
+            <div style="font-size:18px;font-weight:900;color:rgba(255,255,255,0.15);width:22px;flex-shrink:0;line-height:1.4;">${i + 1}</div>
+            <div style="width:32px;height:32px;border-radius:10px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="${p.icon}" style="color:#fff;font-size:13px;"></i>
             </div>
-            <div class="flex-1 min-w-0">
-              <p class="text-white text-sm font-medium truncate">${p.text}</p>
-              <div class="flex items-center gap-4 mt-1 text-xs text-gray-400">
-                <span><i class="fas fa-heart text-pink-400 mr-1"></i>${p.likes.toLocaleString()}</span>
-                <span><i class="fas fa-comment text-blue-400 mr-1"></i>${p.comments}</span>
-                <span><i class="fas fa-share text-green-400 mr-1"></i>${p.shares}</span>
+            <div style="flex:1;min-width:0;">
+              <p style="font-size:13px;font-weight:600;color:#fff;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.text}</p>
+              <div style="display:flex;align-items:center;gap:14px;margin-top:5px;font-size:12px;color:#9ca3af;">
+                <span><i class="fas fa-heart" style="color:#FF2D78;margin-right:4px;"></i>${p.likes.toLocaleString()}</span>
+                <span><i class="fas fa-comment" style="color:#60A5FA;margin-right:4px;"></i>${p.comments}</span>
+                <span><i class="fas fa-share" style="color:#4ade80;margin-right:4px;"></i>${p.shares}</span>
               </div>
             </div>
           </div>`).join('')}
@@ -161,27 +170,27 @@ export function analyticsPage(): string {
       </div>
 
       <!-- Best Times Heatmap -->
-      <div class="glass rounded-2xl p-6">
-        <h3 class="text-white font-bold text-lg mb-2">Best Times to Post</h3>
-        <p class="text-gray-400 text-sm mb-5">Engagement heatmap by day and hour</p>
-        <div class="overflow-x-auto">
-          <div class="flex gap-1 mb-2 ml-10">
-            ${['6AM','9AM','12PM','3PM','6PM','9PM'].map(h => `<div class="flex-1 text-center text-xs text-gray-500">${h}</div>`).join('')}
+      <div class="glass-dark" style="border-radius:18px;padding:22px;">
+        <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0 0 4px;">Best Times to Post</h3>
+        <p style="font-size:13px;color:#9ca3af;margin:0 0 16px;">Engagement heatmap by day and hour</p>
+        <div style="overflow-x:auto;">
+          <div style="display:flex;gap:4px;margin-bottom:6px;margin-left:40px;">
+            ${['6AM', '9AM', '12PM', '3PM', '6PM', '9PM'].map(h => `<div style="flex:1;text-align:center;font-size:11px;color:#6b7280;">${h}</div>`).join('')}
           </div>
-          ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((day,di) => {
-            const vals = [[1,3,4,5,3,2],[2,4,5,4,4,3],[2,5,4,3,3,2],[1,4,5,5,4,2],[2,3,4,4,5,3],[3,3,2,3,4,5],[2,2,1,2,3,4]]
-            const row = vals[di]
-            const opacities = ['bg-cyan-500/10','bg-cyan-500/20','bg-cyan-500/35','bg-cyan-500/55','bg-cyan-500/80']
-            return `
-            <div class="flex items-center gap-1 mb-1">
-              <div class="w-9 text-xs text-gray-500 text-right flex-shrink-0">${day}</div>
-              ${row.map(v => `<div class="flex-1 h-7 rounded-sm ${opacities[v-1]} border border-cyan-500/${v*10} cursor-pointer hover:opacity-80 transition-opacity"></div>`).join('')}
+          ${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, di) => {
+    const vals = [[1, 3, 4, 5, 3, 2], [2, 4, 5, 4, 4, 3], [2, 5, 4, 3, 3, 2], [1, 4, 5, 5, 4, 2], [2, 3, 4, 4, 5, 3], [3, 3, 2, 3, 4, 5], [2, 2, 1, 2, 3, 4]]
+    const row = vals[di]
+    const opacities = [0.08, 0.18, 0.32, 0.52, 0.78]
+    return `
+            <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">
+              <div style="width:36px;font-size:11px;color:#6b7280;text-align:right;flex-shrink:0;">${day}</div>
+              ${row.map(v => `<div style="flex:1;height:26px;border-radius:5px;background:rgba(0,229,255,${opacities[v - 1]});border:1px solid rgba(0,229,255,${opacities[v - 1] * 0.6});cursor:pointer;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'"></div>`).join('')}
             </div>`
-          }).join('')}
-          <div class="flex items-center gap-2 mt-4 justify-end">
-            <span class="text-xs text-gray-500">Low</span>
-            ${['10','20','35','55','80'].map(o => `<div class="w-5 h-5 rounded-sm bg-cyan-500/${o}"></div>`).join('')}
-            <span class="text-xs text-gray-500">High</span>
+  }).join('')}
+          <div style="display:flex;align-items:center;gap:6px;margin-top:12px;justify-content:flex-end;">
+            <span style="font-size:11px;color:#6b7280;">Low</span>
+            ${[0.08, 0.18, 0.32, 0.52, 0.78].map(o => `<div style="width:18px;height:18px;border-radius:4px;background:rgba(0,229,255,${o});"></div>`).join('')}
+            <span style="font-size:11px;color:#6b7280;">High</span>
           </div>
         </div>
       </div>
@@ -189,44 +198,35 @@ export function analyticsPage(): string {
   </div>
 
   <script>
-    // Growth Chart
     const gCtx = document.getElementById('growthChart').getContext('2d');
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const current = months.slice(0,10);
     new Chart(gCtx, {
-      type: 'line',
-      data: {
-        labels: current,
-        datasets: [
-          {label:'Followers', data:[38000,41000,44500,48000,52000,57000,61000,65000,70000,74400], borderColor:'#00E5FF', backgroundColor:'rgba(0,229,255,0.08)', fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#00E5FF'},
-          {label:'Reach', data:[52000,58000,63000,70000,75000,82000,78000,85000,88000,89420], borderColor:'#8B5CF6', backgroundColor:'rgba(139,92,246,0.05)', fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#8B5CF6'},
-          {label:'Engagements', data:[3200,3800,4500,5200,6100,7200,8100,9400,11200,15847], borderColor:'#EC4899', backgroundColor:'rgba(236,72,153,0.05)', fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#EC4899'},
+      type:'line',
+      data:{
+        labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'],
+        datasets:[
+          {label:'Followers', data:[38000,41000,44500,48000,52000,57000,61000,65000,70000,74400], borderColor:'#00E5FF', backgroundColor:'rgba(0,229,255,0.07)', fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#00E5FF'},
+          {label:'Reach', data:[52000,58000,63000,70000,75000,82000,78000,85000,88000,89420], borderColor:'#8B5CF6', backgroundColor:'rgba(139,92,246,0.04)', fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#8B5CF6'},
+          {label:'Engagements', data:[3200,3800,4500,5200,6100,7200,8100,9400,11200,15847], borderColor:'#EC4899', backgroundColor:'rgba(236,72,153,0.04)', fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:'#EC4899'},
         ]
       },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { color:'#9ca3af', font:{size:12}, boxWidth:30 } } },
-        scales: {
-          x: { grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#6b7280'} },
-          y: { grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#6b7280', callback: v => v >= 1000 ? (v/1000).toFixed(0)+'K' : v} }
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display:false } },
+        scales:{
+          x:{ grid:{color:'rgba(255,255,255,0.03)'}, ticks:{color:'#6b7280'} },
+          y:{ grid:{color:'rgba(255,255,255,0.03)'}, ticks:{color:'#6b7280', callback: v => v>=1000?(v/1000).toFixed(0)+'K':v} }
         }
       }
     });
-
-    // Engagement Breakdown Donut
     const eCtx = document.getElementById('engagementBreakdown').getContext('2d');
     new Chart(eCtx, {
-      type: 'doughnut',
-      data: {
-        labels:['Likes','Comments','Shares','Saves','Profile Visits'],
-        datasets:[{ data:[52,18,15,10,5], backgroundColor:['#EC4899','#8B5CF6','#06B6D4','#10B981','#F59E0B'], borderWidth:0, hoverOffset:6 }]
-      },
-      options: { responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{legend:{display:false}} }
+      type:'doughnut',
+      data:{ labels:['Likes','Comments','Shares','Saves','Profile Visits'], datasets:[{ data:[52,18,15,10,5], backgroundColor:['#EC4899','#8B5CF6','#06B6D4','#10B981','#F59E0B'], borderWidth:0, hoverOffset:6 }] },
+      options:{ responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{legend:{display:false}} }
     });
-
     function setPeriod(btn, period) {
-      document.querySelectorAll('.period-btn').forEach(b => b.className = b.className.replace('bg-cyan-500/20 text-cyan-400','text-gray-400 hover:text-white'));
-      btn.className = btn.className.replace('text-gray-400 hover:text-white','bg-cyan-500/20 text-cyan-400');
+      document.querySelectorAll('.period-btn').forEach(b => { b.style.background='transparent'; b.style.color='#9ca3af'; });
+      btn.style.background='rgba(0,229,255,0.15)'; btn.style.color='#00E5FF';
     }
   </script>
   `

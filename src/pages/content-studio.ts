@@ -1,267 +1,201 @@
 import { layout } from './layout'
 
 export function contentStudioPage(): string {
+  const platforms = [
+    { id: 'ig', name: 'Instagram', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)', checked: true },
+    { id: 'tk', name: 'TikTok', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)', checked: true },
+    { id: 'fb', name: 'Facebook', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)', checked: true },
+    { id: 'li', name: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', checked: true },
+    { id: 'tw', name: 'X (Twitter)', icon: 'fab fa-twitter', bg: 'linear-gradient(135deg,#1DA1F2,#0d7abc)', checked: false },
+    { id: 'yt', name: 'YouTube', icon: 'fab fa-youtube', bg: 'linear-gradient(135deg,#FF0000,#cc0000)', checked: false },
+  ]
+  const contentCards = [
+    {
+      platform: 'Instagram', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)',
+      type: 'Caption + Image', reach: '12.4K followers',
+      content: `🚀 Introducing TechFlow Studio — The AI-powered project management tool that thinks like you do.\n\nNo more missed deadlines. No more chaotic workflows. Just pure, automated efficiency.\n\n✅ Smart task prioritization\n✅ AI deadline predictions\n✅ Auto-team assignments\n✅ Real-time progress tracking\n\nTry it FREE for 30 days 👇\n\n#ProductivityTools #AITech #ProjectManagement #SaaS #WorkSmarter #TechFlow #Startup #Innovation`
+    },
+    {
+      platform: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)',
+      type: 'Professional Post', reach: '4.2K connections',
+      content: `After 2 years of building, we're finally launching TechFlow Studio.\n\nHere's what we learned about project management:\n\n→ 68% of projects fail due to poor communication\n→ Teams spend 3.7 hours/day on status updates alone\n→ Deadline misses cost companies an avg. of $97K per project\n\nTechFlow's AI solves all three automatically.\n\nComment "FLOW" to get early access. 🔥`
+    },
+    {
+      platform: 'TikTok', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)',
+      type: 'Video Script (60s)', reach: '34.5K followers',
+      content: `🎬 HOOK (0-3s): "What if your AI could manage your entire team?"\n\n📽 SCENE 1 (3-15s): Chaotic project board → organized AI dashboard\n\n📽 SCENE 2 (15-35s): "Meet TechFlow — it predicts problems BEFORE they happen"\n\n📽 SCENE 3 (35-50s): Stressed manager vs calm TechFlow user\n\n🎯 CTA (50-60s): "Link in bio for 30-day free trial"\n\n#TechTok #AItools #ProductivityHack`
+    },
+    {
+      platform: 'Facebook', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)',
+      type: 'Engagement Post', reach: '8.2K followers',
+      content: `📊 Quick poll for business owners:\n\nWhat's your BIGGEST project management challenge?\n\nA) Keeping track of deadlines 📅\nB) Team communication 💬\nC) Resource allocation 🎯\nD) Reporting & updates 📈\n\nDrop your answer! Everyone who comments gets early access to our beta + founding member discount 🎁`
+    },
+  ]
+
   const content = `
   <!-- Top Bar -->
-  <div class="sticky top-0 z-30 bg-gray-950/80 backdrop-blur border-b border-gray-800 px-8 py-4 flex items-center justify-between">
+  <div style="position:sticky;top:0;z-index:30;background:rgba(3,8,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;">
     <div>
-      <h1 class="text-xl font-bold text-white">AI Content Studio</h1>
-      <p class="text-gray-400 text-sm">Create branded content for all platforms in seconds</p>
+      <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0;">AI Content Studio</h1>
+      <p style="color:#9ca3af;font-size:13px;margin:2px 0 0;">Create branded content for all platforms in seconds</p>
     </div>
-    <div class="flex items-center gap-3">
-      <button class="glass px-4 py-2 rounded-xl text-sm text-gray-300 hover:text-white flex items-center gap-2">
-        <i class="fas fa-history text-cyan-400"></i> History
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 14px;color:#d1d5db;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+        <i class="fas fa-history" style="color:#00E5FF;"></i> History
       </button>
-      <button onclick="generateContent()" class="gradient-primary text-white text-sm font-semibold px-4 py-2 rounded-xl flex items-center gap-2">
+      <button onclick="generateContent()" style="background:linear-gradient(135deg,#00E5FF,#0070F3,#7C3AED);color:#fff;font-size:13px;font-weight:800;padding:8px 16px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;">
         <i class="fas fa-wand-magic-sparkles"></i> Generate All
       </button>
     </div>
   </div>
 
-  <div class="p-8">
-    <div class="grid lg:grid-cols-3 gap-6">
-      <!-- Left: Controls -->
-      <div class="space-y-5">
+  <div style="padding:28px;">
+    <div style="display:grid;grid-template-columns:280px 1fr;gap:20px;">
+
+      <!-- LEFT: Controls -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
         <!-- Business Context -->
-        <div class="glass rounded-2xl p-5">
-          <h3 class="text-white font-bold mb-4 flex items-center gap-2">
-            <i class="fas fa-building text-cyan-400"></i> Business Context
+        <div class="glass-dark" style="border-radius:16px;padding:18px;">
+          <h3 style="font-size:14px;font-weight:800;color:#fff;margin:0 0 14px;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-building" style="color:#00E5FF;"></i> Business Context
           </h3>
-          <div class="space-y-4">
+          <div style="display:flex;flex-direction:column;gap:12px;">
             <div>
-              <label class="text-xs text-gray-400 font-semibold uppercase mb-2 block">Brand Name</label>
-              <input id="brandName" type="text" value="TechFlow Studio" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-cyan-500 outline-none">
+              <label style="font-size:11px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:6px;">Brand Name</label>
+              <input id="brandName" type="text" value="TechFlow Studio" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 12px;color:#fff;font-size:13px;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#00E5FF'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
             </div>
             <div>
-              <label class="text-xs text-gray-400 font-semibold uppercase mb-2 block">Industry / Niche</label>
-              <select id="industry" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-cyan-500 outline-none">
-                <option>SaaS / Technology</option>
-                <option>E-commerce</option>
-                <option>Fitness & Wellness</option>
-                <option>Food & Restaurant</option>
-                <option>Fashion & Beauty</option>
-                <option>Real Estate</option>
-                <option>Education</option>
-                <option>Finance</option>
-                <option>Travel</option>
+              <label style="font-size:11px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:6px;">Industry / Niche</label>
+              <select id="industry" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 12px;color:#fff;font-size:13px;outline:none;box-sizing:border-box;appearance:none;">
+                <option style="background:#0a0f1e;">SaaS / Technology</option>
+                <option style="background:#0a0f1e;">E-commerce</option>
+                <option style="background:#0a0f1e;">Fitness &amp; Wellness</option>
+                <option style="background:#0a0f1e;">Food &amp; Restaurant</option>
+                <option style="background:#0a0f1e;">Fashion &amp; Beauty</option>
+                <option style="background:#0a0f1e;">Real Estate</option>
+                <option style="background:#0a0f1e;">Finance</option>
+                <option style="background:#0a0f1e;">Travel</option>
               </select>
             </div>
             <div>
-              <label class="text-xs text-gray-400 font-semibold uppercase mb-2 block">Tone of Voice</label>
-              <div class="grid grid-cols-3 gap-2">
-                ${['Professional','Friendly','Playful','Bold','Inspiring','Informative'].map((t,i) => `
-                <button onclick="selectTone(this,'${t}')" class="tone-btn text-xs py-2 rounded-lg border ${i===1?'bg-cyan-500/20 border-cyan-500 text-cyan-400':'border-gray-700 text-gray-400 hover:border-gray-500'} transition-all">${t}</button>`).join('')}
+              <label style="font-size:11px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:6px;">Tone of Voice</label>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+                ${['Professional', 'Friendly', 'Playful', 'Bold', 'Inspiring', 'Informative'].map((t, i) => `
+                <button onclick="selectTone(this,'${t}')" class="tone-btn" style="font-size:11px;padding:7px 4px;border-radius:8px;border:1px solid ${i === 1 ? 'rgba(0,229,255,0.6)' : 'rgba(255,255,255,0.12)'};background:${i === 1 ? 'rgba(0,229,255,0.12)' : 'transparent'};color:${i === 1 ? '#00E5FF' : '#9ca3af'};cursor:pointer;transition:all 0.2s;">${t}</button>`).join('')}
               </div>
             </div>
             <div>
-              <label class="text-xs text-gray-400 font-semibold uppercase mb-2 block">Content Topic</label>
-              <textarea id="contentTopic" rows="3" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-cyan-500 outline-none resize-none" placeholder="e.g. Product launch, tips & tricks, behind the scenes...">New product launch — AI-powered project management tool</textarea>
+              <label style="font-size:11px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:6px;">Content Topic</label>
+              <textarea id="contentTopic" rows="3" placeholder="e.g. Product launch, tips &amp; tricks, behind the scenes..." style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 12px;color:#fff;font-size:13px;outline:none;resize:none;box-sizing:border-box;" onfocus="this.style.borderColor='#00E5FF'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">New product launch — AI-powered project management tool</textarea>
             </div>
           </div>
         </div>
 
         <!-- Target Platforms -->
-        <div class="glass rounded-2xl p-5">
-          <h3 class="text-white font-bold mb-4 flex items-center gap-2">
-            <i class="fas fa-share-alt text-purple-400"></i> Target Platforms
+        <div class="glass-dark" style="border-radius:16px;padding:18px;">
+          <h3 style="font-size:14px;font-weight:800;color:#fff;margin:0 0 12px;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-share-alt" style="color:#A78BFA;"></i> Target Platforms
           </h3>
-          <div class="space-y-2">
-            ${[
-              {id:'ig', name:'Instagram', icon:'fab fa-instagram', color:'from-pink-500 to-orange-500', checked:true},
-              {id:'tk', name:'TikTok', icon:'fab fa-tiktok', color:'from-gray-800 to-black', checked:true},
-              {id:'fb', name:'Facebook', icon:'fab fa-facebook', color:'from-blue-600 to-blue-700', checked:true},
-              {id:'li', name:'LinkedIn', icon:'fab fa-linkedin', color:'from-blue-700 to-blue-800', checked:true},
-              {id:'tw', name:'X (Twitter)', icon:'fab fa-twitter', color:'from-sky-500 to-sky-600', checked:false},
-              {id:'yt', name:'YouTube', icon:'fab fa-youtube', color:'from-red-600 to-red-700', checked:false},
-            ].map(p => `
-            <label class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-800 cursor-pointer group">
-              <input type="checkbox" id="plat_${p.id}" ${p.checked?'checked':''} class="w-4 h-4 accent-cyan-500 cursor-pointer">
-              <div class="w-7 h-7 rounded-lg bg-gradient-to-br ${p.color} flex items-center justify-center">
-                <i class="${p.icon} text-white text-xs"></i>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            ${platforms.map(p => `
+            <label style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
+              <input type="checkbox" id="plat_${p.id}" ${p.checked ? 'checked' : ''} style="width:15px;height:15px;accent-color:#00E5FF;cursor:pointer;flex-shrink:0;">
+              <div style="width:26px;height:26px;border-radius:8px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="${p.icon}" style="color:#fff;font-size:12px;"></i>
               </div>
-              <span class="text-sm text-gray-300 group-hover:text-white">${p.name}</span>
+              <span style="font-size:13px;color:#d1d5db;">${p.name}</span>
             </label>`).join('')}
           </div>
         </div>
 
-        <!-- Content Type -->
-        <div class="glass rounded-2xl p-5">
-          <h3 class="text-white font-bold mb-4 flex items-center gap-2">
-            <i class="fas fa-layer-group text-blue-400"></i> Content Type
-          </h3>
-          <div class="space-y-2">
-            ${[
-              {id:'caption', label:'Caption + Hashtags', icon:'fas fa-align-left', active:true},
-              {id:'image', label:'AI Image Generation', icon:'fas fa-image', active:true},
-              {id:'video', label:'AI Video (Sora-2)', icon:'fas fa-video', active:false},
-              {id:'story', label:'Story / Reel Ideas', icon:'fas fa-film', active:true},
-              {id:'thread', label:'Thread / Carousel', icon:'fas fa-list', active:false},
-            ].map(t => `
-            <label class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-800 cursor-pointer">
-              <input type="checkbox" ${t.active?'checked':''} class="w-4 h-4 accent-cyan-500">
-              <i class="${t.icon} text-gray-400 w-4"></i>
-              <span class="text-sm text-gray-300">${t.label}</span>
-            </label>`).join('')}
-          </div>
-        </div>
-
-        <button onclick="generateContent()" class="btn-primary w-full gradient-primary text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-3 text-lg">
+        <!-- Generate Button -->
+        <button onclick="generateContent()" style="background:linear-gradient(135deg,#00E5FF,#0070F3,#7C3AED);color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-shadow:0 6px 20px rgba(0,229,255,0.2);transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
           <i class="fas fa-wand-magic-sparkles"></i>
           Generate Content
         </button>
       </div>
 
-      <!-- Right: Generated Content Preview -->
-      <div class="lg:col-span-2 space-y-5">
+      <!-- RIGHT: Content Cards -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
         <!-- Status Bar -->
-        <div id="generateStatus" class="glass rounded-2xl p-4 flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-            <i class="fas fa-check text-green-400 text-sm"></i>
+        <div id="generateStatus" class="glass-dark" style="border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:rgba(74,222,128,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="fas fa-check" style="color:#4ade80;font-size:14px;"></i>
           </div>
-          <div>
-            <div class="text-white text-sm font-semibold">4 content pieces ready</div>
-            <div class="text-gray-400 text-xs">Generated for Instagram, TikTok, Facebook, LinkedIn</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:#fff;">4 content pieces ready</div>
+            <div style="font-size:12px;color:#9ca3af;margin-top:2px;">Generated for Instagram, TikTok, Facebook, LinkedIn</div>
           </div>
-          <div class="ml-auto flex gap-2">
-            <button class="glass px-3 py-1.5 rounded-lg text-xs text-gray-300 hover:text-white flex items-center gap-1"><i class="fas fa-copy"></i> Copy All</button>
-            <button onclick="scheduleAll()" class="gradient-primary text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 font-semibold"><i class="fas fa-calendar"></i> Schedule All</button>
+          <div style="display:flex;gap:8px;flex-shrink:0;">
+            <button style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 12px;color:#d1d5db;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;">
+              <i class="fas fa-copy"></i> Copy All
+            </button>
+            <button onclick="scheduleAll()" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#001a22;font-size:12px;font-weight:800;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;">
+              <i class="fas fa-calendar"></i> Schedule All
+            </button>
           </div>
         </div>
 
         <!-- Content Cards -->
-        <div id="contentCards" class="space-y-4">
-          ${[
-            {
-              platform:'Instagram', icon:'fab fa-instagram', color:'from-pink-500 to-orange-500', textColor:'pink',
-              type:'Caption + Image',
-              content:`🚀 Introducing TechFlow Studio — The AI-powered project management tool that thinks like you do.
-
-No more missed deadlines. No more chaotic workflows. Just pure, automated efficiency.
-
-✅ Smart task prioritization
-✅ AI deadline predictions  
-✅ Auto-team assignments
-✅ Real-time progress tracking
-
-Try it FREE for 30 days 👇
-
-#ProductivityTools #AITech #ProjectManagement #SaaS #WorkSmarter #TechFlow #Startup #Innovation #AIpowered #FutureOfWork`,
-              reach: '12.4K followers'
-            },
-            {
-              platform:'LinkedIn', icon:'fab fa-linkedin', color:'from-blue-700 to-blue-800', textColor:'blue',
-              type:'Professional Post',
-              content:`After 2 years of building, we're finally launching TechFlow Studio.
-
-Here's what we learned the hard way about project management:
-
-→ 68% of projects fail due to poor communication, not technical issues
-→ Teams spend 3.7 hours/day on status updates alone
-→ Deadline misses cost companies an avg. of $97K per project
-
-TechFlow's AI solves all three. It automatically:
-• Identifies communication gaps before they become problems
-• Generates status reports in seconds
-• Predicts deadline risks 2 weeks in advance
-
-We're offering 50 founding member slots at 60% off.
-
-Comment "FLOW" to get early access. 🔥`,
-              reach: '4.2K connections'
-            },
-            {
-              platform:'TikTok', icon:'fab fa-tiktok', color:'from-gray-800 to-black', textColor:'gray',
-              type:'Video Script (60s)',
-              content:`🎬 HOOK (0-3s): "What if your AI could manage your entire team for you?"
-
-📽️ SCENE 1 (3-15s): Show chaotic project board → transformation to organized AI dashboard
-
-📽️ SCENE 2 (15-35s): "Meet TechFlow. It predicts problems BEFORE they happen..."
-• Show AI flagging a deadline risk
-• Show auto-reassignment feature
-• Show team getting notified instantly
-
-📽️ SCENE 3 (35-50s): Split screen — stressed manager vs calm TechFlow user
-
-🎯 CTA (50-60s): "Link in bio for your 30-day free trial"
-
-🎵 Audio: Trending upbeat tech track
-#TechTok #AItools #ProductivityHack #WorkFromHome`,
-              reach: '34.5K followers'
-            },
-            {
-              platform:'Facebook', icon:'fab fa-facebook', color:'from-blue-600 to-blue-700', textColor:'blue',
-              type:'Engagement Post',
-              content:`📊 Quick poll for business owners & managers:
-
-What's your BIGGEST project management challenge?
-
-A) Keeping track of deadlines 📅
-B) Team communication 💬  
-C) Resource allocation 🎯
-D) Reporting & updates 📈
-
-Drop your answer in the comments! We're building something that solves ALL of these... and we want your input.
-
-P.S. Everyone who comments gets early access to our beta + a special founding member discount 🎁`,
-              reach: '8.2K followers'
-            },
-          ].map(c => `
-          <div class="glass rounded-2xl overflow-hidden border border-gray-700/50 hover:border-gray-600 transition-all">
-            <div class="bg-gradient-to-r from-gray-800 to-gray-800/50 px-5 py-3 flex items-center justify-between border-b border-gray-700">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br ${c.color} flex items-center justify-center">
-                  <i class="${c.icon} text-white text-sm"></i>
+        <div id="contentCards" style="display:flex;flex-direction:column;gap:14px;">
+          ${contentCards.map(c => `
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.16)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+            <div style="background:rgba(255,255,255,0.04);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="width:32px;height:32px;border-radius:10px;background:${c.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <i class="${c.icon}" style="color:#fff;font-size:14px;"></i>
                 </div>
                 <div>
-                  <span class="text-white font-semibold text-sm">${c.platform}</span>
-                  <span class="text-gray-400 text-xs ml-2">· ${c.type}</span>
+                  <span style="font-size:13px;font-weight:700;color:#fff;">${c.platform}</span>
+                  <span style="font-size:12px;color:#6b7280;margin-left:6px;">· ${c.type}</span>
                 </div>
               </div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs text-gray-500">${c.reach}</span>
-                <button class="text-gray-400 hover:text-cyan-400 transition-colors p-1.5 rounded-lg hover:bg-gray-700" title="Copy" onclick="copyContent(this)"><i class="fas fa-copy text-xs"></i></button>
-                <button class="text-gray-400 hover:text-green-400 transition-colors p-1.5 rounded-lg hover:bg-gray-700" title="Edit"><i class="fas fa-pen text-xs"></i></button>
-                <button onclick="schedulePost(this)" class="gradient-primary text-white text-xs px-3 py-1 rounded-lg font-semibold">Schedule</button>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:12px;color:#6b7280;">${c.reach}</span>
+                <button class="copy-btn" onclick="copyContent(this)" style="background:transparent;border:none;cursor:pointer;padding:6px 8px;border-radius:8px;color:#9ca3af;font-size:12px;transition:color 0.2s;" title="Copy" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
+                  <i class="fas fa-copy"></i>
+                </button>
+                <button class="schedule-btn" onclick="schedulePost(this)" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#001a22;font-size:12px;font-weight:800;padding:5px 12px;border-radius:8px;border:none;cursor:pointer;">
+                  Schedule
+                </button>
               </div>
             </div>
-            <div class="p-5">
-              <pre class="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap font-sans">${c.content}</pre>
+            <div style="padding:16px;">
+              <pre style="color:#d1d5db;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:inherit;margin:0;">${c.content}</pre>
             </div>
           </div>`).join('')}
         </div>
 
         <!-- Image Generation Card -->
-        <div class="glass rounded-2xl p-6 border border-purple-500/20">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-9 h-9 rounded-xl bg-purple-500/20 flex items-center justify-center">
-              <i class="fas fa-image text-purple-400"></i>
+        <div style="background:rgba(124,58,237,0.05);border:1px solid rgba(124,58,237,0.2);border-radius:16px;padding:20px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div style="width:38px;height:38px;border-radius:12px;background:rgba(124,58,237,0.15);display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-image" style="color:#A78BFA;font-size:16px;"></i>
             </div>
             <div>
-              <h3 class="text-white font-bold">AI Image Generation</h3>
-              <p class="text-gray-400 text-xs">Custom branded visuals for your posts</p>
+              <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0;">AI Image Generation</h3>
+              <p style="font-size:12px;color:#9ca3af;margin:3px 0 0;">Custom branded visuals for your posts</p>
             </div>
           </div>
-          <div class="grid grid-cols-3 gap-3 mb-4">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
             ${[
-              'Product hero shot, modern tech aesthetic, gradient blue background, professional',
-              'Team collaboration scene, bright office, diverse people, innovative startup',
-              'Abstract data visualization, cyan and blue neon glow, futuristic dark background'
-            ].map((prompt, i) => `
-            <div class="relative group cursor-pointer">
-              <div class="aspect-square rounded-xl overflow-hidden bg-gradient-to-br ${['from-cyan-900 to-blue-900','from-purple-900 to-indigo-900','from-gray-800 to-gray-900'][i]} flex items-center justify-center border border-gray-700 group-hover:border-purple-500 transition-all">
-                <div class="text-center p-2">
-                  <i class="fas fa-image text-gray-600 text-2xl mb-2 block"></i>
-                  <p class="text-gray-500 text-xs leading-tight">${['Product Hero', 'Team Photo', 'Abstract Art'][i]}</p>
-                </div>
-                <div class="absolute inset-0 bg-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
-                  <button class="bg-purple-500 text-white text-xs px-3 py-1.5 rounded-lg font-semibold">Generate</button>
-                </div>
+              { label: 'Product Hero', gradient: 'linear-gradient(135deg,#0a2040,#0d4080)' },
+              { label: 'Team Photo', gradient: 'linear-gradient(135deg,#1a0a40,#2d1080)' },
+              { label: 'Abstract Art', gradient: 'linear-gradient(135deg,#0a1830,#0a2848)' },
+            ].map(img => `
+            <div style="position:relative;cursor:pointer;" onmouseover="this.querySelector('.img-overlay').style.opacity='1'" onmouseout="this.querySelector('.img-overlay').style.opacity='0'">
+              <div style="aspect-ratio:1;border-radius:12px;background:${img.gradient};display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.08);">
+                <i class="fas fa-image" style="color:rgba(255,255,255,0.2);font-size:24px;margin-bottom:6px;"></i>
+                <span style="font-size:11px;color:rgba(255,255,255,0.3);">${img.label}</span>
               </div>
-              <p class="text-gray-500 text-xs mt-1.5 truncate">${prompt.substring(0,35)}...</p>
+              <div class="img-overlay" style="position:absolute;inset:0;background:rgba(124,58,237,0.4);opacity:0;border-radius:12px;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center;">
+                <button style="background:#7C3AED;color:#fff;font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;border:none;cursor:pointer;">Generate</button>
+              </div>
             </div>`).join('')}
           </div>
-          <button class="w-full border border-purple-500/40 text-purple-400 rounded-xl py-3 text-sm font-semibold hover:bg-purple-500/10 transition-all flex items-center justify-center gap-2">
+          <button style="width:100%;border:1px solid rgba(124,58,237,0.35);color:#A78BFA;background:transparent;border-radius:12px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.2s;" onmouseover="this.style.background='rgba(124,58,237,0.1)'" onmouseout="this.style.background='transparent'">
             <i class="fas fa-sparkles"></i>
             Generate Custom Image (uses 1 credit)
           </button>
@@ -273,64 +207,71 @@ P.S. Everyone who comments gets early access to our beta + a special founding me
   <script>
     function selectTone(btn, tone) {
       document.querySelectorAll('.tone-btn').forEach(b => {
-        b.className = b.className.replace('bg-cyan-500/20 border-cyan-500 text-cyan-400','border-gray-700 text-gray-400 hover:border-gray-500');
+        b.style.borderColor = 'rgba(255,255,255,0.12)';
+        b.style.background = 'transparent';
+        b.style.color = '#9ca3af';
       });
-      btn.className = btn.className.replace('border-gray-700 text-gray-400 hover:border-gray-500','bg-cyan-500/20 border-cyan-500 text-cyan-400');
+      btn.style.borderColor = 'rgba(0,229,255,0.6)';
+      btn.style.background = 'rgba(0,229,255,0.12)';
+      btn.style.color = '#00E5FF';
     }
-
     function copyContent(btn) {
-      const content = btn.closest('.glass').querySelector('pre').textContent;
-      navigator.clipboard.writeText(content).then(() => {
-        btn.innerHTML = '<i class="fas fa-check text-xs text-green-400"></i>';
-        setTimeout(() => btn.innerHTML = '<i class="fas fa-copy text-xs"></i>', 2000);
-      });
+      const pre = btn.closest('div[style*="border-radius:16px"]').querySelector('pre');
+      if (pre) {
+        navigator.clipboard.writeText(pre.textContent || '').then(() => {
+          btn.innerHTML = '<i class="fas fa-check" style="color:#4ade80;"></i>';
+          setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
+        });
+      }
     }
-
     function schedulePost(btn) {
       btn.textContent = 'Scheduled ✓';
-      btn.className = btn.className.replace('gradient-primary text-white','bg-green-500/20 text-green-400 border border-green-500/30');
+      btn.style.background = 'rgba(74,222,128,0.12)';
+      btn.style.color = '#4ade80';
+      btn.style.border = '1px solid rgba(74,222,128,0.3)';
     }
-
     function scheduleAll() {
-      document.querySelectorAll('#contentCards button:last-of-type').forEach(btn => schedulePost(btn));
-      const statusEl = document.getElementById('generateStatus');
-      statusEl.innerHTML = \`
-        <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-          <i class="fas fa-calendar-check text-green-400 text-sm"></i>
+      document.querySelectorAll('.schedule-btn').forEach(btn => schedulePost(btn));
+      document.getElementById('generateStatus').innerHTML = \`
+        <div style="width:34px;height:34px;border-radius:50%;background:rgba(74,222,128,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="fas fa-calendar-check" style="color:#4ade80;font-size:14px;"></i>
         </div>
-        <div>
-          <div class="text-white text-sm font-semibold">All posts scheduled!</div>
-          <div class="text-gray-400 text-xs">4 posts added to your queue</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:700;color:#fff;">All posts scheduled!</div>
+          <div style="font-size:12px;color:#9ca3af;margin-top:2px;">4 posts added to your queue</div>
         </div>
-        <a href="/scheduler" class="ml-auto gradient-primary text-white text-xs px-4 py-2 rounded-lg font-semibold">View Schedule →</a>
+        <a href="/scheduler" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#001a22;font-size:12px;font-weight:800;padding:7px 14px;border-radius:8px;text-decoration:none;flex-shrink:0;">View Schedule →</a>
       \`;
     }
-
     function generateContent() {
       const status = document.getElementById('generateStatus');
       status.innerHTML = \`
-        <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
-          <i class="fas fa-spinner fa-spin text-cyan-400 text-sm"></i>
+        <div style="width:34px;height:34px;border-radius:50%;background:rgba(0,229,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="fas fa-spinner fa-spin" style="color:#00E5FF;font-size:14px;"></i>
         </div>
         <div>
-          <div class="text-white text-sm font-semibold">AI is generating your content...</div>
-          <div class="text-gray-400 text-xs">Creating custom posts for your brand</div>
+          <div style="font-size:14px;font-weight:700;color:#fff;">AI is generating your content...</div>
+          <div style="font-size:12px;color:#9ca3af;margin-top:2px;">Creating custom posts for your brand</div>
         </div>
       \`;
       document.getElementById('contentCards').style.opacity = '0.4';
       setTimeout(() => {
         document.getElementById('contentCards').style.opacity = '1';
         status.innerHTML = \`
-          <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-            <i class="fas fa-check text-green-400 text-sm"></i>
+          <div style="width:34px;height:34px;border-radius:50%;background:rgba(74,222,128,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="fas fa-check" style="color:#4ade80;font-size:14px;"></i>
           </div>
-          <div>
-            <div class="text-white text-sm font-semibold">4 new content pieces generated!</div>
-            <div class="text-gray-400 text-xs">Customized for Instagram, TikTok, Facebook, LinkedIn</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:#fff;">4 new content pieces generated!</div>
+            <div style="font-size:12px;color:#9ca3af;margin-top:2px;">Customized for Instagram, TikTok, Facebook, LinkedIn</div>
           </div>
-          <div class="ml-auto flex gap-2">
-            <button class="glass px-3 py-1.5 rounded-lg text-xs text-gray-300 hover:text-white flex items-center gap-1"><i class="fas fa-copy"></i> Copy All</button>
-            <button onclick="scheduleAll()" class="gradient-primary text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 font-semibold"><i class="fas fa-calendar"></i> Schedule All</button>
+          <div style="display:flex;gap:8px;flex-shrink:0;">
+            <button style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 12px;color:#d1d5db;font-size:12px;cursor:pointer;">
+              <i class="fas fa-copy"></i> Copy All
+            </button>
+            <button onclick="scheduleAll()" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#001a22;font-size:12px;font-weight:800;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;">
+              <i class="fas fa-calendar"></i> Schedule All
+            </button>
           </div>
         \`;
       }, 2500);
