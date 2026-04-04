@@ -61,9 +61,9 @@ export function landingPage(): string {
         <a href="/pricing" class="text-gray-400 text-sm">Pricing</a>
       </div>
       <div class="flex items-center gap-3">
-        <a href="/login" class="text-sm text-gray-400 hover:text-white px-4 py-2">Sign In</a>
-        <a href="/login" class="btn-glow gradient-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all" style="color:#fff;">
-          Start Free <i class="fas fa-arrow-right ml-1"></i>
+        <a href="/login" class="text-sm text-gray-400 hover:text-white px-4 py-2" style="display:inline-flex;align-items:center;">Sign In</a>
+        <a href="/login" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);color:#fff;font-size:13px;font-weight:800;padding:10px 20px;border-radius:12px;text-decoration:none;box-shadow:0 0 20px rgba(255,45,120,0.4),0 0 40px rgba(192,38,211,0.15);transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.boxShadow='0 0 30px rgba(255,45,120,0.6),0 0 60px rgba(192,38,211,0.3)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 0 20px rgba(255,45,120,0.4),0 0 40px rgba(192,38,211,0.15)';this.style.transform='translateY(0)'">
+          Start Free <i class="fas fa-arrow-right"></i>
         </a>
       </div>
     </div>

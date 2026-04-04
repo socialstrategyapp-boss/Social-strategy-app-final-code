@@ -90,7 +90,7 @@ export function pricingPage(): string {
             <i class="${f.ok ? 'fas fa-check' : 'fas fa-xmark'}" style="color:${f.ok ? '#4ade80' : '#374151'};margin-top:2px;flex-shrink:0;font-size:12px;"></i>${f.text}
           </li>`).join('')}
         </ul>
-        <a href="/login" style="display:block;text-align:center;border:1px solid rgba(255,255,255,0.15);color:#d1d5db;font-weight:700;padding:12px;border-radius:12px;text-decoration:none;font-size:14px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'">
+        <a href="/login" style="display:block;text-align:center;background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);color:#fff;font-weight:800;padding:13px;border-radius:12px;text-decoration:none;font-size:14px;box-shadow:0 0 22px rgba(255,45,120,0.45),0 0 44px rgba(192,38,211,0.2);transition:all 0.2s;letter-spacing:0.3px;" onmouseover="this.style.boxShadow='0 0 32px rgba(255,45,120,0.65),0 0 60px rgba(192,38,211,0.35)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 0 22px rgba(255,45,120,0.45),0 0 44px rgba(192,38,211,0.2)';this.style.transform='translateY(0)'">
           Get Started Free
         </a>
       </div>
@@ -132,7 +132,7 @@ export function pricingPage(): string {
             <i class="fas fa-check" style="color:#00E5FF;margin-top:2px;flex-shrink:0;font-size:12px;"></i>${f}
           </li>`).join('')}
         </ul>
-        <a href="/login" style="display:block;text-align:center;background:linear-gradient(135deg,#00E5FF,#0070F3,#7C3AED);color:#fff;font-weight:800;padding:14px;border-radius:12px;text-decoration:none;font-size:14px;box-shadow:0 6px 20px rgba(0,229,255,0.25);transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <a href="/login" style="display:block;text-align:center;background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);color:#fff;font-weight:900;padding:14px;border-radius:12px;text-decoration:none;font-size:14px;box-shadow:0 0 28px rgba(255,45,120,0.55),0 0 56px rgba(192,38,211,0.25);transition:all 0.2s;letter-spacing:0.3px;" onmouseover="this.style.boxShadow='0 0 40px rgba(255,45,120,0.75),0 0 80px rgba(192,38,211,0.4)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 28px rgba(255,45,120,0.55),0 0 56px rgba(192,38,211,0.25)';this.style.transform='translateY(0)'">
           Start Pro — 14 Day Free Trial
         </a>
         <p style="text-align:center;font-size:12px;color:#6b7280;margin:10px 0 0;">No credit card required</p>
@@ -167,7 +167,7 @@ export function pricingPage(): string {
             <i class="fas fa-check" style="color:#A78BFA;margin-top:2px;flex-shrink:0;font-size:12px;"></i>${f}
           </li>`).join('')}
         </ul>
-        <a href="/login" style="display:block;text-align:center;border:1px solid rgba(124,58,237,0.4);color:#A78BFA;font-weight:700;padding:12px;border-radius:12px;text-decoration:none;font-size:14px;transition:background 0.2s;" onmouseover="this.style.background='rgba(124,58,237,0.1)'" onmouseout="this.style.background='transparent'">
+        <a href="/login" style="display:block;text-align:center;background:linear-gradient(135deg,#7C3AED,#C026D3,#FF2D78);color:#fff;font-weight:800;padding:13px;border-radius:12px;text-decoration:none;font-size:14px;box-shadow:0 0 22px rgba(124,58,237,0.45),0 0 44px rgba(255,45,120,0.2);transition:all 0.2s;letter-spacing:0.3px;" onmouseover="this.style.boxShadow='0 0 32px rgba(124,58,237,0.65),0 0 60px rgba(255,45,120,0.35)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 0 22px rgba(124,58,237,0.45),0 0 44px rgba(255,45,120,0.2)';this.style.transform='translateY(0)'">
           Contact Sales
         </a>
       </div>

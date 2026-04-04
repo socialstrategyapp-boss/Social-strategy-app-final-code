@@ -25,34 +25,71 @@ export function loginPage(): string {
 
     .login-card {
       position: relative; z-index: 1;
-      width: 100%; max-width: 440px;
+      width: 100%; max-width: 480px;
       margin: 24px;
       background: linear-gradient(145deg, rgba(20,30,55,0.95) 0%, rgba(10,16,38,0.98) 100%);
-      border: 1px solid rgba(0,229,255,0.2);
+      border: 1px solid rgba(255,45,120,0.25);
       border-radius: 28px;
-      padding: 40px 36px;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset,
+                  0 0 60px rgba(255,45,120,0.08);
       backdrop-filter: blur(20px);
     }
-    .premium-pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: linear-gradient(135deg,rgba(0,229,255,0.12),rgba(124,58,237,0.12));
-      border: 1px solid rgba(0,229,255,0.25);
-      border-radius: 999px; padding: 6px 14px;
-      font-size: 12px; font-weight: 700; color: #00E5FF;
-      margin-bottom: 22px; letter-spacing: 0.5px;
+    /* ── HERO TOP SECTION ── */
+    .login-hero {
+      background: linear-gradient(160deg, rgba(124,58,237,0.35) 0%, rgba(192,38,211,0.2) 40%, rgba(255,45,120,0.25) 100%);
+      border-bottom: 1px solid rgba(255,45,120,0.2);
+      padding: 40px 36px 36px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    .premium-pill .dot { width: 7px; height: 7px; background: #00E5FF; border-radius: 50%; animation: blink 2s infinite; }
+    .login-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,45,120,0.18) 0%, transparent 65%),
+                  radial-gradient(ellipse at 50% 100%, rgba(124,58,237,0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .login-hero-logo {
+      width: 110px; height: 110px;
+      margin: 0 auto 20px;
+      filter: drop-shadow(0 0 28px rgba(255,45,120,0.55)) drop-shadow(0 0 56px rgba(124,58,237,0.35));
+      animation: logoGlow 3s ease-in-out infinite;
+    }
+    @keyframes logoGlow {
+      0%,100% { filter: drop-shadow(0 0 28px rgba(255,45,120,0.55)) drop-shadow(0 0 56px rgba(124,58,237,0.35)); }
+      50%      { filter: drop-shadow(0 0 40px rgba(255,45,120,0.8))  drop-shadow(0 0 80px rgba(124,58,237,0.55)); }
+    }
+    .login-hero-name {
+      font-size: 36px; font-weight: 900; letter-spacing: 3px;
+      background: linear-gradient(135deg, #FF2D78, #C026D3, #A78BFA);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin: 0 0 8px; line-height: 1.1;
+      text-shadow: none;
+    }
+    .login-hero-motto {
+      font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.6);
+      letter-spacing: 0.5px; margin: 0;
+      line-height: 1.5;
+    }
+    .login-hero-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,45,120,0.12);
+      border: 1px solid rgba(255,45,120,0.3);
+      border-radius: 999px; padding: 5px 14px;
+      font-size: 11px; font-weight: 700; color: #FF2D78;
+      margin-top: 16px; letter-spacing: 0.5px;
+    }
+    .login-hero-pill .dot { width: 6px; height: 6px; background: #FF2D78; border-radius: 50%; animation: blink 2s infinite; }
+    /* ── FORM SECTION ── */
+    .login-form { padding: 28px 36px 36px; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    .logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-    .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-    .brand-top { font-size: 16px; font-weight: 900; color: #fff; letter-spacing: 1px; }
-    .brand-bot { font-size: 16px; font-weight: 900; letter-spacing: 1px; background: linear-gradient(135deg,#00E5FF,#FF2D78); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     /* MODE TOGGLE */
     .mode-toggle { display: flex; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 4px; margin-bottom: 24px; }
     .mode-btn { flex: 1; padding: 9px; border: none; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; background: transparent; color: #6b7280; }
-    .mode-btn.active { background: linear-gradient(135deg,#00E5FF,#0070F3); color: #001a22; box-shadow: 0 3px 12px rgba(0,229,255,0.3); }
+    .mode-btn.active { background: linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED); color: #fff; box-shadow: 0 3px 12px rgba(255,45,120,0.35); }
 
     .input-group { margin-bottom: 16px; }
     .input-group label { display: block; font-size: 12px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 7px; }
@@ -91,13 +128,19 @@ export function loginPage(): string {
     .btn-start:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,229,255,0.45); }
 
     .btn-google {
-      width: 100%; padding: 13px;
-      background: transparent; color: #e5e7eb; font-size: 14px; font-weight: 700;
-      border: 1.5px solid rgba(255,45,120,0.4); border-radius: 14px; cursor: pointer;
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);
+      color: #fff; font-size: 14px; font-weight: 800;
+      border: none; border-radius: 14px; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 10px;
       transition: all 0.2s; margin-bottom: 20px;
+      box-shadow: 0 0 24px rgba(255,45,120,0.4), 0 0 48px rgba(192,38,211,0.18);
+      letter-spacing: 0.3px;
     }
-    .btn-google:hover { border-color: rgba(255,45,120,0.8); background: rgba(255,45,120,0.06); color: #fff; }
+    .btn-google:hover {
+      box-shadow: 0 0 36px rgba(255,45,120,0.65), 0 0 72px rgba(192,38,211,0.35);
+      transform: translateY(-2px);
+    }
     .google-icon { width: 20px; height: 20px; }
 
     .divider { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; }
@@ -129,18 +172,26 @@ export function loginPage(): string {
   </div>
 
   <div class="login-card">
-    <div class="premium-pill">
-      <div class="dot"></div>
-      Premium AI Growth Platform
-    </div>
 
-    <div class="logo-row">
-      ${ssLogo(48)}
-      <div class="brand-text">
-        <span class="brand-top">SOCIAL</span>
-        <span class="brand-bot">STRATEGY</span>
+    <!-- ── BIG LOGO HERO SECTION ── -->
+    <div class="login-hero">
+      <!-- Massive Logo -->
+      <div class="login-hero-logo">
+        ${ssLogo(110)}
+      </div>
+      <!-- App Name -->
+      <div class="login-hero-name">SOCIAL STRATEGY</div>
+      <!-- Motto -->
+      <p class="login-hero-motto">One Scan. Complete Growth.<br>Your AI-powered marketing command center.</p>
+      <!-- Live pill -->
+      <div class="login-hero-pill">
+        <div class="dot"></div>
+        Premium AI Growth Platform · 12,400+ Businesses
       </div>
     </div>
+
+    <!-- ── FORM SECTION ── -->
+    <div class="login-form">
 
     <!-- Mode Toggle -->
     <div class="mode-toggle">
@@ -208,10 +259,10 @@ export function loginPage(): string {
 
     <button class="btn-google" onclick="handleGoogle()">
       <svg class="google-icon" viewBox="0 0 48 48">
-        <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.6 33.1 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 2.9l5.7-5.7C34.1 6.4 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/>
-        <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.1 8 2.9l5.7-5.7C34.1 6.4 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/>
-        <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.5 26.8 36.5 24 36.5c-5.3 0-9.7-3.5-11.3-8.4l-6.5 5C9.6 39.7 16.3 44 24 44z"/>
-        <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C41.9 35.5 44 30 44 24c0-1.3-.1-2.6-.4-3.9z"/>
+        <path fill="rgba(255,255,255,0.9)" d="M43.6 20.1H42V20H24v8h11.3C33.6 33.1 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 2.9l5.7-5.7C34.1 6.4 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/>
+        <path fill="rgba(255,255,255,0.7)" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.8 1.1 8 2.9l5.7-5.7C34.1 6.4 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/>
+        <path fill="rgba(255,255,255,0.9)" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35.5 26.8 36.5 24 36.5c-5.3 0-9.7-3.5-11.3-8.4l-6.5 5C9.6 39.7 16.3 44 24 44z"/>
+        <path fill="rgba(255,255,255,0.8)" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C41.9 35.5 44 30 44 24c0-1.3-.1-2.6-.4-3.9z"/>
       </svg>
       Continue with Google
     </button>
@@ -224,7 +275,8 @@ export function loginPage(): string {
     <div class="admin-link">
       <a href="/admin" title="">· · ·</a>
     </div>
-  </div>
+    </div><!-- /.login-form -->
+  </div><!-- /.login-card -->
 
   <script>
     let currentMode = 'signin';
