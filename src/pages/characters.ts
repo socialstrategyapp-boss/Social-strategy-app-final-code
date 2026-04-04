@@ -70,9 +70,18 @@ export function charactersPage(): string {
         <div>
           <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;">Character Avatar</div>
           <div style="font-size:12px;color:#6b7280;margin-bottom:10px;">AI-generated from their description</div>
-          <button onclick="generateAvatarPreview()" id="genAvatarBtn" style="background:rgba(124,58,237,0.2);border:1px solid rgba(124,58,237,0.4);color:#a78bfa;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;">
-            <i class="fas fa-magic" style="margin-right:6px;"></i>Generate Avatar
-          </button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button onclick="generateAvatarPreview()" id="genAvatarBtn" style="background:rgba(124,58,237,0.2);border:1px solid rgba(124,58,237,0.4);color:#a78bfa;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;">
+              <i class="fas fa-magic" style="margin-right:6px;"></i>Generate Avatar
+            </button>
+            <button onclick="generateAvatarPreview()" id="regenAvatarBtn" style="display:none;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.3);color:#00E5FF;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;">
+              <i class="fas fa-redo" style="margin-right:6px;"></i>Regenerate
+            </button>
+            <label style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#d1d5db;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+              <i class="fas fa-upload"></i>Upload Custom
+              <input type="file" accept="image/*" style="display:none;" onchange="uploadCustomAvatar(this)">
+            </label>
+          </div>
         </div>
       </div>
 
@@ -100,7 +109,16 @@ export function charactersPage(): string {
 
       <div style="margin-bottom:16px;">
         <label style="display:block;font-size:12px;font-weight:600;color:#9ca3af;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.8px;">Physical Appearance <span style="color:#6b7280;font-weight:400;text-transform:none;">(for avatar & video)</span></label>
-        <input id="charAppearance" type="text" placeholder="e.g. Young woman, 28, athletic build, natural hair, always smiling" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 14px;border-radius:10px;font-size:14px;outline:none;">
+        <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:8px;">
+          <select id="charGender" style="background:rgba(10,15,30,0.9);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:9px 12px;border-radius:10px;font-size:13px;outline:none;">
+            <option value="">Select gender (optional)</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Non-binary">Non-binary</option>
+            <option value="Neutral / Robot">Neutral / Robot</option>
+          </select>
+        </div>
+        <input id="charAppearance" type="text" placeholder="e.g. Athletic build, natural hair, always smiling, 28 years old, stylish streetwear" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 14px;border-radius:10px;font-size:14px;outline:none;">
       </div>
 
       <div style="margin-bottom:16px;">
@@ -457,19 +475,22 @@ async function saveCharacter() {
 
 // ── Generate Avatar Preview ────────────────────────────────────────────────
 async function generateAvatarPreview() {
-  const name = document.getElementById('charName').value.trim();
-  const appearance = document.getElementById('charAppearance').value.trim();
-  const role = document.getElementById('charRole').value.trim();
-  const personality = document.getElementById('charPersonality').value.trim();
+  const name = (document.getElementById('charName') as HTMLInputElement).value.trim();
+  const appearance = (document.getElementById('charAppearance') as HTMLInputElement).value.trim();
+  const role = (document.getElementById('charRole') as HTMLInputElement).value.trim();
+  const personality = (document.getElementById('charPersonality') as HTMLInputElement).value.trim();
+  const gender = (document.getElementById('charGender') as HTMLSelectElement).value;
 
-  const btn = document.getElementById('genAvatarBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Generating...';
+  const genBtn = document.getElementById('genAvatarBtn') as HTMLButtonElement;
+  const regenBtn = document.getElementById('regenAvatarBtn') as HTMLButtonElement;
+  const activeBtn = regenBtn && regenBtn.style.display !== 'none' ? regenBtn : genBtn;
+  activeBtn.disabled = true;
+  activeBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Generating...';
 
-  const prompt = \`Professional brand ambassador portrait for a \${role || 'brand ambassador'}.
-\${appearance ? \`Appearance: \${appearance}.\` : \`Young professional, friendly smile, modern style.\`}
-\${personality ? \`Personality vibe: \${personality}.\` : ''}
-Style: polished, modern, digital illustration, vibrant gradient background, premium social media brand aesthetic. Clean headshot, confident. No text.\`;
+  const genderDesc = gender ? (gender + ' person, ') : '';
+  const appearanceStr = appearance ? ('Appearance: ' + appearance + '.') : 'Friendly smile, modern professional style.';
+  const personalityStr = personality ? ('Personality vibe: ' + personality + '.') : '';
+  const prompt = \`Professional brand ambassador portrait. \${genderDesc}\${role || 'brand ambassador'}. \${appearanceStr} \${personalityStr} Style: polished, modern, digital illustration, vibrant gradient background, premium social media brand aesthetic. Clean headshot, confident, no text.\`;
 
   try {
     const res = await fetch('/api/generate-image', {
@@ -477,19 +498,41 @@ Style: polished, modern, digital illustration, vibrant gradient background, prem
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ prompt, style: 'vivid', size: '1024x1024', saveToLibrary: false })
     });
-    const data = await res.json();
+    const data = await res.json() as { success: boolean; url?: string; error?: string };
     if (data.success && data.url) {
       document.getElementById('avatarPreview').innerHTML = \`<img src="\${data.url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" data-url="\${data.url}">\`;
-      // Store URL so it saves with character
       document.getElementById('avatarPreview').setAttribute('data-url', data.url);
+      // Show regenerate button, hide generate button
+      genBtn.style.display = 'none';
+      if (regenBtn) regenBtn.style.display = 'inline-flex';
     } else {
       alert('Avatar generation failed: ' + (data.error || 'Unknown error'));
     }
   } catch(e) {
     alert('Avatar generation failed.');
   }
-  btn.disabled = false;
-  btn.innerHTML = '<i class="fas fa-magic" style="margin-right:6px;"></i>Generate Avatar';
+  activeBtn.disabled = false;
+  if (activeBtn === regenBtn) {
+    activeBtn.innerHTML = '<i class="fas fa-redo" style="margin-right:6px;"></i>Regenerate';
+  } else {
+    activeBtn.innerHTML = '<i class="fas fa-magic" style="margin-right:6px;"></i>Generate Avatar';
+  }
+}
+
+function uploadCustomAvatar(input: HTMLInputElement) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const url = e.target?.result as string;
+    document.getElementById('avatarPreview').innerHTML = \`<img src="\${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">\`;
+    document.getElementById('avatarPreview').setAttribute('data-url', url);
+    const genBtn = document.getElementById('genAvatarBtn') as HTMLButtonElement;
+    const regenBtn = document.getElementById('regenAvatarBtn') as HTMLButtonElement;
+    if (genBtn) genBtn.style.display = 'none';
+    if (regenBtn) { regenBtn.style.display = 'inline-flex'; }
+  };
+  reader.readAsDataURL(file);
 }
 
 // Override saveCharacter to capture avatar URL

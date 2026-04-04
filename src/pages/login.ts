@@ -12,23 +12,9 @@ export function loginPage(): string {
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     *, *::before, *::after { font-family: 'Inter', sans-serif; box-sizing: border-box; }
-    body {
-      margin: 0; padding: 0;
-      min-height: 100vh;
-      background: #030818;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Bokeh background orbs */
-    .bokeh-wrap {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    }
-    .bokeh {
-      position: absolute; border-radius: 50%;
-      filter: blur(80px); opacity: 0.18;
-    }
+    body { margin: 0; padding: 0; min-height: 100vh; background: #030818; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+    .bokeh-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .bokeh { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.18; }
     .b1 { width: 500px; height: 500px; background: #00E5FF; top: -120px; left: -100px; animation: drift1 14s ease-in-out infinite; }
     .b2 { width: 400px; height: 400px; background: #7C3AED; bottom: -80px; right: -80px; animation: drift2 18s ease-in-out infinite; }
     .b3 { width: 300px; height: 300px; background: #FF2D78; top: 40%; left: 60%; animation: drift3 12s ease-in-out infinite; }
@@ -37,7 +23,6 @@ export function loginPage(): string {
     @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,40px)} }
     @keyframes drift3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,-30px)} }
 
-    /* Card */
     .login-card {
       position: relative; z-index: 1;
       width: 100%; max-width: 440px;
@@ -49,79 +34,68 @@ export function loginPage(): string {
       box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset;
       backdrop-filter: blur(20px);
     }
-
-    /* Premium pill */
     .premium-pill {
       display: inline-flex; align-items: center; gap: 8px;
       background: linear-gradient(135deg,rgba(0,229,255,0.12),rgba(124,58,237,0.12));
       border: 1px solid rgba(0,229,255,0.25);
       border-radius: 999px; padding: 6px 14px;
       font-size: 12px; font-weight: 700; color: #00E5FF;
-      margin-bottom: 22px;
-      letter-spacing: 0.5px;
+      margin-bottom: 22px; letter-spacing: 0.5px;
     }
     .premium-pill .dot { width: 7px; height: 7px; background: #00E5FF; border-radius: 50%; animation: blink 2s infinite; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-    /* Logo row */
-    .logo-row {
-      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
-    }
+    .logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
     .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
     .brand-top { font-size: 16px; font-weight: 900; color: #fff; letter-spacing: 1px; }
-    .brand-bot { font-size: 16px; font-weight: 900; letter-spacing: 1px;
-      background: linear-gradient(135deg,#00E5FF,#FF2D78);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .brand-bot { font-size: 16px; font-weight: 900; letter-spacing: 1px; background: linear-gradient(135deg,#00E5FF,#FF2D78); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-    h1.card-title {
-      font-size: 26px; font-weight: 900; color: #fff; margin: 0 0 6px;
-    }
-    .card-sub { font-size: 14px; color: #9ca3af; margin: 0 0 28px; }
+    /* MODE TOGGLE */
+    .mode-toggle { display: flex; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 4px; margin-bottom: 24px; }
+    .mode-btn { flex: 1; padding: 9px; border: none; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; background: transparent; color: #6b7280; }
+    .mode-btn.active { background: linear-gradient(135deg,#00E5FF,#0070F3); color: #001a22; box-shadow: 0 3px 12px rgba(0,229,255,0.3); }
 
-    /* Input */
     .input-group { margin-bottom: 16px; }
     .input-group label { display: block; font-size: 12px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 7px; }
     .input-wrap {
       display: flex; align-items: center; gap: 10px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px; padding: 12px 14px;
-      transition: border-color 0.2s;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 12px 14px; transition: border-color 0.2s;
     }
     .input-wrap:focus-within { border-color: #00E5FF; box-shadow: 0 0 0 3px rgba(0,229,255,0.08); }
     .input-wrap i { color: #6b7280; font-size: 14px; flex-shrink: 0; }
-    .input-wrap input {
-      flex: 1; background: transparent; border: none; outline: none;
-      color: #fff; font-size: 14px;
-    }
+    .input-wrap input { flex: 1; background: transparent; border: none; outline: none; color: #fff; font-size: 14px; }
     .input-wrap input::placeholder { color: #4b5563; }
+
+    /* PASSWORD STRENGTH */
+    .strength-bar { height: 3px; border-radius: 999px; margin-top: 6px; background: rgba(255,255,255,0.07); overflow: hidden; }
+    .strength-fill { height: 100%; border-radius: 999px; width: 0%; transition: width 0.3s, background 0.3s; }
+    .strength-label { font-size: 11px; font-weight: 600; margin-top: 4px; display: none; }
 
     .forgot { text-align: right; margin-top: -10px; margin-bottom: 20px; }
     .forgot a { font-size: 12px; color: #00E5FF; text-decoration: none; font-weight: 600; }
-    .forgot a:hover { text-decoration: underline; }
 
-    /* Buttons */
+    /* REMEMBER ME */
+    .remember-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+    .remember-row input[type="checkbox"] { width: 15px; height: 15px; accent-color: #00E5FF; cursor: pointer; }
+    .remember-row label { font-size: 13px; color: #9ca3af; cursor: pointer; }
+
     .btn-start {
       width: 100%; padding: 14px;
       background: linear-gradient(135deg,#00E5FF,#0070F3);
       color: #001a22; font-size: 15px; font-weight: 900;
       border: none; border-radius: 14px; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin-bottom: 12px;
-      transition: all 0.2s;
+      margin-bottom: 12px; transition: all 0.2s;
       box-shadow: 0 6px 24px rgba(0,229,255,0.3);
     }
     .btn-start:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,229,255,0.45); }
 
     .btn-google {
       width: 100%; padding: 13px;
-      background: transparent;
-      color: #e5e7eb; font-size: 14px; font-weight: 700;
-      border: 1.5px solid rgba(255,45,120,0.4);
-      border-radius: 14px; cursor: pointer;
+      background: transparent; color: #e5e7eb; font-size: 14px; font-weight: 700;
+      border: 1.5px solid rgba(255,45,120,0.4); border-radius: 14px; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      transition: all 0.2s;
-      margin-bottom: 20px;
+      transition: all 0.2s; margin-bottom: 20px;
     }
     .btn-google:hover { border-color: rgba(255,45,120,0.8); background: rgba(255,45,120,0.06); color: #fff; }
     .google-icon { width: 20px; height: 20px; }
@@ -130,26 +104,30 @@ export function loginPage(): string {
     .divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
     .divider span { font-size: 12px; color: #4b5563; font-weight: 600; }
 
-    .signup-link { text-align: center; font-size: 13px; color: #9ca3af; margin-top: 6px; }
-    .signup-link a { color: #00E5FF; font-weight: 700; text-decoration: none; }
-    .signup-link a:hover { text-decoration: underline; }
+    .switch-link { text-align: center; font-size: 13px; color: #9ca3af; margin-top: 6px; }
+    .switch-link a { color: #00E5FF; font-weight: 700; text-decoration: none; cursor: pointer; }
+    .switch-link a:hover { text-decoration: underline; }
 
-    /* Error / loading */
+    /* Admin link – subtle, bottom right */
+    .admin-link { text-align: right; margin-top: 10px; }
+    .admin-link a { font-size: 10px; color: rgba(255,255,255,0.15); text-decoration: none; cursor: pointer; letter-spacing: 0.5px; transition: color 0.3s; }
+    .admin-link a:hover { color: rgba(167,139,250,0.5); }
+
     .error-msg { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: #f87171; font-size: 13px; padding: 10px 14px; border-radius: 10px; margin-bottom: 14px; display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .spinner { width: 16px; height: 16px; border: 2px solid rgba(0,26,34,0.3); border-top-color: #001a22; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+
+    /* Name field (only in create account mode) */
+    #nameGroup { display: none; }
+    #passwordStrength { display: none; }
+    #forgotLink { display: block; }
   </style>
 </head>
 <body>
-  <!-- Bokeh -->
   <div class="bokeh-wrap">
-    <div class="bokeh b1"></div>
-    <div class="bokeh b2"></div>
-    <div class="bokeh b3"></div>
-    <div class="bokeh b4"></div>
+    <div class="bokeh b1"></div><div class="bokeh b2"></div><div class="bokeh b3"></div><div class="bokeh b4"></div>
   </div>
 
-  <!-- Login Card -->
   <div class="login-card">
     <div class="premium-pill">
       <div class="dot"></div>
@@ -164,10 +142,25 @@ export function loginPage(): string {
       </div>
     </div>
 
-    <h1 class="card-title">Unlock Full Power</h1>
-    <p class="card-sub">Sign in to your AI growth command center</p>
+    <!-- Mode Toggle -->
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="signinBtn" onclick="setMode('signin')">Sign In</button>
+      <button class="mode-btn" id="signupBtn" onclick="setMode('signup')">Create Account</button>
+    </div>
+
+    <h1 id="cardTitle" style="font-size:26px;font-weight:900;color:#fff;margin:0 0 6px;">Welcome Back</h1>
+    <p id="cardSub" style="font-size:14px;color:#9ca3af;margin:0 0 24px;">Sign in to your AI growth command center</p>
 
     <div id="errorMsg" class="error-msg"></div>
+
+    <!-- Name (signup only) -->
+    <div class="input-group" id="nameGroup">
+      <label>Full Name</label>
+      <div class="input-wrap">
+        <i class="fas fa-user"></i>
+        <input id="nameInput" type="text" placeholder="Your full name" autocomplete="name">
+      </div>
+    </div>
 
     <div class="input-group">
       <label>Email Address</label>
@@ -181,17 +174,28 @@ export function loginPage(): string {
       <label>Password</label>
       <div class="input-wrap">
         <i class="fas fa-lock"></i>
-        <input id="passInput" type="password" placeholder="••••••••" autocomplete="current-password">
+        <input id="passInput" type="password" placeholder="••••••••" autocomplete="current-password" oninput="checkPasswordStrength(this.value)">
         <i class="fas fa-eye" id="eyeToggle" onclick="togglePass()" style="cursor:pointer;color:#6b7280;transition:color 0.2s;" title="Show/hide password"></i>
+      </div>
+      <!-- Password strength bar (signup mode) -->
+      <div id="passwordStrength">
+        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+        <div class="strength-label" id="strengthLabel"></div>
       </div>
     </div>
 
-    <div class="forgot">
+    <div class="forgot" id="forgotLink">
       <a href="#">Forgot password?</a>
     </div>
 
-    <button class="btn-start" id="signInBtn" onclick="handleSignIn()">
-      <span id="btnText">Start Free</span>
+    <!-- Remember Me -->
+    <div class="remember-row" id="rememberRow">
+      <input type="checkbox" id="rememberMe">
+      <label for="rememberMe">Remember me for 30 days</label>
+    </div>
+
+    <button class="btn-start" id="mainBtn" onclick="handleAuth()">
+      <span id="btnText">Sign In</span>
       <div class="spinner" id="btnSpinner"></div>
       <i class="fas fa-arrow-right" id="btnArrow"></i>
     </button>
@@ -212,67 +216,117 @@ export function loginPage(): string {
       Continue with Google
     </button>
 
-    <p class="signup-link">Don't have an account? <a href="/login">Start for free →</a></p>
+    <p class="switch-link" id="switchText">
+      Don't have an account? <a onclick="setMode('signup')">Create one free →</a>
+    </p>
+
+    <!-- Hidden admin access link -->
+    <div class="admin-link">
+      <a href="/admin" title="">· · ·</a>
+    </div>
   </div>
 
   <script>
+    let currentMode = 'signin';
+
+    function setMode(mode) {
+      currentMode = mode;
+      const isSignup = mode === 'signup';
+      document.getElementById('signinBtn').className = 'mode-btn' + (!isSignup ? ' active' : '');
+      document.getElementById('signupBtn').className = 'mode-btn' + (isSignup ? ' active' : '');
+      document.getElementById('nameGroup').style.display = isSignup ? 'block' : 'none';
+      document.getElementById('passwordStrength').style.display = isSignup ? 'block' : 'none';
+      document.getElementById('forgotLink').style.display = isSignup ? 'none' : 'block';
+      document.getElementById('cardTitle').textContent = isSignup ? 'Create Your Account' : 'Welcome Back';
+      document.getElementById('cardSub').textContent = isSignup ? 'Start your 14-day free trial. No credit card required.' : 'Sign in to your AI growth command center';
+      document.getElementById('btnText').textContent = isSignup ? 'Create Account' : 'Sign In';
+      document.getElementById('switchText').innerHTML = isSignup
+        ? 'Already have an account? <a onclick="setMode(\'signin\')">Sign in →</a>'
+        : 'Don\'t have an account? <a onclick="setMode(\'signup\')">Create one free →</a>';
+      document.getElementById('passInput').autocomplete = isSignup ? 'new-password' : 'current-password';
+      document.getElementById('errorMsg').style.display = 'none';
+    }
+
+    function checkPasswordStrength(val) {
+      if (currentMode !== 'signup') return;
+      const fill = document.getElementById('strengthFill');
+      const label = document.getElementById('strengthLabel');
+      label.style.display = 'block';
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      const levels = [
+        { pct: 20, color: '#f87171', label: 'Too short' },
+        { pct: 40, color: '#f87171', label: 'Weak' },
+        { pct: 60, color: '#fbbf24', label: 'Fair' },
+        { pct: 80, color: '#4ade80', label: 'Good' },
+        { pct: 100, color: '#00E5FF', label: 'Strong ✓' },
+      ];
+      const level = val.length === 0 ? null : levels[Math.min(score, 4)];
+      if (level) {
+        fill.style.width = level.pct + '%';
+        fill.style.background = level.color;
+        label.textContent = level.label;
+        label.style.color = level.color;
+      } else {
+        fill.style.width = '0%';
+        label.style.display = 'none';
+      }
+    }
+
     function togglePass() {
       const inp = document.getElementById('passInput');
       const eye = document.getElementById('eyeToggle');
       if (inp.type === 'password') {
-        inp.type = 'text';
-        eye.className = 'fas fa-eye-slash';
-        eye.style.color = '#00E5FF';
+        inp.type = 'text'; eye.className = 'fas fa-eye-slash'; eye.style.color = '#00E5FF';
       } else {
-        inp.type = 'password';
-        eye.className = 'fas fa-eye';
-        eye.style.color = '#6b7280';
+        inp.type = 'password'; eye.className = 'fas fa-eye'; eye.style.color = '#6b7280';
       }
     }
 
     function showError(msg) {
       const el = document.getElementById('errorMsg');
-      el.textContent = msg;
-      el.style.display = 'block';
+      el.textContent = msg; el.style.display = 'block';
     }
 
-    function handleSignIn() {
+    function handleAuth() {
       const email = document.getElementById('emailInput').value.trim();
       const pass = document.getElementById('passInput').value;
       document.getElementById('errorMsg').style.display = 'none';
-
       if (!email) { showError('Please enter your email address.'); return; }
       if (!email.includes('@')) { showError('Please enter a valid email address.'); return; }
       if (!pass) { showError('Please enter your password.'); return; }
+      if (currentMode === 'signup' && pass.length < 8) { showError('Password must be at least 8 characters.'); return; }
 
-      // Show loading state
-      const btn = document.getElementById('signInBtn');
-      document.getElementById('btnText').textContent = 'Signing in...';
+      const btn = document.getElementById('mainBtn');
+      document.getElementById('btnText').textContent = currentMode === 'signup' ? 'Creating account...' : 'Signing in...';
       document.getElementById('btnArrow').style.display = 'none';
       document.getElementById('btnSpinner').style.display = 'block';
       btn.disabled = true;
 
-      // Simulate auth → redirect to dashboard
-      setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 1200);
+      if (document.getElementById('rememberMe').checked) {
+        localStorage.setItem('ssRememberEmail', email);
+      }
+      setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
     }
 
     function handleGoogle() {
-      // Show loading
       const btn = document.querySelector('.btn-google');
       btn.textContent = '⏳ Redirecting to Google...';
       btn.disabled = true;
-      // Simulate Google OAuth redirect → dashboard
-      setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 1000);
+      setTimeout(() => { window.location.href = '/dashboard'; }, 1000);
     }
 
-    // Allow Enter key to submit
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') handleSignIn();
-    });
+    // Pre-fill remembered email
+    const remembered = localStorage.getItem('ssRememberEmail');
+    if (remembered) {
+      document.getElementById('emailInput').value = remembered;
+      document.getElementById('rememberMe').checked = true;
+    }
+
+    document.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleAuth(); });
   </script>
 </body>
 </html>`

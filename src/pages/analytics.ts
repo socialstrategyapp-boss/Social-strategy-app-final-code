@@ -30,12 +30,17 @@ export function analyticsPage(): string {
       <p style="color:#9ca3af;font-size:13px;margin:2px 0 0;">Track your growth and optimize your strategy</p>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
+      <!-- Demo Data Badge -->
+      <span style="background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.5px;">📊 Demo Data</span>
       <div style="display:flex;gap:4px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:4px;">
         ${['7D', '30D', '90D', '1Y'].map((p, i) => `
         <button onclick="setPeriod(this,'${p}')" class="period-btn" style="padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;${i === 1 ? 'background:rgba(0,229,255,0.15);color:#00E5FF;' : 'background:transparent;color:#9ca3af;'}">${p}</button>`).join('')}
       </div>
       <button onclick="exportAnalytics()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 14px;color:#d1d5db;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
         <i class="fas fa-download" style="color:#00E5FF;"></i> Export
+      </button>
+      <button onclick="shareReport()" style="background:rgba(255,45,120,0.1);border:1px solid rgba(255,45,120,0.3);border-radius:10px;padding:8px 14px;color:#FF2D78;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+        <i class="fas fa-share-nodes"></i> Share
       </button>
     </div>
   </div>
@@ -103,8 +108,8 @@ export function analyticsPage(): string {
     <div class="glass-dark" style="border-radius:18px;overflow:hidden;margin-bottom:28px;">
       <div style="padding:16px 22px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
         <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0;">Platform Performance</h3>
-        <button style="color:#00E5FF;font-size:13px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;">
-          <i class="fas fa-table"></i> Detailed Report
+        <button onclick="generateDetailedReport()" style="color:#00E5FF;font-size:13px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;" id="detailedReportBtn">
+          <i class="fas fa-file-chart-column"></i> Detailed Report
         </button>
       </div>
       <div style="overflow-x:auto;">
@@ -225,6 +230,7 @@ export function analyticsPage(): string {
       options:{ responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{legend:{display:false}} }
     });
     function setPeriod(btn, period) {
+      window._activePeriod = period;
       document.querySelectorAll('.period-btn').forEach(b => { b.style.background='transparent'; b.style.color='#9ca3af'; });
       btn.style.background='rgba(0,229,255,0.15)'; btn.style.color='#00E5FF';
       // Update growth chart data per period
@@ -233,19 +239,19 @@ export function analyticsPage(): string {
         '7D': [74200,74350,74500,74600,74700,74800,74900],
         '30D': [71000,72000,73200,74400],
         '90D': [65000,70000,74400],
-        '1Y': [38000,41000,44500,48000,52000,57000,61000,65000,70000,74400,0,0].slice(0,12)
+        '1Y': [38000,41000,44500,48000,52000,57000,61000,65000,70000,74400,76000,78000]
       };
       const rData = {
         '7D': [12000,13200,11800,14500,15000,16200,14800],
         '30D': [52000,65000,78000,89420],
         '90D': [60000,75000,89420],
-        '1Y': [52000,58000,63000,70000,75000,82000,78000,85000,88000,89420,0,0].slice(0,12)
+        '1Y': [52000,58000,63000,70000,75000,82000,78000,85000,88000,89420,91000,93000]
       };
       const eData = {
         '7D': [1800,2200,1900,2600,2400,3100,2800],
         '30D': [7200,9800,12400,15847],
         '90D': [8000,11000,15847],
-        '1Y': [3200,3800,4500,5200,6100,7200,8100,9400,11200,15847,0,0].slice(0,12)
+        '1Y': [3200,3800,4500,5200,6100,7200,8100,9400,11200,15847,17200,18600]
       };
       const gChart = window._growthChart;
       if (gChart) {
@@ -255,6 +261,41 @@ export function analyticsPage(): string {
         gChart.data.datasets[2].data = eData[period];
         gChart.update();
       }
+    }
+
+    function shareReport() {
+      const url = window.location.href;
+      if (navigator.share) {
+        navigator.share({ title: 'Social Strategy Analytics Report', url });
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          alert('Report link copied to clipboard!');
+        });
+      }
+    }
+
+    async function generateDetailedReport() {
+      const btn = document.getElementById('detailedReportBtn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+      btn.disabled = true;
+      try {
+        const resp = await fetch('/api/generate-report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ period: window._activePeriod || '30D', brandName: 'Your Brand' })
+        });
+        if (resp.ok) {
+          const html = await resp.text();
+          const win = window.open('', '_blank');
+          if (win) { win.document.write(html); win.document.close(); }
+        } else {
+          alert('Report generation failed. Please check your API key.');
+        }
+      } catch(e) {
+        alert('Error generating report: ' + e.message);
+      }
+      btn.innerHTML = '<i class="fas fa-file-chart-column"></i> Detailed Report';
+      btn.disabled = false;
     }
 
     function exportAnalytics() {

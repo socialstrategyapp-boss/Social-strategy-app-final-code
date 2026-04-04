@@ -81,10 +81,11 @@ export function layout(title: string, content: string, activePage: string = ''):
     { href: '/characters', label: 'AI Characters', icon: 'fas fa-robot', key: 'characters' },
     { href: '/scheduler', label: 'Scheduler', icon: 'fas fa-calendar-alt', key: 'scheduler' },
     { href: '/analytics', label: 'Analytics', icon: 'fas fa-chart-bar', key: 'analytics' },
+    { href: '/uploads', label: 'Media Library', icon: 'fas fa-photo-film', key: 'uploads' },
   ]
   const acct = [
     { href: '/pricing', label: 'Pricing & Plans', icon: 'fas fa-gem', key: 'pricing' },
-    { href: '/settings', label: 'Settings', icon: 'fas fa-cog', key: 'settings' },
+    { href: '/settings', label: 'Account Settings', icon: 'fas fa-cog', key: 'settings' },
   ]
   const navItem = (href: string, label: string, icon: string, key: string) => {
     const active = activePage === key
@@ -349,11 +350,21 @@ export function layout(title: string, content: string, activePage: string = ''):
       ${acct.map(n => navItem(n.href, n.label, n.icon, n.key)).join('')}
     </nav>
 
+    <!-- Live credit counter -->
+    <div style="margin:0 10px 6px;padding:8px 12px;border-radius:10px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.1);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+        <span style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">AI Credits</span>
+        <span style="font-size:11px;font-weight:800;color:#00E5FF;" id="creditDisplay">847/1000</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border-radius:999px;height:4px;overflow:hidden;">
+        <div id="creditBar" style="background:linear-gradient(135deg,#00E5FF,#0070F3);height:4px;border-radius:999px;width:84.7%;transition:width 0.5s ease;"></div>
+      </div>
+    </div>
     <div class="user-card">
       <div class="user-avatar">SS</div>
       <div style="flex:1;min-width:0;">
         <div style="font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Social Strategy</div>
-        <div style="font-size:11px;color:#00E5FF;font-weight:600;">PRO Plan · ⚡ Credits</div>
+        <div style="font-size:11px;color:#00E5FF;font-weight:600;">PRO Plan · ⚡ Active</div>
       </div>
     </div>
   </div>

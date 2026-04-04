@@ -162,7 +162,7 @@ export function settingsPage(): string {
     </div>
 
     <!-- Save confirmation toast -->
-    <div id="saveToast" style="display:none;position:fixed;bottom:90px;right:24px;z-index:100;background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);border-radius:14px;padding:14px 20px;display:none;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+    <div id="saveToast" style="display:none;position:fixed;bottom:90px;right:24px;z-index:100;background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);border-radius:14px;padding:14px 20px;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
       <i class="fas fa-check-circle" style="color:#4ade80;font-size:18px;"></i>
       <span style="font-size:14px;font-weight:700;color:#fff;">Settings saved successfully!</span>
     </div>
