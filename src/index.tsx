@@ -12,6 +12,7 @@ import { loginPage } from './pages/login'
 import { settingsPage } from './pages/settings'
 import { charactersPage } from './pages/characters'
 import { adminPage } from './pages/admin'
+import { profilePage } from './pages/profile'
 
 type Env = {
   OPENAI_API_KEY: string
@@ -35,6 +36,7 @@ app.get('/pricing', (c) => c.html(pricingPage()))
 app.get('/settings', (c) => c.html(settingsPage()))
 app.get('/characters', (c) => c.html(charactersPage()))
 app.get('/admin', (c) => c.html(adminPage()))
+app.get('/profile', (c) => c.html(profilePage()))
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ─── AI GENERATION ENDPOINTS ────────────────────────────────────────────────
