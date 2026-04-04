@@ -78,6 +78,7 @@ export function layout(title: string, content: string, activePage: string = ''):
     { href: '/dashboard', label: 'Dashboard', icon: 'fas fa-chart-line', key: 'dashboard' },
     { href: '/analysis', label: 'Website Analysis', icon: 'fas fa-search', key: 'analysis' },
     { href: '/content-studio', label: 'AI Content Studio', icon: 'fas fa-wand-magic-sparkles', key: 'content-studio' },
+    { href: '/characters', label: 'AI Characters', icon: 'fas fa-robot', key: 'characters' },
     { href: '/scheduler', label: 'Scheduler', icon: 'fas fa-calendar-alt', key: 'scheduler' },
     { href: '/analytics', label: 'Analytics', icon: 'fas fa-chart-bar', key: 'analytics' },
   ]
@@ -381,6 +382,10 @@ export function layout(title: string, content: string, activePage: string = ''):
     <a href="/analytics" class="tb-item ${tb('analytics')}">
       <i class="fas fa-chart-bar"></i>
       <span>Analytics</span>
+    </a>
+    <a href="/characters" class="tb-item ${tb('characters')}">
+      <i class="fas fa-robot"></i>
+      <span>AI Team</span>
     </a>
     <a href="/settings" class="tb-item ${tb('settings')}">
       <i class="fas fa-user-circle"></i>
