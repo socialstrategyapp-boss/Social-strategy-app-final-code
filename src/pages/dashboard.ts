@@ -54,7 +54,7 @@ export function dashboardPage(): string {
   <div style="padding:28px;">
 
     <!-- KPI Cards -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;" class="grid-4">
       ${kpis.map(k => `
       <div class="gradient-card card-hover" style="border-radius:18px;padding:20px;">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;">
@@ -71,7 +71,7 @@ export function dashboardPage(): string {
     </div>
 
     <!-- Charts Row -->
-    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:28px;">
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:28px;" class="grid-2-1">
       <!-- Engagement Chart -->
       <div class="glass-dark" style="border-radius:18px;padding:22px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
@@ -80,9 +80,9 @@ export function dashboardPage(): string {
             <p style="font-size:13px;color:#9ca3af;margin:4px 0 0;">Across all connected platforms</p>
           </div>
           <div style="display:flex;gap:6px;">
-            <button style="background:rgba(0,229,255,0.15);color:#00E5FF;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid rgba(0,229,255,0.3);cursor:pointer;">7D</button>
-            <button style="color:#9ca3af;font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid transparent;cursor:pointer;background:none;">30D</button>
-            <button style="color:#9ca3af;font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid transparent;cursor:pointer;background:none;">90D</button>
+            <button onclick="setDashPeriod(this,'7D')" class="dash-period-btn" style="background:rgba(0,229,255,0.15);color:#00E5FF;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid rgba(0,229,255,0.3);cursor:pointer;">7D</button>
+            <button onclick="setDashPeriod(this,'30D')" class="dash-period-btn" style="color:#9ca3af;font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid transparent;cursor:pointer;background:none;">30D</button>
+            <button onclick="setDashPeriod(this,'90D')" class="dash-period-btn" style="color:#9ca3af;font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid transparent;cursor:pointer;background:none;">90D</button>
           </div>
         </div>
         <canvas id="engagementChart" height="200"></canvas>
@@ -113,7 +113,7 @@ export function dashboardPage(): string {
     <div class="glass-dark" style="border-radius:18px;padding:22px;margin-bottom:28px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
         <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0;">Connected Accounts</h3>
-        <button style="color:#00E5FF;font-size:13px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;">
+        <button onclick="window.location.href='/settings'" style="color:#00E5FF;font-size:13px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;">
           <i class="fas fa-plus-circle"></i> Connect More
         </button>
       </div>
@@ -189,8 +189,33 @@ export function dashboardPage(): string {
   </div>
 
   <script>
+    function setDashPeriod(btn, period) {
+      document.querySelectorAll('.dash-period-btn').forEach(b => {
+        b.style.background = 'none';
+        b.style.color = '#9ca3af';
+        b.style.border = '1px solid transparent';
+      });
+      btn.style.background = 'rgba(0,229,255,0.15)';
+      btn.style.color = '#00E5FF';
+      btn.style.border = '1px solid rgba(0,229,255,0.3)';
+      // Update chart label (mock - in production would refetch data)
+      const periodMap = { '7D': ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], '30D': ['W1','W2','W3','W4'], '90D': ['Jan','Feb','Mar'] };
+      const dataMap = {
+        '7D': { likes: [1200,1800,1500,2200,1900,2800,2400], comments: [340,520,410,680,590,820,710] },
+        '30D': { likes: [8200,11400,13800,15200], comments: [2100,3200,3800,4100] },
+        '90D': { likes: [28000,42000,58000], comments: [7400,11200,16200] }
+      };
+      const chart = window._engChart;
+      if (chart) {
+        chart.data.labels = periodMap[period];
+        chart.data.datasets[0].data = dataMap[period].likes;
+        chart.data.datasets[1].data = dataMap[period].comments;
+        chart.update();
+      }
+    }
+
     const engCtx = document.getElementById('engagementChart').getContext('2d');
-    new Chart(engCtx, {
+    window._engChart = new Chart(engCtx, {
       type: 'line',
       data: {
         labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],

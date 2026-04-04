@@ -1,15 +1,23 @@
+import { layout, ssLogo } from './layout'
+
 export function landingPage(): string {
+  // Reuse the exact same SS logo SVG for navbar + footer
+  const navLogo = ssLogo(40)
+  const footerLogo = ssLogo(34)
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SOCIAL STRATEGY – One Scan. Complete Growth.</title>
+  <link rel="icon" href="data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231a8090'/><circle cx='46' cy='44' r='32' fill='%23050d18'/><text y='58' x='46' font-size='36' font-weight='900' fill='white' font-family='Arial Black' text-anchor='middle'>SS</text><ellipse cx='68' cy='68' rx='16' ry='12' fill='%23ff2d78'/><polygon points='56,72 64,84 72,74' fill='%23ff2d78'/></svg>`)}">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-    *{font-family:'Inter',sans-serif;}
+    *{font-family:'Inter',sans-serif;box-sizing:border-box;}
+    body{margin:0;padding:0;}
     .gradient-primary{background:linear-gradient(135deg,#00E5FF 0%,#0070F3 50%,#7C3AED 100%);}
     .gradient-text{background:linear-gradient(135deg,#00E5FF,#0070F3,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .hero-bg{background:radial-gradient(ellipse at 20% 50%, rgba(0,229,255,0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(124,58,237,0.15) 0%, transparent 50%), radial-gradient(ellipse at 60% 80%, rgba(0,112,243,0.1) 0%, transparent 40%), #030712;}
@@ -22,34 +30,28 @@ export function landingPage(): string {
     .btn-glow:hover{box-shadow:0 0 30px rgba(0,229,255,0.5);}
     .platform-icon{transition:all 0.3s;}
     .platform-icon:hover{transform:scale(1.15);}
-    .step-line{position:absolute;top:50%;left:100%;width:100%;height:2px;background:linear-gradient(90deg,#00E5FF,#0070F3);transform:translateY(-50%);}
     .particle{position:absolute;border-radius:50%;animation:sparkle 3s infinite;}
     @keyframes sparkle{0%,100%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}}
-    nav a{transition:color 0.2s;}
-    nav a:hover{color:#00E5FF;}
+    nav a{transition:color 0.2s;}nav a:hover{color:#00E5FF;}
     .fade-in{animation:fadeIn 0.8s ease-out forwards;opacity:0;}
     @keyframes fadeIn{to{opacity:1}}
     .slide-up{animation:slideUp 0.8s ease-out forwards;opacity:0;transform:translateY(30px);}
     @keyframes slideUp{to{opacity:1;transform:translateY(0)}}
     ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#030712;}::-webkit-scrollbar-thumb{background:#0070F3;border-radius:3px;}
+    .pulse-dot{animation:pulse 2s infinite;}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .card-hover{transition:all .3s;}.card-hover:hover{transform:translateY(-4px);}
   </style>
 </head>
 <body class="bg-gray-950 text-white">
 
   <!-- Navbar -->
   <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
       <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
-        <!-- SS Logo -->
-        <div style="position:relative;width:40px;height:40px;flex-shrink:0;">
-          <div style="width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#1a3a5c 0%,#0a1a35 60%,#04091a 100%);border:2px solid rgba(0,229,255,0.6);box-shadow:0 0 16px rgba(0,229,255,0.4);display:flex;align-items:center;justify-content:center;">
-            <span style="font-size:15px;font-weight:900;color:#fff;letter-spacing:-1px;text-shadow:0 0 8px rgba(0,229,255,0.8);">SS</span>
-          </div>
-          <div style="position:absolute;bottom:-5px;right:-7px;width:16px;height:12px;background:linear-gradient(135deg,#FF2D78,#FF5fa0);border-radius:50% 50% 50% 0;transform:rotate(-15deg);box-shadow:0 0 8px rgba(255,45,120,0.6);"></div>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:3px;">
-          <span style="font-weight:900;color:#fff;font-size:18px;">SOCIAL</span>
-          <span style="font-weight:900;font-size:18px;background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">STRATEGY</span>
+        ${navLogo}
+        <div style="display:flex;flex-direction:column;line-height:1.2;">
+          <span style="font-weight:900;color:#fff;font-size:15px;letter-spacing:1px;">SOCIAL</span>
+          <span style="font-weight:900;font-size:15px;letter-spacing:1px;background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">STRATEGY</span>
         </div>
       </a>
       <div class="hidden md:flex items-center gap-8">
@@ -59,8 +61,8 @@ export function landingPage(): string {
         <a href="/pricing" class="text-gray-400 text-sm">Pricing</a>
       </div>
       <div class="flex items-center gap-3">
-        <a href="/dashboard" class="text-sm text-gray-400 hover:text-white px-4 py-2">Sign In</a>
-        <a href="/dashboard" class="btn-glow gradient-primary text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all">
+        <a href="/login" class="text-sm text-gray-400 hover:text-white px-4 py-2">Sign In</a>
+        <a href="/login" class="btn-glow gradient-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all" style="color:#fff;">
           Start Free <i class="fas fa-arrow-right ml-1"></i>
         </a>
       </div>
@@ -69,7 +71,6 @@ export function landingPage(): string {
 
   <!-- Hero Section -->
   <section class="hero-bg min-h-screen flex items-center pt-20 overflow-hidden relative">
-    <!-- Particles -->
     <div class="particle w-2 h-2 bg-cyan-400 top-1/4 left-1/4" style="animation-delay:0s"></div>
     <div class="particle w-1 h-1 bg-blue-400 top-1/3 right-1/3" style="animation-delay:1s"></div>
     <div class="particle w-1.5 h-1.5 bg-purple-400 bottom-1/3 left-1/3" style="animation-delay:2s"></div>
@@ -89,19 +90,18 @@ export function landingPage(): string {
           The only all-in-one platform that <strong class="text-white">analyzes</strong>, <strong class="text-white">strategizes</strong>, <strong class="text-white">creates</strong>, and <strong class="text-white">automates</strong> your entire social media marketing.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 mb-12">
-          <a href="/analysis" class="btn-glow gradient-primary text-white font-bold px-8 py-4 rounded-2xl text-lg flex items-center gap-3 justify-center transition-all">
+          <a href="/login" class="btn-glow gradient-primary font-bold px-8 py-4 rounded-2xl text-lg flex items-center gap-3 justify-center transition-all" style="color:#fff;">
             <i class="fas fa-search"></i>
             Scan My Website Free
           </a>
-          <a href="/dashboard" class="glass text-white font-semibold px-8 py-4 rounded-2xl text-lg flex items-center gap-3 justify-center hover:bg-white/10 transition-all">
+          <a href="/login" class="glass text-white font-semibold px-8 py-4 rounded-2xl text-lg flex items-center gap-3 justify-center hover:bg-white/10 transition-all">
             <i class="fas fa-play-circle"></i>
             View Demo
           </a>
         </div>
-        <!-- Social proof -->
         <div class="flex items-center gap-6">
           <div class="flex -space-x-2">
-            <div class="w-9 h-9 rounded-full gradient-primary border-2 border-gray-950 flex items-center justify-center text-xs font-bold">A</div>
+            <div class="w-9 h-9 rounded-full gradient-primary border-2 border-gray-950 flex items-center justify-center text-xs font-bold text-white">A</div>
             <div class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-gray-950 flex items-center justify-center text-xs font-bold">B</div>
             <div class="w-9 h-9 rounded-full bg-gradient-to-br from-green-500 to-teal-500 border-2 border-gray-950 flex items-center justify-center text-xs font-bold">C</div>
             <div class="w-9 h-9 rounded-full bg-gradient-to-br from-orange-500 to-red-500 border-2 border-gray-950 flex items-center justify-center text-xs font-bold">+</div>
@@ -115,7 +115,6 @@ export function landingPage(): string {
 
       <!-- Hero visual -->
       <div class="relative hidden lg:block slide-up">
-        <!-- Main dashboard mockup -->
         <div class="float-anim glass rounded-3xl p-6 card-glow border border-cyan-500/20">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-3 h-3 rounded-full bg-red-500"></div>
@@ -123,7 +122,6 @@ export function landingPage(): string {
             <div class="w-3 h-3 rounded-full bg-green-500"></div>
             <div class="ml-2 text-xs text-gray-500 glass rounded-full px-3 py-1">socialstrategy.app/dashboard</div>
           </div>
-          <!-- Mini stats -->
           <div class="grid grid-cols-3 gap-3 mb-4">
             <div class="bg-gray-800 rounded-xl p-3 text-center">
               <div class="gradient-text font-black text-xl">89K</div>
@@ -138,7 +136,6 @@ export function landingPage(): string {
               <div class="text-gray-500 text-xs">Growth</div>
             </div>
           </div>
-          <!-- Mini chart bars -->
           <div class="bg-gray-800 rounded-xl p-4 mb-4">
             <div class="text-xs text-gray-400 mb-3 font-semibold">Weekly Performance</div>
             <div class="flex items-end gap-2 h-16">
@@ -151,7 +148,6 @@ export function landingPage(): string {
               <div class="flex-1 bg-gradient-to-t from-purple-500 to-pink-600 rounded-t-sm opacity-50" style="height:70%"></div>
             </div>
           </div>
-          <!-- Platforms row -->
           <div class="flex gap-2 flex-wrap">
             <span class="bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1"><i class="fab fa-instagram"></i> IG</span>
             <span class="bg-blue-700 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1"><i class="fab fa-facebook"></i> FB</span>
@@ -161,8 +157,6 @@ export function landingPage(): string {
             <span class="bg-blue-800 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1"><i class="fab fa-linkedin"></i> LI</span>
           </div>
         </div>
-
-        <!-- Floating cards -->
         <div class="float-anim2 absolute -top-6 -right-6 glass rounded-2xl p-4 border border-green-500/30 shadow-lg">
           <div class="flex items-center gap-2">
             <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
@@ -190,22 +184,10 @@ export function landingPage(): string {
   <!-- Stats Bar -->
   <section class="border-y border-gray-800 bg-gray-900">
     <div class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-      <div>
-        <div class="gradient-text font-black text-3xl">12,400+</div>
-        <div class="text-gray-400 text-sm mt-1">Active Businesses</div>
-      </div>
-      <div>
-        <div class="gradient-text font-black text-3xl">245M+</div>
-        <div class="text-gray-400 text-sm mt-1">Posts Published</div>
-      </div>
-      <div>
-        <div class="gradient-text font-black text-3xl">8</div>
-        <div class="text-gray-400 text-sm mt-1">Platforms Supported</div>
-      </div>
-      <div>
-        <div class="gradient-text font-black text-3xl">4.9★</div>
-        <div class="text-gray-400 text-sm mt-1">Average Rating</div>
-      </div>
+      <div><div class="gradient-text font-black text-3xl">12,400+</div><div class="text-gray-400 text-sm mt-1">Active Businesses</div></div>
+      <div><div class="gradient-text font-black text-3xl">245M+</div><div class="text-gray-400 text-sm mt-1">Posts Published</div></div>
+      <div><div class="gradient-text font-black text-3xl">8</div><div class="text-gray-400 text-sm mt-1">Platforms Supported</div></div>
+      <div><div class="gradient-text font-black text-3xl">4.9★</div><div class="text-gray-400 text-sm mt-1">Average Rating</div></div>
     </div>
   </section>
 
@@ -214,19 +196,15 @@ export function landingPage(): string {
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-16">
         <div class="inline-block glass rounded-full px-4 py-2 text-sm text-cyan-400 font-semibold mb-4">🎯 How It Works</div>
-        <h2 class="text-4xl lg:text-5xl font-black mb-4">
-          From <span class="gradient-text">URL</span> to Viral in <span class="gradient-text">Minutes</span>
-        </h2>
+        <h2 class="text-4xl lg:text-5xl font-black mb-4">From <span class="gradient-text">URL</span> to Viral in <span class="gradient-text">Minutes</span></h2>
         <p class="text-gray-400 text-lg max-w-2xl mx-auto">No expertise needed. Our AI handles everything — analysis, strategy, content, scheduling.</p>
       </div>
-
       <div class="grid md:grid-cols-5 gap-6">
         ${['Analyze','Strategize','Create','Automate','Grow'].map((step, i) => {
           const icons = ['fas fa-search','fas fa-lightbulb','fas fa-paint-brush','fas fa-robot','fas fa-rocket']
           const descs = ['Enter your URL. AI scans SEO, branding & usability in 2 min.','Get custom growth strategies, pricing models & revenue plans.','AI generates 4 weeks of custom images, videos & captions.','Connect accounts. AI schedules & auto-posts at optimal times.','Track performance. Scale with data-driven insights.']
           const colors = ['from-cyan-500 to-blue-600','from-blue-500 to-indigo-600','from-indigo-500 to-purple-600','from-purple-500 to-pink-600','from-pink-500 to-rose-600']
-          return `
-          <div class="relative">
+          return `<div class="relative">
             <div class="glass rounded-2xl p-6 h-full hover:border-cyan-500/30 transition-all card-hover border border-gray-700/50">
               <div class="w-12 h-12 rounded-2xl bg-gradient-to-br ${colors[i]} flex items-center justify-center mb-4">
                 <i class="${icons[i]} text-white"></i>
@@ -235,7 +213,7 @@ export function landingPage(): string {
               <h3 class="text-white font-bold text-lg mb-2">${step}</h3>
               <p class="text-gray-400 text-sm leading-relaxed">${descs[i]}</p>
             </div>
-            ${i < 4 ? `<div class="hidden md:block absolute top-1/2 -right-3 z-10 w-6 h-6 rounded-full gradient-primary flex items-center justify-center" style="transform:translateY(-50%)"><i class="fas fa-chevron-right text-white text-xs"></i></div>` : ''}
+            ${i < 4 ? `<div class="hidden md:flex absolute top-1/2 -right-3 z-10 w-6 h-6 rounded-full gradient-primary items-center justify-center" style="transform:translateY(-50%)"><i class="fas fa-chevron-right text-white text-xs"></i></div>` : ''}
           </div>`
         }).join('')}
       </div>
@@ -308,17 +286,15 @@ export function landingPage(): string {
       </div>
       <div class="grid md:grid-cols-3 gap-6">
         ${[
-          {name:'Sarah M.', role:'E-commerce Owner', text:'SOCIAL STRATEGY tripled my engagement in 6 weeks. The AI content is so on-brand, my followers can\'t tell it\'s automated. Worth every penny.', rating:5, avatar:'SM'},
+          {name:'Sarah M.', role:'E-commerce Owner', text:"SOCIAL STRATEGY tripled my engagement in 6 weeks. The AI content is so on-brand, my followers can't tell it's automated. Worth every penny.", rating:5, avatar:'SM'},
           {name:'Jake R.', role:'Digital Agency CEO', text:'We manage 15 clients from one dashboard now. What used to take our team 40 hours/week is done automatically. ROI is insane.', rating:5, avatar:'JR'},
           {name:'Priya K.', role:'Fitness Influencer', text:'The website analysis gave me insights I never had before. My strategy is completely transformed. 127% engagement increase!', rating:5, avatar:'PK'}
         ].map(t => `
           <div class="glass rounded-2xl p-6 card-hover border border-gray-700/50">
-            <div class="flex text-yellow-400 mb-4">
-              ${'★'.repeat(t.rating)}
-            </div>
+            <div class="flex text-yellow-400 mb-4">${'★'.repeat(t.rating)}</div>
             <p class="text-gray-300 text-sm leading-relaxed mb-6">"${t.text}"</p>
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-xs font-bold">${t.avatar}</div>
+              <div class="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-xs font-bold text-white">${t.avatar}</div>
               <div>
                 <div class="text-white font-semibold text-sm">${t.name}</div>
                 <div class="text-gray-400 text-xs">${t.role}</div>
@@ -333,12 +309,10 @@ export function landingPage(): string {
   <section class="py-24 bg-gray-950 relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-600/10"></div>
     <div class="relative max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-5xl lg:text-6xl font-black mb-6">
-        Ready to <span class="gradient-text">Automate</span> Your Growth?
-      </h2>
+      <h2 class="text-5xl lg:text-6xl font-black mb-6">Ready to <span class="gradient-text">Automate</span> Your Growth?</h2>
       <p class="text-gray-400 text-xl mb-10">Join 12,400+ businesses growing on autopilot. Free to start, no credit card required.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/analysis" class="gradient-primary text-white font-bold px-10 py-5 rounded-2xl text-xl hover:opacity-90 transition-all shadow-lg">
+        <a href="/login" class="gradient-primary font-bold px-10 py-5 rounded-2xl text-xl hover:opacity-90 transition-all shadow-lg" style="color:#fff;">
           <i class="fas fa-search mr-2"></i>Start Free Analysis
         </a>
         <a href="/pricing" class="glass text-white font-semibold px-10 py-5 rounded-2xl text-xl hover:bg-white/10 transition-all">
@@ -355,15 +329,11 @@ export function landingPage(): string {
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-            <div style="position:relative;width:34px;height:34px;flex-shrink:0;">
-              <div style="width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#1a3a5c 0%,#0a1a35 60%,#04091a 100%);border:2px solid rgba(0,229,255,0.5);box-shadow:0 0 10px rgba(0,229,255,0.3);display:flex;align-items:center;justify-content:center;">
-                <span style="font-size:12px;font-weight:900;color:#fff;letter-spacing:-0.5px;">SS</span>
-              </div>
-              <div style="position:absolute;bottom:-4px;right:-5px;width:13px;height:9px;background:linear-gradient(135deg,#FF2D78,#FF5fa0);border-radius:50% 50% 50% 0;transform:rotate(-15deg);"></div>
-            </div>
+            ${footerLogo}
             <span style="font-weight:900;font-size:15px;color:#fff;">SOCIAL <span style="background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">STRATEGY</span></span>
           </div>
           <p class="text-gray-400 text-sm">Analyze. Strategize. Automate. Grow.</p>
+          <p class="text-gray-500 text-xs mt-2">© 2026 Social Strategy</p>
         </div>
         <div>
           <h4 class="font-semibold text-white mb-3">Product</h4>
@@ -372,39 +342,38 @@ export function landingPage(): string {
             <li><a href="/content-studio" class="hover:text-cyan-400">AI Content Studio</a></li>
             <li><a href="/scheduler" class="hover:text-cyan-400">Scheduler</a></li>
             <li><a href="/analytics" class="hover:text-cyan-400">Analytics</a></li>
+            <li><a href="/pricing" class="hover:text-cyan-400">Pricing</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-white mb-3">Company</h4>
           <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="/dashboard" class="hover:text-cyan-400">About</a></li>
-            <li><a href="/dashboard" class="hover:text-cyan-400">Blog</a></li>
-            <li><a href="/dashboard" class="hover:text-cyan-400">Careers</a></li>
-            <li><a href="/dashboard" class="hover:text-cyan-400">Press</a></li>
+            <li><a href="#" class="hover:text-cyan-400">About Us</a></li>
+            <li><a href="#" class="hover:text-cyan-400">Blog</a></li>
+            <li><a href="#" class="hover:text-cyan-400">Careers</a></li>
+            <li><a href="#" class="hover:text-cyan-400">Press</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-white mb-3">Support</h4>
           <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="/dashboard" class="hover:text-cyan-400">Help Center</a></li>
-            <li><a href="mailto:contact_team@socialstrategyapp.com" class="hover:text-cyan-400">contact_team@socialstrategyapp.com</a></li>
-            <li><a href="/dashboard" class="hover:text-cyan-400">Community</a></li>
-            <li><a href="/dashboard" class="hover:text-cyan-400">Status</a></li>
+            <li><a href="#" class="hover:text-cyan-400">Help Center</a></li>
+            <li><a href="#" class="hover:text-cyan-400">Community</a></li>
+            <li><a href="#" class="hover:text-cyan-400">Status</a></li>
+            <li><a href="/login" class="hover:text-cyan-400">Sign In</a></li>
           </ul>
         </div>
       </div>
       <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
         <p>© 2026 SOCIAL STRATEGY — Your All-in-One Marketing Platform</p>
         <div class="flex gap-4 mt-4 md:mt-0">
-          <a href="/dashboard" class="hover:text-cyan-400">Privacy</a>
-          <a href="/dashboard" class="hover:text-cyan-400">Terms</a>
-          <a href="/dashboard" class="hover:text-cyan-400">GDPR</a>
+          <a href="#" class="hover:text-cyan-400">Privacy Policy</a>
+          <a href="#" class="hover:text-cyan-400">Terms of Service</a>
+          <a href="#" class="hover:text-cyan-400">GDPR</a>
         </div>
       </div>
     </div>
   </footer>
-
-  <style>.pulse-dot{animation:pulse 2s infinite;}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}.card-hover{transition:all .3s;}.card-hover:hover{transform:translateY(-4px);}</style>
 </body>
 </html>`
 }

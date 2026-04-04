@@ -34,7 +34,7 @@ export function analyticsPage(): string {
         ${['7D', '30D', '90D', '1Y'].map((p, i) => `
         <button onclick="setPeriod(this,'${p}')" class="period-btn" style="padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;${i === 1 ? 'background:rgba(0,229,255,0.15);color:#00E5FF;' : 'background:transparent;color:#9ca3af;'}">${p}</button>`).join('')}
       </div>
-      <button style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 14px;color:#d1d5db;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+      <button onclick="exportAnalytics()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 14px;color:#d1d5db;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
         <i class="fas fa-download" style="color:#00E5FF;"></i> Export
       </button>
     </div>
@@ -43,7 +43,7 @@ export function analyticsPage(): string {
   <div style="padding:28px;">
 
     <!-- KPI Cards -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;" class="grid-4">
       ${kpis.map(k => `
       <div class="gradient-card card-hover" style="border-radius:18px;padding:20px;">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;">
@@ -60,7 +60,7 @@ export function analyticsPage(): string {
     </div>
 
     <!-- Charts Row -->
-    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:28px;">
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:28px;" class="grid-2-1">
       <!-- Growth Chart -->
       <div class="glass-dark" style="border-radius:18px;padding:22px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
@@ -199,7 +199,7 @@ export function analyticsPage(): string {
 
   <script>
     const gCtx = document.getElementById('growthChart').getContext('2d');
-    new Chart(gCtx, {
+    window._growthChart = new Chart(gCtx, {
       type:'line',
       data:{
         labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'],
@@ -227,6 +227,52 @@ export function analyticsPage(): string {
     function setPeriod(btn, period) {
       document.querySelectorAll('.period-btn').forEach(b => { b.style.background='transparent'; b.style.color='#9ca3af'; });
       btn.style.background='rgba(0,229,255,0.15)'; btn.style.color='#00E5FF';
+      // Update growth chart data per period
+      const labels = { '7D':['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], '30D':['W1','W2','W3','W4'], '90D':['Jan','Feb','Mar'], '1Y':['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] };
+      const fData = {
+        '7D': [74200,74350,74500,74600,74700,74800,74900],
+        '30D': [71000,72000,73200,74400],
+        '90D': [65000,70000,74400],
+        '1Y': [38000,41000,44500,48000,52000,57000,61000,65000,70000,74400,0,0].slice(0,12)
+      };
+      const rData = {
+        '7D': [12000,13200,11800,14500,15000,16200,14800],
+        '30D': [52000,65000,78000,89420],
+        '90D': [60000,75000,89420],
+        '1Y': [52000,58000,63000,70000,75000,82000,78000,85000,88000,89420,0,0].slice(0,12)
+      };
+      const eData = {
+        '7D': [1800,2200,1900,2600,2400,3100,2800],
+        '30D': [7200,9800,12400,15847],
+        '90D': [8000,11000,15847],
+        '1Y': [3200,3800,4500,5200,6100,7200,8100,9400,11200,15847,0,0].slice(0,12)
+      };
+      const gChart = window._growthChart;
+      if (gChart) {
+        gChart.data.labels = labels[period];
+        gChart.data.datasets[0].data = fData[period];
+        gChart.data.datasets[1].data = rData[period];
+        gChart.data.datasets[2].data = eData[period];
+        gChart.update();
+      }
+    }
+
+    function exportAnalytics() {
+      const rows = [
+        ['Platform','Followers','Reach','Impressions','Engagement Rate','Posts','Growth'],
+        ['Instagram','12400','35200','89000','5.2%','45','+8%'],
+        ['TikTok','34500','28400','102000','6.8%','32','+22%'],
+        ['Facebook','8200','12100','24000','2.1%','28','+3%'],
+        ['YouTube','5600','8900','18000','3.4%','12','+15%'],
+        ['X (Twitter)','9800','14200','28000','1.8%','67','+5%'],
+        ['LinkedIn','4200','6800','12000','4.1%','18','+11%'],
+      ];
+      const csv = rows.map(r => r.join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url;
+      a.download = 'social-strategy-analytics-' + new Date().toISOString().slice(0,10) + '.csv';
+      a.click(); URL.revokeObjectURL(url);
     }
   </script>
   `
