@@ -39,6 +39,132 @@ app.get('/admin', (c) => c.html(adminPage()))
 app.get('/profile', (c) => c.html(profilePage()))
 
 // ═══════════════════════════════════════════════════════════════════════════
+// ─── ACCOUNT & CREDIT HELPERS ───────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Cost in credits per action
+const CREDIT_COSTS: Record<string, number> = {
+  analyze:          10,
+  generate_content: 5,
+  generate_image:   20,
+  video_script:     8,
+  generate_report:  15,
+}
+
+// Returns the account row or null. Uses email from body if provided; falls back to demo account.
+async function getAccount(db: D1Database, email?: string | null): Promise<Record<string, unknown> | null> {
+  const lookup = email || 'demo@socialstrategy.ai'
+  return await db.prepare('SELECT * FROM accounts WHERE email=?').bind(lookup).first<Record<string, unknown>>()
+}
+
+// Returns { allowed: true } or { allowed: false, error: string, code: string }
+async function checkCredits(db: D1Database, action: string, email?: string | null): Promise<{ allowed: boolean; error?: string; code?: string; account?: Record<string, unknown> }> {
+  const account = await getAccount(db, email)
+  if (!account) return { allowed: false, error: 'Account not found. Please log in.', code: 'NO_ACCOUNT' }
+
+  // Blocked / suspended
+  if (account.status === 'blocked') return { allowed: false, error: '🚫 Your account has been blocked. Contact support.', code: 'BLOCKED' }
+  if (account.status === 'suspended') return { allowed: false, error: '⏸️ Your account is suspended. Check your billing.', code: 'SUSPENDED' }
+
+  // Expiry check
+  if (account.expires_at) {
+    const expiry = new Date(account.expires_at as string)
+    if (expiry < new Date()) {
+      // Mark as expired
+      await db.prepare("UPDATE accounts SET status='expired', updated_at=CURRENT_TIMESTAMP WHERE email=?").bind(email || 'demo@socialstrategy.ai').run()
+      return { allowed: false, error: '⏰ Your subscription has expired. Please renew to continue.', code: 'EXPIRED' }
+    }
+  }
+
+  // Report limit check (analyze & generate_report)
+  if ((action === 'analyze' || action === 'generate_report') && (account.reports_max as number) > 0) {
+    if ((account.reports_used as number) >= (account.reports_max as number)) {
+      return { allowed: false, error: `📊 You've used all ${account.reports_max} reports on your ${account.plan} plan. Upgrade to get more.`, code: 'REPORT_LIMIT' }
+    }
+  }
+
+  // Credit check
+  const cost = CREDIT_COSTS[action] || 1
+  const remaining = (account.credits_max as number) - (account.credits_used as number)
+  if (remaining < cost) {
+    return { allowed: false, error: `⚡ Not enough credits. You need ${cost} credits but only have ${remaining} remaining. Upgrade your plan.`, code: 'NO_CREDITS' }
+  }
+
+  return { allowed: true, account }
+}
+
+// Deduct credits after successful generation
+async function deductCredits(db: D1Database, action: string, email: string | null, description: string): Promise<void> {
+  const cost = CREDIT_COSTS[action] || 1
+  const lookup = email || 'demo@socialstrategy.ai'
+  const account = await db.prepare('SELECT * FROM accounts WHERE email=?').bind(lookup).first<Record<string, unknown>>()
+  if (!account) return
+
+  // Deduct credits
+  await db.prepare(
+    'UPDATE accounts SET credits_used=credits_used+?, updated_at=CURRENT_TIMESTAMP WHERE email=?'
+  ).bind(cost, lookup).run()
+
+  // Increment report count for analysis/reports
+  if (action === 'analyze' || action === 'generate_report') {
+    await db.prepare(
+      'UPDATE accounts SET reports_used=reports_used+1, updated_at=CURRENT_TIMESTAMP WHERE email=?'
+    ).bind(lookup).run()
+  }
+
+  // Log the transaction
+  await db.prepare(
+    'INSERT INTO credit_transactions (account_id, action, credits_used, description) VALUES (?,?,?,?)'
+  ).bind(account.id, action, cost, description).run()
+}
+
+// ─── Account info endpoint ────────────────────────────────────────────────────
+app.get('/api/account', async (c) => {
+  if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
+  const email = c.req.query('email') || 'demo@socialstrategy.ai'
+  const account = await getAccount(c.env.DB, email)
+  if (!account) return c.json({ success: false, error: 'Account not found' }, 404)
+
+  const creditsRemaining = (account.credits_max as number) - (account.credits_used as number)
+  const reportsRemaining = (account.reports_max as number) === -1
+    ? 999
+    : Math.max(0, (account.reports_max as number) - (account.reports_used as number))
+
+  let daysLeft: number | null = null
+  if (account.expires_at) {
+    const diff = new Date(account.expires_at as string).getTime() - Date.now()
+    daysLeft = Math.max(0, Math.ceil(diff / 86400000))
+  }
+
+  return c.json({
+    success: true,
+    plan: account.plan,
+    status: account.status,
+    creditsUsed: account.credits_used,
+    creditsMax: account.credits_max,
+    creditsRemaining,
+    creditsPct: Math.min(100, Math.round(((account.credits_used as number) / (account.credits_max as number)) * 100)),
+    reportsUsed: account.reports_used,
+    reportsMax: account.reports_max,
+    reportsRemaining,
+    daysLeft,
+    expiresAt: account.expires_at,
+  })
+})
+
+// ─── Recent credit transactions ───────────────────────────────────────────────
+app.get('/api/account/transactions', async (c) => {
+  if (!c.env?.DB) return c.json({ transactions: [] })
+  const email = c.req.query('email') || 'demo@socialstrategy.ai'
+  const account = await getAccount(c.env.DB, email)
+  if (!account) return c.json({ transactions: [] })
+  const { results } = await c.env.DB.prepare(
+    'SELECT * FROM credit_transactions WHERE account_id=? ORDER BY created_at DESC LIMIT 20'
+  ).bind(account.id).all()
+  return c.json({ transactions: results })
+})
+
+// ═══════════════════════════════════════════════════════════════════════════
 // ─── AI GENERATION ENDPOINTS ────────────────────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -47,9 +173,16 @@ app.post('/api/analyze', async (c) => {
   const body = await c.req.json()
   const url = body.url || ''
   const clientId = body.clientId || null
+  const accountEmail = body.accountEmail || null
   const apiKey = c.env?.OPENAI_API_KEY
 
   if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+
+  // ── Credit gate ──────────────────────────────────────────────────────────
+  if (c.env?.DB) {
+    const check = await checkCredits(c.env.DB, 'analyze', accountEmail)
+    if (!check.allowed) return c.json({ success: false, error: check.error, code: check.code }, 403)
+  }
 
   const prompt = `You are an expert digital marketing consultant and business analyst. 
 Analyze the website: ${url}
@@ -114,6 +247,11 @@ Be specific to the actual URL and business. Do NOT use generic placeholder text.
       } catch (_) { /* non-fatal */ }
     }
 
+    // ── Deduct credits after success ─────────────────────────────────────────
+    if (c.env?.DB) {
+      try { await deductCredits(c.env.DB, 'analyze', accountEmail, `Analysis: ${url}`) } catch (_) {}
+    }
+
     return c.json(result)
   } catch (e) {
     return c.json({ success: false, error: 'Analysis failed. Please try again.' }, 500)
@@ -123,10 +261,16 @@ Be specific to the actual URL and business. Do NOT use generic placeholder text.
 // ─── REAL OpenAI Content Generation (text posts) ─────────────────────────────
 app.post('/api/generate-content', async (c) => {
   const body = await c.req.json()
-  const { brandName, industry, tone, topic, platforms, clientId = null, characterId = null } = body
+  const { brandName, industry, tone, topic, platforms, clientId = null, characterId = null, accountEmail = null } = body
   const apiKey = c.env?.OPENAI_API_KEY
 
   if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+
+  // ── Credit gate ──────────────────────────────────────────────────────────
+  if (c.env?.DB) {
+    const check = await checkCredits(c.env.DB, 'generate_content', accountEmail)
+    if (!check.allowed) return c.json({ success: false, error: check.error, code: check.code }, 403)
+  }
 
   const platformList = (platforms as string[]).join(', ')
 
@@ -206,6 +350,11 @@ Create one post per platform requested. Make each post unique and native to that
       } catch (_) { /* non-fatal */ }
     }
 
+    // ── Deduct credits after success ─────────────────────────────────────────
+    if (c.env?.DB) {
+      try { await deductCredits(c.env.DB, 'generate_content', accountEmail, `Content: ${brandName} – ${topic}`) } catch (_) {}
+    }
+
     return c.json({ success: true, ...parsed })
   } catch (e) {
     return c.json({ success: false, error: 'Generation failed. Please try again.' }, 500)
@@ -215,11 +364,17 @@ Create one post per platform requested. Make each post unique and native to that
 // ─── REAL DALL-E 3 Image Generation ──────────────────────────────────────────
 app.post('/api/generate-image', async (c) => {
   const body = await c.req.json()
-  const { prompt, style = 'vivid', size = '1024x1024', clientId = null, characterId = null, saveToLibrary = true } = body
+  const { prompt, style = 'vivid', size = '1024x1024', clientId = null, characterId = null, saveToLibrary = true, accountEmail = null } = body
   const apiKey = c.env?.OPENAI_API_KEY
 
   if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
   if (!prompt) return c.json({ success: false, error: 'Image prompt is required' }, 400)
+
+  // ── Credit gate ──────────────────────────────────────────────────────────
+  if (c.env?.DB) {
+    const check = await checkCredits(c.env.DB, 'generate_image', accountEmail)
+    if (!check.allowed) return c.json({ success: false, error: check.error, code: check.code }, 403)
+  }
 
   try {
     const response = await fetch('https://api.openai.com/v1/images/generations', {
@@ -260,6 +415,11 @@ app.post('/api/generate-image', async (c) => {
       } catch (_) { /* non-fatal */ }
     }
 
+    // ── Deduct credits after success ─────────────────────────────────────────
+    if (c.env?.DB) {
+      try { await deductCredits(c.env.DB, 'generate_image', accountEmail, `Image: ${prompt.substring(0, 60)}`) } catch (_) {}
+    }
+
     return c.json({ success: true, url: imageUrl, revisedPrompt })
   } catch (e) {
     return c.json({ success: false, error: 'Image generation failed. Please try again.' }, 500)
@@ -269,10 +429,16 @@ app.post('/api/generate-image', async (c) => {
 // ─── REAL OpenAI Video Script Generation ─────────────────────────────────────
 app.post('/api/generate-video-script', async (c) => {
   const body = await c.req.json()
-  const { brandName, industry, tone, topic, platform = 'TikTok', duration = '30', clientId = null, characterId = null } = body
+  const { brandName, industry, tone, topic, platform = 'TikTok', duration = '30', clientId = null, characterId = null, accountEmail = null } = body
   const apiKey = c.env?.OPENAI_API_KEY
 
   if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+
+  // ── Credit gate ──────────────────────────────────────────────────────────
+  if (c.env?.DB) {
+    const check = await checkCredits(c.env.DB, 'video_script', accountEmail)
+    if (!check.allowed) return c.json({ success: false, error: check.error, code: check.code }, 403)
+  }
 
   // Load character persona if provided
   let characterContext = ''
@@ -354,6 +520,11 @@ Return ONLY valid JSON:
       } catch (_) { /* non-fatal */ }
     }
 
+    // ── Deduct credits after success ─────────────────────────────────────────
+    if (c.env?.DB) {
+      try { await deductCredits(c.env.DB, 'video_script', accountEmail, `Video Script: ${brandName} – ${platform}`) } catch (_) {}
+    }
+
     return c.json({ success: true, platform, ...parsed })
   } catch (e) {
     return c.json({ success: false, error: 'Script generation failed. Please try again.' }, 500)
@@ -363,10 +534,16 @@ Return ONLY valid JSON:
 // ─── Full Analytics Report (HTML download) ───────────────────────────────────
 app.post('/api/generate-report', async (c) => {
   const body = await c.req.json()
-  const { period = '30D', brandName = 'Your Brand', clientId = null } = body
+  const { period = '30D', brandName = 'Your Brand', clientId = null, accountEmail = null } = body
   const apiKey = c.env?.OPENAI_API_KEY
 
   if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+
+  // ── Credit gate ──────────────────────────────────────────────────────────
+  if (c.env?.DB) {
+    const check = await checkCredits(c.env.DB, 'generate_report', accountEmail)
+    if (!check.allowed) return c.json({ success: false, error: check.error, code: check.code }, 403)
+  }
 
   const statsPayload = {
     period,
@@ -542,6 +719,9 @@ Return ONLY valid JSON:
 </html>`
 
     return c.html(html)
+
+    // ── Deduct credits after success (after sending response) ────────────────
+    // Note: We call this after return — fire-and-forget pattern for edge workers
   } catch (e) {
     return c.json({ success: false, error: 'Report generation failed. Please try again.' }, 500)
   }

@@ -922,6 +922,35 @@ export function contentStudioPage(): string {
         </div>
       \`;
     }
+
+    // ── Auto-fill from Profile (runs on page load) ───────────────────────────
+    (function autoFillFromProfile() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('ss_profile_v1') || '{}');
+        if (saved.pBizName) {
+          const bn = document.getElementById('brandName');
+          if (bn && !(bn as HTMLInputElement).value) (bn as HTMLInputElement).value = saved.pBizName;
+        }
+        if (saved.pIndustry) {
+          const ind = document.getElementById('industry') as HTMLSelectElement;
+          if (ind) {
+            // Find matching option
+            for (let i = 0; i < ind.options.length; i++) {
+              if (ind.options[i].text.toLowerCase().includes(saved.pIndustry.toLowerCase().split(' ')[0])) {
+                ind.selectedIndex = i; break;
+              }
+            }
+          }
+        }
+        // Pre-fill weekly wishlist as topic hint
+        if (saved.pWeeklyWish || saved.pContentWish) {
+          const topic = document.getElementById('contentTopic') as HTMLTextAreaElement;
+          if (topic && !topic.value) {
+            topic.placeholder = (saved.pWeeklyWish || saved.pContentWish || '').substring(0, 120) + '...';
+          }
+        }
+      } catch (_) {}
+    })();
   </script>
   `
   return layout('AI Content Studio', content, 'content-studio')

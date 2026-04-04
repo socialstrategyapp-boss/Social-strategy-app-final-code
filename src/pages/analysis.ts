@@ -348,6 +348,51 @@ export function analysisPage(): string {
         runAnalysis();
       }
     });
+
+    // ── Auto-fill URL & show credit limit from profile ─────────────────────
+    (function initFromProfile() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('ss_profile_v1') || '{}');
+        const urlInput = document.getElementById('urlInput') as HTMLInputElement;
+        if (urlInput && !urlInput.value) {
+          // Pre-fill from URL query param OR profile
+          const params = new URLSearchParams(window.location.search);
+          const qUrl = params.get('url');
+          if (qUrl) urlInput.value = qUrl;
+          else if (saved.pUrl) urlInput.value = saved.pUrl;
+        }
+
+        // Show credit & report limit warning
+        const email = saved.pEmail || 'demo@socialstrategy.ai';
+        fetch('/api/account?email=' + encodeURIComponent(email)).then(r => r.json()).then((data: any) => {
+          if (!data.success) return;
+          // Inject credit pill into top bar
+          const bar = document.querySelector('.top-bar > div:last-child');
+          if (bar) {
+            const pill = document.createElement('div');
+            pill.style.cssText = 'display:flex;align-items:center;gap:7px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:10px;padding:6px 12px;font-size:12px;';
+            const reportsLeft = data.reportsMax === -1 ? '∞' : data.reportsRemaining;
+            const credLeft = data.creditsRemaining || 0;
+            pill.innerHTML = '<i class="fas fa-bolt" style="color:#fbbf24;"></i><span style="color:#fbbf24;font-weight:700;">' + credLeft.toLocaleString() + ' credits</span><span style="color:#4b5563;">·</span><span style="color:#d1d5db;">' + reportsLeft + ' reports left</span>';
+            bar.prepend(pill);
+          }
+
+          // If no credits or reports left, disable scan button
+          if ((data.creditsRemaining || 0) < 10 || (data.reportsRemaining === 0 && data.reportsMax !== -1)) {
+            const btn = document.getElementById('analyzeBtn') as HTMLButtonElement;
+            if (btn) {
+              btn.disabled = true;
+              btn.style.background = 'rgba(255,255,255,0.05)';
+              btn.style.color = '#6b7280';
+              btn.style.boxShadow = 'none';
+              btn.innerHTML = data.reportsRemaining === 0
+                ? '<i class="fas fa-lock"></i> Report Limit Reached — Upgrade'
+                : '<i class="fas fa-lock"></i> No Credits — Upgrade Plan';
+            }
+          }
+        }).catch(() => {});
+      } catch (_) {}
+    })();
   </script>
   `
   return layout('Website Analysis', content, 'analysis')

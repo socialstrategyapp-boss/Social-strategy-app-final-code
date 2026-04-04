@@ -581,8 +581,120 @@ export function profilePage(): string {
     setTimeout(() => { t.style.display = 'none'; }, 3500);
   }
 
-  // ── Boot ───────────────────────────────────────────────────────────────────
-  loadProfile();
+  // ── Load live account data from API ───────────────────────────────────────
+  async function loadAccountData() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+      const email = saved.pEmail || 'demo@socialstrategy.ai';
+      const resp = await fetch('/api/account?email=' + encodeURIComponent(email));
+      if (!resp.ok) return;
+      const data = await resp.json();
+      if (!data.success) return;
+
+      // Update credits ring
+      const pct = data.creditsPct || 0;
+      const dashOffset = 314 - (314 * pct / 100);
+      const ring = document.getElementById('creditRing');
+      if (ring) ring.setAttribute('stroke-dashoffset', String(dashOffset));
+
+      // Update ring text
+      const ringTexts = document.querySelectorAll('#avatarCircle ~ * text, svg text');
+      // Re-query svg inside avatar
+      const svgTexts = document.querySelectorAll('svg text');
+      svgTexts.forEach(t => {
+        if (t.textContent && t.textContent.includes(',')) {
+          t.textContent = (data.creditsRemaining || 0).toLocaleString();
+        }
+        if (t.textContent && t.textContent.includes('of 10,000')) {
+          t.textContent = 'of ' + (data.creditsMax || 0).toLocaleString() + ' credits';
+        }
+      });
+
+      // Update top pills
+      const creditDisplay = document.getElementById('creditDisplay');
+      if (creditDisplay) {
+        creditDisplay.innerHTML = (data.creditsRemaining || 0).toLocaleString() +
+          ' <span style="color:#4b5563;font-weight:500;">/ ' + (data.creditsMax || 0).toLocaleString() + '</span>';
+      }
+      const creditBar = document.getElementById('creditBar');
+      if (creditBar) creditBar.style.width = pct + '%';
+
+      // Change bar color based on level
+      if (creditBar) {
+        if (pct < 20) creditBar.style.background = 'linear-gradient(90deg,#f87171,#ef4444)';
+        else if (pct < 50) creditBar.style.background = 'linear-gradient(90deg,#fbbf24,#f59e0b)';
+        else creditBar.style.background = 'linear-gradient(90deg,#fbbf24,#f59e0b)';
+      }
+
+      const expiryDisplay = document.getElementById('expiryDisplay');
+      if (expiryDisplay) {
+        if (data.daysLeft === null) expiryDisplay.textContent = 'No expiry';
+        else if (data.daysLeft === 0) {
+          expiryDisplay.textContent = 'Expired!';
+          expiryDisplay.style.color = '#f87171';
+        } else {
+          expiryDisplay.textContent = data.daysLeft + ' days';
+          if (data.daysLeft <= 7) expiryDisplay.style.color = '#fbbf24';
+        }
+      }
+
+      // Update plan badge
+      const planBadge = document.getElementById('planBadge');
+      if (planBadge) {
+        const planColors: Record<string, string> = {
+          free: 'rgba(156,163,175,0.15)',
+          pro: 'rgba(0,229,255,0.15)',
+          business: 'rgba(167,139,250,0.15)'
+        };
+        const planBorders: Record<string, string> = {
+          free: 'rgba(156,163,175,0.3)',
+          pro: 'rgba(0,229,255,0.3)',
+          business: 'rgba(167,139,250,0.3)'
+        };
+        const planTextColors: Record<string, string> = {
+          free: '#9ca3af',
+          pro: '#00E5FF',
+          business: '#A78BFA'
+        };
+        const p = (data.plan || 'free').toLowerCase();
+        planBadge.style.background = planColors[p] || planColors.free;
+        planBadge.style.borderColor = planBorders[p] || planBorders.free;
+        planBadge.style.color = planTextColors[p] || planTextColors.free;
+        planBadge.textContent = (data.plan || 'FREE').toUpperCase();
+      }
+
+      // Update reports section
+      const reportsUsedEl = document.getElementById('reportsUsed');
+      const reportsLimitEl = document.getElementById('reportsLimit');
+      const reportsLeftEl = document.getElementById('reportsLeft');
+      if (reportsUsedEl) reportsUsedEl.textContent = String(data.reportsUsed || 0);
+      if (reportsLimitEl) reportsLimitEl.textContent = data.reportsMax === -1 ? '∞' : String(data.reportsMax || 0);
+      if (reportsLeftEl) {
+        reportsLeftEl.textContent = data.reportsMax === -1 ? '∞' : String(data.reportsRemaining || 0);
+        if ((data.reportsRemaining || 0) === 0) reportsLeftEl.style.color = '#f87171';
+      }
+
+      // Blocked / expired banner
+      if (data.status === 'blocked' || data.status === 'expired' || data.status === 'suspended') {
+        const banner = document.createElement('div');
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(248,113,113,0.95);padding:14px 24px;text-align:center;font-weight:800;font-size:14px;color:#fff;';
+        const msgs: Record<string, string> = {
+          blocked: '🚫 Your account has been blocked. Contact support@socialstrategy.ai',
+          expired: '⏰ Your subscription has expired. Please renew to continue using AI features.',
+          suspended: '⏸️ Account suspended. Please update your billing details.'
+        };
+        banner.textContent = msgs[data.status as string] || 'Account issue detected.';
+        document.body.prepend(banner);
+      }
+
+    } catch (_) {}
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  (function boot() {
+    loadProfile();
+    loadAccountData();
+  })();
   </script>
   `
 
