@@ -40,13 +40,14 @@ export function landingPage(): string {
     /* ── NAVBAR ── */
     .navbar{position:fixed;top:0;left:0;right:0;z-index:100;
       background:rgba(8,4,32,0.92);backdrop-filter:blur(20px);
-      border-bottom:1px solid rgba(0,229,255,0.18);}
-    .navbar-inner{max-width:1400px;margin:0 auto;padding:0 32px;height:72px;
-      display:flex;align-items:center;justify-content:space-between;gap:16px;}
+      border-bottom:1px solid rgba(0,229,255,0.18);overflow:hidden;}
+    .navbar-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:72px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      min-width:0;}
 
     /* Nav links */
-    .nav-links{display:flex;align-items:center;gap:6px;}
-    .nav-link{font-size:13.5px;font-weight:700;padding:8px 18px;border-radius:999px;
+    .nav-links{display:flex;align-items:center;gap:6px;flex-shrink:1;min-width:0;overflow:hidden;}
+    .nav-link{font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px;
       text-decoration:none;transition:all .2s;border:1.5px solid transparent;white-space:nowrap;}
     .nl-features{color:#00E5FF;border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.08);}
     .nl-features:hover{background:rgba(0,229,255,0.2);box-shadow:0 0 20px rgba(0,229,255,0.5);}
@@ -57,23 +58,24 @@ export function landingPage(): string {
     .nl-pricing{color:#FFD600;border-color:rgba(255,214,0,0.3);background:rgba(255,214,0,0.08);}
     .nl-pricing:hover{background:rgba(255,214,0,0.2);box-shadow:0 0 20px rgba(255,214,0,0.5);}
 
-    /* ── NAV AUTH BUTTONS – bigger & colourful ── */
+    /* ── NAV AUTH BUTTONS ── */
+    .nav-auth{display:flex;align-items:center;gap:10px;flex-shrink:0;}
     .btn-signin{display:inline-flex;align-items:center;justify-content:center;
-      font-size:15px;font-weight:900;padding:13px 28px;border-radius:999px;
+      font-size:13px;font-weight:800;padding:10px 20px;border-radius:999px;
       text-decoration:none;white-space:nowrap;transition:all .25s;
       color:#fff;
-      border:2.5px solid #00E5FF;
-      background:linear-gradient(135deg,rgba(0,229,255,0.22),rgba(0,112,243,0.18));
-      box-shadow:0 0 22px rgba(0,229,255,0.55),0 0 44px rgba(0,229,255,0.2),inset 0 1px 0 rgba(255,255,255,0.25);
-      text-shadow:0 0 14px rgba(0,229,255,0.9);}
-    .btn-signin:hover{background:linear-gradient(135deg,rgba(0,229,255,0.38),rgba(0,112,243,0.3));box-shadow:0 0 38px rgba(0,229,255,0.85),0 0 70px rgba(0,229,255,0.35);transform:translateY(-2px);}
-    .btn-start-free{display:inline-flex;align-items:center;gap:9px;
+      border:2px solid #00E5FF;
+      background:linear-gradient(135deg,rgba(0,229,255,0.18),rgba(0,112,243,0.14));
+      box-shadow:0 0 18px rgba(0,229,255,0.45),0 0 36px rgba(0,229,255,0.15),inset 0 1px 0 rgba(255,255,255,0.2);
+      text-shadow:0 0 12px rgba(0,229,255,0.9);}
+    .btn-signin:hover{background:linear-gradient(135deg,rgba(0,229,255,0.32),rgba(0,112,243,0.25));box-shadow:0 0 32px rgba(0,229,255,0.7),0 0 60px rgba(0,229,255,0.3);transform:translateY(-2px);}
+    .btn-start-free{display:inline-flex;align-items:center;gap:7px;
       background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);
-      color:#fff;font-size:14px;font-weight:800;padding:11px 26px;border-radius:999px;
+      color:#fff;font-size:13px;font-weight:800;padding:10px 20px;border-radius:999px;
       text-decoration:none;white-space:nowrap;border:1px solid rgba(255,255,255,0.2);
-      box-shadow:0 0 28px rgba(255,45,120,0.65),0 0 60px rgba(124,58,237,0.3),inset 0 1px 0 rgba(255,255,255,0.2);
+      box-shadow:0 0 22px rgba(255,45,120,0.55),0 0 44px rgba(124,58,237,0.25),inset 0 1px 0 rgba(255,255,255,0.2);
       transition:all .25s;}
-    .btn-start-free:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(255,45,120,0.9),0 0 80px rgba(124,58,237,0.5);}
+    .btn-start-free:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(255,45,120,0.85),0 0 70px rgba(124,58,237,0.45);}
 
     /* ── CTA BUTTONS ── */
     .btn-scan{display:inline-flex;align-items:center;justify-content:center;gap:10px;
@@ -168,12 +170,11 @@ export function landingPage(): string {
       <a href="/pricing"      class="nav-link nl-pricing">💎 Pricing</a>
     </div>
 
-    <!-- Auth buttons – bigger, coloured, evenly spaced -->
-    <div style="display:flex;align-items:center;gap:14px;flex-shrink:0;">
+    <!-- Auth buttons -->
+    <div class="nav-auth">
       <a href="/login" class="btn-signin">🔑 Sign In</a>
       <a href="/login" class="btn-start-free">
         🚀 Start Free
-        <span style="width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff 0%,#FF2D78 55%,#C026D3 100%);box-shadow:0 0 10px #FF2D78;flex-shrink:0;"></span>
       </a>
     </div>
   </div>
@@ -781,6 +782,13 @@ export function landingPage(): string {
 <style>
   @media(max-width:1024px){
     .navbar-inner .nav-links{display:none!important;}
+    .btn-signin{padding:8px 16px!important;font-size:12px!important;}
+    .btn-start-free{padding:8px 16px!important;font-size:12px!important;}
+  }
+  @media(max-width:600px){
+    .btn-signin{display:none!important;}
+    .btn-start-free{padding:9px 18px!important;font-size:12px!important;}
+    .navbar-inner{padding:0 16px!important;}
   }
   @media(max-width:768px){
     div[style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
