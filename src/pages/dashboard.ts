@@ -1,4 +1,4 @@
-import { layout } from './layout'
+import { layout, platformIcon } from './layout'
 
 export function dashboardPage(): string {
   const kpis = [
@@ -16,10 +16,10 @@ export function dashboardPage(): string {
     { name: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', followers: '4.2K', posts: 18, growth: '+11%' },
   ]
   const posts = [
-    { caption: '🔥 5 Morning Routines That Changed My Life...', platform: 'Instagram', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)', likes: 1240, time: '2h ago', status: 'published' },
-    { caption: 'How to 10x Your Productivity Without Burnout', platform: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', likes: 847, time: '5h ago', status: 'published' },
-    { caption: 'POV: Your business is growing on autopilot 🚀', platform: 'TikTok', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)', likes: 3200, time: '1d ago', status: 'published' },
-    { caption: 'Summer Sale — 40% off everything this weekend!', platform: 'Facebook', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)', likes: 0, time: 'Tomorrow 9AM', status: 'scheduled' },
+    { caption: '🔥 5 Morning Routines That Changed My Life...', platform: 'Instagram', iconId: 'ig', bg: 'linear-gradient(145deg,#E1306C,#F77737)', likes: 1240, time: '2h ago', status: 'published' },
+    { caption: 'How to 10x Your Productivity Without Burnout', platform: 'LinkedIn', iconId: 'li', bg: 'linear-gradient(145deg,#0A66C2,#084c8f)', likes: 847, time: '5h ago', status: 'published' },
+    { caption: 'POV: Your business is growing on autopilot 🚀', platform: 'TikTok', iconId: 'tk', bg: 'linear-gradient(145deg,#010101,#69C9D0)', likes: 3200, time: '1d ago', status: 'published' },
+    { caption: 'Summer Sale — 40% off everything this weekend!', platform: 'Facebook', iconId: 'fb', bg: 'linear-gradient(145deg,#1877F2,#0d5fcc)', likes: 0, time: 'Tomorrow 9AM', status: 'scheduled' },
   ]
   const insights = [
     { icon: 'fas fa-fire', color: '#FB923C', bg: 'rgba(251,146,60,0.12)', text: 'Your Tuesday posts perform 34% better. Schedule more content Tuesday mornings.' },
@@ -120,8 +120,8 @@ export function dashboardPage(): string {
       <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;">
         ${platforms.map(p => `
         <div style="text-align:center;cursor:pointer;" onmouseover="this.querySelector('.picon').style.transform='scale(1.08)'" onmouseout="this.querySelector('.picon').style.transform='scale(1)'">
-          <div class="picon" style="width:52px;height:52px;border-radius:16px;background:${p.bg};display:flex;align-items:center;justify-content:center;margin:0 auto 10px;transition:transform 0.2s;box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-            <i class="${p.icon}" style="color:#fff;font-size:22px;"></i>
+          <div class="picon" style="width:52px;height:52px;border-radius:16px;background:${p.bg};display:flex;align-items:center;justify-content:center;margin:0 auto 10px;transition:transform 0.2s;box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15);">
+            ${platformIcon(p.iconId, 24)}
           </div>
           <div style="font-size:14px;font-weight:800;color:#fff;">${p.followers}</div>
           <div style="font-size:11px;color:#9ca3af;margin:2px 0;">${p.name}</div>
@@ -141,8 +141,8 @@ export function dashboardPage(): string {
         <div style="display:flex;flex-direction:column;gap:12px;">
           ${posts.map(p => `
           <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;transition:background 0.2s;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
-            <div style="width:40px;height:40px;border-radius:12px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="${p.icon}" style="color:#fff;font-size:16px;"></i>
+            <div style="width:40px;height:40px;border-radius:12px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15);">
+              ${platformIcon(p.iconId, 18)}
             </div>
             <div style="flex:1;min-width:0;">
               <p style="font-size:13px;font-weight:600;color:#fff;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.caption}</p>

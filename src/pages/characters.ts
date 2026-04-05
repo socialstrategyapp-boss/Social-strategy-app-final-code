@@ -475,14 +475,14 @@ async function saveCharacter() {
 
 // ── Generate Avatar Preview ────────────────────────────────────────────────
 async function generateAvatarPreview() {
-  const name = (document.getElementById('charName') as HTMLInputElement).value.trim();
-  const appearance = (document.getElementById('charAppearance') as HTMLInputElement).value.trim();
-  const role = (document.getElementById('charRole') as HTMLInputElement).value.trim();
-  const personality = (document.getElementById('charPersonality') as HTMLInputElement).value.trim();
-  const gender = (document.getElementById('charGender') as HTMLSelectElement).value;
+  const name = (document.getElementById('charName')).value.trim();
+  const appearance = (document.getElementById('charAppearance')).value.trim();
+  const role = (document.getElementById('charRole')).value.trim();
+  const personality = (document.getElementById('charPersonality')).value.trim();
+  const gender = (document.getElementById('charGender')).value;
 
-  const genBtn = document.getElementById('genAvatarBtn') as HTMLButtonElement;
-  const regenBtn = document.getElementById('regenAvatarBtn') as HTMLButtonElement;
+  const genBtn = document.getElementById('genAvatarBtn');
+  const regenBtn = document.getElementById('regenAvatarBtn');
   const activeBtn = regenBtn && regenBtn.style.display !== 'none' ? regenBtn : genBtn;
   activeBtn.disabled = true;
   activeBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Generating...';
@@ -498,7 +498,7 @@ async function generateAvatarPreview() {
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ prompt, style: 'vivid', size: '1024x1024', saveToLibrary: false })
     });
-    const data = await res.json() as { success: boolean; url?: string; error?: string };
+    const data = await res.json();
     if (data.success && data.url) {
       document.getElementById('avatarPreview').innerHTML = \`<img src="\${data.url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" data-url="\${data.url}">\`;
       document.getElementById('avatarPreview').setAttribute('data-url', data.url);
@@ -519,16 +519,16 @@ async function generateAvatarPreview() {
   }
 }
 
-function uploadCustomAvatar(input: HTMLInputElement) {
-  const file = input.files?.[0];
+function uploadCustomAvatar(input) {
+  const file = input.files && input.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = (e) => {
-    const url = e.target?.result as string;
+    const url = e.target && e.target.result;
     document.getElementById('avatarPreview').innerHTML = \`<img src="\${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">\`;
     document.getElementById('avatarPreview').setAttribute('data-url', url);
-    const genBtn = document.getElementById('genAvatarBtn') as HTMLButtonElement;
-    const regenBtn = document.getElementById('regenAvatarBtn') as HTMLButtonElement;
+    const genBtn = document.getElementById('genAvatarBtn');
+    const regenBtn = document.getElementById('regenAvatarBtn');
     if (genBtn) genBtn.style.display = 'none';
     if (regenBtn) { regenBtn.style.display = 'inline-flex'; }
   };

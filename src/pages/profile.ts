@@ -641,17 +641,17 @@ export function profilePage(): string {
       // Update plan badge
       const planBadge = document.getElementById('planBadge');
       if (planBadge) {
-        const planColors: Record<string, string> = {
+        const planColors = {
           free: 'rgba(156,163,175,0.15)',
           pro: 'rgba(0,229,255,0.15)',
           business: 'rgba(167,139,250,0.15)'
         };
-        const planBorders: Record<string, string> = {
+        const planBorders = {
           free: 'rgba(156,163,175,0.3)',
           pro: 'rgba(0,229,255,0.3)',
           business: 'rgba(167,139,250,0.3)'
         };
-        const planTextColors: Record<string, string> = {
+        const planTextColors = {
           free: '#9ca3af',
           pro: '#00E5FF',
           business: '#A78BFA'
@@ -678,7 +678,7 @@ export function profilePage(): string {
       if (data.status === 'blocked' || data.status === 'expired' || data.status === 'suspended') {
         const banner = document.createElement('div');
         banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(248,113,113,0.95);padding:14px 24px;text-align:center;font-weight:800;font-size:14px;color:#fff;';
-        const msgs: Record<string, string> = {
+        const msgs = {
           blocked: '🚫 Your account has been blocked. Contact support@socialstrategy.ai',
           expired: '⏰ Your subscription has expired. Please renew to continue using AI features.',
           suspended: '⏸️ Account suspended. Please update your billing details.'

@@ -1,4 +1,4 @@
-import { layout } from './layout'
+import { layout, platformIcon } from './layout'
 
 export function analyticsPage(): string {
   const kpis = [
@@ -8,18 +8,18 @@ export function analyticsPage(): string {
     { label: 'Link Clicks', value: '3,204', change: '-2.1%', up: false, icon: 'fas fa-mouse-pointer', color: '#A78BFA', bg: 'rgba(167,139,250,0.1)', border: 'rgba(167,139,250,0.2)' },
   ]
   const platformRows = [
-    { platform: 'Instagram', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)', followers: '12,400', reach: '35,200', impressions: '89,000', eng: '5.2%', posts: 45, growth: '+8%', up: true },
-    { platform: 'TikTok', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)', followers: '34,500', reach: '28,400', impressions: '102,000', eng: '6.8%', posts: 32, growth: '+22%', up: true },
-    { platform: 'Facebook', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)', followers: '8,200', reach: '12,100', impressions: '24,000', eng: '2.1%', posts: 28, growth: '+3%', up: true },
-    { platform: 'YouTube', icon: 'fab fa-youtube', bg: 'linear-gradient(135deg,#FF0000,#cc0000)', followers: '5,600', reach: '8,900', impressions: '18,000', eng: '3.4%', posts: 12, growth: '+15%', up: true },
-    { platform: 'X (Twitter)', icon: 'fab fa-twitter', bg: 'linear-gradient(135deg,#1DA1F2,#0d7abc)', followers: '9,800', reach: '14,200', impressions: '28,000', eng: '1.8%', posts: 67, growth: '+5%', up: true },
-    { platform: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', followers: '4,200', reach: '6,800', impressions: '12,000', eng: '4.1%', posts: 18, growth: '+11%', up: true },
+    { platform: 'Instagram', iconId: 'ig', bg: 'linear-gradient(145deg,#E1306C,#F77737,#C13584)', followers: '12,400', reach: '35,200', impressions: '89,000', eng: '5.2%', posts: 45, growth: '+8%', up: true },
+    { platform: 'TikTok', iconId: 'tk', bg: 'linear-gradient(145deg,#010101,#69C9D0)', followers: '34,500', reach: '28,400', impressions: '102,000', eng: '6.8%', posts: 32, growth: '+22%', up: true },
+    { platform: 'Facebook', iconId: 'fb', bg: 'linear-gradient(145deg,#1877F2,#0d5fcc)', followers: '8,200', reach: '12,100', impressions: '24,000', eng: '2.1%', posts: 28, growth: '+3%', up: true },
+    { platform: 'YouTube', iconId: 'yt', bg: 'linear-gradient(145deg,#FF0000,#cc0000)', followers: '5,600', reach: '8,900', impressions: '18,000', eng: '3.4%', posts: 12, growth: '+15%', up: true },
+    { platform: 'X (Twitter)', iconId: 'tw', bg: 'linear-gradient(145deg,#1DA1F2,#0d7abc)', followers: '9,800', reach: '14,200', impressions: '28,000', eng: '1.8%', posts: 67, growth: '+5%', up: true },
+    { platform: 'LinkedIn', iconId: 'li', bg: 'linear-gradient(145deg,#0A66C2,#084c8f)', followers: '4,200', reach: '6,800', impressions: '12,000', eng: '4.1%', posts: 18, growth: '+11%', up: true },
   ]
   const topPosts = [
-    { text: 'POV: Your entire marketing team runs on AI now 🤖', platform: 'TikTok', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)', likes: 3200, comments: 284, shares: 890 },
-    { text: '5 Morning Routines That Changed My Life [Thread]', platform: 'Instagram', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)', likes: 1840, comments: 127, shares: 320 },
-    { text: 'Why 68% of Projects Fail (not what you think)', platform: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', likes: 892, comments: 234, shares: 445 },
-    { text: 'Summer Sale — 40% off! Limited time offer 🎉', platform: 'Facebook', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)', likes: 642, comments: 89, shares: 201 },
+    { text: 'POV: Your entire marketing team runs on AI now 🤖', platform: 'TikTok', iconId: 'tk', bg: 'linear-gradient(145deg,#010101,#69C9D0)', likes: 3200, comments: 284, shares: 890 },
+    { text: '5 Morning Routines That Changed My Life [Thread]', platform: 'Instagram', iconId: 'ig', bg: 'linear-gradient(145deg,#E1306C,#F77737)', likes: 1840, comments: 127, shares: 320 },
+    { text: 'Why 68% of Projects Fail (not what you think)', platform: 'LinkedIn', iconId: 'li', bg: 'linear-gradient(145deg,#0A66C2,#084c8f)', likes: 892, comments: 234, shares: 445 },
+    { text: 'Summer Sale — 40% off! Limited time offer 🎉', platform: 'Facebook', iconId: 'fb', bg: 'linear-gradient(145deg,#1877F2,#0d5fcc)', likes: 642, comments: 89, shares: 201 },
   ]
 
   const content = `
@@ -125,8 +125,8 @@ export function analyticsPage(): string {
             <tr style="border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.2s;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background='transparent'">
               <td style="padding:14px 18px;">
                 <div style="display:flex;align-items:center;gap:10px;">
-                  <div style="width:36px;height:36px;border-radius:10px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="${p.icon}" style="color:#fff;font-size:15px;"></i>
+                  <div style="width:38px;height:38px;border-radius:12px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15);">
+                    ${platformIcon(p.iconId, 18)}
                   </div>
                   <span style="font-size:13px;font-weight:700;color:#fff;">${p.platform}</span>
                 </div>
@@ -159,8 +159,8 @@ export function analyticsPage(): string {
           ${topPosts.map((p, i) => `
           <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:12px;transition:background 0.2s;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
             <div style="font-size:18px;font-weight:900;color:rgba(255,255,255,0.15);width:22px;flex-shrink:0;line-height:1.4;">${i + 1}</div>
-            <div style="width:32px;height:32px;border-radius:10px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="${p.icon}" style="color:#fff;font-size:13px;"></i>
+            <div style="width:34px;height:34px;border-radius:10px;background:${p.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15);">
+              ${platformIcon(p.iconId, 16)}
             </div>
             <div style="flex:1;min-width:0;">
               <p style="font-size:13px;font-weight:600;color:#fff;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.text}</p>
@@ -308,7 +308,7 @@ export function analyticsPage(): string {
         ['X (Twitter)','9800','14200','28000','1.8%','67','+5%'],
         ['LinkedIn','4200','6800','12000','4.1%','18','+11%'],
       ];
-      const csv = rows.map(r => r.join(',')).join('\n');
+      const csv = rows.map(r => r.join(',')).join('\\n');
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a'); a.href = url;

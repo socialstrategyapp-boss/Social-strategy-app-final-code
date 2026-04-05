@@ -176,7 +176,7 @@ app.post('/api/analyze', async (c) => {
   const accountEmail = body.accountEmail || null
   const apiKey = c.env?.OPENAI_API_KEY
 
-  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured. Add your key in Settings → Integrations to enable real analysis.' }, 500)
 
   // ── Credit gate ──────────────────────────────────────────────────────────
   if (c.env?.DB) {
@@ -258,13 +258,53 @@ Be specific to the actual URL and business. Do NOT use generic placeholder text.
   }
 })
 
+// ─── Demo content generator (no API key needed) ──────────────────────────────
+function generateDemoPosts(brandName: string, industry: string, tone: string, topic: string, platforms: string[]): any[] {
+  const toneEmoji: Record<string,string> = { Professional: '💼', Friendly: '😊', Playful: '🎉', Bold: '🔥', Inspiring: '✨', Informative: '📊' }
+  const te = toneEmoji[tone] || '✨'
+  const platformData: Record<string,{type:string, tip:string, prefix:string, suffix:string}> = {
+    'Instagram': { type: 'Caption + Image', tip: 'Post between 6–9 AM for highest engagement.', prefix: te + ' ', suffix: `\n\n#${(brandName||'brand').replace(/\s/g,'')} #${(industry||'business').replace(/\s+/g,'').toLowerCase()} #socialmedia #marketing #growth #trending #viral` },
+    'TikTok': { type: 'Short Video Caption', tip: 'Use trending audio and hook viewers in first 2 seconds.', prefix: '🎵 ', suffix: `\n\n#fyp #foryoupage #viral #${(brandName||'brand').replace(/\s/g,'').toLowerCase()} #${topic.split(' ')[0].toLowerCase()}` },
+    'Facebook': { type: 'Engagement Post', tip: 'Ask a question to boost comments and reach.', prefix: '📣 ', suffix: `\n\n👉 Click Like if you agree!\n💬 Drop your thoughts in the comments below!` },
+    'LinkedIn': { type: 'Professional Update', tip: 'Post on Tuesday/Wednesday mornings for B2B reach.', prefix: '🚀 ', suffix: `\n\n#${industry || 'business'} #leadership #innovation #${(brandName||'brand').replace(/\s/g,'')} #professional` },
+    'X (Twitter)': { type: 'Tweet', tip: 'Keep under 280 chars and use 1–2 hashtags max.', prefix: te + ' ', suffix: ` #${(brandName||'brand').replace(/\s/g,'')}` },
+    'YouTube': { type: 'Video Description', tip: 'Include timestamps and keywords in description.', prefix: '▶️ ', suffix: `\n\n📌 Subscribe for more ${industry || 'content'} tips!\n🔔 Hit the notification bell!\n\n#${(brandName||'brand').replace(/\s/g,'')} #youtube #${topic.split(' ')[0].toLowerCase()}` },
+    'Threads': { type: 'Thread Post', tip: 'Use conversational tone – Threads rewards authenticity.', prefix: '💬 ', suffix: `\n\n#${(brandName||'brand').replace(/\s/g,'')} #threads` },
+    'Pinterest': { type: 'Pin Description', tip: 'Use descriptive keywords – Pinterest is a search engine.', prefix: '📌 ', suffix: `\n\n#${(brandName||'brand').replace(/\s/g,'')} #${industry||'lifestyle'} #inspiration #ideas` },
+  }
+  const contentVariants = [
+    'Exciting news from ' + brandName + '! ' + te + ' We\u2019re diving deep into ' + topic + ' and we\u2019re here to share everything we know about making it work for the ' + (industry || 'industry') + '.\n\nOur team has been working tirelessly to bring you the best experience possible. Here\u2019s what you can expect:\n\n\u2705 Expert insights on ' + topic + '\n\u2705 Proven strategies that deliver results\n\u2705 Real value for your ' + (industry || 'business') + '\n\nReady to transform the way you approach ' + topic + '? We\u2019ve got you covered. ' + (tone === 'Professional' ? 'Let\u2019s connect and discuss how we can elevate your strategy.' : tone === 'Playful' ? 'Let\u2019s go! This is going to be SO good \uD83D\uDE4C' : 'Your journey starts here. Take the first step today.'),
+    te + ' ' + topic.charAt(0).toUpperCase() + topic.slice(1) + ' \u2014 here\u2019s what the top brands in ' + (industry || 'the industry') + ' are doing differently.\n\nAt ' + brandName + ', we believe in cutting through the noise and delivering real results. Here\u2019s our proven approach:\n\n\uD83D\uDD39 Strategy first \u2014 understanding YOUR audience\n\uD83D\uDD39 Content that converts, not just entertains\n\uD83D\uDD39 Data-driven decisions at every step\n\nThe brands winning right now aren\u2019t the ones posting more \u2014 they\u2019re the ones posting SMARTER.\n\nAre you ready to join them?',
+    'We need to talk about ' + topic + '. \uD83D\uDCA1\n\n' + brandName + ' has seen it all in the ' + (industry || 'industry') + ', and one thing is clear: the brands that ' + (tone === 'Professional' ? 'prioritize strategic planning' : tone === 'Bold' ? 'GO BIG and take action' : 'stay authentic and consistent') + ' are the ones that WIN.\n\nHere\u2019s what we\u2019re doing differently:\n\n1\uFE0F\u20E3 Focusing on what actually moves the needle\n2\uFE0F\u20E3 Building genuine connections with our audience\n3\uFE0F\u20E3 Consistently delivering value through ' + topic + '\n\nWhat\u2019s your biggest challenge with ' + topic + '? Drop it in the comments \u2014 we read every single one.',
+  ]
+  const posts = []
+  for (let i = 0; i < platforms.length; i++) {
+    const platform = platforms[i]
+    const pd = platformData[platform] || { type: 'Post', tip: 'Engage with your audience consistently.', prefix: te + ' ', suffix: '' }
+    const base = contentVariants[i % contentVariants.length]
+    const content = pd.prefix + base + pd.suffix
+    posts.push({ platform, type: pd.type, content, tip: pd.tip, imagePrompt: `${tone} marketing visual for ${brandName}, ${industry} industry, ${topic} themed, vibrant neon colors, professional photography style` })
+  }
+  return posts
+}
+
 // ─── REAL OpenAI Content Generation (text posts) ─────────────────────────────
 app.post('/api/generate-content', async (c) => {
   const body = await c.req.json()
   const { brandName, industry, tone, topic, platforms, clientId = null, characterId = null, accountEmail = null } = body
   const apiKey = c.env?.OPENAI_API_KEY
 
-  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+  // ── DEMO MODE: No API key — generate rich sample posts ───────────────────
+  if (!apiKey) {
+    const demoPosts = generateDemoPosts(
+      brandName || 'Your Brand',
+      industry || 'Business',
+      tone || 'Friendly',
+      topic || 'our latest update',
+      Array.isArray(platforms) ? platforms : ['Instagram']
+    )
+    return c.json({ success: true, posts: demoPosts, demo: true })
+  }
 
   // ── Credit gate ──────────────────────────────────────────────────────────
   if (c.env?.DB) {
@@ -367,7 +407,13 @@ app.post('/api/generate-image', async (c) => {
   const { prompt, style = 'vivid', size = '1024x1024', clientId = null, characterId = null, saveToLibrary = true, accountEmail = null } = body
   const apiKey = c.env?.OPENAI_API_KEY
 
-  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+  if (!apiKey) {
+    // Demo mode: return a placeholder image
+    const colors = ['FF2D78', '00E5FF', 'A78BFA', 'FFD600', '00ff88']
+    const color = colors[Math.floor(Math.random() * colors.length)]
+    const demoUrl = `https://placehold.co/1024x1024/${color}/030818?text=${encodeURIComponent((prompt || 'AI Image').slice(0, 20))}&font=playfair-display`
+    return c.json({ success: true, url: demoUrl, revisedPrompt: prompt, demo: true })
+  }
   if (!prompt) return c.json({ success: false, error: 'Image prompt is required' }, 400)
 
   // ── Credit gate ──────────────────────────────────────────────────────────
@@ -432,7 +478,16 @@ app.post('/api/generate-video-script', async (c) => {
   const { brandName, industry, tone, topic, platform = 'TikTok', duration = '30', clientId = null, characterId = null, accountEmail = null } = body
   const apiKey = c.env?.OPENAI_API_KEY
 
-  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+  if (!apiKey) {
+    // Demo video script
+    return c.json({
+      success: true, platform, demo: true,
+      title: `${brandName}: ${topic} – Your Complete Guide`,
+      hook: `Stop scrolling! This ${topic} tip will change everything for your ${industry || 'business'} 🔥`,
+      script: `[HOOK - 0-3s]\n"Stop! This is the ${topic} secret that ${industry || 'businesses'} don't want you to know."\n\n[SETUP - 3-8s]\n"Hi, I'm from ${brandName}, and today we're diving deep into ${topic}."\n[SHOW: Energetic presenter, bold text overlay]\n\n[MAIN CONTENT - 8-22s]\n"Here's what you need to know:\nFirst – [Key point 1 about ${topic}]\nSecond – [Proven strategy]\nThird – [The secret weapon]\n[CUT TO: Product/service demonstration]"\n\n[CTA - 22-${duration}s]\n"Ready to transform your results? Link in bio. Follow for more tips!"\n[SHOW: Call-to-action screen with ${brandName} branding]`,
+      hashtags: [`#${(brandName||'brand').replace(/\s/g,'')}`, `#${(topic.split(' ')[0]||'tips').toLowerCase()}`, `#fyp`, `#viral`, `#${(industry||'business').replace(/\s/g,'').toLowerCase()}`, '#socialmedia'],
+    })
+  }
 
   // ── Credit gate ──────────────────────────────────────────────────────────
   if (c.env?.DB) {

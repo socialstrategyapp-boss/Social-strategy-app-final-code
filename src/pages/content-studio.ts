@@ -12,12 +12,12 @@ export function contentStudioPage(): string {
     { id: 'pi', name: 'Pinterest', icon: 'fab fa-pinterest', bg: 'linear-gradient(135deg,#E60023,#ad081b)', checked: false },
   ]
 
-  const platformIcons: Record<string, string> = {
+  const platformIcons = {
     ig: 'fab fa-instagram', tk: 'fab fa-tiktok', fb: 'fab fa-facebook',
     li: 'fab fa-linkedin', tw: 'fab fa-twitter', yt: 'fab fa-youtube',
     th: 'fas fa-at', pi: 'fab fa-pinterest'
   }
-  const platformBgs: Record<string, string> = {
+  const platformBgs = {
     ig: 'linear-gradient(135deg,#E1306C,#F77737)',
     tk: 'linear-gradient(135deg,#010101,#69C9D0)',
     fb: 'linear-gradient(135deg,#1877F2,#0d5fcc)',
@@ -430,7 +430,7 @@ export function contentStudioPage(): string {
 
     function copyAll() {
       const posts = document.querySelectorAll('.content-card textarea');
-      const allText = Array.from(posts).map(p => (p as HTMLTextAreaElement).value).join('\\n\\n---\\n\\n');
+      const allText = Array.from(posts).map(p => (p).value).join('\\n\\n---\\n\\n');
       navigator.clipboard.writeText(allText).then(() => {
         const btn = document.getElementById('copyAllBtn');
         if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy All'; }, 2000); }
@@ -445,8 +445,8 @@ export function contentStudioPage(): string {
       chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
     }
 
-    function useTopicIdea(el: HTMLElement) {
-      const topicArea = document.getElementById('contentTopic') as HTMLTextAreaElement;
+    function useTopicIdea(el) {
+      const topicArea = document.getElementById('contentTopic');
       topicArea.value = el.textContent.trim();
       topicArea.style.borderColor = '#00E5FF';
       setTimeout(() => { topicArea.style.borderColor = 'rgba(255,255,255,0.1)'; }, 1500);
@@ -455,12 +455,12 @@ export function contentStudioPage(): string {
     }
 
     function openVideoScriptModal() {
-      const brandName = (document.getElementById('brandName') as HTMLInputElement).value.trim();
-      const industry = (document.getElementById('industry') as HTMLSelectElement).value;
-      const topic = (document.getElementById('contentTopic') as HTMLTextAreaElement).value.trim();
-      (document.getElementById('vsModalBrand') as HTMLInputElement).value = brandName;
-      (document.getElementById('vsModalIndustry') as HTMLInputElement).value = industry;
-      (document.getElementById('vsModalTopic') as HTMLInputElement).value = topic;
+      const brandName = (document.getElementById('brandName')).value.trim();
+      const industry = (document.getElementById('industry')).value;
+      const topic = (document.getElementById('contentTopic')).value.trim();
+      (document.getElementById('vsModalBrand')).value = brandName;
+      (document.getElementById('vsModalIndustry')).value = industry;
+      (document.getElementById('vsModalTopic')).value = topic;
       document.getElementById('videoScriptModal').style.display = 'flex';
     }
 
@@ -469,16 +469,16 @@ export function contentStudioPage(): string {
     }
 
     async function generateVideoScriptFromModal() {
-      const brandName = (document.getElementById('vsModalBrand') as HTMLInputElement).value.trim();
-      const industry = (document.getElementById('vsModalIndustry') as HTMLInputElement).value;
-      const topic = (document.getElementById('vsModalTopic') as HTMLInputElement).value.trim();
-      const platform = (document.getElementById('vsModalPlatform') as HTMLSelectElement).value;
-      const duration = (document.getElementById('vsModalDuration') as HTMLSelectElement).value;
+      const brandName = (document.getElementById('vsModalBrand')).value.trim();
+      const industry = (document.getElementById('vsModalIndustry')).value;
+      const topic = (document.getElementById('vsModalTopic')).value.trim();
+      const platform = (document.getElementById('vsModalPlatform')).value;
+      const duration = (document.getElementById('vsModalDuration')).value;
       const tone = getSelectedTone();
       if (!brandName || !topic) { alert('Please fill in Brand Name and Topic.'); return; }
       const btn = document.getElementById('vsGenerateBtn');
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-      (btn as HTMLButtonElement).disabled = true;
+      (btn).disabled = true;
       const resultEl = document.getElementById('vsScriptResult');
       resultEl.style.display = 'none';
       try {
@@ -487,7 +487,7 @@ export function contentStudioPage(): string {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ brandName, industry, tone, topic, platform, duration })
         });
-        const data = await resp.json() as { success: boolean; title?: string; hook?: string; script?: string; hashtags?: string[]; error?: string };
+        const data = await resp.json();
         if (data.success) {
           resultEl.style.display = 'block';
           resultEl.innerHTML = \`<div style="background:rgba(255,45,120,0.07);border:1px solid rgba(255,45,120,0.2);border-radius:12px;padding:16px;margin-top:16px;">
@@ -501,27 +501,27 @@ export function contentStudioPage(): string {
         }
       } catch(e) { alert('Error generating video script.'); }
       btn.innerHTML = '<i class="fas fa-video"></i> Generate Script';
-      (btn as HTMLButtonElement).disabled = false;
+      (btn).disabled = false;
     }
 
-    async function generateImagePreset(preset: string, idx: number) {
-      const brandName = (document.getElementById('brandName') as HTMLInputElement).value.trim() || 'My Brand';
-      const industry = (document.getElementById('industry') as HTMLSelectElement).value || 'Business';
-      const prompts: Record<string, string> = {
+    async function generateImagePreset(preset, idx) {
+      const brandName = (document.getElementById('brandName')).value.trim() || 'My Brand';
+      const industry = (document.getElementById('industry')).value || 'Business';
+      const prompts = {
         'Product Hero': \`Professional product hero shot for \${brandName}, \${industry} industry, clean white background, studio lighting, premium\`,
         'Team Photo': \`Professional team photo for \${brandName}, modern office, diverse team, natural lighting, editorial style\`,
         'Abstract Art': \`Abstract brand art for \${brandName}, vibrant gradient colors, modern geometric shapes, digital art, \${industry} themed\`
       };
-      (document.getElementById('customImagePrompt') as HTMLInputElement).value = prompts[preset] || preset;
+      (document.getElementById('customImagePrompt')).value = prompts[preset] || preset;
       await generateCustomImage();
     }
 
     async function generateCustomImage() {
-      const prompt = (document.getElementById('customImagePrompt') as HTMLInputElement).value.trim();
+      const prompt = (document.getElementById('customImagePrompt')).value.trim();
       if (!prompt) { alert('Please enter an image prompt or select a preset.'); return; }
       const btn = document.getElementById('genImgBtn');
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating... (20-30s)';
-      (btn as HTMLButtonElement).disabled = true;
+      (btn).disabled = true;
       const resultEl = document.getElementById('generatedImageResult');
       try {
         const resp = await fetch('/api/generate-image', {
@@ -529,7 +529,7 @@ export function contentStudioPage(): string {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt, style: 'vivid', size: '1024x1024' })
         });
-        const data = await resp.json() as { success: boolean; url?: string; error?: string };
+        const data = await resp.json();
         if (data.success && data.url) {
           resultEl.style.display = 'block';
           const imgUrl = data.url;
@@ -539,11 +539,11 @@ export function contentStudioPage(): string {
             </div></div>\`;
         } else {
           resultEl.style.display = 'block';
-          resultEl.innerHTML = \`<div style="color:#f87171;font-size:13px;padding:10px;">\${(data as {error?:string}).error || 'Image generation failed.'}</div>\`;
+          resultEl.innerHTML = \`<div style="color:#f87171;font-size:13px;padding:10px;">\${(data).error || 'Image generation failed.'}</div>\`;
         }
       } catch(e) { alert('Error generating image.'); }
       btn.innerHTML = '<i class="fas fa-sparkles"></i> Generate Custom Image (1 credit)';
-      (btn as HTMLButtonElement).disabled = false;
+      (btn).disabled = false;
     }
 
     // ═══════════════════════════════════════════════════════════════
@@ -575,8 +575,8 @@ export function contentStudioPage(): string {
       }
 
       const selectedPlatforms = ['ig','tk','fb','li','tw','yt','th','pi']
-        .filter(id => (document.getElementById('plat_' + id) as HTMLInputElement)?.checked)
-        .map(id => ({'ig':'Instagram','tk':'TikTok','fb':'Facebook','li':'LinkedIn','tw':'X (Twitter)','yt':'YouTube','th':'Threads','pi':'Pinterest'} as Record<string,string>)[id]);
+        .filter(id => (document.getElementById('plat_' + id))?.checked)
+        .map(id => ({'ig':'Instagram','tk':'TikTok','fb':'Facebook','li':'LinkedIn','tw':'X (Twitter)','yt':'YouTube','th':'Threads','pi':'Pinterest'})[id]);
 
       if (selectedPlatforms.length === 0) {
         alert('Please select at least one platform.');
@@ -606,7 +606,7 @@ export function contentStudioPage(): string {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(reviewParams)
         });
-        const data = await resp.json() as { success: boolean; posts?: any[]; error?: string };
+        const data = await resp.json();
 
         if (!data.success || !data.posts) {
           status.innerHTML = \`
@@ -616,6 +616,16 @@ export function contentStudioPage(): string {
             <div style="font-size:14px;font-weight:700;color:#f87171;">\${data.error || 'Generation failed. Try again.'}</div>
           \`;
           return;
+        }
+
+        // Show demo banner if no API key
+        if (data.demo) {
+          const demoBanner = document.getElementById('demoBanner') || document.createElement('div');
+          demoBanner.id = 'demoBanner';
+          demoBanner.style.cssText = 'background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.35);border-radius:12px;padding:12px 16px;font-size:13px;color:#FFD600;display:flex;align-items:center;gap:10px;margin-bottom:4px;';
+          demoBanner.innerHTML = '<i class="fas fa-star" style="font-size:16px;"></i><span><strong>Demo Mode</strong> — Sample content shown. Add your <a href="/settings" style="color:#FFD600;text-decoration:underline;">OpenAI API key</a> in Settings for real AI-generated posts.</span>';
+          const cardsArea = document.getElementById('contentCards');
+          if (cardsArea && !document.getElementById('demoBanner')) cardsArea.prepend(demoBanner);
         }
 
         // Update history
@@ -661,11 +671,11 @@ export function contentStudioPage(): string {
     // ═══════════════════════════════════════════════════════════════
     //  REVIEW MODAL — open / render
     // ═══════════════════════════════════════════════════════════════
-    function openReviewModal(posts: any[] | null) {
+    function openReviewModal(posts) {
       if (posts) {
         reviewPosts = posts;
         reviewStatus = {};
-        posts.forEach((_: any, i: number) => { reviewStatus[i] = 'pending'; });
+        posts.forEach((_, i) => { reviewStatus[i] = 'pending'; });
       }
       if (!reviewPosts.length) return;
       renderReviewCards();
@@ -691,11 +701,11 @@ export function contentStudioPage(): string {
 
     function renderReviewCards() {
       const container = document.getElementById('reviewCardsList');
-      container.innerHTML = reviewPosts.map((post: any, i: number) => {
-        const pidMap: Record<string,string> = {'Instagram':'ig','TikTok':'tk','Facebook':'fb','LinkedIn':'li','X (Twitter)':'tw','YouTube':'yt','Threads':'th','Pinterest':'pi'};
+      container.innerHTML = reviewPosts.map((post, i) => {
+        const pidMap = {'Instagram':'ig','TikTok':'tk','Facebook':'fb','LinkedIn':'li','X (Twitter)':'tw','YouTube':'yt','Threads':'th','Pinterest':'pi'};
         const pid = pidMap[post.platform] || 'ig';
-        const bg = (platformBgs as Record<string,string>)[pid] || 'linear-gradient(135deg,#333,#555)';
-        const icon = (platformIcons as Record<string,string>)[pid] || 'fas fa-share';
+        const bg = platformBgs[pid] || 'linear-gradient(135deg,#333,#555)';
+        const icon = platformIcons[pid] || 'fas fa-share';
         const st = reviewStatus[i];
         const borderColor = st === 'approved' ? 'rgba(74,222,128,0.4)' : st === 'rejected' ? 'rgba(248,113,113,0.3)' : 'rgba(255,255,255,0.09)';
         const bgColor = st === 'approved' ? 'rgba(74,222,128,0.04)' : st === 'rejected' ? 'rgba(248,113,113,0.04)' : 'rgba(255,255,255,0.02)';
@@ -751,9 +761,9 @@ export function contentStudioPage(): string {
     }
 
     // ── Review card helpers ────────────────────────────────────────────────────
-    function setReviewStatus(i: number, status: 'approved'|'rejected'|'pending') {
+    function setReviewStatus(i, status) {
       // Save any edits from the textarea back into reviewPosts
-      const ta = document.getElementById('rtarea_' + i) as HTMLTextAreaElement;
+      const ta = document.getElementById('rtarea_' + i);
       if (ta) reviewPosts[i].content = ta.value;
       reviewStatus[i] = status;
       // Re-render just that card for performance
@@ -767,7 +777,7 @@ export function contentStudioPage(): string {
 
     function approveAll() {
       reviewPosts.forEach((_, i) => {
-        const ta = document.getElementById('rtarea_' + i) as HTMLTextAreaElement;
+        const ta = document.getElementById('rtarea_' + i);
         if (ta) reviewPosts[i].content = ta.value;
         reviewStatus[i] = 'approved';
       });
@@ -793,8 +803,8 @@ export function contentStudioPage(): string {
       document.getElementById('approveProgress').textContent = approved + ' of ' + reviewPosts.length + ' approved';
     }
 
-    function copyReviewCard(i: number) {
-      const ta = document.getElementById('rtarea_' + i) as HTMLTextAreaElement;
+    function copyReviewCard(i) {
+      const ta = document.getElementById('rtarea_' + i);
       const btn = document.getElementById('copyRBtn_' + i);
       if (ta && btn) {
         navigator.clipboard.writeText(ta.value).then(() => {
@@ -804,20 +814,20 @@ export function contentStudioPage(): string {
       }
     }
 
-    function scheduleApprovedCard(i: number) {
+    function scheduleApprovedCard(i) {
       setReviewStatus(i, 'approved');
       alert('Post ' + (i+1) + ' scheduled to queue!');
     }
 
     // ── Per-card Regenerate with mutation params ───────────────────────────────
-    async function regenerateCard(i: number) {
-      const btn = document.getElementById('regenBtn_' + i) as HTMLButtonElement;
+    async function regenerateCard(i) {
+      const btn = document.getElementById('regenBtn_' + i);
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
       btn.disabled = true;
 
-      const mutTone = (document.getElementById('mutTone') as HTMLSelectElement).value;
-      const mutLength = (document.getElementById('mutLength') as HTMLSelectElement).value;
-      const mutInstruction = (document.getElementById('mutInstruction') as HTMLInputElement).value.trim();
+      const mutTone = (document.getElementById('mutTone')).value;
+      const mutLength = (document.getElementById('mutLength')).value;
+      const mutInstruction = (document.getElementById('mutInstruction')).value.trim();
 
       const platform = reviewPosts[i].platform;
       const params = {
@@ -835,7 +845,7 @@ export function contentStudioPage(): string {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params)
         });
-        const data = await resp.json() as { success: boolean; posts?: any[]; error?: string };
+        const data = await resp.json();
         if (data.success && data.posts && data.posts[0]) {
           reviewPosts[i].content = data.posts[0].content;
           reviewStatus[i] = 'pending';
@@ -867,11 +877,11 @@ export function contentStudioPage(): string {
       closeReviewModal();
 
       const cardsContainer = document.getElementById('contentCards');
-      cardsContainer.innerHTML = approved.map((post: any) => {
-        const pidMap: Record<string,string> = {'Instagram':'ig','TikTok':'tk','Facebook':'fb','LinkedIn':'li','X (Twitter)':'tw','YouTube':'yt','Threads':'th','Pinterest':'pi'};
+      cardsContainer.innerHTML = approved.map((post) => {
+        const pidMap = {'Instagram':'ig','TikTok':'tk','Facebook':'fb','LinkedIn':'li','X (Twitter)':'tw','YouTube':'yt','Threads':'th','Pinterest':'pi'};
         const pid = pidMap[post.platform] || 'ig';
-        const bg = (platformBgs as Record<string,string>)[pid] || 'linear-gradient(135deg,#333,#555)';
-        const icon = (platformIcons as Record<string,string>)[pid] || 'fas fa-share';
+        const bg = platformBgs[pid] || 'linear-gradient(135deg,#333,#555)';
+        const icon = platformIcons[pid] || 'fas fa-share';
         return \`
         <div class="content-card" style="background:rgba(74,222,128,0.03);border:1.5px solid rgba(74,222,128,0.2);border-radius:16px;overflow:hidden;">
           <div style="background:rgba(255,255,255,0.04);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);">
@@ -929,10 +939,10 @@ export function contentStudioPage(): string {
         const saved = JSON.parse(localStorage.getItem('ss_profile_v1') || '{}');
         if (saved.pBizName) {
           const bn = document.getElementById('brandName');
-          if (bn && !(bn as HTMLInputElement).value) (bn as HTMLInputElement).value = saved.pBizName;
+          if (bn && !(bn).value) (bn).value = saved.pBizName;
         }
         if (saved.pIndustry) {
-          const ind = document.getElementById('industry') as HTMLSelectElement;
+          const ind = document.getElementById('industry');
           if (ind) {
             // Find matching option
             for (let i = 0; i < ind.options.length; i++) {
@@ -944,7 +954,7 @@ export function contentStudioPage(): string {
         }
         // Pre-fill weekly wishlist as topic hint
         if (saved.pWeeklyWish || saved.pContentWish) {
-          const topic = document.getElementById('contentTopic') as HTMLTextAreaElement;
+          const topic = document.getElementById('contentTopic');
           if (topic && !topic.value) {
             topic.placeholder = (saved.pWeeklyWish || saved.pContentWish || '').substring(0, 120) + '...';
           }

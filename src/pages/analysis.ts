@@ -353,7 +353,7 @@ export function analysisPage(): string {
     (function initFromProfile() {
       try {
         const saved = JSON.parse(localStorage.getItem('ss_profile_v1') || '{}');
-        const urlInput = document.getElementById('urlInput') as HTMLInputElement;
+        const urlInput = document.getElementById('urlInput');
         if (urlInput && !urlInput.value) {
           // Pre-fill from URL query param OR profile
           const params = new URLSearchParams(window.location.search);
@@ -379,7 +379,7 @@ export function analysisPage(): string {
 
           // If no credits or reports left, disable scan button
           if ((data.creditsRemaining || 0) < 10 || (data.reportsRemaining === 0 && data.reportsMax !== -1)) {
-            const btn = document.getElementById('analyzeBtn') as HTMLButtonElement;
+            const btn = document.getElementById('analyzeBtn');
             if (btn) {
               btn.disabled = true;
               btn.style.background = 'rgba(255,255,255,0.05)';

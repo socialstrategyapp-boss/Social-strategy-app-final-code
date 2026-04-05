@@ -1,7 +1,7 @@
 import { layout } from './layout'
 
 export function schedulerPage(): string {
-  const platformColors: Record<string, string> = {
+  const platformColors = {
     ig: 'linear-gradient(135deg,#E1306C,#F77737)',
     tk: 'linear-gradient(135deg,#010101,#69C9D0)',
     fb: 'linear-gradient(135deg,#1877F2,#0d5fcc)',
@@ -9,7 +9,7 @@ export function schedulerPage(): string {
     tw: 'linear-gradient(135deg,#1DA1F2,#0d7abc)',
     yt: 'linear-gradient(135deg,#FF0000,#cc0000)',
   }
-  const platformIconsMap: Record<string, string> = {
+  const platformIconsMap = {
     ig: 'fab fa-instagram',
     tk: 'fab fa-tiktok',
     fb: 'fab fa-facebook',
@@ -18,7 +18,7 @@ export function schedulerPage(): string {
     yt: 'fab fa-youtube',
   }
 
-  const calPosts: Record<number, { p: string; text: string }[]> = {
+  const calPosts = {
     1: [{ p: 'ig', text: 'Product launch post' }],
     2: [{ p: 'li', text: 'Thought leadership' }],
     3: [{ p: 'tk', text: 'Behind the scenes' }],
