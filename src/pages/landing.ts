@@ -39,14 +39,15 @@ export function landingPage(): string {
 
     /* ── NAVBAR ── */
     .navbar{position:fixed;top:0;left:0;right:0;z-index:100;
-      background:rgba(8,4,32,0.92);backdrop-filter:blur(20px);
+      background:rgba(8,4,32,0.95);backdrop-filter:blur(20px);
       border-bottom:1px solid rgba(0,229,255,0.18);}
+    /* Desktop inner: logo | links | auth */
     .navbar-inner{max-width:1400px;margin:0 auto;padding:0 20px;height:68px;
-      display:flex;align-items:center;gap:10px;overflow:hidden;}
+      display:flex;align-items:center;gap:10px;}
     /* Logo: fixed size, never shrinks */
     .navbar-logo{flex-shrink:0;display:flex;align-items:center;gap:10px;text-decoration:none;}
-    /* Nav links: shrink and hide before buttons do */
-    .nav-links{display:flex;align-items:center;gap:4px;flex:1 1 auto;min-width:0;overflow:hidden;}
+    /* Nav links: fill space, hide on mobile */
+    .nav-links{display:flex;align-items:center;gap:4px;flex:1 1 auto;min-width:0;}
     .nav-link{font-size:13px;font-weight:700;padding:7px 12px;border-radius:999px;
       text-decoration:none;transition:all .2s;border:1.5px solid transparent;white-space:nowrap;}
     .nl-features{color:#00E5FF;border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.08);}
@@ -57,23 +58,62 @@ export function landingPage(): string {
     .nl-platforms:hover{background:rgba(167,139,250,0.2);box-shadow:0 0 20px rgba(167,139,250,0.5);}
     .nl-pricing{color:#FFD600;border-color:rgba(255,214,0,0.3);background:rgba(255,214,0,0.08);}
     .nl-pricing:hover{background:rgba(255,214,0,0.2);box-shadow:0 0 20px rgba(255,214,0,0.5);}
-    /* Auth: flex-shrink:0 so it NEVER gets pushed off screen */
+    /* Auth: always visible, never pushed off */
     .nav-auth{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto;}
     .btn-signin{display:inline-flex;align-items:center;justify-content:center;
       font-size:13px;font-weight:800;padding:9px 18px;border-radius:999px;
       text-decoration:none;white-space:nowrap;transition:all .25s;
       color:#fff;border:2px solid #00E5FF;
       background:linear-gradient(135deg,rgba(0,229,255,0.18),rgba(0,112,243,0.14));
-      box-shadow:0 0 18px rgba(0,229,255,0.45),0 0 36px rgba(0,229,255,0.15),inset 0 1px 0 rgba(255,255,255,0.2);
+      box-shadow:0 0 18px rgba(0,229,255,0.45),inset 0 1px 0 rgba(255,255,255,0.2);
       text-shadow:0 0 12px rgba(0,229,255,0.9);}
-    .btn-signin:hover{background:linear-gradient(135deg,rgba(0,229,255,0.32),rgba(0,112,243,0.25));box-shadow:0 0 32px rgba(0,229,255,0.7),0 0 60px rgba(0,229,255,0.3);transform:translateY(-2px);}
+    .btn-signin:hover{background:linear-gradient(135deg,rgba(0,229,255,0.32),rgba(0,112,243,0.25));box-shadow:0 0 32px rgba(0,229,255,0.7);transform:translateY(-2px);}
     .btn-start-free{display:inline-flex;align-items:center;gap:6px;
       background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);
       color:#fff;font-size:13px;font-weight:800;padding:9px 18px;border-radius:999px;
       text-decoration:none;white-space:nowrap;border:1px solid rgba(255,255,255,0.2);
-      box-shadow:0 0 22px rgba(255,45,120,0.55),0 0 44px rgba(124,58,237,0.25),inset 0 1px 0 rgba(255,255,255,0.2);
+      box-shadow:0 0 22px rgba(255,45,120,0.55),inset 0 1px 0 rgba(255,255,255,0.2);
       transition:all .25s;}
-    .btn-start-free:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(255,45,120,0.85),0 0 70px rgba(124,58,237,0.45);}
+    .btn-start-free:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(255,45,120,0.85);}
+
+    /* ── MOBILE NAVBAR (≤ 600px): stacked — logo row + button row ── */
+    @media(max-width:600px){
+      .navbar{ height:auto; }
+      .navbar-inner{
+        flex-direction:column;
+        height:auto;
+        padding:10px 16px 10px;
+        gap:8px;
+        align-items:stretch;
+      }
+      /* Top row inside navbar: logo left, nothing right */
+      .navbar-logo{ justify-content:center; }
+      /* Nav links always hidden on mobile */
+      .nav-links{ display:none!important; }
+      /* Auth row: full width, both buttons equal, side by side */
+      .nav-auth{
+        margin-left:0;
+        width:100%;
+        display:flex;
+        gap:10px;
+      }
+      .btn-signin{
+        flex:1;
+        justify-content:center;
+        font-size:13px!important;
+        padding:10px 8px!important;
+      }
+      .btn-start-free{
+        flex:1;
+        justify-content:center;
+        font-size:13px!important;
+        padding:10px 8px!important;
+      }
+      /* Hero needs extra top padding since navbar is taller */
+      section[style*="padding-top:72px"]{
+        padding-top:130px!important;
+      }
+    }
 
     /* ── CTA BUTTONS ── */
     .btn-scan{display:inline-flex;align-items:center;justify-content:center;gap:10px;
@@ -194,7 +234,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      HERO
 ══════════════════════════════════════════ -->
-<section style="min-height:100vh;padding-top:72px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;
+<section class="hero-section" style="min-height:100vh;padding-top:72px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:clip;
   background:radial-gradient(ellipse at 20% 30%,rgba(255,45,120,0.25) 0%,transparent 50%),
              radial-gradient(ellipse at 80% 20%,rgba(0,229,255,0.22) 0%,transparent 50%),
              radial-gradient(ellipse at 50% 85%,rgba(124,58,237,0.28) 0%,transparent 55%),
@@ -780,22 +820,10 @@ export function landingPage(): string {
 <style>
   @media(max-width:900px){
     .nav-links{display:none!important;}
-    .btn-signin{padding:8px 14px!important;font-size:12px!important;}
-    .btn-start-free{padding:8px 14px!important;font-size:12px!important;}
   }
-  @media(max-width:500px){
-    .btn-signin{display:none!important;}
-    .btn-start-free{padding:9px 16px!important;font-size:12px!important;}
-    .navbar-inner{padding:0 12px!important;}
-    .navbar-logo > div:last-child{display:none!important;}
-    /* Hero text: prevent overflow on small screens */
-    .hero-social-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(4px,2.5vw,16px)!important;}
-    .hero-strategy-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(4px,2.5vw,16px)!important;}
-    .hero-logo-wrap{width:clamp(140px,50vw,200px)!important;height:clamp(140px,50vw,200px)!important;}
-    /* Tagline wrap on small screens */
-    div[style*="Strategy Genius"]{font-size:10px!important;letter-spacing:1px!important;}
-    /* CTA buttons stack on mobile */
-    div[style*="display:flex;gap:24px"]{flex-direction:column!important;align-items:center!important;}
+  /* Mobile navbar is stacked — needs extra hero padding */
+  @media(max-width:600px){
+    .hero-section{padding-top:130px!important;}
   }
   @media(max-width:768px){
     div[style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
@@ -805,7 +833,6 @@ export function landingPage(): string {
     /* How it works step cards — full width, smaller padding */
     div[style*="display:flex;align-items:flex-start;gap:28px;"]{padding:24px 18px!important;}
     div[style*="width:72px;height:72px"]{width:52px!important;height:52px!important;}
-    /* Description text must never wrap to 1 char per line */
     div[style*="flex:1;min-width:0"] p{font-size:14px!important;}
   }
   @media(max-width:480px){
@@ -815,6 +842,11 @@ export function landingPage(): string {
     div[style*="display:flex;align-items:flex-start;gap:28px;"]{flex-direction:column!important;gap:16px!important;padding:20px 16px!important;}
     div[style*="width:72px;height:72px"]{width:48px!important;height:48px!important;margin-left:0!important;}
     h3[style*="font-weight:900;font-size:24px"]{font-size:18px!important;}
+    /* Hero text clamp on very small phones */
+    .hero-social-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(3px,2vw,12px)!important;}
+    .hero-strategy-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(3px,2vw,12px)!important;}
+    .hero-logo-wrap{width:clamp(130px,45vw,180px)!important;height:clamp(130px,45vw,180px)!important;}
+    div[style*="display:flex;gap:24px"]{flex-direction:column!important;align-items:center!important;}
   }
 </style>
 </body>
