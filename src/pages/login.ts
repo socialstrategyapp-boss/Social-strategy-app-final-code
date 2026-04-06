@@ -61,15 +61,15 @@ export function loginPage(): string {
           rgba(255,45,120,0.45) 70%,
           rgba(124,58,237,0.3) 100%);
       border-bottom: 1px solid rgba(255,45,120,0.25);
-      padding: 52px 40px 44px;
+      padding: 40px 32px 36px;
       text-align: center;
       position: relative;
       overflow: hidden;
-      min-height: 340px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 0;
     }
     .login-hero::before {
       content: '';
@@ -90,18 +90,20 @@ export function loginPage(): string {
     .orb2 { width: 140px; height: 140px; background:#7C3AED; bottom:-30px; left:-10px; animation: orbFloat 10s ease-in-out infinite 2s; }
     @keyframes orbFloat { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(15px,-15px) scale(1.1)} }
 
-    /* LOGO — MASSIVE */
+    /* LOGO — scaled for hero */
     .login-hero-logo {
-      width: 220px; height: 220px;
-      margin: 0 auto 28px;
+      width: clamp(100px, 28vw, 180px);
+      height: clamp(100px, 28vw, 180px);
+      margin: 0 auto 20px;
       position: relative; z-index: 1;
+      flex-shrink: 0;
       filter:
-        drop-shadow(0 0 40px rgba(0,229,255,0.8))
-        drop-shadow(0 0 80px rgba(255,45,120,0.6))
-        drop-shadow(0 0 160px rgba(124,58,237,0.4))
-        drop-shadow(0 0 240px rgba(192,38,211,0.25));
+        drop-shadow(0 0 30px rgba(0,229,255,0.8))
+        drop-shadow(0 0 60px rgba(255,45,120,0.6))
+        drop-shadow(0 0 120px rgba(124,58,237,0.4));
       animation: logoGlow 3s ease-in-out infinite;
     }
+    .login-hero-logo svg { width: 100% !important; height: 100% !important; }
     @keyframes logoGlow {
       0%,100% {
         filter: drop-shadow(0 0 40px rgba(0,229,255,0.8)) drop-shadow(0 0 80px rgba(255,45,120,0.6)) drop-shadow(0 0 160px rgba(124,58,237,0.4));
@@ -113,10 +115,10 @@ export function loginPage(): string {
 
     /* APP NAME — big bold gradient */
     .login-hero-name {
-      font-size: 42px;
+      font-size: clamp(22px, 5vw, 36px);
       font-weight: 900;
-      letter-spacing: 4px;
-      line-height: 1.05;
+      letter-spacing: clamp(1px, 0.5vw, 4px);
+      line-height: 1.1;
       background: linear-gradient(135deg, #fff 0%, #FF2D78 40%, #C026D3 70%, #A78BFA 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -127,11 +129,11 @@ export function loginPage(): string {
 
     /* MOTTO */
     .login-hero-motto {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: rgba(255,255,255,0.65);
-      letter-spacing: 0.4px;
-      margin: 0 0 18px;
+      letter-spacing: 0.3px;
+      margin: 0 0 16px;
       line-height: 1.6;
       position: relative; z-index: 1;
     }
@@ -206,7 +208,7 @@ export function loginPage(): string {
       flex: 1; background: transparent; border: none;
       outline: none; color: #c8e6ff; font-size: 15px; font-weight: 500;
     }
-    .input-wrap input::placeholder { color: rgba(100,160,220,0.4); font-weight:400; }
+    .input-wrap input::placeholder { color: rgba(140,185,230,0.6); font-weight:400; }
 
     /* PASSWORD STRENGTH */
     .strength-bar { height: 3px; border-radius:999px; margin-top:6px; background:rgba(255,255,255,0.07); overflow:hidden; }
@@ -302,9 +304,18 @@ export function loginPage(): string {
     #passwordStrength { display:none; }
 
     @media (max-height: 700px) {
-      .login-hero { min-height: 260px; padding: 32px 36px 28px; }
-      .login-hero-logo { width: 120px; height: 120px; }
-      .login-hero-name { font-size: 32px; }
+      .login-hero { padding: 24px 28px 22px; }
+      .login-hero-logo { width: 100px !important; height: 100px !important; margin-bottom: 14px; }
+      .login-hero-name { font-size: 22px !important; }
+      .login-hero-motto { font-size: 12px; }
+    }
+    @media (max-width: 480px) {
+      .login-card { margin: 10px; border-radius: 24px; }
+      .login-hero { padding: 28px 20px 24px; }
+      .login-form { padding: 24px 20px 28px; }
+      .login-hero-logo { width: 110px !important; height: 110px !important; }
+      .login-hero-name { font-size: 20px !important; letter-spacing: 2px !important; }
+      .input-wrap { padding: 12px 14px; gap: 10px; }
     }
   </style>
 </head>
@@ -325,9 +336,9 @@ export function loginPage(): string {
       <div class="hero-orb orb1"></div>
       <div class="hero-orb orb2"></div>
 
-      <!-- MASSIVE LOGO -->
+      <!-- LOGO — responsive size via CSS class -->
       <div class="login-hero-logo">
-        ${ssLogo(220)}
+        ${ssLogo(220).replace(/width="\d+"/, 'width="100%"').replace(/height="\d+"/, 'height="100%"')}
       </div>
 
       <!-- APP NAME -->

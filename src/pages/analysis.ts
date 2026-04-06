@@ -8,13 +8,13 @@ export function analysisPage(): string {
       <h1>Website Analysis</h1>
       <p>AI-powered business intelligence in 2 minutes</p>
     </div>
-    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#9ca3af;">
+    <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#9ca3af;background:rgba(0,229,255,0.07);border:1px solid rgba(0,229,255,0.18);border-radius:20px;padding:6px 14px;flex-shrink:0;white-space:nowrap;">
       <i class="fas fa-bolt" style="color:#00E5FF;"></i>
-      <span>Powered by GPT-4o</span>
+      <span style="color:#00E5FF;font-weight:700;">Powered by GPT-4o</span>
     </div>
   </div>
 
-  <div style="padding:28px;max-width:920px;">
+  <div style="padding:24px;max-width:920px;">
 
     <!-- URL Input Card -->
     <div style="background:rgba(0,229,255,0.04);border:1px solid rgba(0,229,255,0.2);border-radius:20px;padding:28px;margin-bottom:28px;position:relative;overflow:hidden;">
@@ -38,16 +38,16 @@ export function analysisPage(): string {
           </button>`).join('')}
         </div>
 
-        <div style="display:flex;gap:12px;margin-bottom:14px;">
-          <div id="urlWrap" style="flex:1;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px 16px;transition:border-color 0.2s;">
+        <div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;align-items:stretch;">
+          <div id="urlWrap" style="flex:1;min-width:180px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px 16px;transition:border-color 0.2s;">
             <i class="fas fa-globe" style="color:#6b7280;font-size:14px;flex-shrink:0;"></i>
             <input id="urlInput" type="url" placeholder="https://yourbusiness.com"
-              style="flex:1;background:transparent;color:#fff;border:none;outline:none;font-size:14px;"
+              style="flex:1;min-width:0;background:transparent;color:#fff;border:none;outline:none;font-size:14px;"
               onfocus="document.getElementById('urlWrap').style.borderColor='#00E5FF'"
               onblur="document.getElementById('urlWrap').style.borderColor='rgba(255,255,255,0.12)'">
           </div>
-          <button id="analyzeBtn" onclick="runAnalysis()" class="btn-primary" style="padding:12px 24px;border-radius:12px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;white-space:nowrap;">
-            <i class="fas fa-search"></i> Run Premium Scan
+          <button id="analyzeBtn" onclick="runAnalysis()" class="btn-primary" style="padding:12px 20px;border-radius:12px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;white-space:nowrap;flex-shrink:0;">
+            <i class="fas fa-search"></i> <span>Run Premium Scan</span>
           </button>
         </div>
 

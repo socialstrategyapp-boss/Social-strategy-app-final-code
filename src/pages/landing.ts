@@ -113,6 +113,19 @@ export function landingPage(): string {
     .step-card{border-radius:22px;padding:36px 28px;position:relative;overflow:hidden;transition:all .3s;cursor:default;}
     .step-card:hover{transform:translateY(-8px);}
 
+    /* ── HERO RESPONSIVE ── */
+    .hero-social-text{font-size:clamp(36px,7vw,100px);font-weight:900;letter-spacing:clamp(6px,1.5vw,24px);text-transform:uppercase;line-height:1;
+      background:linear-gradient(135deg,#00E5FF 0%,#A78BFA 60%,#ffffff 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      filter:drop-shadow(0 0 24px rgba(0,229,255,0.8)) drop-shadow(0 0 50px rgba(167,139,250,0.5));
+      margin-bottom:20px;overflow:hidden;max-width:100%;}
+    .hero-strategy-text{font-size:clamp(36px,7vw,100px);font-weight:900;letter-spacing:clamp(6px,1.5vw,24px);text-transform:uppercase;line-height:1;
+      background:linear-gradient(135deg,#FF2D78 0%,#C026D3 50%,#FFD600 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      filter:drop-shadow(0 0 24px rgba(255,45,120,0.8)) drop-shadow(0 0 50px rgba(255,214,0,0.4));
+      margin-bottom:14px;overflow:hidden;max-width:100%;}
+    .hero-logo-wrap{width:clamp(180px,30vw,300px);height:clamp(180px,30vw,300px);margin:0 auto;}
+
     /* ── PLATFORM CARD ── */
     .plat-card{display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;padding:16px 8px;border-radius:18px;transition:all .25s;border:1.5px solid rgba(255,255,255,0.06);}
     .plat-card:hover{transform:translateY(-8px);background:rgba(255,255,255,0.04);}
@@ -193,52 +206,39 @@ export function landingPage(): string {
   <div style="position:absolute;top:8%;right:6%;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.18),transparent 70%);filter:blur(55px);pointer-events:none;"></div>
   <div style="position:absolute;bottom:12%;left:38%;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.18),transparent 70%);filter:blur(65px);pointer-events:none;"></div>
 
-  <div style="position:relative;z-index:1;max-width:960px;margin:0 auto;padding:60px 24px 90px;" class="fade-in">
+  <div style="position:relative;z-index:1;max-width:960px;margin:0 auto;padding:60px 20px 80px;" class="fade-in">
 
     <!-- ── "SOCIAL" ABOVE LOGO ── -->
-    <div style="font-size:clamp(54px,8vw,110px);font-weight:900;letter-spacing:clamp(12px,2vw,28px);text-transform:uppercase;line-height:1;
-      background:linear-gradient(135deg,#00E5FF 0%,#A78BFA 60%,#ffffff 100%);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      filter:drop-shadow(0 0 30px rgba(0,229,255,0.9)) drop-shadow(0 0 60px rgba(167,139,250,0.6));
-      margin-bottom:24px;">
-      SOCIAL
-    </div>
+    <div class="hero-social-text">SOCIAL</div>
 
-    <!-- ── MASSIVE LOGO with neon border ── -->
-    <div style="display:flex;justify-content:center;margin-bottom:20px;">
-      <div style="position:relative;display:inline-block;">
-        <!-- outer neon border ring – logo colours: cyan + pink -->
-        <div style="position:absolute;inset:-8px;border-radius:52px;
+    <!-- ── LOGO with neon border ── -->
+    <div style="display:flex;justify-content:center;margin-bottom:16px;">
+      <div class="hero-logo-wrap" style="position:relative;">
+        <!-- outer neon border ring -->
+        <div style="position:absolute;inset:-6px;border-radius:52px;
           background:linear-gradient(135deg,#3dd4e8 0%,#1ab8cc 25%,#ff4fa0 50%,#e8006a 75%,#3dd4e8 100%);
-          filter:blur(6px) brightness(1.4);
-          box-shadow:0 0 40px rgba(61,212,232,0.8),0 0 80px rgba(255,79,160,0.6);
+          filter:blur(5px) brightness(1.3);
+          box-shadow:0 0 32px rgba(61,212,232,0.7),0 0 64px rgba(255,79,160,0.5);
           animation:neonPulse 2.5s ease-in-out infinite;z-index:0;"></div>
-        <div style="position:absolute;inset:-4px;border-radius:50px;border:3px solid rgba(61,212,232,0.6);z-index:1;"></div>
-        <!-- Multi-layer pulsing halo -->
-        <div style="position:absolute;inset:-35px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.22) 0%,rgba(255,45,120,0.14) 50%,transparent 75%);filter:blur(22px);animation:pulse 3s ease-in-out infinite;z-index:0;"></div>
-        <div style="position:absolute;inset:-55px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,rgba(0,229,255,0.08) 50%,transparent 70%);filter:blur(38px);animation:pulse 3s ease-in-out infinite 1s;z-index:0;"></div>
-        <div style="position:relative;z-index:2;filter:drop-shadow(0 0 60px rgba(0,229,255,0.65)) drop-shadow(0 0 120px rgba(255,45,120,0.45)) drop-shadow(0 0 200px rgba(124,58,237,0.3)) drop-shadow(0 30px 60px rgba(0,0,0,0.8));">
-          ${heroLogo}
+        <div style="position:absolute;inset:-3px;border-radius:50px;border:2px solid rgba(61,212,232,0.5);z-index:1;"></div>
+        <!-- Pulsing halos -->
+        <div style="position:absolute;inset:-25px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.18) 0%,rgba(255,45,120,0.1) 50%,transparent 75%);filter:blur(18px);animation:pulse 3s ease-in-out infinite;z-index:0;"></div>
+        <div style="position:relative;z-index:2;filter:drop-shadow(0 0 40px rgba(0,229,255,0.6)) drop-shadow(0 0 80px rgba(255,45,120,0.4)) drop-shadow(0 20px 40px rgba(0,0,0,0.7));width:100%;height:100%;">
+          <div style="width:100%;height:100%;">${heroLogo.replace(/width="\d+"/, 'width="100%"').replace(/height="\d+"/, 'height="100%"')}</div>
         </div>
       </div>
     </div>
 
     <!-- ── "STRATEGY" BELOW LOGO ── -->
-    <div style="font-size:clamp(54px,8vw,110px);font-weight:900;letter-spacing:clamp(12px,2vw,28px);text-transform:uppercase;line-height:1;
-      background:linear-gradient(135deg,#FF2D78 0%,#C026D3 50%,#FFD600 100%);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      filter:drop-shadow(0 0 30px rgba(255,45,120,0.9)) drop-shadow(0 0 60px rgba(255,214,0,0.5));
-      margin-bottom:16px;">
-      STRATEGY
-    </div>
+    <div class="hero-strategy-text">STRATEGY</div>
 
     <!-- tagline -->
-    <div style="font-size:clamp(10px,1.1vw,13px);font-weight:700;letter-spacing:2.5px;color:rgba(0,229,255,0.8);text-transform:uppercase;margin-bottom:48px;">
+    <div style="font-size:clamp(10px,1.3vw,13px);font-weight:700;letter-spacing:2px;color:rgba(0,229,255,0.8);text-transform:uppercase;margin-bottom:36px;line-height:1.8;">
       Strategy Genius &nbsp;•&nbsp; Auto-Create &nbsp;•&nbsp; Auto-Schedule &nbsp;•&nbsp; Auto-Post
     </div>
 
     <!-- ── HEADLINE ── -->
-    <h1 style="font-size:clamp(50px,7vw,86px);font-weight:900;line-height:1.0;margin-bottom:30px;letter-spacing:-2px;">
+    <h1 style="font-size:clamp(36px,6vw,82px);font-weight:900;line-height:1.05;margin-bottom:24px;letter-spacing:-1px;">
       One Scan.<br>
       <span style="background:linear-gradient(135deg,#00E5FF,#FF2D78,#FFD600);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Complete</span><br>
       Growth.
@@ -788,16 +788,33 @@ export function landingPage(): string {
     .btn-start-free{padding:9px 16px!important;font-size:12px!important;}
     .navbar-inner{padding:0 12px!important;}
     .navbar-logo > div:last-child{display:none!important;}
+    /* Hero text: prevent overflow on small screens */
+    .hero-social-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(4px,2.5vw,16px)!important;}
+    .hero-strategy-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(4px,2.5vw,16px)!important;}
+    .hero-logo-wrap{width:clamp(140px,50vw,200px)!important;height:clamp(140px,50vw,200px)!important;}
+    /* Tagline wrap on small screens */
+    div[style*="Strategy Genius"]{font-size:10px!important;letter-spacing:1px!important;}
+    /* CTA buttons stack on mobile */
+    div[style*="display:flex;gap:24px"]{flex-direction:column!important;align-items:center!important;}
   }
   @media(max-width:768px){
     div[style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
     div[style*="grid-template-columns:1.5fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important;}
     div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
     div[style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important;}
+    /* How it works step cards — full width, smaller padding */
+    div[style*="display:flex;align-items:flex-start;gap:28px;"]{padding:24px 18px!important;}
+    div[style*="width:72px;height:72px"]{width:52px!important;height:52px!important;}
+    /* Description text must never wrap to 1 char per line */
+    div[style*="flex:1;min-width:0"] p{font-size:14px!important;}
   }
   @media(max-width:480px){
     div[style*="grid-template-columns:1.5fr 1fr 1fr 1fr"]{grid-template-columns:1fr!important;}
     div[style*="grid-template-columns:repeat(2,1fr)"]{grid-template-columns:1fr!important;}
+    /* Step cards even more compact */
+    div[style*="display:flex;align-items:flex-start;gap:28px;"]{flex-direction:column!important;gap:16px!important;padding:20px 16px!important;}
+    div[style*="width:72px;height:72px"]{width:48px!important;height:48px!important;margin-left:0!important;}
+    h3[style*="font-weight:900;font-size:24px"]{font-size:18px!important;}
   }
 </style>
 </body>

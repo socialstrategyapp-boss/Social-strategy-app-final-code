@@ -334,17 +334,18 @@ export function contentStudioPage(): string {
   .cs-btn-ghost:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.3); }
 
   /* ── REVIEW MODAL ── */
-  .cs-modal-wrap { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:2000; overflow-y:auto; padding:20px; }
+  .cs-modal-wrap { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:2000; overflow-y:auto; padding:16px; display:none; align-items:flex-start; justify-content:center; }
   .cs-modal {
-    max-width: 860px; margin: 30px auto;
+    max-width: 860px; width:100%; margin: 20px auto;
     background: linear-gradient(160deg, rgba(3,8,22,0.99), rgba(4,10,24,0.99));
-    border: 1.5px solid rgba(0,229,255,0.28); border-radius: 24px; overflow: hidden;
+    border: 1.5px solid rgba(0,229,255,0.28); border-radius: 24px; overflow: visible;
     box-shadow: 0 0 60px rgba(0,229,255,0.08), 0 0 100px rgba(124,58,237,0.05), 0 30px 80px rgba(0,0,0,0.7);
+    box-sizing: border-box;
   }
   .cs-modal-head {
-    padding: 22px 28px; border-bottom: 1.5px solid rgba(0,229,255,0.12);
+    padding: 18px 22px; border-bottom: 1.5px solid rgba(0,229,255,0.12);
     display: flex; align-items: center; justify-content: space-between;
-    background: rgba(0,229,255,0.03);
+    background: rgba(0,229,255,0.03); border-radius: 24px 24px 0 0;
   }
 
   /* ── COLLAPSIBLE ── */
@@ -690,7 +691,7 @@ export function contentStudioPage(): string {
       </div>
       <button onclick="closeVideoScriptModal()" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#9ca3af;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;transition:all 0.2s;">✕</button>
     </div>
-    <div style="padding:24px;display:flex;flex-direction:column;gap:14px;">
+    <div style="padding:20px;display:flex;flex-direction:column;gap:14px;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div><label class="cs-label">Brand Name</label><input id="vsModalBrand" type="text" class="cs-input" placeholder="Your brand"></div>
         <div><label class="cs-label">Industry</label><input id="vsModalIndustry" type="text" class="cs-input" placeholder="Your industry"></div>
@@ -707,7 +708,7 @@ export function contentStudioPage(): string {
       <button id="vsGenerateBtn" onclick="generateVideoScriptFromModal()" class="cs-btn-pink" style="width:100%;padding:12px;font-size:14px;border-radius:12px;">
         <i class="fas fa-video"></i> Generate Script
       </button>
-      <div id="vsScriptResult" style="display:none;max-height:260px;overflow-y:auto;"></div>
+      <div id="vsScriptResult" style="display:none;max-height:340px;overflow-y:auto;padding:0 4px;"></div>
     </div>
   </div>
 </div>
