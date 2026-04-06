@@ -40,14 +40,14 @@ export function landingPage(): string {
     /* ── NAVBAR ── */
     .navbar{position:fixed;top:0;left:0;right:0;z-index:100;
       background:rgba(8,4,32,0.92);backdrop-filter:blur(20px);
-      border-bottom:1px solid rgba(0,229,255,0.18);overflow:hidden;}
-    .navbar-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:72px;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      min-width:0;}
-
-    /* Nav links */
-    .nav-links{display:flex;align-items:center;gap:6px;flex-shrink:1;min-width:0;overflow:hidden;}
-    .nav-link{font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px;
+      border-bottom:1px solid rgba(0,229,255,0.18);}
+    .navbar-inner{max-width:1400px;margin:0 auto;padding:0 20px;height:68px;
+      display:flex;align-items:center;gap:10px;overflow:hidden;}
+    /* Logo: fixed size, never shrinks */
+    .navbar-logo{flex-shrink:0;display:flex;align-items:center;gap:10px;text-decoration:none;}
+    /* Nav links: shrink and hide before buttons do */
+    .nav-links{display:flex;align-items:center;gap:4px;flex:1 1 auto;min-width:0;overflow:hidden;}
+    .nav-link{font-size:13px;font-weight:700;padding:7px 12px;border-radius:999px;
       text-decoration:none;transition:all .2s;border:1.5px solid transparent;white-space:nowrap;}
     .nl-features{color:#00E5FF;border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.08);}
     .nl-features:hover{background:rgba(0,229,255,0.2);box-shadow:0 0 20px rgba(0,229,255,0.5);}
@@ -57,21 +57,19 @@ export function landingPage(): string {
     .nl-platforms:hover{background:rgba(167,139,250,0.2);box-shadow:0 0 20px rgba(167,139,250,0.5);}
     .nl-pricing{color:#FFD600;border-color:rgba(255,214,0,0.3);background:rgba(255,214,0,0.08);}
     .nl-pricing:hover{background:rgba(255,214,0,0.2);box-shadow:0 0 20px rgba(255,214,0,0.5);}
-
-    /* ── NAV AUTH BUTTONS ── */
-    .nav-auth{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+    /* Auth: flex-shrink:0 so it NEVER gets pushed off screen */
+    .nav-auth{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto;}
     .btn-signin{display:inline-flex;align-items:center;justify-content:center;
-      font-size:13px;font-weight:800;padding:10px 20px;border-radius:999px;
+      font-size:13px;font-weight:800;padding:9px 18px;border-radius:999px;
       text-decoration:none;white-space:nowrap;transition:all .25s;
-      color:#fff;
-      border:2px solid #00E5FF;
+      color:#fff;border:2px solid #00E5FF;
       background:linear-gradient(135deg,rgba(0,229,255,0.18),rgba(0,112,243,0.14));
       box-shadow:0 0 18px rgba(0,229,255,0.45),0 0 36px rgba(0,229,255,0.15),inset 0 1px 0 rgba(255,255,255,0.2);
       text-shadow:0 0 12px rgba(0,229,255,0.9);}
     .btn-signin:hover{background:linear-gradient(135deg,rgba(0,229,255,0.32),rgba(0,112,243,0.25));box-shadow:0 0 32px rgba(0,229,255,0.7),0 0 60px rgba(0,229,255,0.3);transform:translateY(-2px);}
-    .btn-start-free{display:inline-flex;align-items:center;gap:7px;
+    .btn-start-free{display:inline-flex;align-items:center;gap:6px;
       background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);
-      color:#fff;font-size:13px;font-weight:800;padding:10px 20px;border-radius:999px;
+      color:#fff;font-size:13px;font-weight:800;padding:9px 18px;border-radius:999px;
       text-decoration:none;white-space:nowrap;border:1px solid rgba(255,255,255,0.2);
       box-shadow:0 0 22px rgba(255,45,120,0.55),0 0 44px rgba(124,58,237,0.25),inset 0 1px 0 rgba(255,255,255,0.2);
       transition:all .25s;}
@@ -146,7 +144,7 @@ export function landingPage(): string {
 <nav class="navbar">
   <div class="navbar-inner">
     <!-- Logo -->
-    <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;">
+    <a href="/" class="navbar-logo">
       <div style="position:relative;display:inline-block;">
         <!-- neon border ring matching logo colours -->
         <div style="position:absolute;inset:-4px;border-radius:18px;
@@ -163,7 +161,7 @@ export function landingPage(): string {
     </a>
 
     <!-- Coloured nav links -->
-    <div class="nav-links hidden md:flex">
+    <div class="nav-links">
       <a href="#features"     class="nav-link nl-features">✨ Features</a>
       <a href="#how-it-works" class="nav-link nl-how">🎯 How It Works</a>
       <a href="#platforms"    class="nav-link nl-platforms">📱 Platforms</a>
@@ -780,15 +778,16 @@ export function landingPage(): string {
 </footer>
 
 <style>
-  @media(max-width:1024px){
-    .navbar-inner .nav-links{display:none!important;}
-    .btn-signin{padding:8px 16px!important;font-size:12px!important;}
-    .btn-start-free{padding:8px 16px!important;font-size:12px!important;}
+  @media(max-width:900px){
+    .nav-links{display:none!important;}
+    .btn-signin{padding:8px 14px!important;font-size:12px!important;}
+    .btn-start-free{padding:8px 14px!important;font-size:12px!important;}
   }
-  @media(max-width:600px){
+  @media(max-width:500px){
     .btn-signin{display:none!important;}
-    .btn-start-free{padding:9px 18px!important;font-size:12px!important;}
-    .navbar-inner{padding:0 16px!important;}
+    .btn-start-free{padding:9px 16px!important;font-size:12px!important;}
+    .navbar-inner{padding:0 12px!important;}
+    .navbar-logo > div:last-child{display:none!important;}
   }
   @media(max-width:768px){
     div[style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
