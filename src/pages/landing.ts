@@ -41,12 +41,9 @@ export function landingPage(): string {
     .navbar{position:fixed;top:0;left:0;right:0;z-index:100;
       background:rgba(8,4,32,0.95);backdrop-filter:blur(20px);
       border-bottom:1px solid rgba(0,229,255,0.18);}
-    /* Desktop inner: logo | links | auth */
-    .navbar-inner{max-width:1400px;margin:0 auto;padding:0 20px;height:68px;
-      display:flex;align-items:center;gap:10px;}
-    /* Logo: fixed size, never shrinks */
+    .navbar-inner{max-width:1400px;margin:0 auto;padding:0 20px;height:64px;
+      display:flex;align-items:center;gap:12px;}
     .navbar-logo{flex-shrink:0;display:flex;align-items:center;gap:10px;text-decoration:none;}
-    /* Nav links: fill space, hide on mobile */
     .nav-links{display:flex;align-items:center;gap:4px;flex:1 1 auto;min-width:0;}
     .nav-link{font-size:13px;font-weight:700;padding:7px 12px;border-radius:999px;
       text-decoration:none;transition:all .2s;border:1.5px solid transparent;white-space:nowrap;}
@@ -58,61 +55,31 @@ export function landingPage(): string {
     .nl-platforms:hover{background:rgba(167,139,250,0.2);box-shadow:0 0 20px rgba(167,139,250,0.5);}
     .nl-pricing{color:#FFD600;border-color:rgba(255,214,0,0.3);background:rgba(255,214,0,0.08);}
     .nl-pricing:hover{background:rgba(255,214,0,0.2);box-shadow:0 0 20px rgba(255,214,0,0.5);}
-    /* Auth: always visible, never pushed off */
     .nav-auth{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto;}
-    .btn-signin{display:inline-flex;align-items:center;justify-content:center;
-      font-size:13px;font-weight:800;padding:9px 18px;border-radius:999px;
+    .btn-signin{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      font-size:13px;font-weight:800;padding:9px 20px;border-radius:999px;
       text-decoration:none;white-space:nowrap;transition:all .25s;
       color:#fff;border:2px solid #00E5FF;
-      background:linear-gradient(135deg,rgba(0,229,255,0.18),rgba(0,112,243,0.14));
-      box-shadow:0 0 18px rgba(0,229,255,0.45),inset 0 1px 0 rgba(255,255,255,0.2);
-      text-shadow:0 0 12px rgba(0,229,255,0.9);}
-    .btn-signin:hover{background:linear-gradient(135deg,rgba(0,229,255,0.32),rgba(0,112,243,0.25));box-shadow:0 0 32px rgba(0,229,255,0.7);transform:translateY(-2px);}
+      background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,112,243,0.1));
+      box-shadow:0 0 14px rgba(0,229,255,0.4),inset 0 1px 0 rgba(255,255,255,0.15);
+      text-shadow:0 0 10px rgba(0,229,255,0.8);}
+    .btn-signin:hover{background:linear-gradient(135deg,rgba(0,229,255,0.28),rgba(0,112,243,0.2));box-shadow:0 0 28px rgba(0,229,255,0.65);transform:translateY(-2px);}
     .btn-start-free{display:inline-flex;align-items:center;gap:6px;
       background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);
-      color:#fff;font-size:13px;font-weight:800;padding:9px 18px;border-radius:999px;
+      color:#fff;font-size:13px;font-weight:800;padding:9px 20px;border-radius:999px;
       text-decoration:none;white-space:nowrap;border:1px solid rgba(255,255,255,0.2);
-      box-shadow:0 0 22px rgba(255,45,120,0.55),inset 0 1px 0 rgba(255,255,255,0.2);
+      box-shadow:0 0 18px rgba(255,45,120,0.5),inset 0 1px 0 rgba(255,255,255,0.2);
       transition:all .25s;}
-    .btn-start-free:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(255,45,120,0.85);}
+    .btn-start-free:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(255,45,120,0.8);}
 
-    /* ── MOBILE NAVBAR (≤ 600px): stacked — logo row + button row ── */
-    @media(max-width:600px){
-      .navbar{ height:auto; }
-      .navbar-inner{
-        flex-direction:column;
-        height:auto;
-        padding:10px 16px 10px;
-        gap:8px;
-        align-items:stretch;
-      }
-      /* Top row inside navbar: logo left, nothing right */
-      .navbar-logo{ justify-content:center; }
-      /* Nav links always hidden on mobile */
+    /* ── MOBILE NAVBAR (≤ 700px): hide logo & nav, show 2 compact buttons only ── */
+    @media(max-width:700px){
+      .navbar-logo{ display:none!important; }
       .nav-links{ display:none!important; }
-      /* Auth row: full width, both buttons equal, side by side */
-      .nav-auth{
-        margin-left:0;
-        width:100%;
-        display:flex;
-        gap:10px;
-      }
-      .btn-signin{
-        flex:1;
-        justify-content:center;
-        font-size:13px!important;
-        padding:10px 8px!important;
-      }
-      .btn-start-free{
-        flex:1;
-        justify-content:center;
-        font-size:13px!important;
-        padding:10px 8px!important;
-      }
-      /* Hero needs extra top padding since navbar is taller */
-      section[style*="padding-top:72px"]{
-        padding-top:130px!important;
-      }
+      .navbar-inner{ justify-content:center; gap:12px; padding:0 16px; }
+      .nav-auth{ margin-left:0; gap:12px; }
+      .btn-signin{ font-size:13px!important; padding:9px 18px!important; min-width:0!important; }
+      .btn-start-free{ font-size:13px!important; padding:9px 18px!important; min-width:0!important; }
     }
 
     /* ── CTA BUTTONS ── */
@@ -164,7 +131,7 @@ export function landingPage(): string {
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
       filter:drop-shadow(0 0 24px rgba(255,45,120,0.8)) drop-shadow(0 0 50px rgba(255,214,0,0.4));
       margin-bottom:14px;overflow:hidden;max-width:100%;}
-    .hero-logo-wrap{width:clamp(180px,30vw,300px);height:clamp(180px,30vw,300px);margin:0 auto;}
+    .hero-logo-wrap{width:clamp(200px,30vw,300px);height:clamp(200px,30vw,300px);margin:0 auto;}
 
     /* ── PLATFORM CARD ── */
     .plat-card{display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;padding:16px 8px;border-radius:18px;transition:all .25s;border:1.5px solid rgba(255,255,255,0.06);}
@@ -798,9 +765,9 @@ export function landingPage(): string {
           letter-spacing:0.3px;">© 2026 Social Strategy · AI-Powered Marketing Platform · All rights reserved</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           ${[
-            ['Privacy Policy','#','#A78BFA','rgba(167,139,250,0.25)'],
-            ['Terms of Service','#','#FF2D78','rgba(255,45,120,0.25)'],
-            ['GDPR','#','#7C3AED','rgba(124,58,237,0.25)'],
+            ['Privacy Policy','/privacy','#A78BFA','rgba(167,139,250,0.25)'],
+            ['Terms of Service','/terms','#FF2D78','rgba(255,45,120,0.25)'],
+            ['GDPR','/gdpr','#7C3AED','rgba(124,58,237,0.25)'],
             ['About Us','/about','#00E5FF','rgba(0,229,255,0.25)'],
             ['FAQ','/faq','#00ff88','rgba(0,255,136,0.25)'],
           ].map(([label,href,col,bg])=>
@@ -821,9 +788,9 @@ export function landingPage(): string {
   @media(max-width:900px){
     .nav-links{display:none!important;}
   }
-  /* Mobile navbar is stacked — needs extra hero padding */
-  @media(max-width:600px){
-    .hero-section{padding-top:130px!important;}
+  /* Mobile navbar is single-row (no logo) — normal padding */
+  @media(max-width:700px){
+    .hero-section{padding-top:80px!important;}
   }
   @media(max-width:768px){
     div[style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
@@ -845,7 +812,7 @@ export function landingPage(): string {
     /* Hero text clamp on very small phones */
     .hero-social-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(3px,2vw,12px)!important;}
     .hero-strategy-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(3px,2vw,12px)!important;}
-    .hero-logo-wrap{width:clamp(130px,45vw,180px)!important;height:clamp(130px,45vw,180px)!important;}
+    .hero-logo-wrap{width:clamp(150px,45vw,200px)!important;height:clamp(150px,45vw,200px)!important;}
     div[style*="display:flex;gap:24px"]{flex-direction:column!important;align-items:center!important;}
   }
 </style>

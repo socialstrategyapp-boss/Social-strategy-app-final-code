@@ -13,6 +13,7 @@ import { settingsPage } from './pages/settings'
 import { charactersPage } from './pages/characters'
 import { adminPage } from './pages/admin'
 import { profilePage } from './pages/profile'
+import { privacyPage, termsPage, gdprPage, aboutPage, faqPage } from './pages/static-pages'
 
 type Env = {
   OPENAI_API_KEY: string
@@ -37,6 +38,11 @@ app.get('/settings', (c) => c.html(settingsPage()))
 app.get('/characters', (c) => c.html(charactersPage()))
 app.get('/admin', (c) => c.html(adminPage()))
 app.get('/profile', (c) => c.html(profilePage()))
+app.get('/privacy', (c) => c.html(privacyPage()))
+app.get('/terms', (c) => c.html(termsPage()))
+app.get('/gdpr', (c) => c.html(gdprPage()))
+app.get('/about', (c) => c.html(aboutPage()))
+app.get('/faq', (c) => c.html(faqPage()))
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ─── ACCOUNT & CREDIT HELPERS ───────────────────────────────────────────────
