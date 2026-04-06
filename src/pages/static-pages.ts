@@ -548,3 +548,236 @@ export function faqPage(): string {
     </div>
   `)
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COOKIE POLICY
+// ─────────────────────────────────────────────────────────────────────────────
+export function cookiePage(): string {
+  return pageShell('Cookie Policy', `
+    <div class="page-hero">
+      <div class="page-badge">🍪 Cookies</div>
+      <h1 class="page-title">Cookie <span style="background:linear-gradient(135deg,#FFB020,#FF2DA6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Policy</span></h1>
+      <p class="page-subtitle">How Social Strategy uses cookies and similar tracking technologies on our platform.</p>
+      <p class="page-updated">Last updated: April 2026</p>
+    </div>
+
+    <div class="section">
+      <h2>1. What Are Cookies?</h2>
+      <p>Cookies are small text files placed on your device when you visit our website or use our platform. They help us remember your preferences, keep you logged in, and understand how you use Social Strategy so we can improve the experience.</p>
+      <p>We also use similar technologies such as web beacons, pixel tags, and local storage (collectively referred to as "cookies" in this policy).</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Categories of Cookies We Use</h2>
+
+      <h3>2.1 Strictly Necessary Cookies</h3>
+      <p>These cookies are essential to operate the platform. Without them, services such as authentication, session management, and security cannot function. You cannot opt out of strictly necessary cookies.</p>
+      <ul>
+        <li><strong>Session token</strong> — keeps you logged in during your session.</li>
+        <li><strong>CSRF token</strong> — protects against cross-site request forgery attacks.</li>
+        <li><strong>Account preferences</strong> — remembers your selected plan and region.</li>
+      </ul>
+
+      <h3>2.2 Performance &amp; Analytics Cookies</h3>
+      <p>These cookies collect anonymised information about how visitors use our site — which pages are visited, how long users stay, and where they come from. We use this to improve platform performance.</p>
+      <ul>
+        <li><strong>Cloudflare Analytics</strong> — edge-level performance metrics, fully privacy-safe and cookie-less.</li>
+        <li><strong>Internal event tracking</strong> — page views and feature interactions stored in our own database, never sold to third parties.</li>
+      </ul>
+
+      <h3>2.3 Functional Cookies</h3>
+      <p>These cookies enable enhanced functionality and personalisation, such as remembering your chosen tone, industry, or content preferences in the Studio.</p>
+      <ul>
+        <li><strong>Studio preferences</strong> — last-used industry, tone, platforms, and brand name.</li>
+        <li><strong>Dark-mode / UI state</strong> — persists your interface layout choices.</li>
+      </ul>
+
+      <h3>2.4 Marketing &amp; Targeting Cookies</h3>
+      <p>We may use cookies from third-party services to show you relevant advertising on other platforms (e.g., Google, Meta). These are only placed with your explicit consent.</p>
+      <ul>
+        <li><strong>Google Ads conversion</strong> — measures campaign effectiveness.</li>
+        <li><strong>Meta Pixel</strong> — retargeting audiences on Facebook/Instagram.</li>
+      </ul>
+      <div class="highlight-box">
+        <p>You can withdraw your consent for marketing cookies at any time via the Cookie Preferences panel (click "Cookie Settings" in the footer) or through your browser settings.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. Third-Party Cookies</h2>
+      <p>Some features of Social Strategy embed or interact with third-party services that may set their own cookies:</p>
+      <ul>
+        <li><strong>Stripe</strong> — payment processing; sets cookies for fraud detection and session continuity.</li>
+        <li><strong>Intercom / Support chat</strong> — customer support widget; sets cookies to identify returning users.</li>
+        <li><strong>YouTube / Vimeo</strong> — if we embed tutorial videos; those providers may set tracking cookies.</li>
+      </ul>
+      <p>We have no control over third-party cookies. Please review the relevant providers' privacy policies for details.</p>
+    </div>
+
+    <div class="section">
+      <h2>4. How Long Do Cookies Last?</h2>
+      <ul>
+        <li><strong>Session cookies</strong> — deleted when you close your browser.</li>
+        <li><strong>Persistent cookies</strong> — remain for the duration listed below:</li>
+      </ul>
+      <div class="highlight-box">
+        <p>Authentication token: 30 days &nbsp;·&nbsp; Studio preferences: 90 days &nbsp;·&nbsp; Analytics identifiers: up to 12 months &nbsp;·&nbsp; Marketing pixels: up to 180 days.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>5. Your Cookie Choices</h2>
+      <p>You have several ways to manage cookies:</p>
+      <ul>
+        <li><strong>Cookie Preferences panel</strong> — available via "Cookie Settings" in the footer. Accepts or rejects non-essential cookies in one click.</li>
+        <li><strong>Browser settings</strong> — most browsers allow you to block or delete cookies. Note: disabling strictly necessary cookies will break the platform.</li>
+        <li><strong>Opt-out links</strong> — Google Analytics opt-out: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">tools.google.com/dlpage/gaoptout</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>6. Do Not Track (DNT)</h2>
+      <p>Our platform currently does not respond to browser-level DNT signals. You can use the Cookie Preferences panel instead to control tracking at a granular level.</p>
+    </div>
+
+    <div class="section">
+      <h2>7. Changes to This Policy</h2>
+      <p>We may update this Cookie Policy as we introduce new features or in response to changes in legislation. Material changes will be announced via in-app notification and a revised "Last updated" date above.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Contact Us</h2>
+      <p>For questions about our cookie practices, contact our Privacy team:</p>
+      <ul>
+        <li>Email: <a href="mailto:privacy@socialstrategyapp.com.au">privacy@socialstrategyapp.com.au</a></li>
+        <li>Website: <a href="https://socialstrategyapp.com.au" target="_blank">socialstrategyapp.com.au</a></li>
+      </ul>
+    </div>
+  `)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BILLING POLICY (Trials, Credits & Refunds)
+// ─────────────────────────────────────────────────────────────────────────────
+export function billingPolicyPage(): string {
+  return pageShell('Billing, Trials & Refunds', `
+    <div class="page-hero">
+      <div class="page-badge">💳 Billing</div>
+      <h1 class="page-title">Billing, Trials <span style="background:linear-gradient(135deg,#20D9FF,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">&amp; Refunds</span></h1>
+      <p class="page-subtitle">Everything you need to know about how we charge, trial periods, credits, and our refund policy.</p>
+      <p class="page-updated">Last updated: April 2026 &nbsp;·&nbsp; Prices in AUD (Australian Dollars).</p>
+    </div>
+
+    <div class="section">
+      <h2>1. Subscription Plans</h2>
+      <p>Social Strategy offers four subscription tiers billed monthly or annually:</p>
+      <ul>
+        <li><strong>Free</strong> — $0/month. 8 credits/month, 2 platforms, 2 text posts/week. No credit card required.</li>
+        <li><strong>Business</strong> — $79/month. 150 credits/month, 8 platforms, text + image, 1 AI character, 1 brand, 14-day full-access trial (60 credits).</li>
+        <li><strong>Pro</strong> — $199/month. 500 credits/month, text + image + video, 3 brands, 3 AI characters, unlimited reports, 14-day full-access trial (120 credits).</li>
+        <li><strong>Enterprise</strong> — From $699/month. 2,500+ pooled credits, unlimited brands, team roles, API access, custom SLA. <a href="mailto:sales@socialstrategyapp.com.au">Contact sales</a> for pricing.</li>
+      </ul>
+      <p>Annual plans are available at up to 40% discount. Annual subscriptions are billed upfront and are non-refundable after the 14-day window unless required by law.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Free Trial Policy</h2>
+      <div class="highlight-box">
+        <p><strong>One trial per business.</strong> Free trials are limited to one per business, defined by business website domain. Creating multiple accounts to circumvent this limit is a Terms of Service violation and may result in permanent suspension.</p>
+      </div>
+      <ul>
+        <li><strong>Trial length:</strong> 14 days from activation date.</li>
+        <li><strong>Trial credits:</strong> Business trial = 60 credits; Pro trial = 120 credits.</li>
+        <li><strong>No charge during trial:</strong> Your payment method is saved but not charged until the trial ends.</li>
+        <li><strong>Auto-renewal:</strong> At trial end, your subscription converts to a paid plan at the standard monthly rate unless you cancel before expiry.</li>
+        <li><strong>Credit carryover:</strong> Unused trial credits do not carry over to a paid subscription.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>3. Credit System</h2>
+      <p>Credits are consumed each time you generate AI content. Costs per action:</p>
+      <ul>
+        <li>Website Analysis / Audit — 10 credits</li>
+        <li>Caption + CTA + Hashtags (per platform set) — 2 credits</li>
+        <li>AI Image Generation (1 image) — 4 credits</li>
+        <li>AI Image Generation (2 images) — 8 credits</li>
+        <li>AI Image Generation (3 images) — 12 credits</li>
+        <li>Image Edit / Variation — 2 credits</li>
+        <li>Video Script (text only) — 4 credits</li>
+        <li>Full Analytics Report — 20 credits</li>
+        <li>Report Summary — 4 credits</li>
+        <li>SEO Meta (title + description + keywords) — 3 credits</li>
+        <li>Blog Draft — 6 credits</li>
+        <li>7-Day Content Schedule — 4 credits</li>
+        <li>30-Day Content Schedule — 10 credits</li>
+        <li>Publish Post (after plan cap) — 1 credit each</li>
+        <li>Multi-Platform Variant (extra platforms) — +1 credit per platform</li>
+        <li>Character Continuity Injection — 3 credits</li>
+      </ul>
+      <p>Credits reset at the start of each billing cycle. Unused subscription credits do not roll over.</p>
+
+      <h3>3.1 Credit Top-Up Packs</h3>
+      <ul>
+        <li>50 credits — $59 AUD (one-off)</li>
+        <li>150 credits — $159 AUD (one-off)</li>
+        <li>500 credits — $449 AUD (one-off)</li>
+        <li>2,000 credits — $1,499 AUD (one-off)</li>
+      </ul>
+      <p>Top-up credits are non-expiring while your account remains active and are drawn after subscription credits are exhausted.</p>
+    </div>
+
+    <div class="section">
+      <h2>4. Payments</h2>
+      <ul>
+        <li>All payments processed securely by <strong>Stripe</strong>. We do not store card numbers.</li>
+        <li>Accepted: Visa, Mastercard, American Express, Apple Pay, Google Pay.</li>
+        <li>Subscriptions renew automatically each month (or year for annual plans).</li>
+        <li>Failed payments: retried up to 3 times over 7 days. If unresolved, account downgrades to Free tier.</li>
+        <li>A receipt is emailed after every successful charge.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>5. Refund Policy</h2>
+      <div class="highlight-box">
+        <p><strong>7-day money-back guarantee:</strong> Contact us within 7 days of your first payment for a full refund — provided you have used less than 10% of your monthly credit allowance.</p>
+      </div>
+      <ul>
+        <li>Refunds unavailable after 7 days or once &gt;10% of monthly credits are consumed.</li>
+        <li>Top-up credit packs are non-refundable once any credits from the pack are used.</li>
+        <li>Accounts suspended for ToS violations are not eligible for refunds.</li>
+        <li>To request a refund: <a href="mailto:billing@socialstrategyapp.com.au">billing@socialstrategyapp.com.au</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>6. Cancellation</h2>
+      <ul>
+        <li>Cancel at any time from <strong>Settings → Billing</strong> in the app.</li>
+        <li>Cancellation takes effect at the end of the current billing period. Full access retained until then.</li>
+        <li>After cancellation, account reverts to Free. Data retained for 30 days, then permanently deleted.</li>
+        <li>To cancel an annual plan: <a href="mailto:billing@socialstrategyapp.com.au">billing@socialstrategyapp.com.au</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>7. Price Changes</h2>
+      <p>We reserve the right to modify pricing. If we increase your plan's price, we will give at least 30 days' notice by email. You may cancel before the new price takes effect. Continued use constitutes acceptance.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Anti-Abuse &amp; Trial Integrity</h2>
+      <p>Social Strategy actively monitors for trial abuse, including: multiple accounts for the same business domain, VPN/proxy use to mask identity, and false business domain information. Violating accounts may be immediately suspended, credits revoked, and permanently banned without refund.</p>
+    </div>
+
+    <div class="section">
+      <h2>9. Contact Billing Support</h2>
+      <ul>
+        <li>Billing: <a href="mailto:billing@socialstrategyapp.com.au">billing@socialstrategyapp.com.au</a></li>
+        <li>General support: <a href="mailto:support@socialstrategyapp.com.au">support@socialstrategyapp.com.au</a></li>
+        <li>Response time: within 1 business day for billing issues.</li>
+      </ul>
+    </div>
+  `)
+}

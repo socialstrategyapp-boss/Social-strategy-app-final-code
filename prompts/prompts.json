@@ -1,0 +1,196 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-04",
+  "description": "All AI prompts used in Social Strategy — structured JSON for programmatic use",
+
+  "prompts": {
+
+    "websiteAnalysis": {
+      "id": "prompt_001",
+      "name": "Website & Brand Analysis",
+      "endpoint": "/api/analyze",
+      "model": "gpt-4o-mini",
+      "maxTokens": 2000,
+      "temperature": 0.3,
+      "creditCost": 10,
+      "responseFormat": "json_object",
+      "variables": ["url"],
+      "outputFields": [
+        "businessName","industry","seoScore","brandScore","usabilityScore",
+        "contentScore","overallScore","websiteSummary","businessStrengths",
+        "recommendations","strategy","contentPillars","targetAudience",
+        "socialMediaStrategy","topOpportunity","quickWins"
+      ]
+    },
+
+    "contentGeneration": {
+      "id": "prompt_002",
+      "name": "Social Media Content Generation",
+      "endpoint": "/api/generate-content",
+      "model": "gpt-4o",
+      "maxTokens": 4000,
+      "temperature": 0.82,
+      "creditCost": 2,
+      "responseFormat": "json_object",
+      "variables": [
+        "brandName","industry","websiteUrl","businessDesc",
+        "tone","topic","platforms","characterContext"
+      ],
+      "platformRules": {
+        "instagram": { "words": "150-300", "hashtags": "15-20", "emojis": "3-5", "lineBreaks": true },
+        "tiktok":    { "words": "100-150", "hashtags": "5-8",  "emojis": "moderate", "lineBreaks": false },
+        "facebook":  { "words": "100-200", "hashtags": "1-3",  "emojis": "minimal",  "lineBreaks": true },
+        "linkedin":  { "words": "150-250", "hashtags": "3-5",  "emojis": "minimal",  "lineBreaks": true },
+        "twitter":   { "words": "max 280 chars", "hashtags": "1-2", "emojis": "1-2" },
+        "youtube":   { "words": "200-300", "hashtags": "5-10", "seoOptimised": true },
+        "threads":   { "words": "150-200", "hashtags": "1-3",  "conversational": true },
+        "pinterest": { "words": "80-150",  "hashtags": "5-10", "keywordRich": true }
+      }
+    },
+
+    "videoScript": {
+      "id": "prompt_003",
+      "name": "Video Script Generation",
+      "endpoint": "/api/generate-video-script",
+      "model": "gpt-4o-mini",
+      "maxTokens": 2000,
+      "temperature": 0.8,
+      "creditCost": 4,
+      "responseFormat": "json_object",
+      "variables": ["brandName","industry","tone","topic","platform","duration","characterContext"],
+      "outputFields": [
+        "title","hook","script","scenes","captions",
+        "hashtags","thumbnailPrompt","broll","musicMood","cta","estimatedDuration"
+      ]
+    },
+
+    "analyticsReport": {
+      "id": "prompt_004",
+      "name": "Analytics Report Generation",
+      "endpoint": "/api/generate-report",
+      "model": "gpt-4o-mini",
+      "maxTokens": 2000,
+      "temperature": 0.4,
+      "creditCost": 20,
+      "responseFormat": "json_object",
+      "variables": ["brandName","period","statsPayload"],
+      "outputFields": [
+        "executiveSummary","keyWin","biggestChallenge","recommendations"
+      ]
+    },
+
+    "characterCreate": {
+      "id": "prompt_005",
+      "name": "Character / Entity Blueprint",
+      "endpoint": "/api/characters/create",
+      "model": "gpt-4o-mini",
+      "maxTokens": 1500,
+      "temperature": 0.7,
+      "creditCost": 3,
+      "responseFormat": "json_object",
+      "variables": ["name","role","personality","style","tone","brandContext","notes"],
+      "outputFields": [
+        "id","name","role","tagline","personality","voice","visual",
+        "contentAngles","previewPost","doNotRepeat","brandFit"
+      ]
+    },
+
+    "characterGuidedEdit": {
+      "id": "prompt_006",
+      "name": "Guided Character Edit",
+      "endpoint": "/api/characters/{id}/guided-edit",
+      "model": "gpt-4o-mini",
+      "temperature": 0.6,
+      "editTypes": [
+        "more_premium","more_local","friendlier","more_confident","more_technical","younger_voice"
+      ]
+    },
+
+    "purchaseTriggers": {
+      "id": "prompt_007",
+      "name": "Purchase Trigger Content Matrix",
+      "endpoint": "/api/generate-triggers",
+      "model": "gpt-4o",
+      "maxTokens": 3000,
+      "temperature": 0.75,
+      "creditCost": 8,
+      "responseFormat": "json_object",
+      "variables": ["businessName","industry","brandVoice","offerStack"],
+      "triggers": [
+        "first_visit","cart_abandonment","first_purchase","repeat_purchase",
+        "subscription_start","lapsed_customer","seasonal","birthday",
+        "review_request","referral","upsell","renewal"
+      ]
+    },
+
+    "masterAudit": {
+      "id": "prompt_008",
+      "name": "Master Business Audit (Industry-Specific)",
+      "endpoint": "/api/master-audit",
+      "model": "gpt-4o",
+      "maxTokens": 4000,
+      "temperature": 0.3,
+      "creditCost": 20,
+      "responseFormat": "json_object",
+      "variables": ["businessName","websiteUrl","industry","targetAudience","challenges"],
+      "sections": [
+        "businessIdentity","audienceIntelligence","contentStrategy90Day",
+        "seoDiscovery","revenueGrowthFramework","socialProofArchitecture","actionPlan30Day"
+      ]
+    },
+
+    "imageGeneration": {
+      "id": "prompt_009",
+      "name": "Image Generation (DALL-E 3)",
+      "endpoint": "/api/generate-image",
+      "model": "dall-e-3",
+      "sizes": ["1024x1024","1792x1024","1024x1792"],
+      "styles": ["vivid","natural"],
+      "quality": ["standard","hd"],
+      "creditCosts": {
+        "1_image": 4,
+        "2_images": 8,
+        "3_images": 12,
+        "4_images": 14,
+        "5_images": 18,
+        "edit_upscale": 2,
+        "character_consistency": 3
+      }
+    }
+  },
+
+  "industryModules": [
+    "retail_ecommerce","food_beverage","health_beauty","professional_services",
+    "real_estate","trades_home_services","education_coaching","hospitality",
+    "technology_saas","fashion_apparel","automotive","healthcare",
+    "agriculture","financial_services","universal"
+  ],
+
+  "creditCosts": {
+    "caption": 1,
+    "caption_cta_hashtags": 2,
+    "seo_meta": 3,
+    "report_summary": 4,
+    "blog_draft": 6,
+    "full_report": 20,
+    "image_1": 4,
+    "image_2": 8,
+    "image_3": 12,
+    "image_4": 14,
+    "image_5": 18,
+    "image_edit": 2,
+    "character_consistency": 3,
+    "video_5s": 15,
+    "video_10s": 28,
+    "video_20s": 48,
+    "video_30s": 70,
+    "video_60s": 130,
+    "video_120s": 250,
+    "schedule_7day": 4,
+    "schedule_30day": 10,
+    "publish_post": 1,
+    "platform_variant": 1,
+    "generate_content": 2,
+    "analyze_url": 10
+  }
+}

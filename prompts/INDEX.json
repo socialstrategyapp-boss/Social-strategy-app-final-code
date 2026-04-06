@@ -1,0 +1,170 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-04-06",
+  "description": "Social Strategy AI Prompt Registry — All prompt modules indexed for API routing",
+  "prompts": [
+    {
+      "id": "website_analysis",
+      "label": "Website & Brand Analysis",
+      "file": "PROMPTS.md",
+      "apiEndpoint": "/api/analyze",
+      "model": "gpt-4o-mini",
+      "maxTokens": 2000,
+      "temperature": 0.3,
+      "creditCost": 10,
+      "responseFormat": "json_object",
+      "inputFields": ["websiteUrl", "businessDesc"],
+      "outputFields": [
+        "businessName", "industry", "seoScore", "brandScore", "usabilityScore",
+        "contentScore", "overallScore", "websiteSummary", "businessStrengths",
+        "recommendations", "strategy", "contentPillars", "targetAudience",
+        "socialMediaStrategy", "topOpportunity", "quickWins", "hashtags"
+      ],
+      "description": "Comprehensive SEO, branding, usability, and growth audit from a website URL"
+    },
+    {
+      "id": "content_generation",
+      "label": "Multi-Platform Content Generation",
+      "file": "CONTENT-ENGINE.md",
+      "apiEndpoint": "/api/generate-content",
+      "model": "gpt-4o",
+      "maxTokens": 4000,
+      "temperature": 0.82,
+      "creditCost": 2,
+      "responseFormat": "json_object",
+      "inputFields": [
+        "websiteUrl", "businessName", "industry", "tone", "topic",
+        "goal", "format", "targetAudience", "platforms", "businessDesc"
+      ],
+      "outputFields": [
+        "platform", "type", "content", "hashtags", "tip",
+        "imagePrompt", "hook", "cta", "estimatedEngagement", "postingTime"
+      ],
+      "description": "Generates native post copy for up to 8 platforms from a single brand brief"
+    },
+    {
+      "id": "video_script",
+      "label": "Short-Form Video Script",
+      "file": "VIDEO-SCRIPT.md",
+      "apiEndpoint": "/api/generate-video-script",
+      "model": "gpt-4o-mini",
+      "maxTokens": 2000,
+      "temperature": 0.80,
+      "creditCost": 4,
+      "responseFormat": "json_object",
+      "inputFields": [
+        "businessName", "industry", "topic", "platform",
+        "duration", "tone", "targetAudience", "goal", "businessDesc"
+      ],
+      "outputFields": [
+        "title", "hook", "hookType", "script", "sceneBreakdown",
+        "captions", "hashtags", "thumbnailPrompt", "bRollSuggestions",
+        "musicMood", "callToAction", "estimatedDuration", "productionNotes"
+      ],
+      "description": "Complete short-form video script with hooks, scenes, B-roll, and captions"
+    },
+    {
+      "id": "purchase_trigger",
+      "label": "Purchase Trigger Content",
+      "file": "PURCHASE-TRIGGER.md",
+      "apiEndpoint": "/api/generate-triggers",
+      "model": "gpt-4o",
+      "maxTokens": 3000,
+      "temperature": 0.75,
+      "creditCost": 6,
+      "responseFormat": "json_object",
+      "inputFields": [
+        "businessName", "industry", "triggerEvent", "customerName",
+        "productName", "price", "offer", "tone", "businessDesc"
+      ],
+      "outputFields": [
+        "triggerEvent", "messages.email", "messages.sms",
+        "messages.socialAd", "messages.push",
+        "behavioralNote", "abTestSuggestion"
+      ],
+      "triggerEvents": [
+        "browse_intent", "cart_abandon", "first_purchase",
+        "repeat_buyer", "subscriber_welcome", "lapsed_customer",
+        "milestone_moment", "vip_recognition", "advocate_reward",
+        "social_proof_amplify"
+      ],
+      "description": "Multi-channel triggered messages for 10 customer journey events"
+    },
+    {
+      "id": "analytics_report",
+      "label": "Analytics Report Generation",
+      "file": "PROMPTS.md",
+      "apiEndpoint": "/api/generate-report",
+      "model": "gpt-4o-mini",
+      "maxTokens": 1200,
+      "temperature": 0.4,
+      "creditCost": 20,
+      "responseFormat": "json_object",
+      "inputFields": ["period", "brandName", "clientId", "accountEmail"],
+      "outputFields": [
+        "executiveSummary", "keyWin", "biggestChallenge", "recommendations"
+      ],
+      "description": "Full analytics period report with AI-generated executive summary and recommendations"
+    },
+    {
+      "id": "seo_meta",
+      "label": "SEO Title, Meta & Keywords",
+      "file": null,
+      "apiEndpoint": "/api/generate-seo",
+      "model": "gpt-4o-mini",
+      "maxTokens": 800,
+      "temperature": 0.4,
+      "creditCost": 3,
+      "responseFormat": "json_object",
+      "inputFields": ["websiteUrl", "pageType", "targetKeyword", "businessDesc"],
+      "outputFields": ["title", "metaDescription", "h1", "keywords", "slug"],
+      "description": "SEO-optimised page title, meta description, H1, and keyword cluster"
+    },
+    {
+      "id": "blog_draft",
+      "label": "Blog Article Draft",
+      "file": null,
+      "apiEndpoint": "/api/generate-blog",
+      "model": "gpt-4o",
+      "maxTokens": 3000,
+      "temperature": 0.65,
+      "creditCost": 6,
+      "responseFormat": "json_object",
+      "inputFields": ["businessName", "industry", "topic", "tone", "targetAudience", "keywords"],
+      "outputFields": ["title", "slug", "metaDescription", "outline", "body", "cta"],
+      "description": "1000–1500 word SEO-optimised blog article draft"
+    }
+  ],
+
+  "industryRouting": {
+    "description": "Industry detection → prompt variant routing",
+    "file": "INDUSTRY-LIBRARY.md",
+    "detectedIndustries": [
+      "retail_ecommerce", "food_hospitality", "health_wellness", "professional_services",
+      "trades_property", "tech_digital", "education_coaching", "creative_media",
+      "automotive_industry", "nonprofit_community", "finance_crypto", "sports_fitness",
+      "events_entertainment", "agriculture", "fashion_apparel"
+    ],
+    "routingLogic": "Detected from analysis.industry field → load industry-specific content pillars, hashtag pools, tone adjustments, and benchmark comparisons"
+  },
+
+  "creditCostTable": {
+    "caption_only": 1,
+    "caption_cta_hashtags": 2,
+    "seo_title_meta": 3,
+    "image_1": 4,
+    "image_2": 8,
+    "image_3": 12,
+    "image_edit": 2,
+    "video_script": 4,
+    "blog_draft": 6,
+    "analytics_report": 20,
+    "report_summary": 4,
+    "trigger_content_set": 6,
+    "schedule_7day": 4,
+    "schedule_30day": 10,
+    "publish_per_platform": 1,
+    "character_consistency": 3,
+    "brand_analysis": 10
+  }
+}

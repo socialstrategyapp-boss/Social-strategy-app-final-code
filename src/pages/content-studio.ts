@@ -64,7 +64,7 @@ export function contentStudioPage(): string {
   }
   .cs-hero-sub { color: #7ab3d4; font-size: 12px; margin: 0; }
 
-  .cs-hero-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .cs-hero-right { display:flex; align-items:center; gap:10px; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end; }
 
   /* Old topbar kept as fallback but replaced by hero */
   .cs-topbar {
@@ -152,29 +152,28 @@ export function contentStudioPage(): string {
 
   /* ── GENERATE BUTTON ── */
   .cs-gen-btn {
-    width: 100%; padding: 16px; border-radius: 14px; border: none; cursor: pointer;
-    background: linear-gradient(135deg, #00E5FF 0%, #0070F3 35%, #7C3AED 70%, #A855F7 100%);
-    color: #fff; font-size: 15px; font-weight: 900; letter-spacing: 0.5px;
+    width: 100%; padding: 15px; border-radius: 14px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, #20D9FF 0%, #2F80FF 50%, #8B5CF6 100%);
+    color: #050816; font-size: 15px; font-weight: 900; letter-spacing: 0.4px;
     display: flex; align-items: center; justify-content: center; gap: 10px;
-    box-shadow: 0 0 35px rgba(0,229,255,0.45), 0 0 70px rgba(124,58,237,0.3), 0 6px 24px rgba(0,0,0,0.5);
+    box-shadow: 0 0 22px rgba(32,217,255,0.32), 0 4px 16px rgba(0,0,0,0.4);
     transition: all 0.25s; position: relative; overflow: hidden;
     margin-top: 6px;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
   }
   .cs-gen-btn::before { content:''; position:absolute; inset:0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 50%); }
-  .cs-gen-btn:hover { transform: translateY(-3px);
-    box-shadow: 0 0 55px rgba(0,229,255,0.7), 0 0 100px rgba(124,58,237,0.5), 0 8px 32px rgba(0,0,0,0.6); }
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 50%); }
+  .cs-gen-btn:hover { transform: translateY(-2px);
+    box-shadow: 0 0 36px rgba(32,217,255,0.5), 0 6px 24px rgba(0,0,0,0.5); }
 
   /* ── VIDEO SCRIPT BTN ── */
   .cs-script-btn {
     width: 100%; padding: 11px; border-radius: 12px; cursor: pointer;
-    background: rgba(255,45,120,0.07); border: 1.5px solid rgba(255,45,120,0.35);
-    color: #FF2D78; font-size: 13px; font-weight: 800;
+    background: rgba(255,45,166,0.06); border: 1.5px solid rgba(255,45,166,0.3);
+    color: #FF2DA6; font-size: 13px; font-weight: 800;
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: all 0.2s; box-shadow: 0 0 12px rgba(255,45,120,0.1);
+    transition: all 0.2s; box-shadow: 0 0 8px rgba(255,45,166,0.08);
   }
-  .cs-script-btn:hover { background: rgba(255,45,120,0.15); box-shadow: 0 0 24px rgba(255,45,120,0.3); }
+  .cs-script-btn:hover { background: rgba(255,45,166,0.12); box-shadow: 0 0 16px rgba(255,45,166,0.22); }
 
   /* ── RIGHT CONTENT AREA ── */
   .cs-right {
@@ -288,52 +287,67 @@ export function contentStudioPage(): string {
 
   /* ── BOTTOM ACTION BAR ── */
   .cs-action-bar {
-    margin: 16px 20px 20px;
-    background: rgba(3,8,22,0.9); border: 1.5px solid rgba(0,229,255,0.18);
-    border-radius: 16px; padding: 14px 18px;
-    display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
-    box-shadow: 0 0 20px rgba(0,229,255,0.04), 0 4px 16px rgba(0,0,0,0.3);
+    margin: 12px 16px 16px;
+    background: rgba(5,8,22,0.96);
+    border: 1.5px solid rgba(32,217,255,0.14);
+    border-radius: 14px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.22);
   }
-  .cs-action-left { display: flex; gap: 10px; flex-wrap: wrap; }
-  .cs-action-right { display: flex; gap: 10px; flex-wrap: wrap; }
-  /* Hide button text labels on very small screens */
-  @media(max-width:480px){ .cs-btn-label{ display:none; } }
+  /* All action bar buttons get uniform, consistent sizing */
+  .cs-action-bar .cs-btn-ghost,
+  .cs-action-bar .cs-btn-cyan,
+  .cs-action-bar .cs-btn-pink,
+  .cs-action-bar .cs-btn-green {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    justify-content: center;
+  }
+  /* Icon-only on very small screens */
+  @media(max-width:480px){ .cs-btn-label{ display:none; } .cs-action-bar .cs-btn-ghost, .cs-action-bar .cs-btn-cyan, .cs-action-bar .cs-btn-pink, .cs-action-bar .cs-btn-green { padding: 9px 12px !important; } }
 
   /* Neon action buttons */
   .cs-btn-cyan {
-    display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px;
-    border-radius: 999px; font-size: 13px; font-weight: 800; cursor: pointer; border: none;
-    background: linear-gradient(135deg, #00E5FF, #0070F3);
-    color: #001a22;
-    box-shadow: 0 0 18px rgba(0,229,255,0.45), 0 0 36px rgba(0,229,255,0.2);
+    display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px;
+    border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; border: none;
+    background: linear-gradient(135deg, #20D9FF, #2F80FF);
+    color: #050816;
+    box-shadow: 0 0 10px rgba(32,217,255,0.20);
     transition: all 0.2s;
   }
-  .cs-btn-cyan:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0,229,255,0.7), 0 0 60px rgba(0,229,255,0.35); }
+  .cs-btn-cyan:hover { transform: translateY(-2px); box-shadow: 0 0 18px rgba(32,217,255,0.38); }
   .cs-btn-pink {
-    display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px;
-    border-radius: 999px; font-size: 13px; font-weight: 800; cursor: pointer; border: none;
-    background: linear-gradient(135deg, #FF2D78, #C026D3, #7C3AED);
+    display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px;
+    border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; border: none;
+    background: linear-gradient(135deg, #FF2DA6, #8B5CF6);
     color: #fff;
-    box-shadow: 0 0 18px rgba(255,45,120,0.45), 0 0 36px rgba(192,38,211,0.2);
+    box-shadow: 0 0 10px rgba(255,45,166,0.20);
     transition: all 0.2s;
   }
-  .cs-btn-pink:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(255,45,120,0.7), 0 0 60px rgba(192,38,211,0.4); }
+  .cs-btn-pink:hover { transform: translateY(-2px); box-shadow: 0 0 18px rgba(255,45,166,0.38); }
   .cs-btn-green {
-    display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px;
-    border-radius: 999px; font-size: 13px; font-weight: 800; cursor: pointer; border: none;
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
-    color: #001a22;
-    box-shadow: 0 0 18px rgba(0,255,136,0.4);
+    display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px;
+    border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; border: none;
+    background: linear-gradient(135deg, #00F59B, #20D9FF);
+    color: #050816;
+    box-shadow: 0 0 10px rgba(0,245,155,0.18);
     transition: all 0.2s;
   }
-  .cs-btn-green:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0,255,136,0.65); }
+  .cs-btn-green:hover { transform: translateY(-2px); box-shadow: 0 0 18px rgba(0,245,155,0.32); }
   .cs-btn-ghost {
-    display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px;
-    border-radius: 999px; font-size: 13px; font-weight: 700; cursor: pointer;
-    background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.15);
-    color: #94a3b8; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px;
+    border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer;
+    background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.12);
+    color: #A8B3C7; transition: all 0.2s;
   }
-  .cs-btn-ghost:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.3); }
+  .cs-btn-ghost:hover { background: rgba(255,255,255,0.08); color: #F4F7FB; border-color: rgba(255,255,255,0.25); }
 
   /* ── REVIEW MODAL ── */
   .cs-modal-wrap { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:2000; overflow-y:auto; padding:16px; display:none; align-items:flex-start; justify-content:center; }
@@ -420,6 +434,10 @@ export function contentStudioPage(): string {
             <option>Toys &amp; Children's Products</option>
             <option>Home Goods &amp; Furniture</option>
             <option>Pet Supplies &amp; Services</option>
+            <option>Baby &amp; Maternity Products</option>
+            <option>Gift &amp; Novelty Store</option>
+            <option>Books &amp; Stationery</option>
+            <option>Vintage &amp; Secondhand Retail</option>
             </optgroup>
             <optgroup label="── Food &amp; Hospitality ──">
             <option>Food &amp; Beverage / Restaurant</option>
@@ -430,12 +448,18 @@ export function contentStudioPage(): string {
             <option>Hospitality &amp; Accommodation</option>
             <option>Tourism &amp; Travel Agency</option>
             <option>Bar &amp; Nightlife</option>
+            <option>Winery &amp; Brewery</option>
+            <option>Fast Food &amp; QSR</option>
+            <option>Meal Prep &amp; Delivery</option>
+            <option>Vegan &amp; Plant-Based</option>
             </optgroup>
             <optgroup label="── Health &amp; Wellness ──">
             <option>Health, Beauty &amp; Wellness</option>
             <option>Fitness &amp; Personal Training</option>
+            <option>Gym &amp; CrossFit Box</option>
             <option>Yoga &amp; Pilates Studio</option>
             <option>Salon &amp; Hair Studio</option>
+            <option>Barber Shop</option>
             <option>Spa &amp; Day Spa</option>
             <option>Skincare &amp; Cosmetics</option>
             <option>Healthcare &amp; Medical</option>
@@ -443,29 +467,51 @@ export function contentStudioPage(): string {
             <option>Allied Health &amp; Physiotherapy</option>
             <option>Mental Health &amp; Counselling</option>
             <option>Nutrition &amp; Dietetics</option>
+            <option>Chiropractic &amp; Osteopathy</option>
+            <option>Naturopathy &amp; Holistic Health</option>
+            <option>Supplement &amp; Vitamins Brand</option>
+            <option>Weight Loss &amp; Transformation</option>
             </optgroup>
             <optgroup label="── Professional Services ──">
             <option>Professional Services</option>
             <option>Legal &amp; Law Firm</option>
             <option>Accounting &amp; Bookkeeping</option>
             <option>Financial Services</option>
+            <option>Financial Planning &amp; Wealth Management</option>
             <option>Insurance</option>
             <option>Mortgage &amp; Finance Broking</option>
             <option>HR &amp; Recruitment</option>
             <option>Business Consulting</option>
             <option>Marketing &amp; Advertising Agency</option>
             <option>PR &amp; Communications</option>
+            <option>Translation &amp; Language Services</option>
+            <option>Notary &amp; Document Services</option>
+            </optgroup>
+            <optgroup label="── Finance &amp; Crypto ──">
+            <option>Cryptocurrency &amp; Blockchain</option>
+            <option>NFT &amp; Web3</option>
+            <option>DeFi &amp; Trading</option>
+            <option>Stock Market &amp; Investing</option>
+            <option>Forex &amp; Currency Trading</option>
+            <option>Fintech &amp; Payments</option>
+            <option>Banking &amp; Credit Unions</option>
+            <option>Tax &amp; Accounting Services</option>
             </optgroup>
             <optgroup label="── Trades &amp; Property ──">
             <option>Trades &amp; Home Services</option>
             <option>Building &amp; Construction</option>
             <option>Electrical &amp; Plumbing</option>
+            <option>HVAC &amp; Air Conditioning</option>
+            <option>Pest Control</option>
             <option>Landscaping &amp; Gardening</option>
+            <option>Pool &amp; Spa Maintenance</option>
             <option>Cleaning Services</option>
             <option>Interior Design &amp; Decorating</option>
             <option>Real Estate</option>
+            <option>Real Estate Development</option>
             <option>Property Management</option>
             <option>Architecture</option>
+            <option>Solar &amp; Renewable Energy</option>
             </optgroup>
             <optgroup label="── Tech &amp; Digital ──">
             <option>Technology / SaaS</option>
@@ -473,18 +519,27 @@ export function contentStudioPage(): string {
             <option>Web Design &amp; Development</option>
             <option>Cybersecurity</option>
             <option>IT Support &amp; Services</option>
+            <option>Cloud Services</option>
             <option>AI &amp; Machine Learning</option>
+            <option>Data Analytics &amp; BI</option>
             <option>E-learning Platform</option>
             <option>Digital Marketing / SEO</option>
+            <option>Social Media Management</option>
+            <option>Game Development</option>
+            <option>AR / VR &amp; Immersive Tech</option>
             </optgroup>
             <optgroup label="── Education &amp; Coaching ──">
             <option>Education &amp; Coaching</option>
             <option>Life Coaching &amp; Mindset</option>
             <option>Business Coaching</option>
+            <option>Executive Coaching</option>
             <option>Kids Education &amp; Tutoring</option>
             <option>Music &amp; Arts Tuition</option>
             <option>Language School</option>
             <option>Sports Coaching</option>
+            <option>Online Course Creator</option>
+            <option>Motivational Speaking</option>
+            <option>Career Development &amp; Resume</option>
             </optgroup>
             <optgroup label="── Creative &amp; Media ──">
             <option>Entertainment &amp; Media</option>
@@ -492,19 +547,48 @@ export function contentStudioPage(): string {
             <option>Content Creator &amp; Influencer</option>
             <option>Podcast &amp; Broadcasting</option>
             <option>Music &amp; Events</option>
+            <option>DJ &amp; Entertainment</option>
             <option>Film &amp; Production</option>
             <option>Graphic Design &amp; Branding</option>
             <option>Publishing &amp; Writing</option>
+            <option>Animation &amp; Motion Graphics</option>
+            <option>Street Art &amp; Visual Arts</option>
+            </optgroup>
+            <optgroup label="── Sports &amp; Recreation ──">
+            <option>Sports &amp; Recreation</option>
+            <option>Professional Sports Team</option>
+            <option>Martial Arts &amp; Boxing</option>
+            <option>Surfing &amp; Water Sports</option>
+            <option>Golf &amp; Country Club</option>
+            <option>Dance Studio</option>
+            <option>Cycling &amp; Triathlon</option>
+            <option>Outdoor Adventures &amp; Hiking</option>
+            <option>Hunting &amp; Fishing</option>
+            <option>eSports &amp; Gaming</option>
+            </optgroup>
+            <optgroup label="── Events &amp; Entertainment ──">
+            <option>Event Planning &amp; Management</option>
+            <option>Wedding Planning</option>
+            <option>Corporate Events</option>
+            <option>Party &amp; Birthday Events</option>
+            <option>Concert &amp; Festival Promotion</option>
+            <option>Venue &amp; Function Centre</option>
+            <option>Escape Room &amp; Family Entertainment</option>
+            <option>Kids Party Entertainment</option>
             </optgroup>
             <optgroup label="── Automotive &amp; Industry ──">
             <option>Automotive</option>
             <option>Car Dealership</option>
             <option>Mechanical &amp; Auto Repair</option>
+            <option>Detailing &amp; Car Care</option>
+            <option>Motorbike &amp; Powersports</option>
             <option>Agriculture &amp; Rural</option>
             <option>Mining &amp; Resources</option>
             <option>Manufacturing &amp; Engineering</option>
             <option>Logistics &amp; Transport</option>
+            <option>Freight &amp; Courier Services</option>
             <option>Waste &amp; Environmental Services</option>
+            <option>Safety &amp; Compliance</option>
             </optgroup>
             <optgroup label="── Non-profit &amp; Community ──">
             <option>Non-profit &amp; Charity</option>
@@ -512,6 +596,20 @@ export function contentStudioPage(): string {
             <option>Religious Organisation</option>
             <option>Government &amp; Public Sector</option>
             <option>Sports Club &amp; Association</option>
+            <option>Animal Shelter &amp; Rescue</option>
+            <option>Environmental &amp; Conservation</option>
+            <option>Social Enterprise</option>
+            </optgroup>
+            <optgroup label="── Lifestyle &amp; Personal Brand ──">
+            <option>Personal Brand</option>
+            <option>Lifestyle Blog &amp; Vlog</option>
+            <option>Parenting &amp; Family</option>
+            <option>Relationships &amp; Dating</option>
+            <option>Travel &amp; Adventure</option>
+            <option>Food &amp; Cooking (Personal)</option>
+            <option>Fashion Blogging</option>
+            <option>Home Decor &amp; DIY</option>
+            <option>Sustainability &amp; Eco Living</option>
             </optgroup>
           </select>
         </div>
@@ -734,13 +832,27 @@ export function contentStudioPage(): string {
       <span><strong>Demo Mode</strong> — Sample content. Add your <a href="/settings" style="color:#FFD600;text-decoration:underline;">OpenAI API key</a> in Settings for real AI posts.</span>
     </div>
 
-    <!-- BOTTOM ACTION BAR — perfectly centred, 5 equal buttons -->
-    <div class="cs-action-bar" id="actionBar" style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:14px 18px;">
-      <button onclick="regenerateContent()" class="cs-btn-ghost" id="regenBtn" title="Regenerate content with same settings"><i class="fas fa-rotate-right"></i><span class="cs-btn-label"> Regenerate</span></button>
-      <button onclick="copyAll()" class="cs-btn-ghost" id="copyAllBtn" title="Copy all posts to clipboard"><i class="fas fa-copy"></i><span class="cs-btn-label"> Copy All</span></button>
-      <button onclick="openReviewModal(null)" class="cs-btn-cyan" id="reviewOpenBtn" title="Review and edit each post"><i class="fas fa-eye"></i><span class="cs-btn-label"> Review &amp; Edit</span></button>
-      <button onclick="scheduleAll()" class="cs-btn-pink" title="Schedule all approved posts"><i class="fas fa-calendar-plus"></i><span class="cs-btn-label"> Schedule All</span></button>
-      <button onclick="publishApproved()" class="cs-btn-green" id="publishBtn" title="Publish approved posts now"><i class="fas fa-paper-plane"></i><span class="cs-btn-label"> Publish</span></button>
+    <!-- BOTTOM ACTION BAR — centered, 5 equal buttons in two groups -->
+    <div class="cs-action-bar" id="actionBar">
+      <!-- Group 1: Utility actions -->
+      <button onclick="regenerateContent()" class="cs-btn-ghost" id="regenBtn" title="Regenerate with same settings">
+        <i class="fas fa-rotate-right"></i><span class="cs-btn-label"> Regenerate</span>
+      </button>
+      <button onclick="copyAll()" class="cs-btn-ghost" id="copyAllBtn" title="Copy all posts to clipboard">
+        <i class="fas fa-copy"></i><span class="cs-btn-label"> Copy All</span>
+      </button>
+      <!-- Divider -->
+      <div style="width:1px;height:28px;background:rgba(255,255,255,0.1);flex-shrink:0;"></div>
+      <!-- Group 2: Review & publish actions -->
+      <button onclick="openReviewModal(null)" class="cs-btn-cyan" id="reviewOpenBtn" title="Review and edit each post">
+        <i class="fas fa-eye"></i><span class="cs-btn-label"> Review &amp; Edit</span>
+      </button>
+      <button onclick="scheduleAll()" class="cs-btn-pink" title="Schedule all approved posts">
+        <i class="fas fa-calendar-plus"></i><span class="cs-btn-label"> Schedule All</span>
+      </button>
+      <button onclick="publishApproved()" class="cs-btn-green" id="publishBtn" title="Publish approved posts now">
+        <i class="fas fa-paper-plane"></i><span class="cs-btn-label"> Publish</span>
+      </button>
     </div>
 
     <!-- IMAGE GENERATION -->
