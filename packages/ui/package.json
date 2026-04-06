@@ -1,0 +1,17 @@
+{
+  "name": "@social-strategy/ui",
+  "version": "1.0.0",
+  "description": "Social Strategy shared UI components — web HTML helpers and React Native components",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "build": "tsc --outDir dist --declaration",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@social-strategy/theme": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

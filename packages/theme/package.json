@@ -1,0 +1,14 @@
+{
+  "name": "@social-strategy/theme",
+  "version": "1.0.0",
+  "description": "Social Strategy design system tokens — shared between web and mobile",
+  "main": "./tokens.ts",
+  "types": "./tokens.ts",
+  "scripts": {
+    "build": "tsc --outDir dist --declaration",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

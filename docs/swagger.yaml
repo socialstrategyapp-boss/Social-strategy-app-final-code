@@ -1,0 +1,814 @@
+openapi: 3.0.3
+info:
+  title: Social Strategy API
+  version: 1.0.0
+  description: |
+    Full REST API for Social Strategy — AI-powered social media management platform.
+    All endpoints are served from Cloudflare Workers (edge runtime).
+    Base URL: https://socialstrategyapp.com.au
+  contact:
+    email: support@socialstrategyapp.com.au
+  license:
+    name: Proprietary
+    url: https://socialstrategyapp.com.au/terms
+
+servers:
+  - url: https://socialstrategyapp.com.au
+    description: Production (Cloudflare Pages)
+  - url: http://localhost:3000
+    description: Local development (wrangler pages dev)
+
+# ─── SECURITY ─────────────────────────────────────────────────────────────────
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT issued after login. Pass as Authorization header.
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: API key for Enterprise plan integrations.
+
+  schemas:
+    # ── Account ──
+    Account:
+      type: object
+      properties:
+        id:               { type: integer, example: 1 }
+        email:            { type: string,  example: user@example.com }
+        plan:             { type: string,  enum: [free, business, pro, enterprise] }
+        status:           { type: string,  enum: [active, trial, expired, suspended, blocked] }
+        credits_used:     { type: integer, example: 45 }
+        credits_max:      { type: integer, example: 150 }
+        credits_remaining:{ type: integer, example: 105 }
+        reports_used:     { type: integer, example: 1 }
+        reports_max:      { type: integer, example: 2 }
+        days_left:        { type: integer, nullable: true, example: 12 }
+        expires_at:       { type: string,  format: date-time, nullable: true }
+
+    # ── Credit Transaction ──
+    CreditTransaction:
+      type: object
+      properties:
+        id:          { type: integer }
+        account_id:  { type: integer }
+        action:      { type: string, example: analyze }
+        credits_used:{ type: integer, example: 10 }
+        description: { type: string, example: "Analysis: https://example.com" }
+        created_at:  { type: string, format: date-time }
+
+    # ── Analysis Report ──
+    AnalysisReport:
+      type: object
+      properties:
+        businessName:    { type: string }
+        industry:        { type: string }
+        seoScore:        { type: integer, minimum: 0, maximum: 100 }
+        brandScore:      { type: integer, minimum: 0, maximum: 100 }
+        usabilityScore:  { type: integer, minimum: 0, maximum: 100 }
+        contentScore:    { type: integer, minimum: 0, maximum: 100 }
+        overallScore:    { type: integer, minimum: 0, maximum: 100 }
+        websiteSummary:  { type: string }
+        businessStrengths: { type: array, items: { type: string } }
+        recommendations: { type: array, items: { type: string } }
+        topOpportunity:  { type: string }
+        quickWins:       { type: array, items: { type: string } }
+        contentPillars:  { type: array, items: { type: string } }
+        strategy:
+          type: object
+          properties:
+            pricing:       { type: string }
+            revenue:       { type: string }
+            competitorGap: { type: string }
+            actions:       { type: array, items: { type: string } }
+        targetAudience:
+          type: object
+          properties:
+            primary:    { type: string }
+            secondary:  { type: string }
+            painPoints: { type: array, items: { type: string } }
+        socialMediaStrategy:
+          type: object
+          properties:
+            bestPlatforms:    { type: array, items: { type: string } }
+            postingFrequency: { type: string }
+            contentTypes:     { type: array, items: { type: string } }
+            bestHashtags:     { type: array, items: { type: string } }
+
+    # ── Generated Post ──
+    GeneratedPost:
+      type: object
+      properties:
+        platform: { type: string }
+        type:     { type: string }
+        content:  { type: string }
+        hashtags: { type: array, items: { type: string } }
+        tip:      { type: string }
+        cta:      { type: string }
+
+    # ── AI Character ──
+    Character:
+      type: object
+      properties:
+        id:           { type: integer }
+        account_id:   { type: integer }
+        name:         { type: string, example: "Emma - Brand Voice" }
+        role:         { type: string, example: "Content Creator" }
+        personality:  { type: string, example: "Friendly, witty, professional" }
+        backstory:    { type: string }
+        tone:         { type: string, example: "Conversational" }
+        industry:     { type: string }
+        avatar_url:   { type: string, nullable: true }
+        posts_created:{ type: integer }
+        is_active:    { type: boolean }
+        created_at:   { type: string, format: date-time }
+
+    # ── Billing Subscription ──
+    Subscription:
+      type: object
+      properties:
+        id:               { type: string }
+        plan:             { type: string, enum: [free, business, pro, enterprise] }
+        status:           { type: string, enum: [active, trialing, past_due, canceled] }
+        current_period_end:{ type: string, format: date-time }
+        cancel_at_period_end: { type: boolean }
+        stripe_subscription_id: { type: string, nullable: true }
+
+    # ── Error ──
+    Error:
+      type: object
+      properties:
+        success: { type: boolean, example: false }
+        error:   { type: string }
+        code:    { type: string, enum: [NO_ACCOUNT, BLOCKED, SUSPENDED, EXPIRED, REPORT_LIMIT, NO_CREDITS, INVALID_INPUT] }
+
+# ─── PATHS ────────────────────────────────────────────────────────────────────
+paths:
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # ACCOUNT ENDPOINTS
+  # ══════════════════════════════════════════════════════════════════════════
+  /api/account:
+    get:
+      summary: Get account details
+      description: Returns plan, status, credits used/remaining, reports, and expiry info.
+      tags: [Account]
+      parameters:
+        - in: query
+          name: email
+          schema: { type: string }
+          description: Account email. Falls back to demo account if omitted.
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+                  - type: object
+                    properties:
+                      success: { type: boolean, example: true }
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /api/account/transactions:
+    get:
+      summary: Get recent credit transactions
+      description: Returns the last 20 credit deduction events for the account.
+      tags: [Account]
+      parameters:
+        - in: query
+          name: email
+          schema: { type: string }
+      responses:
+        '200':
+          description: Transaction list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items: { $ref: '#/components/schemas/CreditTransaction' }
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # ANALYSIS ENDPOINTS
+  # ══════════════════════════════════════════════════════════════════════════
+  /api/analyze:
+    post:
+      summary: Analyse a website/brand
+      description: |
+        Performs a comprehensive 200+ signal audit via GPT-4o-mini.
+        Costs 10 credits. Saves result to D1 analysis_reports table.
+      tags: [Analysis]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [url]
+              properties:
+                url:          { type: string, example: "https://example.com.au" }
+                clientId:     { type: integer, nullable: true }
+                accountEmail: { type: string, nullable: true }
+      responses:
+        '200':
+          description: Analysis result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/AnalysisReport'
+                  - type: object
+                    properties:
+                      success: { type: boolean }
+                      url:     { type: string }
+        '403':
+          description: Credit/access error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '500':
+          description: OpenAI API error or DB error
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # CONTENT GENERATION ENDPOINTS
+  # ══════════════════════════════════════════════════════════════════════════
+  /api/generate-content:
+    post:
+      summary: Generate social media content
+      description: |
+        Generates captions, CTAs, and hashtags for multiple platforms.
+        Cost: 2 credits per platform set (generate_content action).
+        Uses GPT-4o-mini with industry-specific prompts from the prompts library.
+      tags: [Content]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [brandName, platforms]
+              properties:
+                brandName:    { type: string }
+                websiteUrl:   { type: string }
+                industry:     { type: string }
+                tone:         { type: string, enum: [Professional, Friendly, Playful, Bold, Inspiring, Witty, Casual, Urgent] }
+                topic:        { type: string }
+                platforms:    { type: array, items: { type: string } }
+                characterId:  { type: integer, nullable: true, description: "AI character to use for voice consistency" }
+                accountEmail: { type: string, nullable: true }
+      responses:
+        '200':
+          description: Generated posts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  posts:
+                    type: array
+                    items: { $ref: '#/components/schemas/GeneratedPost' }
+        '403':
+          description: Credit/access error
+
+  /api/generate-image:
+    post:
+      summary: Generate AI images via DALL-E 3
+      description: |
+        Generates 1–5 images. Credit cost:
+        1 image = 4cr, 2 = 8cr, 3 = 12cr, 4 = 14cr, 5 = 18cr.
+      tags: [Content]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [prompt]
+              properties:
+                prompt:       { type: string, description: "Image description" }
+                count:        { type: integer, enum: [1,2,3,4,5], default: 1 }
+                size:         { type: string, enum: ["1024x1024","1792x1024","1024x1792"], default: "1024x1024" }
+                style:        { type: string, enum: [vivid, natural], default: vivid }
+                accountEmail: { type: string, nullable: true }
+      responses:
+        '200':
+          description: Generated image URLs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  images:  { type: array, items: { type: string, format: uri } }
+        '403':
+          description: Credit/access error
+
+  /api/video-script:
+    post:
+      summary: Generate video script
+      description: Generates a structured video script (text only). Costs 4 credits.
+      tags: [Content]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [brandName, topic]
+              properties:
+                brandName:    { type: string }
+                topic:        { type: string }
+                duration:     { type: string, enum: ["15s","30s","60s","3min"], default: "60s" }
+                platform:     { type: string, default: "TikTok" }
+                tone:         { type: string }
+                accountEmail: { type: string, nullable: true }
+      responses:
+        '200':
+          description: Video script
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  script:  { type: string }
+                  hook:    { type: string }
+                  scenes:  { type: array, items: { type: object } }
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # CHARACTERS (AI Employees) ENDPOINTS
+  # ══════════════════════════════════════════════════════════════════════════
+  /api/characters:
+    get:
+      summary: List AI characters
+      description: Returns all characters for the account.
+      tags: [Characters]
+      parameters:
+        - in: query
+          name: email
+          schema: { type: string }
+      responses:
+        '200':
+          description: Character list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:    { type: boolean }
+                  characters: { type: array, items: { $ref: '#/components/schemas/Character' } }
+
+    post:
+      summary: Create a new AI character
+      description: |
+        Creates a new AI character/employee. 
+        Plan limits: Free = 0, Business = 1, Pro = 3, Enterprise = unlimited.
+      tags: [Characters]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, role, personality, tone, industry]
+              properties:
+                name:         { type: string }
+                role:         { type: string, example: "Content Creator" }
+                personality:  { type: string }
+                backstory:    { type: string }
+                tone:         { type: string }
+                industry:     { type: string }
+                accountEmail: { type: string }
+      responses:
+        '200':
+          description: Created character
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:   { type: boolean }
+                  character: { $ref: '#/components/schemas/Character' }
+        '403':
+          description: Plan limit reached
+
+  /api/characters/{id}:
+    get:
+      summary: Get character by ID
+      tags: [Characters]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Character details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:   { type: boolean }
+                  character: { $ref: '#/components/schemas/Character' }
+        '404':
+          description: Character not found
+
+    put:
+      summary: Update character
+      tags: [Characters]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Character' }
+      responses:
+        '200':
+          description: Updated character
+
+    delete:
+      summary: Delete character
+      tags: [Characters]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Deleted successfully
+
+  /api/characters/{id}/generate:
+    post:
+      summary: Generate content using a specific character voice
+      description: |
+        Generates posts using the character's personality and tone.
+        Costs: generate_content (2cr) + character_consistency (3cr) = 5cr per platform set.
+      tags: [Characters]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                topic:     { type: string }
+                platforms: { type: array, items: { type: string } }
+      responses:
+        '200':
+          description: Character-voiced posts
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # REPORTS ENDPOINTS
+  # ══════════════════════════════════════════════════════════════════════════
+  /api/reports:
+    get:
+      summary: List analysis reports
+      description: Returns all saved reports for the account.
+      tags: [Reports]
+      parameters:
+        - in: query
+          name: email
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: Report list
+
+  /api/reports/{id}:
+    get:
+      summary: Get a specific report
+      tags: [Reports]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Full report object
+        '404':
+          description: Not found
+
+  /api/generate-report:
+    post:
+      summary: Generate a full analytics report
+      description: Generates comprehensive analytics report. Costs 15 credits.
+      tags: [Reports]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:          { type: string }
+                accountEmail: { type: string }
+      responses:
+        '200':
+          description: Full report
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # BILLING ENDPOINTS
+  # ══════════════════════════════════════════════════════════════════════════
+  /api/billing/subscription:
+    get:
+      summary: Get current subscription
+      tags: [Billing]
+      parameters:
+        - in: query
+          name: email
+          schema: { type: string }
+      responses:
+        '200':
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:      { type: boolean }
+                  subscription: { $ref: '#/components/schemas/Subscription' }
+
+  /api/billing/checkout:
+    post:
+      summary: Create Stripe checkout session
+      description: Creates a Stripe checkout session for plan upgrade.
+      tags: [Billing]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [plan, email]
+              properties:
+                plan:      { type: string, enum: [business, pro, enterprise] }
+                email:     { type: string }
+                interval:  { type: string, enum: [monthly, annual], default: monthly }
+      responses:
+        '200':
+          description: Stripe checkout URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:     { type: boolean }
+                  checkoutUrl: { type: string, format: uri }
+
+  /api/billing/portal:
+    post:
+      summary: Create Stripe customer portal session
+      description: Redirects user to Stripe portal to manage subscription.
+      tags: [Billing]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email: { type: string }
+      responses:
+        '200':
+          description: Portal URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:    { type: boolean }
+                  portalUrl:  { type: string, format: uri }
+
+  /api/billing/webhook:
+    post:
+      summary: Stripe webhook handler
+      description: |
+        Receives Stripe webhook events (checkout.session.completed,
+        customer.subscription.updated, customer.subscription.deleted, invoice.paid).
+        Webhook secret verified via Stripe-Signature header.
+      tags: [Billing]
+      security: []
+      parameters:
+        - in: header
+          name: Stripe-Signature
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Webhook processed
+        '400':
+          description: Invalid signature
+
+  /api/billing/plans:
+    get:
+      summary: Get all available plans and pricing
+      description: Returns plan definitions, credit costs, and credit packs.
+      tags: [Billing]
+      security: []
+      responses:
+        '200':
+          description: Plan details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:     { type: boolean }
+                  plans:       { type: object }
+                  creditCosts: { type: object }
+                  creditPacks: { type: array }
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # ANALYTICS ENDPOINTS
+  # ══════════════════════════════════════════════════════════════════════════
+  /api/analytics/overview:
+    get:
+      summary: Get analytics overview
+      description: Returns post performance, engagement metrics, and growth trends.
+      tags: [Analytics]
+      parameters:
+        - in: query
+          name: email
+          schema: { type: string }
+        - in: query
+          name: period
+          schema: { type: string, enum: [7d, 30d, 90d], default: 30d }
+      responses:
+        '200':
+          description: Analytics overview data
+
+  /api/analytics/posts:
+    get:
+      summary: Get post performance analytics
+      tags: [Analytics]
+      parameters:
+        - in: query
+          name: email
+          schema: { type: string }
+        - in: query
+          name: platform
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: Post performance data
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # ADMIN ENDPOINTS (requires admin auth)
+  # ══════════════════════════════════════════════════════════════════════════
+  /api/admin/accounts:
+    get:
+      summary: List all accounts (admin only)
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Account list with plan and credit details
+        '401':
+          description: Unauthorized
+
+  /api/admin/accounts/{email}/credits:
+    post:
+      summary: Manual credit adjustment (admin only)
+      description: Add or subtract credits from an account. Logs to credit_transactions.
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [amount, reason]
+              properties:
+                amount: { type: integer, description: "Positive to add, negative to deduct" }
+                reason: { type: string }
+      responses:
+        '200':
+          description: Credits adjusted
+
+  /api/admin/accounts/{email}/status:
+    put:
+      summary: Update account status (admin only)
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: { type: string, enum: [active, suspended, blocked, trial, expired] }
+                reason: { type: string }
+      responses:
+        '200':
+          description: Status updated
+
+  /api/admin/accounts/{email}/plan:
+    put:
+      summary: Override plan and credits (admin only)
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan:          { type: string, enum: [free, business, pro, enterprise] }
+                credits_max:   { type: integer }
+                credits_used:  { type: integer }
+                reports_max:   { type: integer }
+                expires_at:    { type: string, format: date-time }
+      responses:
+        '200':
+          description: Plan updated
+
+  /api/admin/trial-lock:
+    post:
+      summary: Check/apply trial lock (anti-abuse)
+      description: |
+        Prevents duplicate free trials using email + device fingerprint + IP.
+        Returns whether the requesting entity is allowed to start a trial.
+      tags: [Admin]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:       { type: string }
+                fingerprint: { type: string }
+                ip:          { type: string }
+      responses:
+        '200':
+          description: Trial lock check result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allowed:  { type: boolean }
+                  reason:   { type: string, nullable: true }
+
+tags:
+  - name: Account
+    description: Account info, credit balance, and transaction history
+  - name: Analysis
+    description: Website and brand analysis endpoints
+  - name: Content
+    description: AI content generation — captions, images, scripts
+  - name: Characters
+    description: AI character/employee management and content generation
+  - name: Reports
+    description: Analytics report generation and retrieval
+  - name: Billing
+    description: Subscription management, Stripe integration, credit packs
+  - name: Analytics
+    description: Post and platform performance analytics
+  - name: Admin
+    description: Admin-only endpoints for account management and abuse prevention

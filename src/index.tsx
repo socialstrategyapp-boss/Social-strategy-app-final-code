@@ -15,6 +15,9 @@ import { adminPage } from './pages/admin'
 import { profilePage } from './pages/profile'
 import { privacyPage, termsPage, gdprPage, aboutPage, faqPage, cookiePage, billingPolicyPage } from './pages/static-pages'
 import { billingPage } from './pages/billing'
+import { characterMakerPage } from './pages/character-maker'
+import { imageMakerPage } from './pages/image-maker'
+import { uploadsPage } from './pages/uploads'
 
 type Env = {
   OPENAI_API_KEY: string
@@ -54,14 +57,14 @@ app.get('/billing', (c) => c.html(billingPage()))
 
 // Cost in credits per action (per spec: 1 credit ≈ $1 AUD value, 3x markup on cost)
 const CREDIT_COSTS: Record<string, number> = {
-  analyze:               10,  // SEO + brand audit scan → 10cr
+  analyze:               10,  // SEO + brand + usability audit → 10cr
   generate_content:       2,  // caption + CTA + hashtags per platform set → 2cr
-  generate_image:         4,  // 1 DALL-E 3 image → 4cr
-  generate_image_2:       8,  // 2 images → 8cr
-  generate_image_3:      12,  // 3 images → 12cr
-  generate_image_edit:    2,  // edit/upscale/variation → +2cr
+  generate_image:         4,  // 1 × DALL-E 3 image → 4cr
+  generate_image_2:       8,  // 2 × images → 8cr
+  generate_image_3:      12,  // 3 × images → 12cr
+  generate_image_edit:    2,  // edit / upscale / variation → +2cr
   video_script:           4,  // video script (text only) → 4cr
-  generate_report:       20,  // full analytics report → 20cr
+  generate_report:       15,  // full analytics report → 15cr (updated from 20)
   report_summary:         4,  // lightweight report summary → 4cr
   seo_meta:               3,  // SEO title + meta + keywords → 3cr
   blog_draft:             6,  // long-form blog article → 6cr
@@ -1487,5 +1490,246 @@ app.post('/api/stripe/webhook', async (c) => {
 
   return c.text('ok')
 })
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ─── ADMIN API ROUTES ────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// All /api/admin/* routes require the X-Admin-Token header.
+// In production: set ADMIN_TOKEN as a Cloudflare secret.
+// Fallback dev token: 'dev-admin-329383' (change before deploying)
+
+function requireAdmin(c: Parameters<typeof app.get>[1] extends infer F ? F extends (c: infer C) => unknown ? C : never : never): boolean {
+  const token = (c.req as unknown as { header: (k: string) => string | undefined }).header('x-admin-token')
+  const expected = ((c as Record<string, unknown>).env as Record<string, string | undefined>)?.ADMIN_TOKEN || 'dev-admin-329383'
+  return token === expected
+}
+
+// ─── List all accounts ────────────────────────────────────────────────────────
+app.get('/api/admin/accounts', async (c) => {
+  if (!requireAdmin(c as never)) return c.json({ success: false, error: 'Unauthorized' }, 401)
+  if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
+  const { results } = await c.env.DB.prepare(
+    'SELECT id, email, plan, status, credits_used, credits_max, reports_used, reports_max, expires_at, created_at FROM accounts ORDER BY created_at DESC LIMIT 500'
+  ).all()
+  return c.json({ success: true, accounts: results, total: results.length })
+})
+
+// ─── Manual credit adjustment ─────────────────────────────────────────────────
+app.post('/api/admin/accounts/:email/credits', async (c) => {
+  if (!requireAdmin(c as never)) return c.json({ success: false, error: 'Unauthorized' }, 401)
+  if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
+
+  const email  = c.req.param('email')
+  const body   = await c.req.json() as { amount: number; reason: string }
+  const amount = Number(body.amount)
+  const reason = body.reason || 'Admin adjustment'
+
+  if (!amount || isNaN(amount)) return c.json({ success: false, error: 'Invalid amount' }, 400)
+
+  const account = await getAccount(c.env.DB, email)
+  if (!account) return c.json({ success: false, error: 'Account not found' }, 404)
+
+  // Apply adjustment — positive adds credits, negative deducts
+  if (amount > 0) {
+    // Refund: increase credits_max (not reduce credits_used, so history is preserved)
+    await c.env.DB.prepare(
+      'UPDATE accounts SET credits_max=credits_max+?, updated_at=CURRENT_TIMESTAMP WHERE email=?'
+    ).bind(amount, email).run()
+  } else {
+    // Deduction: increase credits_used
+    const deduct = Math.abs(amount)
+    await c.env.DB.prepare(
+      'UPDATE accounts SET credits_used=MIN(credits_used+?,credits_max), updated_at=CURRENT_TIMESTAMP WHERE email=?'
+    ).bind(deduct, email).run()
+  }
+
+  // Log to credit_transactions
+  await c.env.DB.prepare(
+    'INSERT INTO credit_transactions (account_id, action, credits_used, description) VALUES (?,?,?,?)'
+  ).bind(account.id, 'admin_adjustment', amount, `[Admin] ${reason}`).run()
+
+  return c.json({ success: true, message: `Credits adjusted by ${amount} for ${email}`, reason })
+})
+
+// ─── Update account status ────────────────────────────────────────────────────
+app.put('/api/admin/accounts/:email/status', async (c) => {
+  if (!requireAdmin(c as never)) return c.json({ success: false, error: 'Unauthorized' }, 401)
+  if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
+
+  const email  = c.req.param('email')
+  const body   = await c.req.json() as { status: string; reason?: string }
+  const status = body.status
+  const allowed = ['active', 'suspended', 'blocked', 'trial', 'expired']
+  if (!allowed.includes(status)) return c.json({ success: false, error: `Invalid status. Must be one of: ${allowed.join(', ')}` }, 400)
+
+  const account = await getAccount(c.env.DB, email)
+  if (!account) return c.json({ success: false, error: 'Account not found' }, 404)
+
+  await c.env.DB.prepare(
+    'UPDATE accounts SET status=?, updated_at=CURRENT_TIMESTAMP WHERE email=?'
+  ).bind(status, email).run()
+
+  // Log it
+  await c.env.DB.prepare(
+    'INSERT INTO credit_transactions (account_id, action, credits_used, description) VALUES (?,?,?,?)'
+  ).bind(account.id, 'admin_status_change', 0, `[Admin] Status → ${status}${body.reason ? ': ' + body.reason : ''}`).run()
+
+  return c.json({ success: true, message: `Account ${email} status updated to ${status}` })
+})
+
+// ─── Override plan & limits ───────────────────────────────────────────────────
+app.put('/api/admin/accounts/:email/plan', async (c) => {
+  if (!requireAdmin(c as never)) return c.json({ success: false, error: 'Unauthorized' }, 401)
+  if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
+
+  const email = c.req.param('email')
+  const body  = await c.req.json() as {
+    plan?: string; credits_max?: number; credits_used?: number;
+    reports_max?: number; expires_at?: string;
+  }
+
+  const account = await getAccount(c.env.DB, email)
+  if (!account) return c.json({ success: false, error: 'Account not found' }, 404)
+
+  // Build UPDATE SET clauses dynamically
+  const sets: string[] = ['updated_at=CURRENT_TIMESTAMP']
+  const vals: unknown[] = []
+
+  if (body.plan)          { sets.push('plan=?');          vals.push(body.plan)          }
+  if (body.credits_max  !== undefined) { sets.push('credits_max=?');  vals.push(body.credits_max)  }
+  if (body.credits_used !== undefined) { sets.push('credits_used=?'); vals.push(body.credits_used) }
+  if (body.reports_max  !== undefined) { sets.push('reports_max=?');  vals.push(body.reports_max)  }
+  if (body.expires_at)    { sets.push('expires_at=?');    vals.push(body.expires_at)    }
+
+  if (sets.length === 1) return c.json({ success: false, error: 'No fields to update' }, 400)
+
+  vals.push(email)
+  await c.env.DB.prepare(`UPDATE accounts SET ${sets.join(', ')} WHERE email=?`).bind(...vals).run()
+
+  // Log
+  await c.env.DB.prepare(
+    'INSERT INTO credit_transactions (account_id, action, credits_used, description) VALUES (?,?,?,?)'
+  ).bind(account.id, 'admin_plan_change', 0, `[Admin] Plan override: ${JSON.stringify(body)}`).run()
+
+  return c.json({ success: true, message: `Account ${email} updated`, changes: body })
+})
+
+// ─── Trial anti-abuse lock ────────────────────────────────────────────────────
+// One 14-day trial per business: checked via email + optional fingerprint/IP
+app.post('/api/admin/trial-lock', async (c) => {
+  if (!c.env?.DB) return c.json({ allowed: true }) // DB not available = permissive fallback
+
+  const body        = await c.req.json() as { email: string; fingerprint?: string; ip?: string }
+  const email       = (body.email || '').toLowerCase().trim()
+  const fingerprint = body.fingerprint || null
+  const ip          = body.ip || c.req.header('cf-connecting-ip') || null
+
+  if (!email) return c.json({ allowed: false, reason: 'Email required' }, 400)
+
+  // Check if this email has ever had a trial
+  const existing = await c.env.DB.prepare(
+    "SELECT id, status, plan, trial_used FROM accounts WHERE email=?"
+  ).bind(email).first<Record<string, unknown>>()
+
+  if (existing && (existing.trial_used as number) === 1) {
+    return c.json({ allowed: false, reason: 'A free trial has already been used for this account. Only one trial per business.' })
+  }
+
+  // Check fingerprint abuse (same device/browser used for multiple trials)
+  if (fingerprint) {
+    const fpCheck = await c.env.DB.prepare(
+      "SELECT COUNT(*) as cnt FROM accounts WHERE trial_fingerprint=? AND trial_used=1"
+    ).bind(fingerprint).first<{ cnt: number }>()
+    if (fpCheck && fpCheck.cnt > 0) {
+      return c.json({ allowed: false, reason: 'Trial already used on this device.' })
+    }
+  }
+
+  // Check IP abuse (max 3 trials per IP — allows households but stops bots)
+  if (ip) {
+    const ipCheck = await c.env.DB.prepare(
+      "SELECT COUNT(*) as cnt FROM accounts WHERE trial_ip=? AND trial_used=1"
+    ).bind(ip).first<{ cnt: number }>()
+    if (ipCheck && ipCheck.cnt >= 3) {
+      return c.json({ allowed: false, reason: 'Too many trial accounts registered from this network. Please contact support.' })
+    }
+  }
+
+  return c.json({ allowed: true })
+})
+
+// ─── Mark trial as started (call after successful trial activation) ───────────
+app.post('/api/admin/trial-lock/mark', async (c) => {
+  if (!c.env?.DB) return c.json({ success: true })
+
+  const body        = await c.req.json() as { email: string; fingerprint?: string; ip?: string }
+  const email       = (body.email || '').toLowerCase().trim()
+  const fingerprint = body.fingerprint || null
+  const ip          = body.ip || c.req.header('cf-connecting-ip') || null
+
+  if (!email) return c.json({ success: false, error: 'Email required' }, 400)
+
+  await c.env.DB.prepare(
+    'UPDATE accounts SET trial_used=1, trial_fingerprint=?, trial_ip=?, updated_at=CURRENT_TIMESTAMP WHERE email=?'
+  ).bind(fingerprint, ip, email).run()
+
+  return c.json({ success: true, message: `Trial marked as used for ${email}` })
+})
+
+// ─── Admin stats dashboard ────────────────────────────────────────────────────
+app.get('/api/admin/stats', async (c) => {
+  if (!requireAdmin(c as never)) return c.json({ success: false, error: 'Unauthorized' }, 401)
+  if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
+
+  const [totalAccounts, planCounts, activeCounts, recentTransactions] = await Promise.all([
+    c.env.DB.prepare('SELECT COUNT(*) as cnt FROM accounts').first<{ cnt: number }>(),
+    c.env.DB.prepare('SELECT plan, COUNT(*) as cnt FROM accounts GROUP BY plan').all(),
+    c.env.DB.prepare("SELECT status, COUNT(*) as cnt FROM accounts GROUP BY status").all(),
+    c.env.DB.prepare('SELECT * FROM credit_transactions ORDER BY created_at DESC LIMIT 50').all(),
+  ])
+
+  // Total credits consumed across all accounts
+  const creditStats = await c.env.DB.prepare(
+    'SELECT SUM(credits_used) as total_used, SUM(credits_max) as total_max FROM accounts'
+  ).first<{ total_used: number; total_max: number }>()
+
+  return c.json({
+    success: true,
+    totalAccounts:      totalAccounts?.cnt ?? 0,
+    planBreakdown:      planCounts.results,
+    statusBreakdown:    activeCounts.results,
+    creditStats,
+    recentTransactions: recentTransactions.results,
+  })
+})
+
+// ─── Plans & credit costs (public endpoint for pricing page) ─────────────────
+app.get('/api/billing/plans', (c) => {
+  return c.json({
+    success: true,
+    plans: {
+      free:       { name: 'Free',       price: 0,   currency: 'AUD', credits: 8,    trialDays: 0,  trialCredits: 0   },
+      business:   { name: 'Business',   price: 79,  currency: 'AUD', credits: 150,  trialDays: 14, trialCredits: 60  },
+      pro:        { name: 'Pro',        price: 199, currency: 'AUD', credits: 500,  trialDays: 14, trialCredits: 120 },
+      enterprise: { name: 'Enterprise', price: 699, currency: 'AUD', credits: 2500, trialDays: 0,  trialCredits: 0   },
+    },
+    creditCosts: CREDIT_COSTS,
+    creditPacks: [
+      { credits: 50,   priceAUD: 59,   label: 'Starter Pack' },
+      { credits: 150,  priceAUD: 159,  label: 'Growth Pack'  },
+      { credits: 500,  priceAUD: 449,  label: 'Pro Pack'     },
+      { credits: 2000, priceAUD: 1499, label: 'Agency Pack'  },
+    ],
+  })
+})
+
+// ─── Route to character maker page ───────────────────────────────────────────
+app.get('/create/character', (c) => c.html(characterMakerPage()))
+
+// ─── Route to image maker page ────────────────────────────────────────────────
+app.get('/image-maker', (c) => c.html(imageMakerPage()))
+
+// ─── Route to uploads page ────────────────────────────────────────────────────
+app.get('/uploads', (c) => c.html(uploadsPage()))
 
 export default app
