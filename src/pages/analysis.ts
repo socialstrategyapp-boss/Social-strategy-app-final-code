@@ -330,6 +330,29 @@ export function analysisPage(): string {
         document.getElementById('resultsSection').style.display = 'flex';
         document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+        // ── Auto-save report data to localStorage for Content Studio auto-fill ──
+        try {
+          const existingProfile = JSON.parse(localStorage.getItem('ss_profile_v1') || '{}');
+          const reportData = {
+            ...existingProfile,
+            // Business identity
+            pBizName:    data.businessName || existingProfile.pBizName || '',
+            pIndustry:   data.industry     || existingProfile.pIndustry || '',
+            pUrl:        url,
+            // Hashtag bank from analysis
+            pBestHashtags: (data.socialMediaStrategy?.bestHashtags || []).join(' '),
+            pBestPlatforms: data.socialMediaStrategy?.bestPlatforms || [],
+            pContentPillars: data.contentPillars || [],
+            pTargetAudience: (typeof data.targetAudience === 'object'
+              ? data.targetAudience?.primary
+              : data.targetAudience) || '',
+            pLastAnalysis: new Date().toISOString(),
+            pOverallScore: data.overallScore || 0,
+          };
+          localStorage.setItem('ss_profile_v1', JSON.stringify(reportData));
+          localStorage.setItem('ss_last_report_v1', JSON.stringify(data));
+        } catch(_) { /* non-fatal */ }
+
       } catch(e) {
         clearInterval(si);
         document.getElementById('loadingState').style.display = 'none';

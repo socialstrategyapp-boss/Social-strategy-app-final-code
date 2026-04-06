@@ -405,6 +405,11 @@ export function contentStudioPage(): string {
   ════════════════════════════════════════ -->
   <div class="cs-sidebar">
 
+    <!-- Auto-fill notice (hidden by default, shown when filled from report) -->
+    <div id="autoFillNotice" style="display:none;background:rgba(32,217,255,0.07);border:1px solid rgba(32,217,255,0.25);border-radius:10px;padding:9px 14px;font-size:12px;color:#20D9FF;font-weight:600;transition:opacity .4s;margin-bottom:6px;">
+      ✨ Auto-filled from your last report
+    </div>
+
     <!-- 1. Business Context -->
     <div class="cs-card">
       <div class="cs-card-title"><i class="fas fa-building"></i> Business Context</div>
@@ -614,6 +619,20 @@ export function contentStudioPage(): string {
           </select>
         </div>
       </div>
+    </div>
+
+    <!-- Report hashtag suggestions (auto-populated from last analysis) -->
+    <div class="cs-card" id="hashtagSuggestionsCard" style="display:none;">
+      <div class="cs-card-title"><i class="fas fa-hashtag"></i> Hashtags from Your Report</div>
+      <p style="font-size:11px;color:#A8B3C7;margin:0 0 8px;">Tap any tag to add it to your topic brief.</p>
+      <div id="hashtagSuggestions" style="display:none;flex-wrap:wrap;gap:6px;"></div>
+    </div>
+
+    <!-- Content pillars from last report -->
+    <div class="cs-card" id="reportPillarsCard" style="display:none;">
+      <div class="cs-card-title"><i class="fas fa-layer-group"></i> Content Pillars from Report</div>
+      <p style="font-size:11px;color:#A8B3C7;margin:0 0 8px;">Tap a pillar to use it as your topic.</p>
+      <div id="reportPillars" style="display:none;flex-wrap:wrap;gap:6px;"></div>
     </div>
 
     <!-- 2. Tone of Voice -->
@@ -1588,17 +1607,90 @@ export function contentStudioPage(): string {
     }, 2200);
   }
 
-  // ── Auto-fill from profile ──
+  // ── Auto-fill from profile & last analysis report ──
   (function autoFill() {
     try {
       const saved = JSON.parse(localStorage.getItem('ss_profile_v1') || '{}');
-      if (saved.pBizName) { const el = document.getElementById('brandName'); if (el && !el.value) el.value = saved.pBizName; }
+      let filledFields = [];
+
+      // Brand name
+      if (saved.pBizName) {
+        const el = document.getElementById('brandName');
+        if (el && !el.value) { el.value = saved.pBizName; filledFields.push('Brand Name'); }
+      }
+
+      // Website URL
+      if (saved.pUrl) {
+        const el = document.getElementById('websiteUrl');
+        if (el && !el.value) { el.value = saved.pUrl; }
+      }
+
+      // Industry — try to match the select option
       if (saved.pIndustry) {
         const el = document.getElementById('industry');
-        if (el) for (let i = 0; i < el.options.length; i++) { if (el.options[i].text.toLowerCase().includes(saved.pIndustry.toLowerCase().split(' ')[0])) { el.selectedIndex = i; break; } }
+        if (el) {
+          const needle = saved.pIndustry.toLowerCase();
+          for (let i = 0; i < el.options.length; i++) {
+            const optText = el.options[i].text.toLowerCase();
+            if (optText.includes(needle.split(' ')[0]) || needle.includes(optText.split(' ')[0])) {
+              el.selectedIndex = i; filledFields.push('Industry'); break;
+            }
+          }
+        }
+      }
+
+      // Hashtag suggestions from last analysis
+      if (saved.pBestHashtags && saved.pBestHashtags.trim()) {
+        const hashContainer = document.getElementById('hashtagSuggestions');
+        if (hashContainer) {
+          const tags = saved.pBestHashtags.trim().split(/\s+/).filter(Boolean);
+          hashContainer.innerHTML = tags.slice(0, 12).map(tag => {
+            const t = tag.startsWith('#') ? tag : '#' + tag;
+            return '<span onclick="insertHashtag(this)" style="display:inline-block;background:rgba(32,217,255,0.07);border:1px solid rgba(32,217,255,0.22);border-radius:999px;padding:4px 10px;font-size:11px;color:#20D9FF;cursor:pointer;transition:all .15s;font-weight:700;" onmouseover="this.style.background=\'rgba(32,217,255,0.15)\'" onmouseout="this.style.background=\'rgba(32,217,255,0.07)\'">' + t + '</span>';
+          }).join('');
+          hashContainer.style.display = 'flex';
+          filledFields.push('Hashtag suggestions');
+        }
+      }
+
+      // Content pillars as topic suggestions
+      if (saved.pContentPillars && saved.pContentPillars.length > 0) {
+        const pillarsEl = document.getElementById('reportPillars');
+        if (pillarsEl) {
+          pillarsEl.innerHTML = saved.pContentPillars.slice(0, 5).map(p =>
+            '<span onclick="usePillar(\'' + p.replace(/'/g, "\\'") + '\')" style="display:inline-block;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.22);border-radius:999px;padding:4px 10px;font-size:11px;color:#8B5CF6;cursor:pointer;transition:all .15s;font-weight:700;" onmouseover="this.style.background=\'rgba(139,92,246,0.15)\'" onmouseout="this.style.background=\'rgba(139,92,246,0.07)\'">' + p + '</span>'
+          ).join('');
+          pillarsEl.style.display = 'flex';
+        }
+      }
+
+      // Show auto-fill notice if we filled anything
+      if (filledFields.length > 0) {
+        const notice = document.getElementById('autoFillNotice');
+        if (notice) {
+          notice.textContent = '✨ Auto-filled from your last report: ' + filledFields.join(', ');
+          notice.style.display = 'block';
+          setTimeout(() => { notice.style.opacity = '0'; setTimeout(() => { notice.style.display = 'none'; }, 400); }, 4000);
+        }
       }
     } catch(_) {}
   })();
+
+  function insertHashtag(el) {
+    const tag = el.textContent.trim();
+    const topicEl = document.getElementById('topicInput');
+    if (topicEl) {
+      if (topicEl.value && !topicEl.value.endsWith(' ')) topicEl.value += ' ';
+      topicEl.value += tag;
+    }
+    el.style.background = 'rgba(32,217,255,0.25)';
+    el.style.borderColor = 'rgba(32,217,255,0.5)';
+  }
+
+  function usePillar(text) {
+    const topicEl = document.getElementById('topicInput');
+    if (topicEl) { topicEl.value = text; topicEl.focus(); }
+  }
 </script>
   `
   return layout('AI Content Studio', content, 'content-studio')
