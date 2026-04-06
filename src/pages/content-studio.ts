@@ -1642,6 +1642,7 @@ export function contentStudioPage(): string {
       // Hashtag suggestions from last analysis
       if (saved.pBestHashtags && saved.pBestHashtags.trim()) {
         const hashContainer = document.getElementById('hashtagSuggestions');
+        const hashCard = document.getElementById('hashtagSuggestionsCard');
         if (hashContainer) {
           const tags = saved.pBestHashtags.trim().split(/\s+/).filter(Boolean);
           hashContainer.innerHTML = tags.slice(0, 12).map(tag => {
@@ -1649,6 +1650,9 @@ export function contentStudioPage(): string {
             return '<span onclick="insertHashtag(this)" style="display:inline-block;background:rgba(32,217,255,0.07);border:1px solid rgba(32,217,255,0.22);border-radius:999px;padding:4px 10px;font-size:11px;color:#20D9FF;cursor:pointer;transition:all .15s;font-weight:700;" onmouseover="this.style.background=\'rgba(32,217,255,0.15)\'" onmouseout="this.style.background=\'rgba(32,217,255,0.07)\'">' + t + '</span>';
           }).join('');
           hashContainer.style.display = 'flex';
+          hashContainer.style.flexWrap = 'wrap';
+          hashContainer.style.gap = '6px';
+          if (hashCard) hashCard.style.display = 'block';
           filledFields.push('Hashtag suggestions');
         }
       }
@@ -1656,11 +1660,15 @@ export function contentStudioPage(): string {
       // Content pillars as topic suggestions
       if (saved.pContentPillars && saved.pContentPillars.length > 0) {
         const pillarsEl = document.getElementById('reportPillars');
+        const pillarsCard = document.getElementById('reportPillarsCard');
         if (pillarsEl) {
           pillarsEl.innerHTML = saved.pContentPillars.slice(0, 5).map(p =>
             '<span onclick="usePillar(\'' + p.replace(/'/g, "\\'") + '\')" style="display:inline-block;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.22);border-radius:999px;padding:4px 10px;font-size:11px;color:#8B5CF6;cursor:pointer;transition:all .15s;font-weight:700;" onmouseover="this.style.background=\'rgba(139,92,246,0.15)\'" onmouseout="this.style.background=\'rgba(139,92,246,0.07)\'">' + p + '</span>'
           ).join('');
           pillarsEl.style.display = 'flex';
+          pillarsEl.style.flexWrap = 'wrap';
+          pillarsEl.style.gap = '6px';
+          if (pillarsCard) pillarsCard.style.display = 'block';
         }
       }
 

@@ -392,4 +392,326 @@ Edit types and their instructions:
 - Credit costs: analyze=10, generate_content=2, generate_image=4, video_script=4, generate_report=20
 
 ---
-*Social Strategy · socialstrategyapp.com · All prompts © 2026*
+
+## PROMPT 9 — SELF-LEARNING CONTENT ENGINE (FULL PIPELINE)
+**Purpose:** Reads a completed audit report and generates a full multi-platform content plan.  
+**Trigger:** After `/api/analyze` returns. Feeds into Content Studio auto-fill.
+
+```
+You are a world-class content strategist and self-learning marketing engine.
+You have been provided the following audit data for a real business:
+
+BUSINESS PROFILE:
+- Name: {businessName}
+- Industry: {industry}
+- Website: {websiteUrl}
+- Target Audience: {targetAudience}
+- Content Pillars: {contentPillars}
+- Brand Voice: {tone}
+- Best Platforms: {bestPlatforms}
+- Top Opportunity: {topOpportunity}
+- SEO Keywords from report: {seoKeywords}
+
+YOUR MISSION:
+Generate a COMPLETE 30-day multi-platform content plan with the following:
+
+1. MONTHLY THEME: One unifying campaign theme for the month.
+2. WEEKLY FOCUS: 4 weekly focus areas derived from the content pillars.
+3. CONTENT ITEMS: For each platform listed, create 8 ready-to-use post briefs.
+
+Each content item MUST use this exact wrapper format:
+---CONTENT_ITEM_START---
+PLATFORM: {platform}
+WEEK: {1-4}
+TYPE: {Reel/Carousel/Single Image/Story/Long-Form/Poll/Quote}
+HOOK: {scroll-stopping first line}
+CAPTION: {full caption with line breaks, emojis, CTA}
+HASHTAGS: {#tag1 #tag2 #tag3 ... (15-25 tags)}
+IMAGE_PROMPT: {DALL-E 3 detailed image generation prompt}
+POST_TIME: {best time to post, day + hour}
+GOAL: {Drive Sales/Build Awareness/Grow Followers/Educate/Announce/Generate Leads}
+---CONTENT_ITEM_END---
+
+RULES:
+- Every hook must open with the business name woven naturally
+- Hashtags must be SPECIFIC to the industry and topic, never generic
+- All content must feel native to the platform's culture and algorithm
+- Include branded hashtags: #{businessNameSlug}, #{industrySlug}official, #{businessNameSlug}community
+- Image prompts must be detailed: art style, subject, background, lighting, colour, mood
+
+Return the full plan as JSON:
+{
+  "monthlyTheme": "...",
+  "weeklyFocus": ["Week 1: ...", "Week 2: ...", "Week 3: ...", "Week 4: ..."],
+  "contentItems": [ { ...per item fields... } ],
+  "hashtagBanks": {
+    "brand": ["#brandtag", ...],
+    "niche": ["#nichetag", ...],
+    "local": ["#localtag", ...],
+    "broad": ["#broadtag", ...]
+  }
+}
+```
+
+---
+
+## PROMPT 10 — PURCHASE-TRIGGER AUTOMATION
+**Purpose:** Generates automated trigger-based messages for the full customer journey.  
+**Use:** Email, SMS, retargeting ads, push notifications.
+
+```
+You are a world-class conversion copywriter and CRM automation specialist.
+Generate trigger-based customer journey messages for:
+
+BUSINESS: {businessName}
+INDUSTRY: {industry}
+BRAND VOICE: {tone}
+OFFER: {primaryOffer}
+USP: {uniqueSellingPoint}
+
+Create automated message sequences for ALL of the following triggers:
+
+TRIGGERS & DELAYS:
+1. First Visit (0 min delay) — Welcome / intrigue message
+2. Return Visit (24h delay) — "We noticed you came back..."
+3. Abandoned Cart (1h delay) — Recovery with urgency
+4. Abandoned Cart Follow-up (24h delay) — Social proof + discount
+5. First Purchase (immediate) — Thank you + cross-sell
+6. Post-Purchase Day 3 (72h delay) — Usage tips / unboxing prompt
+7. Post-Purchase Day 7 (7d delay) — Review / referral request
+8. Repeat Purchase (immediate) — Loyalty reward unlock
+9. Lapsed Customer 30d (30d no activity) — Win-back
+10. Lapsed Customer 60d (60d no activity) — Final win-back + offer
+11. Seasonal — Christmas / EOFY / etc.
+12. Birthday/Anniversary — Personalised celebration
+
+For EACH trigger, provide:
+- EMAIL SUBJECT: (compelling, under 50 chars)
+- EMAIL BODY: (150-250 words, personal, brand voice, strong CTA)
+- SMS: (under 160 chars, punchy, includes opt-out)
+- AD COPY: (Facebook/Instagram retargeting, 90-char primary text + 25-char headline)
+- PUSH NOTIFICATION: (title + body, under 100 chars total)
+
+Return as JSON with each trigger as a key containing { email_subject, email_body, sms, ad_copy, push }.
+Ensure every message sounds like it comes from {businessName}, not a generic template.
+```
+
+---
+
+## PROMPT 11 — INDUSTRY ROUTING GUIDE
+**Purpose:** Detects the business's industry from the URL/description and routes to the correct prompt module.  
+**Triggered:** During `/api/analyze`, before content generation.
+
+### Detection Logic
+```
+Given: businessName={businessName}, industry={industry}, websiteSummary={summary}
+
+Map to one of these 15 industry modules:
+1. retail_ecommerce      → Retail & E-commerce
+2. food_beverage         → Food & Beverage / Restaurant / Café
+3. health_beauty         → Health, Beauty & Wellness
+4. professional_services → Legal, Accounting, Consulting, Finance
+5. real_estate           → Real Estate, Property, Development
+6. trades_home_services  → Trades, Plumbing, Electrical, Cleaning
+7. education_coaching    → Education, Training, Coaching, Tutoring
+8. hospitality_tourism   → Hotels, Accommodation, Travel, Tourism
+9. technology_saas       → Tech, Software, SaaS, Apps
+10. fashion_apparel       → Fashion, Clothing, Accessories
+11. automotive            → Cars, Motorcycles, Automotive Services
+12. healthcare_allied     → Medical, Dental, Allied Health, Physio
+13. agriculture           → Farming, Primary Production, Agriculture
+14. financial_services    → Banking, Insurance, Superannuation, Mortgage
+15. universal             → Anything not matching above (uses Universal Variable Prompt)
+
+Return: { "industry_module": "<module_id>", "confidence": <0-1>, "routing_reason": "<why>" }
+```
+
+### Industry-Specific Content Variables
+| Module | Keywords | Visual Direction | Content Angles | Avg Margin |
+|--------|----------|-----------------|----------------|------------|
+| retail_ecommerce | deals, new in, shop now, limited stock | bright product flatlay, lifestyle | product features, UGC, seasonal | 40-60% |
+| food_beverage | taste, fresh, made with love, order now | food photography, warm tones | behind-scenes, specials, recipes | 65-80% |
+| health_beauty | glow, transform, results, book now | clean aesthetic, before/after | transformations, tips, testimonials | 70-85% |
+| professional_services | expertise, trusted, results, free consult | corporate clean, trust signals | case studies, insights, FAQs | 80-90% |
+| real_estate | investment, lifestyle, dream home, enquire | architectural, lifestyle photography | market updates, property tips, listings | 50-70% |
+| trades_home_services | quality work, local trusted, free quote | before/after, on-site photos | job showcases, tips, reviews | 55-70% |
+| technology_saas | automate, scale, results, try free | product UI, clean minimal | product demos, use cases, testimonials | 80-95% |
+| fashion_apparel | style, look, wear, shop the look | editorial, lifestyle model | lookbooks, OOTD, seasonal drops | 50-70% |
+| healthcare_allied | health, wellbeing, pain-free, book now | clinical clean, reassuring | tips, patient stories, FAQs | 60-80% |
+
+---
+
+## PROMPT 12 — FULL 20-INDUSTRY MASTER PROMPT LIBRARY
+
+### Retail / E-commerce
+```
+Create a PREMIUM GROWTH REPORT for {businessName}, a retail/e-commerce business.
+Sections required:
+1. Signature Product / Hero SKU Strategy
+2. Customer Loyalty & Return Purchase System  
+3. Product Bundle & Revenue Stack
+4. Social Proof & UGC Content Strategy
+5. Subscription / Membership Model
+6. Portfolio Optimisation (trim & amplify)
+7. B2B / Wholesale Channel
+8. Occasion & Seasonal Calendar
+9. SEO & Visibility (keywords, meta, schema)
+10. 90-Day Social Media Calendar (daily posts per platform)
+11. Customer LTV Map
+12. Pricing & Margin Framework
+13. Operational Efficiency Score
+14. 12-Month Financial Projection (revenue, margin, growth %)
+15. 90-Day Priority Action Plan (with specific dollar targets)
+
+FORMAT: Use ## Section Headers, data tables, bullet points, specific dollar figures, emoji icons for scannability.
+TONE: Senior marketing consultant — authoritative, specific, no generic advice.
+LENGTH: Full, comprehensive. Do not truncate any section.
+```
+
+### Food & Beverage / Restaurant
+```
+Create a PREMIUM GROWTH REPORT for {businessName}, a food & beverage / restaurant business.
+[Same 15-section structure as above, adapted for hospitality:]
+1. Signature Dish / Experience Concept
+2. Table Loyalty & Return Dining System
+3. Revenue-Stacking Add-ons & Catering
+4. Social Proof: Google Reviews, UGC, Food Influencer Strategy
+5. Subscription Meal Box / Loyalty Card Model
+6. Menu Optimisation & Profit Engineering
+7. Wholesale / Wholesale-to-Retail Channel
+8. Seasonal Menu Calendar & Events
+9. Local SEO (Google Business, Maps, "near me" rankings)
+10. 90-Day Social Media Calendar (food photography, reels, stories)
+11. Customer LTV Map (dine-in vs delivery vs catering)
+12. Pricing, Portion & Margin Framework
+13. Kitchen & Service Efficiency Score
+14. 12-Month Revenue Projection
+15. 90-Day Priority Action Plan
+```
+
+### Health & Beauty
+```
+[Same structure adapted for health/beauty/wellness — focus on:]
+- Before/after transformation strategy
+- Rebooking system & retention
+- Product retail add-ons
+- Google reviews & social proof domination
+- Subscription beauty box / membership
+- Service menu optimisation
+- Corporate wellness B2B channel
+- Seasonal promotion calendar
+- Local SEO for beauty & wellness searches
+- 90-Day Social Calendar (reels, tutorials, client stories)
+```
+
+### Professional Services (Legal / Accounting / Consulting)
+```
+[Same structure adapted for professional services — focus on:]
+- Signature service / retainer package
+- Referral & repeat client system
+- High-ticket service stack & pricing tiers
+- Case study & thought leadership content
+- Subscription advisory model
+- Practice area optimisation
+- B2B strategic partnership channel
+- End-of-financial-year seasonal strategy
+- SEO for professional service keywords
+- LinkedIn & industry platform content calendar
+```
+
+### Universal Variable Prompt (Fallback for any industry)
+```
+INDUSTRY CALIBRATION NOTE (read before generating):
+Business: {businessName}
+Industry: {industry}
+Audience: {targetAudience}
+Revenue model: {revenueModel}
+Primary offer: {primaryOffer}
+
+Adapt all 15 sections to this specific business context. If a section doesn't apply directly, explain why and replace with the most relevant alternative for this industry. Use the margin benchmarks: {marginLow}–{marginHigh}% as the basis for financial projections.
+
+[Then follow the same 15-section format as above, fully adapted.]
+```
+
+---
+
+## PROMPT 13 — HASHTAG EXTRACTION & ENRICHMENT
+**Purpose:** Generates a complete, tiered hashtag set for any topic/industry combination.  
+**Triggered:** Automatically within `/api/generate-content` and available as standalone.
+
+```
+You are a social media SEO expert and hashtag strategist.
+Generate a COMPLETE hashtag package for:
+
+BUSINESS: {businessName}
+INDUSTRY: {industry}
+TOPIC: {topic}
+PLATFORMS: {platforms}
+AUDIENCE: {targetAudience}
+
+Return a tiered hashtag strategy as JSON:
+{
+  "branded": ["#{businessSlug}", "#{businessSlug}official", "#{businessSlug}community"],
+  "high_volume": ["100k+ posts — broad discovery"],
+  "medium_niche": ["10k-100k — industry specific"],
+  "micro_niche": ["under 10k — highly targeted"],
+  "local": ["#cityname", "#suburb", "#regionbusiness"],
+  "trending": ["currently trending tags related to topic"],
+  "platform_specific": {
+    "instagram": ["IG-specific mix of 20-25 tags"],
+    "tiktok": ["TikTok 5-7 niche tags only"],
+    "linkedin": ["3-5 professional tags"],
+    "pinterest": ["5-8 descriptive tags"]
+  },
+  "hashtag_strategy_tip": "Platform-specific posting tip for hashtag placement"
+}
+
+RULES:
+- NEVER include generic tags: #socialmedia #marketing #business #entrepreneur
+- ALL tags must be SPECIFIC to {topic} and {industry}
+- Think: what would someone interested in THIS exact topic search for?
+- Include competitor-adjacent tags to intercept their audience
+- Branded tags must be unique to {businessName}
+```
+
+---
+
+## CREDIT PRICING TABLE (as at April 2026)
+
+| Action | Credits | AUD Value | Notes |
+|--------|---------|-----------|-------|
+| Website Analysis | 10 | ~$10 | Full audit scan |
+| Caption + CTA + Hashtags | 2 | ~$2 | Per platform set |
+| AI Image (1) | 4 | ~$4 | DALL-E 3 |
+| AI Image (2) | 8 | ~$8 | |
+| AI Image (3) | 12 | ~$12 | |
+| Image Edit/Variation | 2 | ~$2 | |
+| Video Script (text) | 4 | ~$4 | |
+| Full Analytics Report | 20 | ~$20 | |
+| Report Summary | 4 | ~$4 | |
+| SEO Meta | 3 | ~$3 | Title + desc + keywords |
+| Blog Draft | 6 | ~$6 | Long-form |
+| 7-Day Schedule | 4 | ~$4 | |
+| 30-Day Schedule | 10 | ~$10 | |
+| Publish Post (after cap) | 1 | ~$1 | |
+| Platform Variant (+extra) | 1 | ~$1 | Per extra platform |
+| Character Continuity | 3 | ~$3 | Per generation |
+
+**Pricing logic:** `customer_price = (provider_cost + infra_buffer + risk_buffer) × markup`  
+**Target markup:** Text/SEO 4-8×, Images 3-5×, Video 2.5-4×
+
+---
+
+## PLAN LIMITS TABLE (as at April 2026)
+
+| Plan | Price | Credits/mo | Platforms | Reports | Characters | Trial |
+|------|-------|-----------|-----------|---------|------------|-------|
+| Free | $0 | 8 | 2 | — | — | — |
+| Business | $79 | 150 | 8 | 1/mo | 1 | 14d, 60cr |
+| Pro | $199 | 500 | 8 | Unlimited | 3 | 14d, 120cr |
+| Enterprise | $699+ | 2,500+ | 8+API | Unlimited | Unlimited | Custom |
+
+**Top-up packs:** 50cr $59 · 150cr $159 · 500cr $449 · 2,000cr $1,499 (AUD, no expiry)
+
+---
+*Social Strategy · socialstrategyapp.com.au · All prompts © 2026*
