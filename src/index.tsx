@@ -266,30 +266,81 @@ Be specific to the actual URL and business. Do NOT use generic placeholder text.
 
 // ─── Demo content generator (no API key needed) ──────────────────────────────
 function generateDemoPosts(brandName: string, industry: string, tone: string, topic: string, platforms: string[]): any[] {
-  const toneEmoji: Record<string,string> = { Professional: '💼', Friendly: '😊', Playful: '🎉', Bold: '🔥', Inspiring: '✨', Informative: '📊' }
-  const te = toneEmoji[tone] || '✨'
-  const platformData: Record<string,{type:string, tip:string, prefix:string, suffix:string}> = {
-    'Instagram': { type: 'Caption + Image', tip: 'Post between 6–9 AM for highest engagement.', prefix: te + ' ', suffix: `\n\n#${(brandName||'brand').replace(/\s/g,'')} #${(industry||'business').replace(/\s+/g,'').toLowerCase()} #socialmedia #marketing #growth #trending #viral` },
-    'TikTok': { type: 'Short Video Caption', tip: 'Use trending audio and hook viewers in first 2 seconds.', prefix: '🎵 ', suffix: `\n\n#fyp #foryoupage #viral #${(brandName||'brand').replace(/\s/g,'').toLowerCase()} #${topic.split(' ')[0].toLowerCase()}` },
-    'Facebook': { type: 'Engagement Post', tip: 'Ask a question to boost comments and reach.', prefix: '📣 ', suffix: `\n\n👉 Click Like if you agree!\n💬 Drop your thoughts in the comments below!` },
-    'LinkedIn': { type: 'Professional Update', tip: 'Post on Tuesday/Wednesday mornings for B2B reach.', prefix: '🚀 ', suffix: `\n\n#${industry || 'business'} #leadership #innovation #${(brandName||'brand').replace(/\s/g,'')} #professional` },
-    'X (Twitter)': { type: 'Tweet', tip: 'Keep under 280 chars and use 1–2 hashtags max.', prefix: te + ' ', suffix: ` #${(brandName||'brand').replace(/\s/g,'')}` },
-    'YouTube': { type: 'Video Description', tip: 'Include timestamps and keywords in description.', prefix: '▶️ ', suffix: `\n\n📌 Subscribe for more ${industry || 'content'} tips!\n🔔 Hit the notification bell!\n\n#${(brandName||'brand').replace(/\s/g,'')} #youtube #${topic.split(' ')[0].toLowerCase()}` },
-    'Threads': { type: 'Thread Post', tip: 'Use conversational tone – Threads rewards authenticity.', prefix: '💬 ', suffix: `\n\n#${(brandName||'brand').replace(/\s/g,'')} #threads` },
-    'Pinterest': { type: 'Pin Description', tip: 'Use descriptive keywords – Pinterest is a search engine.', prefix: '📌 ', suffix: `\n\n#${(brandName||'brand').replace(/\s/g,'')} #${industry||'lifestyle'} #inspiration #ideas` },
+  const te = tone === 'Bold' ? '🔥' : tone === 'Professional' ? '💼' : tone === 'Playful' ? '🎉' : tone === 'Inspiring' ? '✨' : '🚀'
+  const brand = brandName || 'Your Brand'
+  const ind = industry || 'Business'
+  const tp = topic || 'our latest update'
+  const brandTag = '#' + brand.replace(/\s+/g,'')
+  const indTag = '#' + ind.replace(/\s+/g,'').toLowerCase()
+  const topicTag = '#' + tp.split(' ')[0].replace(/[^a-zA-Z0-9]/g,'').toLowerCase()
+
+  const platformData: Record<string, { type: string; tip: string; content: string; hashtags: string[] }> = {
+    'Instagram': {
+      type: 'Caption + Image',
+      tip: 'Post between 6–9 AM or 6–9 PM for peak engagement. Use all 30 hashtags across caption and first comment.',
+      content: `${te} ${brand} just changed the game when it comes to ${tp}.\n\nHere's the truth no one in ${ind} is telling you:\n\nMost businesses are leaving serious money on the table because they're not showing up the right way online. We fixed that.\n\n✅ Real results, not vanity metrics\n✅ Strategies built for YOUR business, not a template\n✅ The ${tp} approach that actually converts\n\nDrop a 🔥 in the comments if you're ready to level up.\n\nLink in bio to get started for free 👆`,
+      hashtags: [brandTag, indTag, topicTag, `#${tp.replace(/\s+/g,'').toLowerCase()}`, '#businessgrowth', '#socialmediatips', '#digitalmarketing', '#entrepreneur', '#smallbusiness', '#contentcreator', '#onlinebusiness', '#marketingstrategy', '#growthhacking', '#success', '#startup']
+    },
+    'TikTok': {
+      type: 'Short Reel Caption',
+      tip: 'Hook viewers in the FIRST 2 SECONDS. Use trending audio. The first line of your caption is your scroll-stopper.',
+      content: `POV: You just discovered how ${brand} does ${tp} differently 🤯\n\n• Most people don't know this works\n• We tried it and the results were unreal\n• Here's exactly what we did\n\nFollow for more ${ind} secrets 👇`,
+      hashtags: ['#fyp', '#foryoupage', '#viral', brandTag, topicTag]
+    },
+    'Facebook': {
+      type: 'Engagement Post',
+      tip: 'Ask a direct question at the end — Facebook rewards posts that generate comments. Tag a friend posts get 3x the reach.',
+      content: `Something exciting is happening at ${brand} and we couldn't wait to share it with you.\n\nWe've been working hard on ${tp} and the response from our ${ind} community has been incredible. What started as a simple idea has turned into something we're genuinely proud of.\n\nHere's what we want you to know: We built this for YOU. Every decision, every feature, every update — it's all designed to make your life easier.\n\nDrop a ❤️ if you've been waiting for something like this! And tag someone who needs to see this.\n\n👇 Tell us — what's YOUR biggest challenge with ${tp} right now?`,
+      hashtags: [brandTag, indTag, topicTag, '#community', '#smallbusiness']
+    },
+    'LinkedIn': {
+      type: 'Professional Insight',
+      tip: 'Post Tuesday–Thursday between 8–10 AM. The first 3 lines determine if people click "see more" — make them count.',
+      content: `I've spent years in ${ind} and here's what I've learned about ${tp}:\n\nThe businesses that win aren't the ones with the biggest budget. They're the ones with the clearest strategy.\n\nAt ${brand}, we've seen this firsthand:\n\n→ Companies that invest in ${tp} see 40%+ higher ROI\n→ The difference between good and great is execution, not intention\n→ Most teams overcomplicate what should be simple\n\nHere's the framework that actually works:\n\n1. Define your specific outcome (not just "grow")\n2. Build systems, not one-off campaigns  \n3. Measure what matters, cut what doesn't\n4. Iterate based on data, not gut feelings\n\nWhat's your take on ${tp} in ${ind} right now? I'd love to hear your experience.`,
+      hashtags: [brandTag, indTag, '#leadership', '#strategy', '#businessgrowth']
+    },
+    'X (Twitter)': {
+      type: 'Tweet',
+      tip: 'Under 280 characters. Controversial or bold opinions get 10x the retweets. Ask yourself: would someone quote-tweet this to disagree?',
+      content: `Hot take: Most ${ind} businesses are doing ${tp} completely wrong.\n\n${brand} figured out the fix. The results? Speak for themselves. ${topicTag} ${brandTag}`,
+      hashtags: [topicTag, brandTag]
+    },
+    'YouTube': {
+      type: 'Video Description',
+      tip: 'The first 2-3 lines show before "Show more" — pack keywords here. Include a timestamp list and end screen CTA.',
+      content: `${te} ${tp.toUpperCase()} — Everything ${brand} Knows About ${ind} | Full Guide\n\nIn this video, we're breaking down everything you need to know about ${tp} in the ${ind} space. No fluff, no filler — just the strategies that actually move the needle.\n\n🎯 WHAT YOU'LL LEARN:\n00:00 — Introduction\n02:30 — Why most approaches to ${tp} fail\n07:15 — The ${brand} method\n14:00 — Real results and case studies\n18:45 — Your action plan\n\n📌 SUBSCRIBE for weekly ${ind} insights: [Subscribe Button]\n🔔 Hit the notification bell so you never miss a video!\n\n🔗 FREE resources mentioned:\n→ Get started with ${brand}: [Link]\n→ Download our guide: [Link]\n\n📧 Business enquiries: hello@${brand.toLowerCase().replace(/\s/g,'')}.com`,
+      hashtags: [brandTag, indTag, topicTag, '#youtube', '#tutorial', '#howto', '#${ind.toLowerCase()}tips', '#business']
+    },
+    'Threads': {
+      type: 'Thread',
+      tip: 'Threads rewards raw, conversational posts. Don\'t over-polish. Write like you\'re texting a smart friend.',
+      content: `real talk about ${tp} in ${ind}:\n\n${brand} tested 3 different approaches over 6 months. the results were so clear it was almost embarrassing.\n\nspoiler: the "professional" strategy lost every time\n\nwhat actually worked was just being real with people and showing up consistently\n\nanyone else find this in their business?`,
+      hashtags: [brandTag, topicTag]
+    },
+    'Pinterest': {
+      type: 'Pin Description',
+      tip: 'Pinterest is a visual search engine. Front-load your keywords in the first 2 lines. Pins have a 2-year lifespan — optimise for long-term search.',
+      content: `${tp} for ${ind} businesses: The complete guide from ${brand}.\n\nDiscover the proven strategies that help ${ind} professionals get real results with ${tp}. Whether you're just starting out or looking to scale, these actionable tips will transform your approach.\n\nSave this pin for later and share with someone in ${ind} who needs to see this! ✨\n\n→ More tips and resources at ${brand}`,
+      hashtags: [brandTag, indTag, topicTag, `#${tp.split(' ').join('')}tips`, '#inspiration', '#howto', '#${ind.toLowerCase()}', '#savethis']
+    }
   }
-  const contentVariants = [
-    'Exciting news from ' + brandName + '! ' + te + ' We\u2019re diving deep into ' + topic + ' and we\u2019re here to share everything we know about making it work for the ' + (industry || 'industry') + '.\n\nOur team has been working tirelessly to bring you the best experience possible. Here\u2019s what you can expect:\n\n\u2705 Expert insights on ' + topic + '\n\u2705 Proven strategies that deliver results\n\u2705 Real value for your ' + (industry || 'business') + '\n\nReady to transform the way you approach ' + topic + '? We\u2019ve got you covered. ' + (tone === 'Professional' ? 'Let\u2019s connect and discuss how we can elevate your strategy.' : tone === 'Playful' ? 'Let\u2019s go! This is going to be SO good \uD83D\uDE4C' : 'Your journey starts here. Take the first step today.'),
-    te + ' ' + topic.charAt(0).toUpperCase() + topic.slice(1) + ' \u2014 here\u2019s what the top brands in ' + (industry || 'the industry') + ' are doing differently.\n\nAt ' + brandName + ', we believe in cutting through the noise and delivering real results. Here\u2019s our proven approach:\n\n\uD83D\uDD39 Strategy first \u2014 understanding YOUR audience\n\uD83D\uDD39 Content that converts, not just entertains\n\uD83D\uDD39 Data-driven decisions at every step\n\nThe brands winning right now aren\u2019t the ones posting more \u2014 they\u2019re the ones posting SMARTER.\n\nAre you ready to join them?',
-    'We need to talk about ' + topic + '. \uD83D\uDCA1\n\n' + brandName + ' has seen it all in the ' + (industry || 'industry') + ', and one thing is clear: the brands that ' + (tone === 'Professional' ? 'prioritize strategic planning' : tone === 'Bold' ? 'GO BIG and take action' : 'stay authentic and consistent') + ' are the ones that WIN.\n\nHere\u2019s what we\u2019re doing differently:\n\n1\uFE0F\u20E3 Focusing on what actually moves the needle\n2\uFE0F\u20E3 Building genuine connections with our audience\n3\uFE0F\u20E3 Consistently delivering value through ' + topic + '\n\nWhat\u2019s your biggest challenge with ' + topic + '? Drop it in the comments \u2014 we read every single one.',
-  ]
+
   const posts = []
-  for (let i = 0; i < platforms.length; i++) {
-    const platform = platforms[i]
-    const pd = platformData[platform] || { type: 'Post', tip: 'Engage with your audience consistently.', prefix: te + ' ', suffix: '' }
-    const base = contentVariants[i % contentVariants.length]
-    const content = pd.prefix + base + pd.suffix
-    posts.push({ platform, type: pd.type, content, tip: pd.tip, imagePrompt: `${tone} marketing visual for ${brandName}, ${industry} industry, ${topic} themed, vibrant neon colors, professional photography style` })
+  for (const platform of platforms) {
+    const pd = platformData[platform] || {
+      type: 'Post',
+      tip: 'Engage with your audience consistently and respond to every comment.',
+      content: `${te} ${brand} shares: ${tp}\n\nExciting things are happening in ${ind}. Stay tuned for more updates from ${brand}!`,
+      hashtags: [brandTag, indTag, topicTag]
+    }
+    posts.push({
+      platform,
+      type: pd.type,
+      content: pd.content,
+      hashtags: pd.hashtags,
+      tip: pd.tip,
+      imagePrompt: `${tone} marketing visual for ${brand}, ${ind} industry, ${tp} themed, professional photography, vibrant colors, studio quality, brand identity`
+    })
   }
   return posts
 }
@@ -339,37 +390,63 @@ All posts must sound authentically like this character, in their unique voice.`
     } catch (_) { /* non-fatal */ }
   }
 
-  const prompt = `You are an expert social media content creator. 
-Create highly engaging social media content for:
-- Brand: ${brandName}
-- Industry: ${industry}
-- Tone: ${tone}
-- Topic: ${topic}
-- Platforms: ${platformList}
+  const prompt = `You are a world-class social media strategist and copywriter. Your job is to create EXCEPTIONAL, platform-native social media posts that drive real engagement and conversions.
+
+BUSINESS BRIEF:
+- Brand Name: ${brandName}
+- Industry: ${industry || 'Business'}
+- Tone of Voice: ${tone}
+- Content Topic: ${topic}
+- Target Platforms: ${platformList}
 ${characterContext}
 
-Return ONLY valid JSON in this exact format:
+YOUR TASK:
+Create ONE highly tailored post for EACH platform listed. Every post must:
+
+1. ALWAYS open with the brand name "${brandName}" naturally worked into a powerful hook or opening line
+2. Be completely native to that platform's format, culture, and algorithm preferences
+3. Include a strong HOOK in the first line that stops the scroll
+4. Have a clear STORY or VALUE in the body (educate, entertain, or inspire)
+5. End with a compelling CALL TO ACTION relevant to the topic
+6. Include HASHTAGS extracted from the topic and industry — mix of broad, niche, and branded tags
+7. Use the exact tone specified: ${tone}
+
+PLATFORM-SPECIFIC RULES:
+- Instagram: 3-5 sentences + 20-25 hashtags in a block at the end. Use line breaks. Emojis throughout.
+- TikTok: Short punchy hook (1 line), 3 bullet points, 1 strong CTA, 3-5 trending hashtags only.
+- Facebook: Conversational story format, 4-6 sentences, 3-5 hashtags, feel like a friend sharing news.
+- LinkedIn: Professional insight format, open with a bold statement, share expertise, end with a question to drive comments. 3-5 relevant hashtags. NO excessive emojis.
+- X (Twitter): Under 280 characters, punchy, opinionated, 2-3 hashtags MAX.
+- YouTube: SEO-optimised video description, include timestamps placeholder, keywords, subscribe CTA, 10-15 hashtags.
+- Threads: Conversational, opinion-led, feel raw and authentic, 1-2 hashtags only.
+- Pinterest: Keyword-rich description, actionable, benefit-focused, 5-8 hashtags.
+
+HASHTAG RULE: Generate hashtags SPECIFIC to "${topic}" and "${industry || 'business'}" — NOT generic tags like #socialmedia or #marketing. Think about what someone would actually search for.
+
+Return ONLY valid JSON:
 {
   "posts": [
     {
-      "platform": "<platform name>",
-      "type": "<content type e.g. Caption + Image, Video Script, Professional Post>",
-      "content": "<the full post content with emojis, hashtags where appropriate>",
-      "tip": "<one specific posting tip for this platform>",
-      "imagePrompt": "<a detailed DALL-E image generation prompt for the visual that would accompany this post, describing style, subject, colors, mood>"
+      "platform": "<exact platform name>",
+      "type": "<e.g. Caption + Image, Reel Caption, Professional Post, Tweet>",
+      "content": "<the complete post text, ready to copy and publish — include all emojis, line breaks, and hashtags>",
+      "hashtags": ["<tag1>", "<tag2>", "<tag3>"],
+      "tip": "<one specific power tip for maximising reach on this platform for this type of post>",
+      "imagePrompt": "<detailed DALL-E prompt: style, subject, lighting, colors, mood — make it specific to ${brandName} and ${topic}>"
     }
   ]
 }
-Create one post per platform requested. Make each post unique and native to that platform's style. Be specific to the brand and topic provided.`
+
+CRITICAL: Make the content feel REAL, SPECIFIC and AUTHENTIC to ${brandName}. Avoid generic filler phrases. Every word must serve a purpose.`
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 2500, temperature: 0.8,
+        max_tokens: 4000, temperature: 0.82,
         response_format: { type: 'json_object' }
       })
     })

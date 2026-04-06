@@ -291,7 +291,7 @@ export function contentStudioPage(): string {
     margin: 16px 20px 20px;
     background: rgba(3,8,22,0.9); border: 1.5px solid rgba(0,229,255,0.18);
     border-radius: 16px; padding: 14px 18px;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
     box-shadow: 0 0 20px rgba(0,229,255,0.04), 0 4px 16px rgba(0,0,0,0.3);
   }
   .cs-action-left { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -637,16 +637,12 @@ export function contentStudioPage(): string {
       <span><strong>Demo Mode</strong> — Sample content. Add your <a href="/settings" style="color:#FFD600;text-decoration:underline;">OpenAI API key</a> in Settings for real AI posts.</span>
     </div>
 
-    <!-- BOTTOM ACTION BAR -->
+    <!-- BOTTOM ACTION BAR — centred, simplified -->
     <div class="cs-action-bar" id="actionBar">
-      <div class="cs-action-left">
-        <button onclick="showHistory()" class="cs-btn-ghost"><i class="fas fa-history"></i> History</button>
-        <button onclick="copyAll()" class="cs-btn-ghost" id="copyAllBtn"><i class="fas fa-copy"></i> Copy All</button>
-      </div>
-      <div class="cs-action-right">
-        <button onclick="scheduleAll()" class="cs-btn-pink"><i class="fas fa-calendar-plus"></i> Schedule All</button>
-        <button onclick="openReviewModal(null)" class="cs-btn-cyan" id="reviewOpenBtn" style="display:none;"><i class="fas fa-eye"></i> Full Review</button>
-      </div>
+      <button onclick="copyAll()" class="cs-btn-ghost" id="copyAllBtn"><i class="fas fa-copy"></i> Copy All</button>
+      <button onclick="openReviewModal(null)" class="cs-btn-cyan" id="reviewOpenBtn"><i class="fas fa-eye"></i> Review &amp; Edit</button>
+      <button onclick="scheduleAll()" class="cs-btn-pink"><i class="fas fa-calendar-plus"></i> Schedule All</button>
+      <button onclick="publishApproved()" class="cs-btn-green" id="publishBtn"><i class="fas fa-paper-plane"></i> Publish</button>
     </div>
 
     <!-- IMAGE GENERATION -->
@@ -1035,7 +1031,7 @@ export function contentStudioPage(): string {
 
       // Show toolbar + review button
       document.getElementById('viewerToolbar').style.display = 'flex';
-      document.getElementById('reviewOpenBtn').style.display = 'inline-flex';
+      // reviewOpenBtn is always visible now
 
       // Update status bar
       status.innerHTML = \`
@@ -1047,7 +1043,7 @@ export function contentStudioPage(): string {
           <div style="font-size:12px;color:#7ab3d4;margin-top:2px;">Edit directly in the boxes · Approve · then Publish</div>
         </div>
         <button onclick="openReviewModal(null)" class="cs-btn-cyan" style="padding:7px 14px;font-size:12px;flex-shrink:0;">
-          <i class="fas fa-eye"></i> Full Review
+          <i class="fas fa-eye"></i> Review &amp; Edit
         </button>
       \`;
       updateApproveProgress();
@@ -1096,6 +1092,8 @@ export function contentStudioPage(): string {
         </div>
         <div style="padding:12px 14px;">
           <textarea id="vtarea_\${i}" rows="4" style="width:100%;background:rgba(0,229,255,0.02);border:1.5px solid rgba(0,229,255,0.1);border-radius:9px;padding:9px 11px;color:#c8e6ff;font-size:13px;line-height:1.7;font-family:inherit;outline:none;resize:vertical;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(0,229,255,0.4)'" onblur="this.style.borderColor='rgba(0,229,255,0.1)'">\${post.content}</textarea>
+          \${post.hashtags && post.hashtags.length ? \`<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;">\${post.hashtags.slice(0,8).map(h=>\`<span style="font-size:10px;background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.2);color:#00E5FF;padding:2px 8px;border-radius:20px;">\${h.startsWith('#')?h:'#'+h}</span>\`).join('')}</div>\` : ''}
+          \${post.tip ? \`<div style="margin-top:8px;padding:7px 10px;background:rgba(255,214,0,0.06);border-left:3px solid rgba(255,214,0,0.5);border-radius:0 8px 8px 0;font-size:11px;color:#FFD600;"><i class="fas fa-lightbulb" style="margin-right:5px;"></i>\${post.tip}</div>\` : ''}
         </div>
         <div style="padding:8px 14px 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
           <div style="display:flex;gap:6px;">
