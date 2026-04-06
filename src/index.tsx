@@ -190,34 +190,77 @@ app.post('/api/analyze', async (c) => {
     if (!check.allowed) return c.json({ success: false, error: check.error, code: check.code }, 403)
   }
 
-  const prompt = `You are an expert digital marketing consultant and business analyst. 
-Analyze the website: ${url}
+  const prompt = `You are a senior digital marketing consultant, business strategist, and brand analyst with 20+ years experience. You are conducting a COMPREHENSIVE, PAID-LEVEL audit of this business.
 
-Provide a REAL, DETAILED analysis. Return ONLY valid JSON in this exact format:
+Website to analyse: ${url}
+
+Conduct a THOROUGH, SPECIFIC analysis of this real business. Research the URL deeply and provide a detailed, actionable report. Do NOT use placeholder text or generic advice — every point must be specific to THIS business.
+
+Return ONLY valid JSON in this exact format:
 {
+  "businessName": "<the actual business name extracted from the website>",
+  "industry": "<specific industry/niche>",
   "seoScore": <number 0-100>,
   "brandScore": <number 0-100>,
   "usabilityScore": <number 0-100>,
+  "contentScore": <number 0-100>,
   "overallScore": <number 0-100>,
-  "websiteSummary": "<2-sentence summary of what this business does>",
+  "websiteSummary": "<3-4 sentence summary: what this business does, who they serve, what makes them unique, and their apparent market position>",
+  "businessStrengths": [
+    "<specific strength 1 observed from their website>",
+    "<specific strength 2>",
+    "<specific strength 3>"
+  ],
   "recommendations": [
-    "<specific SEO recommendation>",
-    "<specific branding recommendation>",
-    "<specific content recommendation>",
-    "<specific conversion recommendation>",
-    "<specific social media recommendation>",
-    "<specific technical recommendation>"
+    "<SPECIFIC SEO recommendation with exact action — e.g. 'Add schema markup for local business on homepage to improve Google rich snippets'>",
+    "<SPECIFIC branding recommendation>",
+    "<SPECIFIC content recommendation>",
+    "<SPECIFIC conversion optimisation recommendation>",
+    "<SPECIFIC social media recommendation>",
+    "<SPECIFIC technical/UX recommendation>"
   ],
   "strategy": {
-    "pricing": "<recommended pricing model based on their niche>",
-    "revenue": "<specific revenue growth projection and strategy>",
-    "actions": ["<immediate action 1>","<immediate action 2>","<immediate action 3>"]
+    "pricing": "<recommended pricing model with specific price points based on their niche and apparent market position>",
+    "revenue": "<specific 12-month revenue growth projection with strategy — e.g. '40% revenue increase achievable by implementing X, Y, Z'>",
+    "actions": [
+      "<immediate action 1 — do this week>",
+      "<immediate action 2 — do this month>",
+      "<immediate action 3 — do this quarter>"
+    ],
+    "competitorGap": "<specific gap vs competitors that this business can exploit>"
   },
-  "contentPillars": ["<pillar 1>","<pillar 2>","<pillar 3>","<pillar 4>"],
-  "targetAudience": "<specific target audience description>",
-  "topOpportunity": "<single biggest growth opportunity for this business>"
+  "contentPillars": [
+    "<content pillar 1 — specific to this business and industry>",
+    "<content pillar 2>",
+    "<content pillar 3>",
+    "<content pillar 4>",
+    "<content pillar 5>"
+  ],
+  "targetAudience": {
+    "primary": "<primary target audience — age, demographics, psychographics, pain points>",
+    "secondary": "<secondary audience>",
+    "painPoints": ["<pain point 1>", "<pain point 2>", "<pain point 3>"]
+  },
+  "socialMediaStrategy": {
+    "bestPlatforms": ["<platform 1>", "<platform 2>", "<platform 3>"],
+    "postingFrequency": "<recommended posting frequency per platform>",
+    "contentTypes": ["<content type 1>", "<content type 2>", "<content type 3>"],
+    "bestHashtags": ["<hashtag1>", "<hashtag2>", "<hashtag3>", "<hashtag4>", "<hashtag5>", "<hashtag6>", "<hashtag7>", "<hashtag8>", "<hashtag9>", "<hashtag10>"]
+  },
+  "topOpportunity": "<the single BIGGEST growth opportunity for this specific business — be specific and bold>",
+  "quickWins": [
+    "<quick win 1 — something they can implement in 24 hours>",
+    "<quick win 2>",
+    "<quick win 3>"
+  ]
 }
-Be specific to the actual URL and business. Do NOT use generic placeholder text.`
+
+CRITICAL RULES:
+1. Be SPECIFIC to this actual URL and business — no generic advice
+2. The businessName field must be the REAL name of the business from the website
+3. The bestHashtags must be SPECIFIC to this business's industry and content — not generic tags
+4. Revenue projections must be realistic and specific to their apparent business size
+5. All recommendations must be actionable — tell them exactly WHAT to do, not just WHAT the problem is`
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -348,7 +391,7 @@ function generateDemoPosts(brandName: string, industry: string, tone: string, to
 // ─── REAL OpenAI Content Generation (text posts) ─────────────────────────────
 app.post('/api/generate-content', async (c) => {
   const body = await c.req.json()
-  const { brandName, industry, tone, topic, platforms, clientId = null, characterId = null, accountEmail = null } = body
+  const { brandName, industry, tone, topic, platforms, clientId = null, characterId = null, accountEmail = null, websiteUrl = '', businessDesc = '' } = body
   const apiKey = c.env?.OPENAI_API_KEY
 
   // ── DEMO MODE: No API key — generate rich sample posts ───────────────────
@@ -390,54 +433,64 @@ All posts must sound authentically like this character, in their unique voice.`
     } catch (_) { /* non-fatal */ }
   }
 
-  const prompt = `You are a world-class social media strategist and copywriter. Your job is to create EXCEPTIONAL, platform-native social media posts that drive real engagement and conversions.
+  const prompt = `You are a world-class social media strategist, copywriter, and brand expert. Your job is to create EXCEPTIONAL, platform-native social media posts that feel 100% authentic to the brand and drive real engagement, followers, and sales.
 
-BUSINESS BRIEF:
+BRAND BRIEF:
 - Brand Name: ${brandName}
-- Industry: ${industry || 'Business'}
+- Industry / Niche: ${industry || 'Business'}
+- Website: ${websiteUrl || 'Not provided'}
+- Business Description: ${businessDesc || 'Not provided'}
 - Tone of Voice: ${tone}
-- Content Topic: ${topic}
+- Content Topic / Theme: ${topic}
 - Target Platforms: ${platformList}
 ${characterContext}
 
-YOUR TASK:
-Create ONE highly tailored post for EACH platform listed. Every post must:
+YOUR MISSION:
+Create ONE highly tailored, ready-to-publish post for EACH platform listed. Every single post must:
 
-1. ALWAYS open with the brand name "${brandName}" naturally worked into a powerful hook or opening line
-2. Be completely native to that platform's format, culture, and algorithm preferences
-3. Include a strong HOOK in the first line that stops the scroll
-4. Have a clear STORY or VALUE in the body (educate, entertain, or inspire)
-5. End with a compelling CALL TO ACTION relevant to the topic
-6. Include HASHTAGS extracted from the topic and industry — mix of broad, niche, and branded tags
-7. Use the exact tone specified: ${tone}
+1. OPEN with the brand name "${brandName}" woven naturally into a powerful hook — make it feel like the brand is speaking directly to the audience, not a generic post
+2. Be 100% native to that platform's format, culture, algorithm, and audience behaviour
+3. Open with a scroll-stopping HOOK — the first line must make someone stop and read on
+4. Build a STORY, VALUE or EMOTION in the body — educate, entertain, inspire, or create FOMO
+5. End with ONE crystal-clear, specific CALL TO ACTION relevant to the topic and brand
+6. Include HASHTAGS that are laser-targeted to "${topic}" and "${industry || 'this business'}" — a strategic mix of:
+   • 3-5 HIGH VOLUME broad tags (100k+ posts)
+   • 5-10 MEDIUM NICHE tags specific to the industry and topic (10k-100k posts)
+   • 3-5 MICRO NICHE tags (under 10k posts) for discoverability
+   • 1-2 BRANDED tags using "${brandName}" variations
+   NEVER use generic tags like #socialmedia #marketing #business — make them SPECIFIC to this topic and industry
+7. Match the exact tone specified: ${tone}
+8. Extract any key data points, achievements, or unique selling points from the business description and weave them into the content naturally
 
-PLATFORM-SPECIFIC RULES:
-- Instagram: 3-5 sentences + 20-25 hashtags in a block at the end. Use line breaks. Emojis throughout.
-- TikTok: Short punchy hook (1 line), 3 bullet points, 1 strong CTA, 3-5 trending hashtags only.
-- Facebook: Conversational story format, 4-6 sentences, 3-5 hashtags, feel like a friend sharing news.
-- LinkedIn: Professional insight format, open with a bold statement, share expertise, end with a question to drive comments. 3-5 relevant hashtags. NO excessive emojis.
-- X (Twitter): Under 280 characters, punchy, opinionated, 2-3 hashtags MAX.
-- YouTube: SEO-optimised video description, include timestamps placeholder, keywords, subscribe CTA, 10-15 hashtags.
-- Threads: Conversational, opinion-led, feel raw and authentic, 1-2 hashtags only.
-- Pinterest: Keyword-rich description, actionable, benefit-focused, 5-8 hashtags.
+PLATFORM-SPECIFIC RULES — follow these EXACTLY:
+• Instagram: 150-300 words. Strong hook first line. 3-4 punchy paragraphs. Line breaks between each. 20-25 strategic hashtags in a block at the end. Minimum 5 emojis, maximum 10. End with a question or CTA in the last line.
+• TikTok: 80-120 words MAX. Ultra-punchy hook (1 bold line). 3 short punchy bullet points. 1 strong CTA. 5-7 trending niche hashtags ONLY. Must feel raw, authentic and "for you page" worthy.
+• Facebook: 120-200 words. Conversational story format — feels like a trusted friend sharing important news. 2-3 short paragraphs. 3-5 hashtags. 2-4 emojis. End with a direct question to drive comments.
+• LinkedIn: 150-250 words. Open with a bold professional statement or surprising statistic. Share a genuine expert insight related to "${topic}". Use numbered points or short paragraphs. End with a thought-provoking question. 3-5 professional hashtags. MAX 3 emojis — keep it credible.
+• X (Twitter): STRICTLY under 280 characters including hashtags. Punchy, opinionated, quotable. 2 hashtags MAX. Use a strong opinion or bold fact format.
+• YouTube: Full SEO-optimised video description 150-250 words. Include: keyword-rich first sentence, what the video covers (3-4 bullet points), timestamps placeholder, subscribe CTA, links placeholder. 10-15 SEO hashtags at bottom.
+• Threads: 80-150 words. Raw, conversational, opinion-led. Feels like a hot take or genuine personal thought. 1-2 hashtags ONLY. No corporate speak. Be real and authentic.
+• Pinterest: 100-150 words. Keyword-rich, actionable, benefit-focused description. Uses "how to", "best", "top" language naturally. Evergreen content style. 5-8 descriptive hashtags. Include a clear CTA.
 
-HASHTAG RULE: Generate hashtags SPECIFIC to "${topic}" and "${industry || 'business'}" — NOT generic tags like #socialmedia or #marketing. Think about what someone would actually search for.
+HASHTAG EXTRACTION RULE: Analyse "${topic}" and "${industry || 'the business'}" deeply. Generate hashtags that someone searching for this exact topic would use. Think: What problem does this solve? What transformation does it offer? What community would engage with this?
 
-Return ONLY valid JSON:
+IMPORTANT: Make the content feel REAL, SPECIFIC, and AUTHENTIC to ${brandName}. Every word must serve a purpose. Avoid filler phrases like "In today's fast-paced world", "Are you ready to", "Game changer". Be direct, bold and genuine.
+
+Return ONLY valid JSON — no commentary before or after:
 {
   "posts": [
     {
       "platform": "<exact platform name>",
-      "type": "<e.g. Caption + Image, Reel Caption, Professional Post, Tweet>",
-      "content": "<the complete post text, ready to copy and publish — include all emojis, line breaks, and hashtags>",
-      "hashtags": ["<tag1>", "<tag2>", "<tag3>"],
-      "tip": "<one specific power tip for maximising reach on this platform for this type of post>",
-      "imagePrompt": "<detailed DALL-E prompt: style, subject, lighting, colors, mood — make it specific to ${brandName} and ${topic}>"
+      "type": "<e.g. Caption + Image Reel, Carousel Caption, Professional Post, Tweet, Video Description>",
+      "content": "<the COMPLETE post text, 100% ready to copy and publish — include all emojis, line breaks formatted with \\n, and hashtags>",
+      "hashtags": ["<tag1>", "<tag2>", "<tag3>", "<tag4>", "<tag5>"],
+      "tip": "<one specific, actionable power tip for maximising reach on THIS platform for THIS type of post — be specific, not generic>",
+      "imagePrompt": "<highly detailed DALL-E 3 prompt — specify: art style, main subject, background, lighting, colour palette, mood, composition. Make it specific to ${brandName} and ${topic} and ${industry || 'this brand'}>"
     }
   ]
 }
 
-CRITICAL: Make the content feel REAL, SPECIFIC and AUTHENTIC to ${brandName}. Avoid generic filler phrases. Every word must serve a purpose.`
+CRITICAL QUALITY CHECK before returning: Re-read every post. If any post sounds generic, replace it. If any hashtag is too broad or generic, replace it. Every post must sound like it was written by a human expert who knows this brand deeply.`
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {

@@ -296,6 +296,8 @@ export function contentStudioPage(): string {
   }
   .cs-action-left { display: flex; gap: 10px; flex-wrap: wrap; }
   .cs-action-right { display: flex; gap: 10px; flex-wrap: wrap; }
+  /* Hide button text labels on very small screens */
+  @media(max-width:480px){ .cs-btn-label{ display:none; } }
 
   /* Neon action buttons */
   .cs-btn-cyan {
@@ -398,24 +400,119 @@ export function contentStudioPage(): string {
           <input id="brandName" class="cs-input" type="text" placeholder="Your brand name...">
         </div>
         <div>
+          <label class="cs-label">Website URL <span style="color:#6b7280;font-weight:400;text-transform:none;letter-spacing:0;">(optional — pulls from scan)</span></label>
+          <input id="websiteUrl" class="cs-input" type="text" placeholder="https://yourbusiness.com">
+        </div>
+        <div>
+          <label class="cs-label">Business Description <span style="color:#6b7280;font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+          <textarea id="businessDesc" class="cs-textarea" rows="2" placeholder="Briefly describe what your business does and who you serve..."></textarea>
+        </div>
+        <div>
           <label class="cs-label">Industry / Niche</label>
           <select id="industry" class="cs-select">
             <option value="">Select industry...</option>
+            <optgroup label="── Retail &amp; Commerce ──">
             <option>Retail &amp; E-commerce</option>
-            <option>Food &amp; Beverage / Restaurant</option>
-            <option>Health, Beauty &amp; Wellness</option>
-            <option>Professional Services</option>
-            <option>Real Estate</option>
-            <option>Trades &amp; Home Services</option>
-            <option>Education &amp; Coaching</option>
-            <option>Hospitality &amp; Accommodation</option>
-            <option>Technology / SaaS</option>
             <option>Fashion &amp; Apparel</option>
-            <option>Automotive</option>
+            <option>Jewellery &amp; Accessories</option>
+            <option>Luxury Goods &amp; High-End Retail</option>
+            <option>Sporting Goods &amp; Outdoor</option>
+            <option>Toys &amp; Children's Products</option>
+            <option>Home Goods &amp; Furniture</option>
+            <option>Pet Supplies &amp; Services</option>
+            </optgroup>
+            <optgroup label="── Food &amp; Hospitality ──">
+            <option>Food &amp; Beverage / Restaurant</option>
+            <option>Café &amp; Coffee Shop</option>
+            <option>Bakery &amp; Desserts</option>
+            <option>Food Truck &amp; Street Food</option>
+            <option>Catering &amp; Events</option>
+            <option>Hospitality &amp; Accommodation</option>
+            <option>Tourism &amp; Travel Agency</option>
+            <option>Bar &amp; Nightlife</option>
+            </optgroup>
+            <optgroup label="── Health &amp; Wellness ──">
+            <option>Health, Beauty &amp; Wellness</option>
+            <option>Fitness &amp; Personal Training</option>
+            <option>Yoga &amp; Pilates Studio</option>
+            <option>Salon &amp; Hair Studio</option>
+            <option>Spa &amp; Day Spa</option>
+            <option>Skincare &amp; Cosmetics</option>
             <option>Healthcare &amp; Medical</option>
-            <option>Agriculture &amp; Rural</option>
+            <option>Dental &amp; Orthodontics</option>
+            <option>Allied Health &amp; Physiotherapy</option>
+            <option>Mental Health &amp; Counselling</option>
+            <option>Nutrition &amp; Dietetics</option>
+            </optgroup>
+            <optgroup label="── Professional Services ──">
+            <option>Professional Services</option>
+            <option>Legal &amp; Law Firm</option>
+            <option>Accounting &amp; Bookkeeping</option>
             <option>Financial Services</option>
+            <option>Insurance</option>
+            <option>Mortgage &amp; Finance Broking</option>
+            <option>HR &amp; Recruitment</option>
+            <option>Business Consulting</option>
+            <option>Marketing &amp; Advertising Agency</option>
+            <option>PR &amp; Communications</option>
+            </optgroup>
+            <optgroup label="── Trades &amp; Property ──">
+            <option>Trades &amp; Home Services</option>
+            <option>Building &amp; Construction</option>
+            <option>Electrical &amp; Plumbing</option>
+            <option>Landscaping &amp; Gardening</option>
+            <option>Cleaning Services</option>
+            <option>Interior Design &amp; Decorating</option>
+            <option>Real Estate</option>
+            <option>Property Management</option>
+            <option>Architecture</option>
+            </optgroup>
+            <optgroup label="── Tech &amp; Digital ──">
+            <option>Technology / SaaS</option>
+            <option>App Development</option>
+            <option>Web Design &amp; Development</option>
+            <option>Cybersecurity</option>
+            <option>IT Support &amp; Services</option>
+            <option>AI &amp; Machine Learning</option>
+            <option>E-learning Platform</option>
+            <option>Digital Marketing / SEO</option>
+            </optgroup>
+            <optgroup label="── Education &amp; Coaching ──">
+            <option>Education &amp; Coaching</option>
+            <option>Life Coaching &amp; Mindset</option>
+            <option>Business Coaching</option>
+            <option>Kids Education &amp; Tutoring</option>
+            <option>Music &amp; Arts Tuition</option>
+            <option>Language School</option>
+            <option>Sports Coaching</option>
+            </optgroup>
+            <optgroup label="── Creative &amp; Media ──">
             <option>Entertainment &amp; Media</option>
+            <option>Photography &amp; Videography</option>
+            <option>Content Creator &amp; Influencer</option>
+            <option>Podcast &amp; Broadcasting</option>
+            <option>Music &amp; Events</option>
+            <option>Film &amp; Production</option>
+            <option>Graphic Design &amp; Branding</option>
+            <option>Publishing &amp; Writing</option>
+            </optgroup>
+            <optgroup label="── Automotive &amp; Industry ──">
+            <option>Automotive</option>
+            <option>Car Dealership</option>
+            <option>Mechanical &amp; Auto Repair</option>
+            <option>Agriculture &amp; Rural</option>
+            <option>Mining &amp; Resources</option>
+            <option>Manufacturing &amp; Engineering</option>
+            <option>Logistics &amp; Transport</option>
+            <option>Waste &amp; Environmental Services</option>
+            </optgroup>
+            <optgroup label="── Non-profit &amp; Community ──">
+            <option>Non-profit &amp; Charity</option>
+            <option>Community Organisation</option>
+            <option>Religious Organisation</option>
+            <option>Government &amp; Public Sector</option>
+            <option>Sports Club &amp; Association</option>
+            </optgroup>
           </select>
         </div>
       </div>
@@ -637,12 +734,13 @@ export function contentStudioPage(): string {
       <span><strong>Demo Mode</strong> — Sample content. Add your <a href="/settings" style="color:#FFD600;text-decoration:underline;">OpenAI API key</a> in Settings for real AI posts.</span>
     </div>
 
-    <!-- BOTTOM ACTION BAR — centred, simplified -->
-    <div class="cs-action-bar" id="actionBar">
-      <button onclick="copyAll()" class="cs-btn-ghost" id="copyAllBtn"><i class="fas fa-copy"></i> Copy All</button>
-      <button onclick="openReviewModal(null)" class="cs-btn-cyan" id="reviewOpenBtn"><i class="fas fa-eye"></i> Review &amp; Edit</button>
-      <button onclick="scheduleAll()" class="cs-btn-pink"><i class="fas fa-calendar-plus"></i> Schedule All</button>
-      <button onclick="publishApproved()" class="cs-btn-green" id="publishBtn"><i class="fas fa-paper-plane"></i> Publish</button>
+    <!-- BOTTOM ACTION BAR — perfectly centred, 5 equal buttons -->
+    <div class="cs-action-bar" id="actionBar" style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:14px 18px;">
+      <button onclick="regenerateContent()" class="cs-btn-ghost" id="regenBtn" title="Regenerate content with same settings"><i class="fas fa-rotate-right"></i><span class="cs-btn-label"> Regenerate</span></button>
+      <button onclick="copyAll()" class="cs-btn-ghost" id="copyAllBtn" title="Copy all posts to clipboard"><i class="fas fa-copy"></i><span class="cs-btn-label"> Copy All</span></button>
+      <button onclick="openReviewModal(null)" class="cs-btn-cyan" id="reviewOpenBtn" title="Review and edit each post"><i class="fas fa-eye"></i><span class="cs-btn-label"> Review &amp; Edit</span></button>
+      <button onclick="scheduleAll()" class="cs-btn-pink" title="Schedule all approved posts"><i class="fas fa-calendar-plus"></i><span class="cs-btn-label"> Schedule All</span></button>
+      <button onclick="publishApproved()" class="cs-btn-green" id="publishBtn" title="Publish approved posts now"><i class="fas fa-paper-plane"></i><span class="cs-btn-label"> Publish</span></button>
     </div>
 
     <!-- IMAGE GENERATION -->
@@ -927,11 +1025,21 @@ export function contentStudioPage(): string {
   // ══════════════════════════════════════════════════
   //  MAIN GENERATE
   // ══════════════════════════════════════════════════
+  function regenerateContent() {
+    if (!document.getElementById('brandName').value.trim()) {
+      alert('Please fill in your Brand Name first, then click Regenerate.');
+      return;
+    }
+    generateContent();
+  }
+
   async function generateContent() {
     const brandName = document.getElementById('brandName').value.trim();
     const industry = document.getElementById('industry').value;
     const tone = getSelectedTone();
     const topic = document.getElementById('contentTopic').value.trim();
+    const websiteUrl = document.getElementById('websiteUrl').value.trim();
+    const businessDesc = document.getElementById('businessDesc').value.trim();
 
     if (!brandName) {
       document.getElementById('brandName').style.borderColor = '#f87171';
@@ -952,7 +1060,7 @@ export function contentStudioPage(): string {
 
     if (selectedPlatforms.length === 0) { alert('Please select at least one platform.'); return; }
 
-    reviewParams = { brandName, industry, tone, topic, platforms: selectedPlatforms };
+    reviewParams = { brandName, industry, tone, topic, websiteUrl, businessDesc, platforms: selectedPlatforms };
 
     // Show loading in status bar
     const status = document.getElementById('generateStatus');
