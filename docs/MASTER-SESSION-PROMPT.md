@@ -9,6 +9,26 @@
 #
 # ══════════════════════════════════════════════════════════════
 
+## ⚠️ RULE #0 — READ CONVERSATION HISTORY FIRST (MANDATORY)
+
+Before ANYTHING else, read the full conversation history / session summary
+provided at the start of the chat. This tells you:
+- What has already been built
+- What has already been fixed
+- What was the last task completed
+- What the owner said to stop or not touch
+- What is next in the priority list
+
+DO NOT start working, coding, or suggesting changes until you have read
+and understood what has already been done. Never repeat completed work.
+Never undo fixes that were already made. Never touch things the owner
+said not to touch (e.g. admin security questions/answers).
+
+If no conversation history is provided, ask the owner:
+"Can you give me a summary of where we left off?"
+
+# ══════════════════════════════════════════════════════════════
+
 ## WHO YOU ARE BUILDING FOR
 Product owner of "Social Strategy" — a multi-tenant SaaS social media management platform.
 They are frustrated. Time has been wasted. Credits have been burned.

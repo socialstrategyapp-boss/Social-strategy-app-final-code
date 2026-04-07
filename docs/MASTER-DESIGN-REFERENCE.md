@@ -9,15 +9,52 @@
 
 ## 🖼️ REFERENCE IMAGES (Always Refer Back To These)
 
-| Ref | Description | Key Rule To Extract |
-|-----|-------------|-------------------|
-| REF-1 | 3×3 grid of 3D clay-style social icons on pure black | Icon style, black background, glow from color not light |
-| REF-2 | Phone with rainbow burst of app icons exploding upward | Hero energy, neon gradient rays, deep midnight blue bg |
-| REF-3 | Neon pill-shaped toggle buttons (SIGN UP, LOGIN etc) | Button style: pill shape, neon gradient border, dark fill |
-| REF-4 | Toggle switches day/night, color-coded ON/OFF states | Toggle UI: large thumb, gradient fill, clean states |
-| REF-5 | AI hologram face on phone, robot, neon circuitry | AI branding mood: cyan/violet/magenta, futuristic depth |
-| REF-6 | 3D social icons (WA, FB, Twitter, IG) on white bg | Icon rendering: glossy, embossed, soft shadow, thick padding |
-| REF-7 | Icon style collage — 3D glossy + watercolor variants | Icon variety: rounded corners, brand colors, modular grid |
+| Ref | URL | Description | Key Rule To Extract |
+|-----|-----|-------------|-------------------|
+| REF-1 | https://www.genspark.ai/api/files/s/BHRVxUAX | 3×3 grid of 3D clay-style social icons on pure black | Icon style, black background, glow from color not light |
+| REF-2 | https://www.genspark.ai/api/files/s/zmXeXL50 | Phone with rainbow burst of app icons exploding upward | Hero energy, neon gradient rays, deep midnight blue bg |
+| REF-3 | https://www.genspark.ai/api/files/s/JjOCcjKk | Neon pill-shaped toggle buttons (SIGN UP, LOGIN etc) | Button style: pill shape, neon gradient border, dark fill |
+| REF-4 | https://www.genspark.ai/api/files/s/0mHpvTiL | Toggle switches day/night, color-coded ON/OFF states | Toggle UI: large thumb, gradient fill, clean states |
+| REF-5 | https://www.genspark.ai/api/files/s/Xzi5ftS5 | AI hologram face on phone, robot, neon circuitry | AI branding mood: cyan/violet/magenta, futuristic depth |
+| REF-6 | https://www.genspark.ai/api/files/s/fhzI7eRJ | 3D social icons (WA, FB, Twitter, IG) on white bg | Icon rendering: glossy, embossed, soft shadow, thick padding |
+| REF-7 | https://www.genspark.ai/api/files/s/48XisGiS | Icon style collage — 3D glossy + watercolor variants | Icon variety: rounded corners, brand colors, modular grid |
+
+### CONFIRMED SPECS FROM IMAGE ANALYSIS (2026-04-07)
+
+**REF-4 Toggles — Exact Spec:**
+- Day/ON: pill track gradient red/pink → orange → yellow. White thumb right. Sun icon left.
+- Night/ON: deep royal blue → cyan/teal. Crescent moon inside. White thumb left. Inner glow.
+- OFF state: matte light gray, white thumb, embossed inner shadow — NO color.
+- Mini toggles: magenta, cyan, green — same pill, white thumb, saturated fill, soft drop shadow.
+
+**REF-3 Buttons — Exact Spec:**
+- Background: deep charcoal/navy #08111a
+- Shape: elongated pill, very large corner radius (999px)
+- Border: thin glowing neon gradient outline (NOT solid color)
+- Interior: near-black dark fill — glassmorphism feel
+- Right end: circular gradient orb/knob (unique color per button)
+- Text: uppercase bold white, left-aligned
+- Gradient pairs: SIGN UP=yellow-green, LOGIN=cyan→pink, SEARCH=purple→magenta,
+  LOG OUT=magenta→orange, UPLOAD=cyan→blue, NEXT=purple→pink,
+  ACCEPT=purple→teal, E-MAIL=purple→cyan
+- Glow: soft bloom outer glow around entire pill border
+
+**REF-1 Icons — Exact Spec:**
+- Background: pure black #000000
+- Shape: rounded square — very thick corner radius, cushion/pillow edges
+- Finish: claymorphism + 3D — matte-to-semi-gloss, extruded depth
+- Shadow: soft ambient occlusion, subtle edge lighting
+- Each icon: own brand color tile, white symbol centered, ~55% tile width
+
+**REF-2 Hero — Exact Spec:**
+- LANDING PAGE ONLY — never use on internal app screens
+- Deep electric blue → black bg with cyan/magenta circuit lines
+- Radial burst: white/yellow core → blue, cyan, magenta, orange streaks
+
+**REF-5 AI Pages — Exact Spec:**
+- Colors: cyan + violet + magenta on dark purple-blue bg
+- Style: high saturation 3D, intense bloom, edge glow, layered glass panels
+- Use for: Characters page, Image Maker, AI features
 
 ---
 
