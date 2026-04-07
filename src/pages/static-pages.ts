@@ -499,7 +499,7 @@ export function faqPage(): string {
     },
     {
       q: 'What AI technology powers Social Strategy?',
-      a: 'Our analysis and content creation engine is powered by OpenAI GPT-4o, the most advanced commercially available AI model. Video scripts use Sora-2. Our entire platform runs on Cloudflare\'s global edge network for ultra-fast performance worldwide.'
+      a: "Our analysis and content creation engine is powered by OpenAI GPT-4o, the most advanced commercially available AI model. Video scripts use Sora-2. Our entire platform runs on Cloudflare's global edge network for ultra-fast performance worldwide."
     },
     {
       q: 'How many posts can I schedule?',
@@ -519,7 +519,7 @@ export function faqPage(): string {
     },
     {
       q: 'How do I connect my social media accounts?',
-      a: 'After signing in, go to your Dashboard and click "Connect Accounts." You will be redirected through each platform\'s official OAuth flow — we never ask for your passwords. Once connected, you can start scheduling immediately.'
+      a: "After signing in, go to your Dashboard and click \"Connect Accounts.\" You will be redirected through each platform's official OAuth flow — we never ask for your passwords. Once connected, you can start scheduling immediately."
     },
   ]
 

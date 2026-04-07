@@ -552,13 +552,13 @@ const mockUsers = [
 ];
 
 const mockTickets = [
-  { id:'t1', user:'Sarah Mitchell',  email:'sarah.m@fitness.co',  subject:'Can\'t connect Instagram', msg:'Hi, I\'ve been trying to connect my Instagram account for 2 days now. The button just spins and nothing happens. Please help!', time:'8 min ago',  status:'open'   },
-  { id:'t2', user:'Coach Dan',       email:'coach.dan@email.com', subject:'Credits not refreshing',   msg:'My credits showed 0 this morning even though I\'m on Pro. I should have 1000/mo. Can you check?',                          time:'22 min ago', status:'open'   },
-  { id:'t3', user:'Mike Lawson',     email:'mike@lawson.io',      subject:'Upgrade question',          msg:'What\'s included in Pro vs Business? I need more accounts connected. Is there a trial?',                                  time:'1 hr ago',   status:'open'   },
+  { id:'t1', user:'Sarah Mitchell',  email:'sarah.m@fitness.co',  subject:"Can't connect Instagram", msg:"Hi, I've been trying to connect my Instagram account for 2 days now. The button just spins and nothing happens. Please help!", time:'8 min ago',  status:'open'   },
+  { id:'t2', user:'Coach Dan',       email:'coach.dan@email.com', subject:'Credits not refreshing',   msg:"My credits showed 0 this morning even though I'm on Pro. I should have 1000/mo. Can you check?",                          time:'22 min ago', status:'open'   },
+  { id:'t3', user:'Mike Lawson',     email:'mike@lawson.io',      subject:'Upgrade question',          msg:"What's included in Pro vs Business? I need more accounts connected. Is there a trial?",                                  time:'1 hr ago',   status:'open'   },
   { id:'t4', user:'Café Brew',       email:'hello@cafebrew.au',   subject:'Content generation slow',  msg:'Content generation has been taking 5+ minutes lately. Is there an issue with the server?',                               time:'2 hrs ago',  status:'open'   },
   { id:'t5', user:'James Thornton',  email:'james.t@realty.com',  subject:'Billing receipt needed',   msg:'I need a receipt/invoice for April for my accountant. Can you send one to this email?',                                  time:'3 hrs ago',  status:'replied'},
-  { id:'t6', user:'Brand Studio',    email:'agency@brand.studio', subject:'Account appeal',            msg:'My account was blocked. I believe this was a mistake. Please review. We\'ve always complied with your terms.',            time:'4 hrs ago',  status:'open'   },
-  { id:'t7', user:'Zara Boutique',   email:'zara@boutique.com',   subject:'Reactivate account',       msg:'My account got suspended after a failed payment. I\'ve updated my card. Please reactivate.',                             time:'6 hrs ago',  status:'open'   },
+  { id:'t6', user:'Brand Studio',    email:'agency@brand.studio', subject:'Account appeal',            msg:"My account was blocked. I believe this was a mistake. Please review. We've always complied with your terms.",            time:'4 hrs ago',  status:'open'   },
+  { id:'t7', user:'Zara Boutique',   email:'zara@boutique.com',   subject:'Reactivate account',       msg:"My account got suspended after a failed payment. I've updated my card. Please reactivate.",                             time:'6 hrs ago',  status:'open'   },
 ];
 
 // ── Render user rows ────────────────────────────────────────────────────────

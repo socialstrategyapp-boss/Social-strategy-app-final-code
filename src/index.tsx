@@ -385,7 +385,7 @@ function generateDemoPosts(brandName: string, industry: string, tone: string, to
     },
     'Threads': {
       type: 'Thread',
-      tip: 'Threads rewards raw, conversational posts. Don\'t over-polish. Write like you\'re texting a smart friend.',
+      tip: "Threads rewards raw, conversational posts. Don't over-polish. Write like you're texting a smart friend.",
       content: `real talk about ${tp} in ${ind}:\n\n${brand} tested 3 different approaches over 6 months. the results were so clear it was almost embarrassing.\n\nspoiler: the "professional" strategy lost every time\n\nwhat actually worked was just being real with people and showing up consistently\n\nanyone else find this in their business?`,
       hashtags: [brandTag, topicTag]
     },

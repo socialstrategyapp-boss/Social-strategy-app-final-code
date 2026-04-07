@@ -298,7 +298,7 @@ export function characterMakerPage(): string {
         </div>
         <div>
           <label class="cm-label">Signature Phrase / Opener (optional)</label>
-          <input id="charPhrase" class="cm-input" type="text" placeholder='e.g. "Here\'s what no one tells you..."'>
+          <input id="charPhrase" class="cm-input" type="text" placeholder='e.g. "Here&apos;s what no one tells you..."'>
         </div>
       </div>
     </div>
@@ -578,7 +578,7 @@ async function buildCharacter() {
         personality: { traits: selectedTraits, communicationStyle: style, signaturePhrase: phrase || 'Let me show you something...' },
         voice: { tone, vocabulary: 'Professional yet approachable', sentenceLength: 'medium', emojiUse: 'minimal' },
         contentAngles: ['Authority content and expert insights', 'Behind-the-scenes brand stories', 'Educational tips that drive engagement'],
-        previewPost: name + ' here. Here\'s what most brands get wrong about content marketing — they focus on selling instead of connecting.\n\nYour audience doesn\'t want to be sold to. They want to feel understood. They want solutions. They want to trust the person behind the brand.\n\nThat\'s exactly why every piece of content we create starts with one question: "How does this help our customer?"\n\nStart there. Everything else follows. 💡\n\n#ContentMarketing #BrandStrategy #Marketing',
+        previewPost: name + " here. Here\u2019s what most brands get wrong about content marketing \u2014 they focus on selling instead of connecting.\n\nYour audience doesn\u2019t want to be sold to. They want to feel understood. They want solutions. They want to trust the person behind the brand.\n\nThat\u2019s exactly why every piece of content we create starts with one question: \"How does this help our customer?\"\n\nStart there. Everything else follows. \ud83d\udca1\n\n#ContentMarketing #BrandStrategy #Marketing",
         brandFit: 'Perfect alignment with brand goals — authentic voice that builds trust and drives engagement without feeling promotional.'
       };
       currentChar = demoChar;

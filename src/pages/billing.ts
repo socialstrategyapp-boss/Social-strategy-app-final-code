@@ -444,9 +444,9 @@ export function billingPage(): string {
       </div>
       <div class="bl-card-body">
         ${[
-          ['When will I be charged?','You won\'t be charged during your 14-day trial. Your first charge occurs on the day after your trial ends.'],
+          ['When will I be charged?',"You won't be charged during your 14-day trial. Your first charge occurs on the day after your trial ends."],
           ['How do I cancel?','Click "Cancel Plan" above. Your access continues until the end of the current billing period.'],
-          ['What happens to unused credits?','Unused monthly credits expire at the end of each billing cycle. Top-up pack credits don\'t expire.'],
+          ['What happens to unused credits?',"Unused monthly credits expire at the end of each billing cycle. Top-up pack credits don't expire."],
           ['Is my card safe?','Yes. We use Stripe — we never see or store your card details. All transactions are PCI DSS Level 1 compliant.'],
         ].map(([q,a]) => `
         <div class="faq-mini-item" onclick="this.classList.toggle('open')">

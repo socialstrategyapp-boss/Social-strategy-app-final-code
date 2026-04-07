@@ -417,11 +417,11 @@ function generateCharacterBio() {
     output.innerHTML = '<strong style="color:#A78BFA;">' + name + '</strong> is a ' + (personality || 'professional') + ' ' + role.toLowerCase() + ' who brings authenticity and expertise to every post. ' +
       'With a ' + (style || 'engaging') + ' approach, ' + name + ' creates content that resonates deeply with their audience. ' +
       'They are known for their ability to translate complex ideas into relatable, actionable insights that drive real results. ' +
-      'Whether on Instagram, LinkedIn or TikTok, ' + name + '\'s voice remains consistent \u2014 always genuine, always value-driven.<br><br>' +
+      'Whether on Instagram, LinkedIn or TikTok, ' + name + "'s voice remains consistent \u2014 always genuine, always value-driven.<br><br>" +
       '<strong style="color:#00E5FF;">Sample Post:</strong><br>' +
-      '\u201cEvery big achievement started with a simple decision to begin. Stop waiting for the perfect moment \u2014 it doesn\'t exist. Start now, adjust as you go, and watch the compound effect do its magic. \ud83d\ude80 #' + (role.replace(/\s/g,'')) + ' #GrowthMindset #ActionOverPerfection\u201d';
+      '\u201cEvery big achievement started with a simple decision to begin. Stop waiting for the perfect moment \u2014 it doesn\u2019t exist. Start now, adjust as you go, and watch the compound effect do its magic. \ud83d\ude80 #' + (role.replace(/\s/g,'')) + ' #GrowthMindset #ActionOverPerfection\u201d';
 
-    document.getElementById('samplePost').textContent = '\u201cEvery big achievement started with a simple decision to begin. Stop waiting for the perfect moment \u2014 it doesn\'t exist. Start now, adjust as you go, and watch the compound effect do its magic. \ud83d\ude80\u201d \u2014 ' + name;
+    document.getElementById('samplePost').textContent = '\u201cEvery big achievement started with a simple decision to begin. Stop waiting for the perfect moment \u2014 it doesn\u2019t exist. Start now, adjust as you go, and watch the compound effect do its magic. \ud83d\ude80\u201d \u2014 ' + name;
   }, 1200);
 }
 
@@ -431,8 +431,8 @@ function generateVoiceSamples() {
   output.innerHTML = '<span style="color:#A78BFA;">\u2728 Generating voice samples for ' + name + '...</span>';
   setTimeout(function() {
     output.innerHTML = '<strong style="color:#00E5FF;">Voice Samples for ' + name + ':</strong><br><br>' +
-      '<div style="margin-bottom:10px;padding:10px;background:rgba(0,229,255,0.04);border-radius:8px;border-left:3px solid #00E5FF;"><strong style="color:#00E5FF;">Instagram:</strong><br>"The secret to consistency? Make it non-negotiable. 30 days in \u2014 here\'s what changed. \ud83d\udd25 #consistency #results"</div>' +
-      '<div style="margin-bottom:10px;padding:10px;background:rgba(167,139,250,0.04);border-radius:8px;border-left:3px solid #A78BFA;"><strong style="color:#A78BFA;">LinkedIn:</strong><br>"After working with 200+ clients, I\'ve identified the #1 mistake businesses make with their social presence. Let me break it down..."</div>' +
+      '<div style="margin-bottom:10px;padding:10px;background:rgba(0,229,255,0.04);border-radius:8px;border-left:3px solid #00E5FF;"><strong style="color:#00E5FF;">Instagram:</strong><br>"The secret to consistency? Make it non-negotiable. 30 days in \u2014 here\u2019s what changed. \ud83d\udd25 #consistency #results"</div>' +
+      '<div style="margin-bottom:10px;padding:10px;background:rgba(167,139,250,0.04);border-radius:8px;border-left:3px solid #A78BFA;"><strong style="color:#A78BFA;">LinkedIn:</strong><br>"After working with 200+ clients, I\u2019ve identified the #1 mistake businesses make with their social presence. Let me break it down..."</div>' +
       '<div style="padding:10px;background:rgba(255,45,120,0.04);border-radius:8px;border-left:3px solid #FF2D78;"><strong style="color:#FF2D78;">TikTok:</strong><br>"POV: You finally get your content strategy right and the algorithm starts working FOR you \ud83c\udf99\ufe0f\u2728 This changed everything..."</div>';
   }, 1000);
 }
