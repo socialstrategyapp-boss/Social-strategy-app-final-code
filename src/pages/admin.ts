@@ -351,7 +351,7 @@ export function adminPage(): string {
 // ── Pre-computed SHA-256 hashes (lowercase answers) ───────────────────────────
 // ID   : 329383
 // Q1 A : rambo  (answer is Rambo — r.a.m.b.o)
-// Q2 A : west's tigers
+// Q2 A : wests tigers
 // Q3 A : twenty twenty two
 const ADMIN_ID   = '329383';
 const QA = [
@@ -360,7 +360,7 @@ const QA = [
   { q: "What year was he born in?",    aKey: '' }
 ];
 // We compute hashes on first load and cache in sessionStorage so the plaintext never appears
-const ANSWERS_RAW = ['rambo', "west's tigers", 'twenty twenty two'];
+const ANSWERS_RAW = ['rambo', 'wests tigers', 'twenty twenty two'];
 
 const SESSION_KEY = 'ss_admin_sess_v4';
 const LOCK_KEY    = 'ss_admin_lock4';
