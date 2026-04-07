@@ -18,6 +18,8 @@ import { billingPage } from './pages/billing'
 import { characterMakerPage } from './pages/character-maker'
 import { imageMakerPage } from './pages/image-maker'
 import { uploadsPage } from './pages/uploads'
+import { characterCreatePage } from './pages/character-create'
+import { reportPage } from './pages/report'
 
 type Env = {
   OPENAI_API_KEY: string
@@ -50,6 +52,8 @@ app.get('/faq', (c) => c.html(faqPage()))
 app.get('/cookies', (c) => c.html(cookiePage()))
 app.get('/billing-policy', (c) => c.html(billingPolicyPage()))
 app.get('/billing', (c) => c.html(billingPage()))
+app.get('/character-create', (c) => c.html(characterCreatePage()))
+app.get('/report', (c) => c.html(reportPage()))
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ─── ACCOUNT & CREDIT HELPERS ───────────────────────────────────────────────
@@ -1733,5 +1737,111 @@ app.get('/image-maker', (c) => c.html(imageMakerPage()))
 
 // ─── Route to uploads page ────────────────────────────────────────────────────
 app.get('/uploads', (c) => c.html(uploadsPage()))
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ─── CHARACTER CREATE API ─────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+
+// POST /api/characters/create — create a new character profile
+app.post('/api/characters/create', async (c) => {
+  try {
+    const body = await c.req.json()
+    const { name, role, personality, style, bio, tone, platforms, keywords, avoidWords, locked, customer_id } = body
+    if (!name) return c.json({ success: false, error: 'Character name is required.' }, 400)
+
+    const id = crypto.randomUUID()
+    const customerId = customer_id || 'demo-customer'
+
+    if (c.env.DB) {
+      await c.env.DB.prepare(`
+        INSERT INTO character_profiles (id, customer_id, name, role, personality, style, tone, preview_text, locked_for_brand_consistency, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+      `).bind(id, customerId, name, role || '', personality || '', style || '', JSON.stringify(tone || []), bio || '', locked ? 1 : 0).run()
+    }
+
+    return c.json({
+      success: true,
+      character: { id, name, role, personality, style, bio, tone, platforms, keywords, avoidWords, locked, customer_id: customerId }
+    })
+  } catch (err: any) {
+    return c.json({ success: false, error: err.message || 'Failed to create character.' }, 500)
+  }
+})
+
+// POST /api/characters/:characterId/guided-edit — apply a guided edit to a character
+app.post('/api/characters/:characterId/guided-edit', async (c) => {
+  try {
+    const characterId = c.req.param('characterId')
+    const body = await c.req.json()
+    const { instruction, field } = body
+    if (!instruction) return c.json({ success: false, error: 'Instruction is required.' }, 400)
+
+    // Demo: return a guided suggestion without actual AI (OpenAI key required for real implementation)
+    const suggestions: Record<string, string> = {
+      bio: `Based on your instruction "${instruction}", here is an updated bio that incorporates the feedback while maintaining brand voice consistency.`,
+      tone: `Tone adjusted to be more ${instruction} while preserving authenticity.`,
+      style: `Content style updated: ${instruction}`,
+      default: `Applied guided edit: "${instruction}". The character profile has been updated to reflect this change.`
+    }
+
+    const result = suggestions[field || 'default'] || suggestions.default
+
+    if (c.env.DB && characterId !== 'demo') {
+      await c.env.DB.prepare(`UPDATE character_profiles SET updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(characterId).run()
+    }
+
+    return c.json({ success: true, characterId, field: field || 'general', result, guided: true })
+  } catch (err: any) {
+    return c.json({ success: false, error: err.message || 'Guided edit failed.' }, 500)
+  }
+})
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ─── REPORTS API ─────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+
+// GET /api/reports/latest — return the latest report for the current user
+app.get('/api/reports/latest', async (c) => {
+  try {
+    // Try to load from DB first
+    if (c.env.DB) {
+      const row = await c.env.DB.prepare(
+        `SELECT * FROM analysis_reports ORDER BY created_at DESC LIMIT 1`
+      ).first<Record<string, unknown>>()
+
+      if (row) {
+        const data = typeof row.report_data === 'string' ? JSON.parse(row.report_data) : {}
+        return c.json({
+          success: true,
+          reportId: row.id,
+          businessName: data.businessName || row.url || 'Your Business',
+          website: data.website || String(row.url || ''),
+          industry: data.industry || 'General',
+          score: data.score || data.overallScore || 70,
+          grade: data.grade || 'B',
+          summary: data.summary || data.executiveSummary || 'Report loaded from database.',
+          generatedAt: row.created_at,
+          source: 'database'
+        })
+      }
+    }
+
+    // Fallback demo report
+    return c.json({
+      success: true,
+      reportId: 'demo-report-001',
+      businessName: 'Bloom Beauty Co.',
+      website: 'bloombeauty.com.au',
+      industry: 'Beauty & Cosmetics',
+      score: 74,
+      grade: 'B+',
+      summary: 'Bloom Beauty Co. has strong brand identity and loyal customer base, but is significantly under-leveraging social media reach. SEO technical gaps and inconsistent posting are limiting organic growth by an estimated 40%.',
+      generatedAt: new Date().toISOString(),
+      source: 'demo'
+    })
+  } catch (err: any) {
+    return c.json({ success: false, error: err.message || 'Failed to load report.' }, 500)
+  }
+})
 
 export default app

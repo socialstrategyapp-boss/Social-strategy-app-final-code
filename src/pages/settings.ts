@@ -1,17 +1,8 @@
-import { layout } from './layout'
+import { layout, topBar } from './layout'
 
 export function settingsPage(): string {
   const content = `
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div>
-      <h1>Settings</h1>
-      <p>Manage your account, billing, and preferences</p>
-    </div>
-    <button onclick="saveSettings()" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#001a22;font-size:13px;font-weight:800;padding:9px 18px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;">
-      <i class="fas fa-save"></i> Save Changes
-    </button>
-  </div>
+  ${topBar('Settings', 'Manage your account, billing and preferences', '<button onclick="saveSettings()" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="fas fa-save"></i> Save</button>')}
 
   <div style="padding:28px;max-width:900px;">
 

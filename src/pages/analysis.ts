@@ -1,18 +1,8 @@
-import { layout } from './layout'
+import { layout, topBar } from './layout'
 
 export function analysisPage(): string {
   const content = `
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div>
-      <h1>Website Analysis</h1>
-      <p>AI-powered business intelligence in 2 minutes</p>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#9ca3af;background:rgba(0,229,255,0.07);border:1px solid rgba(0,229,255,0.18);border-radius:20px;padding:6px 14px;flex-shrink:0;white-space:nowrap;">
-      <i class="fas fa-bolt" style="color:#00E5FF;"></i>
-      <span style="color:#00E5FF;font-weight:700;">Powered by GPT-4o</span>
-    </div>
-  </div>
+  ${topBar('Website Analysis', 'AI-powered business intelligence in 2 minutes', '<span style="display:flex;align-items:center;gap:5px;font-size:11px;color:#00E5FF;font-weight:700;background:rgba(0,229,255,0.07);border:1px solid rgba(0,229,255,0.18);border-radius:20px;padding:5px 12px;"><i class="fas fa-bolt"></i> GPT-4o</span>')}
 
   <div style="padding:24px;max-width:920px;">
 

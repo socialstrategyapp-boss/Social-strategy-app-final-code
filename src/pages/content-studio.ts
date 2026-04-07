@@ -1647,7 +1647,7 @@ export function contentStudioPage(): string {
           const tags = saved.pBestHashtags.trim().split(/\s+/).filter(Boolean);
           hashContainer.innerHTML = tags.slice(0, 12).map(tag => {
             const t = tag.startsWith('#') ? tag : '#' + tag;
-            return '<span onclick="insertHashtag(this)" style="display:inline-block;background:rgba(32,217,255,0.07);border:1px solid rgba(32,217,255,0.22);border-radius:999px;padding:4px 10px;font-size:11px;color:#20D9FF;cursor:pointer;transition:all .15s;font-weight:700;" onmouseover="this.style.background=\'rgba(32,217,255,0.15)\'" onmouseout="this.style.background=\'rgba(32,217,255,0.07)\'">' + t + '</span>';
+            return '<span onclick="insertHashtag(this)" style="display:inline-block;background:rgba(32,217,255,0.07);border:1px solid rgba(32,217,255,0.22);border-radius:999px;padding:4px 10px;font-size:11px;color:#20D9FF;cursor:pointer;transition:all .15s;font-weight:700;">' + t + '</span>';
           }).join('');
           hashContainer.style.display = 'flex';
           hashContainer.style.flexWrap = 'wrap';
@@ -1662,9 +1662,10 @@ export function contentStudioPage(): string {
         const pillarsEl = document.getElementById('reportPillars');
         const pillarsCard = document.getElementById('reportPillarsCard');
         if (pillarsEl) {
-          pillarsEl.innerHTML = saved.pContentPillars.slice(0, 5).map(p =>
-            '<span onclick="usePillar(\'' + p.replace(/'/g, "\\'") + '\')" style="display:inline-block;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.22);border-radius:999px;padding:4px 10px;font-size:11px;color:#8B5CF6;cursor:pointer;transition:all .15s;font-weight:700;" onmouseover="this.style.background=\'rgba(139,92,246,0.15)\'" onmouseout="this.style.background=\'rgba(139,92,246,0.07)\'">' + p + '</span>'
-          ).join('');
+          pillarsEl.innerHTML = saved.pContentPillars.slice(0, 5).map(function(p) {
+            var safe = p.replace(/"/g, '&quot;');
+            return '<span onclick="usePillar(this)" data-pillar="' + safe + '" style="display:inline-block;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.22);border-radius:999px;padding:4px 10px;font-size:11px;color:#8B5CF6;cursor:pointer;transition:all .15s;font-weight:700;">' + p + '</span>';
+          }).join('');
           pillarsEl.style.display = 'flex';
           pillarsEl.style.flexWrap = 'wrap';
           pillarsEl.style.gap = '6px';
@@ -1695,7 +1696,9 @@ export function contentStudioPage(): string {
     el.style.borderColor = 'rgba(32,217,255,0.5)';
   }
 
-  function usePillar(text) {
+  function usePillar(el) {
+    var text = el.dataset ? el.dataset.pillar : (el.getAttribute ? el.getAttribute('data-pillar') : el);
+    if (!text) text = el.textContent || el;
     const topicEl = document.getElementById('topicInput');
     if (topicEl) { topicEl.value = text; topicEl.focus(); }
   }

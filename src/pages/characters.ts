@@ -1,19 +1,9 @@
-import { layout } from './layout'
+import { layout, topBar } from './layout'
 
 export function charactersPage(): string {
   const content = `
-<!-- TOP BAR -->
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;">
-  <div>
-    <h1 style="font-size:26px;font-weight:900;background:linear-gradient(135deg,#00E5FF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;">
-      AI Characters & Employees
-    </h1>
-    <p style="color:#6b7280;font-size:14px;">Create persistent AI brand personas that write content, star in videos, and represent your clients.</p>
-  </div>
-  <button onclick="openCreateModal()" style="background:linear-gradient(135deg,#00E5FF,#7C3AED);border:none;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:14px;">
-    <i class="fas fa-plus"></i> New Character
-  </button>
-</div>
+${topBar('AI Characters', 'Create persistent AI brand personas for all your content', '<button onclick="openCreateModal()" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="fas fa-plus"></i> New Character</button>')}
+<div style="padding:20px;">
 
 <!-- STATS ROW -->
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:28px;">
@@ -763,6 +753,7 @@ function closeModal(id) {
 // Load on start
 loadCharacters();
 </script>
+</div>
 `
 
   return layout('AI Characters & Employees', content, 'characters')

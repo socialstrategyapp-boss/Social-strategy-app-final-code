@@ -1,20 +1,8 @@
-import { layout } from './layout'
+import { layout, topBar } from './layout'
 
 export function uploadsPage(): string {
   const content = `
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div>
-      <h1>Media Library</h1>
-      <p>Upload, manage and reuse your brand assets and AI-generated visuals</p>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <button onclick="document.getElementById('fileInput').click()" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#001a22;font-size:13px;font-weight:800;padding:9px 18px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;">
-        <i class="fas fa-cloud-upload-alt"></i> Upload Files
-      </button>
-      <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display:none;" onchange="handleUpload(this.files)">
-    </div>
-  </div>
+  ${topBar('Media Library', 'Upload, manage and reuse your brand assets', '<button onclick="document.getElementById(\"fileInput\").click()" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="fas fa-cloud-upload-alt"></i> Upload</button><input type="file" id="fileInput" multiple accept="image/*,video/*" style="display:none;" onchange="handleUpload(this.files)">')}
 
   <div style="padding:24px 28px;">
 

@@ -1,4 +1,4 @@
-import { layout } from './layout'
+import { layout, topBar } from './layout'
 
 export function schedulerPage(): string {
   const platformColors = {
@@ -59,26 +59,7 @@ export function schedulerPage(): string {
   ]
 
   const content = `
-  <!-- Top Bar -->
-  <div style="position:sticky;top:0;z-index:30;background:rgba(3,8,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;">
-    <div>
-      <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0;">Post Scheduler</h1>
-      <p style="color:#9ca3af;font-size:13px;margin:2px 0 0;">Manage your content queue across all platforms</p>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <div style="display:flex;gap:4px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:4px;">
-        <button id="calBtn" onclick="setView('calendar')" style="padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:rgba(0,229,255,0.15);color:#00E5FF;display:flex;align-items:center;gap:6px;">
-          <i class="fas fa-calendar"></i>Calendar
-        </button>
-        <button id="listBtn" onclick="setView('list')" style="padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:transparent;color:#9ca3af;display:flex;align-items:center;gap:6px;">
-          <i class="fas fa-list"></i>Queue
-        </button>
-      </div>
-      <button onclick="openNewPostModal()" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#001a22;font-size:13px;font-weight:800;padding:8px 16px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;">
-        <i class="fas fa-plus"></i> New Post
-      </button>
-    </div>
-  </div>
+  ${topBar('Post Scheduler', 'Manage your content queue across all platforms', '<a href="/content-studio" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;text-decoration:none;display:flex;align-items:center;gap:5px;"><i class="fas fa-plus"></i> New Post</a>')}
 
   <div style="padding:28px;">
 

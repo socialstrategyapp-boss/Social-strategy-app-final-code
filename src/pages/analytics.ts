@@ -1,4 +1,4 @@
-import { layout, platformIcon } from './layout'
+import { layout, platformIcon, topBar } from './layout'
 
 export function analyticsPage(): string {
   const kpis = [
@@ -23,27 +23,7 @@ export function analyticsPage(): string {
   ]
 
   const content = `
-  <!-- Top Bar -->
-  <div style="position:sticky;top:0;z-index:30;background:rgba(3,8,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;">
-    <div>
-      <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0;">Analytics</h1>
-      <p style="color:#9ca3af;font-size:13px;margin:2px 0 0;">Track your growth and optimize your strategy</p>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <!-- Demo Data Badge -->
-      <span style="background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.5px;">📊 Demo Data</span>
-      <div style="display:flex;gap:4px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:4px;">
-        ${['7D', '30D', '90D', '1Y'].map((p, i) => `
-        <button onclick="setPeriod(this,'${p}')" class="period-btn" style="padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;${i === 1 ? 'background:rgba(0,229,255,0.15);color:#00E5FF;' : 'background:transparent;color:#9ca3af;'}">${p}</button>`).join('')}
-      </div>
-      <button onclick="exportAnalytics()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 14px;color:#d1d5db;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
-        <i class="fas fa-download" style="color:#00E5FF;"></i> Export
-      </button>
-      <button onclick="shareReport()" style="background:rgba(255,45,120,0.1);border:1px solid rgba(255,45,120,0.3);border-radius:10px;padding:8px 14px;color:#FF2D78;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
-        <i class="fas fa-share-nodes"></i> Share
-      </button>
-    </div>
-  </div>
+  ${topBar('Analytics', 'Track your growth and optimise your strategy', `<span style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);color:#fbbf24;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;">📊 Demo Data</span>`)}
 
   <div style="padding:28px;">
 

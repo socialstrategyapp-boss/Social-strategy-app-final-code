@@ -1,4 +1,4 @@
-import { layout, platformIcon } from './layout'
+import { layout, platformIcon, ssLogo, topBar } from './layout'
 
 export function dashboardPage(): string {
   const kpis = [
@@ -35,21 +35,7 @@ export function dashboardPage(): string {
   ]
 
   const content = `
-  <!-- Top Bar -->
-  <div style="position:sticky;top:0;z-index:30;background:rgba(3,8,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;">
-    <div>
-      <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0;">Dashboard</h1>
-      <p style="color:#9ca3af;font-size:13px;margin:2px 0 0;">Welcome back! Here's your growth overview.</p>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <button style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 14px;color:#d1d5db;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
-        <i class="fas fa-calendar" style="color:#00E5FF;"></i> Last 30 days <i class="fas fa-chevron-down" style="font-size:10px;"></i>
-      </button>
-      <a href="/analysis" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#001a22;font-size:13px;font-weight:800;padding:8px 16px;border-radius:10px;text-decoration:none;display:flex;align-items:center;gap:6px;">
-        <i class="fas fa-plus"></i> New Analysis
-      </a>
-    </div>
-  </div>
+  ${topBar('Dashboard', 'Your growth command centre', '<a href="/analysis" style="background:linear-gradient(135deg,#00E5FF,#0070F3);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;text-decoration:none;display:flex;align-items:center;gap:5px;"><i class="fas fa-plus"></i> Analyse</a>')}
 
   <div style="padding:28px;">
 

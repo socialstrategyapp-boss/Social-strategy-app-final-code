@@ -1,4 +1,4 @@
-import { layout, ssLogo } from './layout'
+import { layout, ssLogo, topBar } from './layout'
 
 export function profilePage(): string {
 
@@ -12,48 +12,7 @@ export function profilePage(): string {
   ]
 
   const content = `
-  <!-- ─── TOP BAR ─────────────────────────────────────────────────────────── -->
-  <div style="position:sticky;top:0;z-index:30;background:rgba(3,8,24,0.92);backdrop-filter:blur(14px);
-    border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 28px;
-    display:flex;align-items:center;justify-content:space-between;">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <div>
-        <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0;">My Profile</h1>
-        <p style="color:#9ca3af;font-size:12px;margin:2px 0 0;">Business Intelligence Hub · powers all AI content &amp; reports</p>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <!-- credits meter pill -->
-      <div id="creditsPill" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);
-        border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:8px 16px;">
-        <i class="fas fa-bolt" style="color:#fbbf24;font-size:13px;"></i>
-        <div>
-          <div style="font-size:10px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.6px;">AI Credits</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span id="creditDisplay" style="font-size:14px;font-weight:900;color:#fbbf24;">6,535 <span style="color:#4b5563;font-weight:500;">/ 10,000</span></span>
-          </div>
-        </div>
-        <div style="width:70px;height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;">
-          <div id="creditBar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#fbbf24,#f59e0b);width:65.35%;transition:width .6s ease;"></div>
-        </div>
-      </div>
-      <!-- expiry pill -->
-      <div style="display:flex;align-items:center;gap:7px;background:rgba(74,222,128,0.06);
-        border:1px solid rgba(74,222,128,0.2);border-radius:12px;padding:8px 14px;">
-        <i class="fas fa-calendar-check" style="color:#4ade80;font-size:12px;"></i>
-        <div>
-          <div style="font-size:10px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.6px;">Expires</div>
-          <div style="font-size:13px;font-weight:800;color:#4ade80;" id="expiryDisplay">15 days</div>
-        </div>
-      </div>
-      <a href="/content-studio" style="background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);
-        color:#fff;font-size:13px;font-weight:800;padding:9px 18px;border-radius:11px;
-        text-decoration:none;display:flex;align-items:center;gap:6px;
-        box-shadow:0 0 18px rgba(255,45,120,0.35);">
-        <i class="fas fa-wand-magic-sparkles"></i> Create Content
-      </a>
-    </div>
-  </div>
+  ${topBar('My Profile', 'Business Intelligence Hub · powers all AI content & reports', '<a href="/content-studio" style="background:linear-gradient(135deg,#FF2D78,#C026D3,#7C3AED);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;text-decoration:none;display:flex;align-items:center;gap:5px;"><i class="fas fa-wand-magic-sparkles"></i> Create</a>')}
 
   <div style="padding:28px;max-width:1100px;margin:0 auto;">
 

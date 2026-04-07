@@ -1,4 +1,4 @@
-import { layout } from './layout'
+import { layout, topBar } from './layout'
 
 export function pricingPage(): string {
 
@@ -278,16 +278,7 @@ export function pricingPage(): string {
   .pr-bottom-cta p { font-size: 15px; color: #A8B3C7; margin-bottom: 32px; }
 </style>
 
-<!-- TOP BAR -->
-<div class="pr-topbar">
-  <div>
-    <h1 style="font-size:20px;font-weight:900;color:#fff;margin:0;">Pricing</h1>
-    <p style="color:#A8B3C7;font-size:12px;margin:2px 0 0;">Simple, transparent pricing in AUD · No hidden fees · Cancel anytime</p>
-  </div>
-  <a href="/billing" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:999px;background:linear-gradient(135deg,#20D9FF,#2F80FF);color:#fff;font-size:13px;font-weight:800;text-decoration:none;box-shadow:0 0 18px rgba(32,217,255,0.35);">
-    <i class="fas fa-credit-card"></i> Upgrade Now
-  </a>
-</div>
+${topBar('Pricing & Plans', 'Simple, transparent pricing in AUD · No hidden fees · Cancel anytime', '<a href="/billing" style="background:linear-gradient(135deg,#20D9FF,#2F80FF);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;text-decoration:none;display:flex;align-items:center;gap:5px;"><i class="fas fa-credit-card"></i> Upgrade</a>')}
 
 <!-- HERO -->
 <div class="pr-hero">
