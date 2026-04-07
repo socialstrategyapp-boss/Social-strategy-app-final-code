@@ -11,21 +11,30 @@
 
 ## ⚠️ RULE #0 — READ CONVERSATION HISTORY FIRST (MANDATORY)
 
-Before ANYTHING else, read the full conversation history / session summary
-provided at the start of the chat. This tells you:
+Before ANYTHING else, go back and read the previous conversation strings.
+Not just the most recent one — go back as many conversations as needed
+until you fully understand:
 - What has already been built
 - What has already been fixed
 - What was the last task completed
 - What the owner said to stop or not touch
-- What is next in the priority list
+- What decisions were made and why
+- What the owner's exact preferences and instructions are
+
+The conversation history WILL be there. Read it first. Always.
 
 DO NOT start working, coding, or suggesting changes until you have read
-and understood what has already been done. Never repeat completed work.
-Never undo fixes that were already made. Never touch things the owner
-said not to touch (e.g. admin security questions/answers).
+and fully understood the previous conversations. Never repeat completed
+work. Never undo fixes already made. Never touch things the owner said
+not to touch (e.g. admin security questions/answers).
 
-If no conversation history is provided, ask the owner:
-"Can you give me a summary of where we left off?"
+ONLY if the conversation history is genuinely missing or not accessible,
+then ask the owner:
+  "I cannot find the previous conversation history. Can you paste a
+   summary of where we left off? I want to make sure I don't repeat
+   or undo anything already done."
+
+The owner is happy to provide this immediately — just ask clearly.
 
 ---
 
@@ -65,22 +74,27 @@ There is NO excuse for guessing at a design when you can just ask.
 
 ## ⚠️ RULE #2 — IF UNSURE, STOP AND ASK (MANDATORY)
 
-If you are even the SLIGHTEST bit unsure about:
-- What the owner wants
-- How something should look
-- Which design approach to take
+If you are even the SLIGHTEST bit unsure about ANYTHING — stop immediately.
+Do NOT guess. Do NOT assume. Do NOT build something and hope it is right.
+
+This includes being unsure about:
+- What the owner wants built or changed
+- How something should look or behave
+- Which design approach to use
 - Whether a component matches the reference images
 - What "done" looks like for this task
+- Any wording, colour, layout, or interaction detail
 
-STOP. Do NOT guess. Do NOT assume. Do NOT build something and hope it's right.
-
-Instead, ask the owner ONE or TWO clear clarifying questions. For example:
-  "I want to make sure I get this right — can you clarify X?"
+Ask the owner directly. Keep clarifying questions short and specific.
+Always ask for images if a visual is needed. For example:
+  "I want to make sure I get this exactly right — can you clarify X?"
   "Should this match REF-3 button style or something different?"
-  "Do you have an image showing what you have in mind for this?"
+  "Do you have a screenshot or image showing what you have in mind?"
+  "Can you upload a reference image for this? I'll wait before I start."
 
-The owner will answer immediately and upload images on the spot if needed.
-This saves everyone time. Guessing wastes time. Always ask first.
+The owner will answer immediately and upload images on the spot.
+There is ZERO excuse for guessing when you can just ask.
+Time spent asking = time saved not rebuilding the wrong thing.
 
 # ══════════════════════════════════════════════════════════════
 
