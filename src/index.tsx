@@ -1065,10 +1065,12 @@ Return ONLY valid JSON:
 </body>
 </html>`
 
-    return c.html(html)
+    // ── Deduct credits BEFORE returning response ─────────────────────────────
+    if (c.env?.DB) {
+      try { await deductCredits(c.env.DB, 'generate_report', accountEmail, `Report: ${brandName} – ${period}`) } catch (_) {}
+    }
 
-    // ── Deduct credits after success (after sending response) ────────────────
-    // Note: We call this after return — fire-and-forget pattern for edge workers
+    return c.html(html)
   } catch (e) {
     return c.json({ success: false, error: 'Report generation failed. Please try again.' }, 500)
   }

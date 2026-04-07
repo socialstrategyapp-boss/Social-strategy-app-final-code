@@ -498,9 +498,9 @@ function addImageCard(id, imgSrc, prompt, loading = false) {
     </div>
     <div class="im-card-actions">
       <button class="im-action-btn im-action-save" onclick="saveToLib('\${id}')"><i class="fas fa-bookmark"></i>Save</button>
-      <button class="im-action-btn im-action-copy" onclick="copyPrompt('\${id}','${prompt.replace(/'/g,"\\'")}')"><i class="fas fa-copy"></i>Prompt</button>
+      <button class="im-action-btn im-action-copy" onclick="copyPrompt('\${id}',\${JSON.stringify(prompt)})"><i class="fas fa-copy"></i>Prompt</button>
       <button class="im-action-btn im-action-download" onclick="dlImg('\${id}')"><i class="fas fa-download"></i>DL</button>
-      <button class="im-action-btn im-action-regen" onclick="regenImg('\${id}','${prompt.replace(/'/g,"\\'")}')"><i class="fas fa-redo"></i></button>
+      <button class="im-action-btn im-action-regen" onclick="regenImg('\${id}',\${JSON.stringify(prompt)})"><i class="fas fa-redo"></i></button>
     </div>
   \`;
   grid.appendChild(card);
