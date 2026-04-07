@@ -642,7 +642,7 @@ export function profilePage(): string {
           expired: '⏰ Your subscription has expired. Please renew to continue using AI features.',
           suspended: '⏸️ Account suspended. Please update your billing details.'
         };
-        banner.textContent = msgs[data.status as string] || 'Account issue detected.';
+        banner.textContent = msgs[data.status] || 'Account issue detected.';
         document.body.prepend(banner);
       }
 

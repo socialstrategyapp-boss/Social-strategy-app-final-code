@@ -377,7 +377,7 @@ export function analysisPage(): string {
 
         // Show credit & report limit warning
         const email = saved.pEmail || 'demo@socialstrategy.ai';
-        fetch('/api/account?email=' + encodeURIComponent(email)).then(r => r.json()).then((data: any) => {
+        fetch('/api/account?email=' + encodeURIComponent(email)).then(r => r.json()).then((data) => {
           if (!data.success) return;
           // Inject credit pill into top bar
           const bar = document.querySelector('.top-bar > div:last-child');
