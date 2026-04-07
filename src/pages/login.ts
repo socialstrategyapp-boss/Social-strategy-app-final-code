@@ -13,14 +13,22 @@ export function loginPage(): string {
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     *, *::before, *::after { font-family: 'Inter', sans-serif; box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ─── BODY — same dark navy/indigo as landing page ─── */
+    /* ─── BODY — luminous neon teal-navy, lit from within ─── */
     body {
       min-height: 100vh;
-      background: #060818;
+      /* Base: not flat black — a deep teal-midnight that feels lit */
+      background: #071a2e;
       background-image:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(32,217,255,0.09) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 100% 100%, rgba(139,92,246,0.10) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 40% at 0% 80%, rgba(255,45,166,0.07) 0%, transparent 55%);
+        /* Large cyan burst — top center, like the phone screen explosion */
+        radial-gradient(ellipse 100% 70% at 50% -10%, rgba(0,210,255,0.28) 0%, transparent 60%),
+        /* Hot pink/magenta bloom — bottom right */
+        radial-gradient(ellipse 70% 60% at 95% 100%, rgba(255,45,166,0.32) 0%, transparent 55%),
+        /* Deep violet pool — left mid */
+        radial-gradient(ellipse 60% 55% at -5% 55%, rgba(139,92,246,0.28) 0%, transparent 55%),
+        /* Aqua streak — bottom left floor */
+        radial-gradient(ellipse 50% 40% at 10% 100%, rgba(0,245,180,0.18) 0%, transparent 50%),
+        /* Warm orange/gold spark — top right corner */
+        radial-gradient(ellipse 40% 35% at 100% 5%, rgba(255,176,32,0.14) 0%, transparent 50%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -28,14 +36,24 @@ export function loginPage(): string {
       position: relative;
     }
 
-    /* subtle grid */
+    /* neon circuit grid — more visible on the lighter base */
     body::before {
       content: '';
       position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background-image:
-        linear-gradient(rgba(32,217,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(32,217,255,0.025) 1px, transparent 1px);
-      background-size: 52px 52px;
+        linear-gradient(rgba(32,217,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(32,217,255,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* extra neon streak layer — diagonal light rays like REF-2 */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        linear-gradient(125deg, rgba(0,210,255,0.07) 0%, transparent 40%),
+        linear-gradient(245deg, rgba(255,45,166,0.07) 0%, transparent 40%),
+        linear-gradient(180deg, transparent 30%, rgba(139,92,246,0.06) 100%);
     }
 
     /* ─── LAYOUT ─── */
@@ -51,44 +69,50 @@ export function loginPage(): string {
     /* ─── CARD ─── */
     .login-card {
       width: 100%; max-width: 460px;
-      background: rgba(11,18,38,0.92);
-      border: 1px solid rgba(32,217,255,0.2);
+      /* Semi-transparent so the vivid background glows through */
+      background: rgba(6, 18, 42, 0.82);
+      border: 1px solid rgba(32,217,255,0.28);
       border-radius: 28px;
       overflow: hidden;
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(28px) saturate(1.4);
+      -webkit-backdrop-filter: blur(28px) saturate(1.4);
       box-shadow:
-        0 0 0 1px rgba(32,217,255,0.06) inset,
-        0 32px 80px rgba(0,0,0,0.7),
-        0 0 80px rgba(32,217,255,0.07);
+        0 0 0 1px rgba(32,217,255,0.08) inset,
+        0 32px 80px rgba(0,0,0,0.5),
+        0 0 60px rgba(0,210,255,0.12),
+        0 0 120px rgba(139,92,246,0.10);
     }
 
     /* ─── HEADER ─── */
     .login-header {
-      background: linear-gradient(170deg, #0d1535 0%, #0a1228 60%, #060818 100%);
-      border-bottom: 1px solid rgba(32,217,255,0.13);
+      background: linear-gradient(170deg,
+        rgba(0,40,80,0.85) 0%,
+        rgba(5,20,55,0.80) 50%,
+        rgba(8,10,35,0.75) 100%);
+      border-bottom: 1px solid rgba(32,217,255,0.18);
       padding: 40px 32px 30px;
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-    /* top glow beam */
+    /* cyan burst from top — matches REF-2 phone screen energy */
     .login-header::before {
       content: '';
       position: absolute;
-      top: -80px; left: 50%; transform: translateX(-50%);
-      width: 380px; height: 220px;
+      top: -60px; left: 50%; transform: translateX(-50%);
+      width: 420px; height: 260px;
       border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(32,217,255,0.13) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(0,210,255,0.22) 0%, rgba(139,92,246,0.10) 50%, transparent 70%);
       pointer-events: none;
     }
-    /* bottom pink accent */
+    /* hot pink bloom — bottom right */
     .login-header::after {
       content: '';
       position: absolute;
-      bottom: -60px; right: -40px;
-      width: 200px; height: 200px;
+      bottom: -50px; right: -30px;
+      width: 220px; height: 220px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,45,166,0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,45,166,0.18) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -146,13 +170,16 @@ export function loginPage(): string {
     @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.8)} }
 
     /* ─── FORM BODY ─── */
-    .login-body { padding: 28px 32px 32px; }
+    .login-body {
+      padding: 28px 32px 32px;
+      background: rgba(4,14,36,0.60);
+    }
 
     /* ─── MODE TOGGLE (Sign In / Create Account) ─── */
     .mode-toggle {
       display: flex;
-      background: rgba(6,8,24,0.8);
-      border: 1.5px solid rgba(32,217,255,0.18);
+      background: rgba(4,12,35,0.70);
+      border: 1.5px solid rgba(32,217,255,0.22);
       border-radius: 16px; padding: 5px; gap: 5px;
       margin-bottom: 26px;
     }
@@ -203,16 +230,16 @@ export function loginPage(): string {
     .input-group { margin-bottom: 18px; }
     .input-wrap {
       display: flex; align-items: center; gap: 12px;
-      background: #182248;           /* lighter than card — clearly visible */
-      border: 1.5px solid rgba(32,217,255,0.25);
+      background: rgba(10,30,70,0.70);
+      border: 1.5px solid rgba(32,217,255,0.28);
       border-radius: 14px;
       padding: 14px 16px;
       transition: all 0.22s;
     }
     .input-wrap:focus-within {
       border-color: #20D9FF;
-      background: #1e2d5e;
-      box-shadow: 0 0 0 3px rgba(32,217,255,0.12), 0 0 24px rgba(32,217,255,0.1);
+      background: rgba(15,40,90,0.80);
+      box-shadow: 0 0 0 3px rgba(32,217,255,0.15), 0 0 24px rgba(32,217,255,0.12);
     }
     .input-icon {
       color: #20D9FF; font-size: 16px; flex-shrink: 0;
