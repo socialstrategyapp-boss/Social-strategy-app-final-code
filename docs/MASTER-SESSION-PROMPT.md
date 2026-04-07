@@ -27,6 +27,61 @@ said not to touch (e.g. admin security questions/answers).
 If no conversation history is provided, ask the owner:
 "Can you give me a summary of where we left off?"
 
+---
+
+## ⚠️ RULE #1 — ASK FOR IMAGES BEFORE EVERY BUILD SESSION (MANDATORY)
+
+At the START of every new session, before writing any UI code, ask the owner:
+
+  "Before I start — do you have any reference images you want me to look at
+   for this task? Please upload them now so there is no confusion and no
+   wasted time."
+
+The owner has confirmed they will upload images immediately when asked.
+There is NO excuse for guessing at a design when you can just ask.
+
+### Where the reference images and framework docs live:
+- Design bible:      /home/user/webapp/docs/MASTER-DESIGN-REFERENCE.md
+- This file:         /home/user/webapp/docs/MASTER-SESSION-PROMPT.md
+- Page scaffolds:    /home/user/webapp/docs/UI-SCAFFOLDS.md
+- Uniformity rules:  /home/user/webapp/docs/UNIFORMITY-RULES.md
+- Architecture:      /home/user/webapp/docs/architecture.md
+- Pricing/credits:   /home/user/webapp/docs/pricing-meter.md
+- Admin ops:         /home/user/webapp/docs/admin-ops.md
+- DB schema:         /home/user/webapp/docs/database-schema.md
+- Content prompts:   /home/user/webapp/prompts/
+- GitHub repo:       https://github.com/socialstrategyapp-boss/Social-strategy-app-final-code
+
+### Saved reference image URLs (re-upload or re-read these any time):
+- REF-1 (3D clay icons, black bg):     https://www.genspark.ai/api/files/s/BHRVxUAX
+- REF-2 (phone hero burst):            https://www.genspark.ai/api/files/s/zmXeXL50
+- REF-3 (neon pill buttons):           https://www.genspark.ai/api/files/s/JjOCcjKk
+- REF-4 (toggle switches day/night):   https://www.genspark.ai/api/files/s/0mHpvTiL
+- REF-5 (AI hologram phone):           https://www.genspark.ai/api/files/s/Xzi5ftS5
+- REF-6 (3D icons on white):           https://www.genspark.ai/api/files/s/fhzI7eRJ
+- REF-7 (icon style collage):          https://www.genspark.ai/api/files/s/48XisGiS
+
+---
+
+## ⚠️ RULE #2 — IF UNSURE, STOP AND ASK (MANDATORY)
+
+If you are even the SLIGHTEST bit unsure about:
+- What the owner wants
+- How something should look
+- Which design approach to take
+- Whether a component matches the reference images
+- What "done" looks like for this task
+
+STOP. Do NOT guess. Do NOT assume. Do NOT build something and hope it's right.
+
+Instead, ask the owner ONE or TWO clear clarifying questions. For example:
+  "I want to make sure I get this right — can you clarify X?"
+  "Should this match REF-3 button style or something different?"
+  "Do you have an image showing what you have in mind for this?"
+
+The owner will answer immediately and upload images on the spot if needed.
+This saves everyone time. Guessing wastes time. Always ask first.
+
 # ══════════════════════════════════════════════════════════════
 
 ## WHO YOU ARE BUILDING FOR
