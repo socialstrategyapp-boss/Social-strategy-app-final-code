@@ -239,6 +239,7 @@ export function loginPage(): string {
       letter-spacing: 1.3px; margin-bottom: 10px;
       text-shadow: 0 0 12px rgba(32,217,255,0.80);
     }
+    .field-label i { display: none; }
 
     /* INPUT FIELDS — INTENSE NEON GLOW */
     .input-group { margin-bottom: 22px; }
@@ -263,7 +264,8 @@ export function loginPage(): string {
         0 0 80px rgba(139,92,246,0.40);
     }
     .input-icon {
-      display: none;
+      color: #20D9FF; font-size: 18px; flex-shrink: 0;
+      filter: drop-shadow(0 0 12px rgba(32,217,255,1));
     }
     .input-wrap input {
       flex: 1; background: transparent; border: none; outline: none;
@@ -554,10 +556,10 @@ export function loginPage(): string {
 
         <div class="mode-toggle">
           <button class="mode-btn active" id="signinBtn" onclick="setMode('signin')">
-            SIGN IN
+            <i class="fas fa-sign-in-alt" style="margin-right:8px;font-size:13px;"></i>SIGN IN
           </button>
           <button class="mode-btn" id="signupBtn" onclick="setMode('signup')">
-            CREATE ACCOUNT
+            <i class="fas fa-user-plus" style="margin-right:8px;font-size:13px;"></i>CREATE ACCOUNT
           </button>
         </div>
 
@@ -571,27 +573,30 @@ export function loginPage(): string {
 
         <div class="input-group" id="nameGroup">
           <label class="field-label" for="nameInput">
-            FULL NAME
+            <i class="fas fa-user" style="margin-right:7px;"></i>FULL NAME
           </label>
           <div class="input-wrap">
+            <i class="fas fa-user input-icon"></i>
             <input id="nameInput" type="text" placeholder="Your full name" autocomplete="name">
           </div>
         </div>
 
         <div class="input-group">
           <label class="field-label" for="emailInput">
-            EMAIL ADDRESS
+            <i class="fas fa-envelope" style="margin-right:7px;"></i>EMAIL ADDRESS
           </label>
           <div class="input-wrap">
+            <i class="fas fa-envelope input-icon"></i>
             <input id="emailInput" type="email" placeholder="you@yourbusiness.com" autocomplete="email">
           </div>
         </div>
 
         <div class="input-group">
           <label class="field-label" for="passInput">
-            PASSWORD
+            <i class="fas fa-lock" style="margin-right:7px;"></i>PASSWORD
           </label>
           <div class="input-wrap">
+            <i class="fas fa-lock input-icon"></i>
             <input id="passInput" type="password" placeholder="••••••••" autocomplete="current-password" oninput="checkStrength(this.value)">
             <button class="eye-btn" id="eyeBtn" onclick="togglePass()" type="button" aria-label="Show/hide password">
               <i class="fas fa-eye" id="eyeIcon"></i>
@@ -612,7 +617,7 @@ export function loginPage(): string {
             <label class="remember-label" for="rememberMe">Remember me</label>
           </div>
           <a class="forgot-link" id="forgotLink" href="#" onclick="handleForgot(event)">
-            Forgot password?
+            <i class="fas fa-key" style="margin-right:6px;font-size:11px;"></i>Forgot password?
           </a>
         </div>
 
@@ -717,6 +722,7 @@ export function loginPage(): string {
       if (currentMode !== 'signup') return;
       var fill  = document.getElementById('strengthFill');
       var label = document.getElementById('strengthLabel');
+      label.stylngthLabel');
       label.style.display = 'block';
       if (!val) { fill.style.width = '0%'; label.style.display = 'none'; return; }
       var score = 0;
@@ -736,6 +742,74 @@ export function loginPage(): string {
       fill.style.background = lv.color;
       label.textContent     = lv.lbl;
       label.style.color     = lv.color;
+    }
+
+    function togglePass() {
+      var inp  = document.getElementById('passInput');
+      var icon = document.getElementById('eyeIcon');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      icon.className = inp.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('errorMsg');
+      document.getElementById('errorText').textContent = msg;
+      el.style.display = 'flex';
+    }
+
+    function handleAuth() {
+      var email = document.getElementById('emailInput').value.trim();
+      var pass  = document.getElementById('passInput').value;
+      document.getElementById('errorMsg').style.display = 'none';
+
+      if (!email)                 { showError('Please enter your email address.'); return; }
+      if (!email.includes('@'))   { showError('Please enter a valid email address.'); return; }
+      if (!pass)                  { showError('Please enter your password.'); return; }
+      if (currentMode === 'signup') {
+        if (pass.length < 8)      { showError('Password must be at least 8 characters.'); return; }
+        if (!document.getElementById('nameInput').value.trim()) {
+          showError('Please enter your full name.'); return;
+        }
+      }
+
+      var btn = document.getElementById('mainBtn');
+      document.getElementById('btnText').textContent = currentMode === 'signup' ? 'CREATING ACCOUNT…' : 'SIGNING IN…';
+      document.getElementById('btnArrow').style.display   = 'none';
+      document.getElementById('btnSpinner').style.display = 'block';
+      btn.disabled = true;
+
+      if (document.getElementById('rememberMe').checked) {
+        localStorage.setItem('ssRememberEmail', email);
+      }
+
+      setTimeout(function () { window.location.href = '/dashboard'; }, 1400);
+    }
+
+    function handleForgot(e) {
+      e.preventDefault();
+      var email = document.getElementById('emailInput').value.trim();
+      if (!email) { showError('Enter your email above then click Forgot password.'); return; }
+      alert('Password reset link sent to ' + email + ' (demo mode)');
+    }
+
+    function handleGoogle() {
+      alert('Google OAuth will be connected later via Cloudflare.');
+    }
+
+    var remembered = localStorage.getItem('ssRememberEmail');
+    if (remembered) {
+      document.getElementById('emailInput').value = remembered;
+      document.getElementById('rememberMe').checked = true;
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') handleAuth();
+    });
+  </script>
+</body>
+</html>`
+}
+olor;
     }
 
     function togglePass() {
