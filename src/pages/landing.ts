@@ -134,16 +134,24 @@ export function landingPage(): string {
     .step-card:hover{transform:translateY(-8px);}
 
     /* ── HERO RESPONSIVE ── */
-    .hero-social-text{font-size:clamp(28px,7vw,100px);font-weight:900;letter-spacing:clamp(2px,0.8vw,20px);text-transform:uppercase;line-height:1;
+    .hero-social-text{
+      font-size:clamp(32px,6vw,90px);font-weight:900;
+      letter-spacing:clamp(4px,0.5vw,14px);
+      text-transform:uppercase;line-height:1;
       background:linear-gradient(135deg,#00E5FF 0%,#A78BFA 60%,#ffffff 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
       filter:drop-shadow(0 0 24px rgba(0,229,255,0.8)) drop-shadow(0 0 50px rgba(167,139,250,0.5));
-      margin-bottom:20px;max-width:100%;width:100%;text-align:center;display:block;box-sizing:border-box;padding:0 10px;}
-    .hero-strategy-text{font-size:clamp(28px,7vw,100px);font-weight:900;letter-spacing:clamp(2px,0.8vw,20px);text-transform:uppercase;line-height:1;
+      margin-bottom:20px;width:100%;text-align:center;display:block;
+      box-sizing:border-box;overflow:visible;}
+    .hero-strategy-text{
+      font-size:clamp(32px,6vw,90px);font-weight:900;
+      letter-spacing:clamp(4px,0.5vw,14px);
+      text-transform:uppercase;line-height:1;
       background:linear-gradient(135deg,#FF2D78 0%,#C026D3 50%,#FFD600 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
       filter:drop-shadow(0 0 24px rgba(255,45,120,0.8)) drop-shadow(0 0 50px rgba(255,214,0,0.4));
-      margin-bottom:14px;max-width:100%;width:100%;text-align:center;display:block;box-sizing:border-box;padding:0 10px;}
+      margin-bottom:14px;width:100%;text-align:center;display:block;
+      box-sizing:border-box;overflow:visible;}
     .hero-logo-wrap{width:clamp(200px,30vw,300px);height:clamp(200px,30vw,300px);margin:0 auto;}
 
     /* ── PLATFORM CARD ── */
@@ -212,7 +220,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      HERO
 ══════════════════════════════════════════ -->
-<section class="hero-section" style="min-height:100vh;padding-top:72px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;
+<section class="hero-section" style="min-height:100vh;padding-top:72px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:visible;
   background:radial-gradient(ellipse at 20% 30%,rgba(255,45,120,0.25) 0%,transparent 50%),
              radial-gradient(ellipse at 80% 20%,rgba(0,229,255,0.22) 0%,transparent 50%),
              radial-gradient(ellipse at 50% 85%,rgba(124,58,237,0.28) 0%,transparent 55%),
@@ -224,7 +232,7 @@ export function landingPage(): string {
   <div style="position:absolute;top:8%;right:6%;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.18),transparent 70%);filter:blur(55px);pointer-events:none;"></div>
   <div style="position:absolute;bottom:12%;left:38%;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.18),transparent 70%);filter:blur(65px);pointer-events:none;"></div>
 
-  <div style="position:relative;z-index:1;max-width:960px;margin:0 auto;padding:60px 20px 80px;" class="fade-in">
+  <div style="position:relative;z-index:1;max-width:960px;width:100%;margin:0 auto;padding:60px 20px 80px;box-sizing:border-box;overflow:visible;" class="fade-in">
 
     <!-- ── "SOCIAL" ABOVE LOGO ── -->
     <div class="hero-social-text">SOCIAL</div>
@@ -820,12 +828,20 @@ export function landingPage(): string {
     div[style*="display:flex;align-items:flex-start;gap:28px;"]{flex-direction:column!important;gap:16px!important;padding:20px 16px!important;}
     div[style*="width:72px;height:72px"]{width:48px!important;height:48px!important;margin-left:0!important;}
     h3[style*="font-weight:900;font-size:24px"]{font-size:18px!important;}
-    /* Hero text — phones: NO letter-spacing blowout */
-    .hero-social-text{font-size:clamp(22px,8.5vw,44px)!important;letter-spacing:clamp(1px,0.5vw,4px)!important;padding:0 8px!important;}
-    .hero-strategy-text{font-size:clamp(22px,8.5vw,44px)!important;letter-spacing:clamp(1px,0.5vw,4px)!important;padding:0 8px!important;}
-    .hero-logo-wrap{width:clamp(140px,42vw,190px)!important;height:clamp(140px,42vw,190px)!important;}
-    .hero-strategy-text{font-size:clamp(26px,9vw,52px)!important;letter-spacing:clamp(2px,1.5vw,8px)!important;}
-    .hero-logo-wrap{width:clamp(140px,42vw,190px)!important;height:clamp(140px,42vw,190px)!important;}
+    /* Hero text — hard pixel sizes on phones, NO letter-spacing, NO overflow */
+    .hero-social-text{
+      font-size:38px!important;
+      letter-spacing:6px!important;
+      padding:0!important;
+      overflow:visible!important;
+    }
+    .hero-strategy-text{
+      font-size:38px!important;
+      letter-spacing:6px!important;
+      padding:0!important;
+      overflow:visible!important;
+    }
+    .hero-logo-wrap{width:160px!important;height:160px!important;}
     div[style*="display:flex;gap:24px"]{flex-direction:column!important;align-items:center!important;}
   }
 </style>

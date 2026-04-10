@@ -113,9 +113,9 @@ export function loginPage(): string {
 
     /* LOGO — INTENSE 3D neon */
     .logo-wrap {
-      width: clamp(180px, 48vw, 220px);
+      width: 200px;
       height: auto;
-      margin: 0 auto 10px;
+      margin: 0 auto 18px;
       position: relative; z-index: 1;
       display: flex; flex-direction: column; align-items: center;
       animation: breathe 5s ease-in-out infinite;
@@ -125,17 +125,17 @@ export function loginPage(): string {
       box-shadow: 0 0 45px rgba(32,217,255,0.9), 0 0 80px rgba(255,45,166,0.7);
     }
     .logo-text-top, .logo-text-bot {
-      font-size: clamp(12px, 4vw, 16px);
+      font-size: 14px;
       font-weight: 900;
-      letter-spacing: clamp(3px, 1.2vw, 7px);
+      letter-spacing: 5px;
       text-transform: uppercase;
       white-space: nowrap;
       text-align: center;
       width: 100%;
       display: block;
     }
-    .logo-text-top { color:#fff; text-shadow: 0 0 10px rgba(0,229,255,1), 0 0 20px rgba(0,229,255,0.6); margin-bottom: 6px; }
-    .logo-text-bot { background:linear-gradient(135deg,#00E5FF,#FF2D78); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-top: 6px; }
+    .logo-text-top { color:#fff; text-shadow: 0 0 10px rgba(0,229,255,1), 0 0 20px rgba(0,229,255,0.6); margin-bottom: 8px; }
+    .logo-text-bot { background:linear-gradient(135deg,#00E5FF,#FF2D78); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-top: 8px; }
     .logo-wrap svg { width: 100% !important; height: 100% !important; }
     @keyframes breathe {
       0%,100% {
@@ -527,18 +527,16 @@ export function loginPage(): string {
       .login-header { padding: 28px 16px 24px; }
       .login-body   { padding: 28px 16px 32px; }
       .login-card   { border-radius: 24px; }
-      /* logo — fixed px so it never shrinks below legible size */
-      .logo-wrap    { width: 180px !important; }
-      .logo-text-top, .logo-text-bot { font-size: 13px !important; letter-spacing: 3px !important; }
+      .logo-wrap    { width: 180px !important; margin-bottom: 16px !important; }
+      .logo-text-top, .logo-text-bot { font-size: 13px !important; letter-spacing: 4px !important; }
       .brand-tagline { font-size: 10px; letter-spacing: 1px; }
       .form-title   { font-size: 25px; }
       .st           { width: 44px; height: 44px; border-radius: 14px; }
     }
     @media (max-height: 740px) {
       .login-header { padding: 24px 20px 20px; }
-      /* keep logo readable even on short screens */
       .logo-wrap    { width: 160px !important; }
-      .logo-text-top, .logo-text-bot { font-size: 12px !important; letter-spacing: 2.5px !important; }
+      .logo-text-top, .logo-text-bot { font-size: 12px !important; letter-spacing: 3px !important; }
     }
   </style>
 </head>
