@@ -125,9 +125,9 @@ export function loginPage(): string {
       box-shadow: 0 0 45px rgba(32,217,255,0.9), 0 0 80px rgba(255,45,166,0.7);
     }
     .logo-text-top, .logo-text-bot {
-      font-size: 14px;
+      font-size: 22px;
       font-weight: 900;
-      letter-spacing: 5px;
+      letter-spacing: 6px;
       text-transform: uppercase;
       white-space: nowrap;
       text-align: center;
@@ -528,7 +528,7 @@ export function loginPage(): string {
       .login-body   { padding: 28px 16px 32px; }
       .login-card   { border-radius: 24px; }
       .logo-wrap    { width: 180px !important; margin-bottom: 16px !important; }
-      .logo-text-top, .logo-text-bot { font-size: 13px !important; letter-spacing: 4px !important; }
+      .logo-text-top, .logo-text-bot { font-size: 20px !important; letter-spacing: 5px !important; }
       .brand-tagline { font-size: 10px; letter-spacing: 1px; }
       .form-title   { font-size: 25px; }
       .st           { width: 44px; height: 44px; border-radius: 14px; }
@@ -536,7 +536,7 @@ export function loginPage(): string {
     @media (max-height: 740px) {
       .login-header { padding: 24px 20px 20px; }
       .logo-wrap    { width: 160px !important; }
-      .logo-text-top, .logo-text-bot { font-size: 12px !important; letter-spacing: 3px !important; }
+      .logo-text-top, .logo-text-bot { font-size: 18px !important; letter-spacing: 4px !important; }
     }
   </style>
 </head>
