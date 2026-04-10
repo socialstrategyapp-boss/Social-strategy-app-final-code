@@ -271,12 +271,7 @@ export function loginPage(): string {
       text-shadow: 0 0 8px rgba(255,255,255,0.30);
     }
     .input-wrap input::placeholder { color: #5a6b8f; font-weight: 400; }
-    .eye-btn {
-      background: none; border: none; cursor: pointer; padding: 4px;
-      color: #5a6b8f; font-size: 17px;
-      transition: color 0.24s; flex-shrink: 0;
-    }
-    .eye-btn:hover { color: #20D9FF; filter: drop-shadow(0 0 12px rgba(32,217,255,1)); }
+    .eye-btn { display: none; }
 
     .strength-wrap { margin-top: 11px; display: none; }
     .strength-bar {
@@ -682,9 +677,7 @@ export function loginPage(): string {
           </label>
           <div class="input-wrap">
             <input id="passInput" type="password" placeholder="••••••••" autocomplete="current-password" oninput="checkStrength(this.value)">
-            <button class="eye-btn" id="eyeBtn" onclick="togglePass()" type="button" aria-label="Show/hide password">
-              <i class="fas fa-eye" id="eyeIcon"></i>
-            </button>
+
           </div>
           <div class="strength-wrap" id="strengthWrap">
             <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
@@ -728,7 +721,6 @@ export function loginPage(): string {
 
         <div class="social-section">
           <div class="social-label">
-            <i class="fas fa-globe" style="margin-right:7px;"></i>
             MANAGE ALL YOUR PLATFORMS
           </div>
           <div class="social-row">
