@@ -20,7 +20,7 @@ export function ssLogo(size: number = 44): string {
   const s = size
   return `<span style="display:inline-flex;flex-direction:column;align-items:center;line-height:1;gap:1px;">
   <span style="font-size:${Math.round(s*0.18)}px;font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;text-shadow:0 0 8px rgba(0,229,255,0.8);">SOCIAL</span>
-  <img src="/assets/ss-logo-3d.jpg" alt="SS" width="${s}" height="${s}" style="border-radius:${Math.round(s*0.22)}px;display:block;box-shadow:0 0 ${Math.round(s*0.3)}px rgba(0,229,255,0.6),0 0 ${Math.round(s*0.5)}px rgba(255,45,120,0.3);">
+  <img src="/assets/ss-logo-new.jpg" alt="SS" width="${s}" height="${s}" style="border-radius:${Math.round(s*0.22)}px;display:block;box-shadow:0 0 ${Math.round(s*0.3)}px rgba(0,229,255,0.6),0 0 ${Math.round(s*0.5)}px rgba(255,45,120,0.3);">
   <span style="font-size:${Math.round(s*0.18)}px;font-weight:900;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">STRATEGY</span>
 </span>`
 }

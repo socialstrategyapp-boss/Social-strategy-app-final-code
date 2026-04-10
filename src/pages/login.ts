@@ -548,7 +548,7 @@ export function loginPage(): string {
       <div class="login-header">
         <div class="logo-wrap">
           <span class="logo-text-top">SOCIAL</span>
-          <img src="/assets/ss-logo-3d.jpg" alt="Social Strategy" style="border-radius:20px;display:block;">
+          <img src="/assets/ss-logo-new.jpg" alt="Social Strategy" style="border-radius:22px;display:block;">
           <span class="logo-text-bot">STRATEGY</span>
         </div>
 
