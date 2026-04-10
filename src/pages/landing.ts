@@ -18,7 +18,7 @@ export function landingPage(): string {
     html{scroll-behavior:smooth;}
 
     /* ── LIGHTER, RICHER BACKGROUND with purple/indigo depth ── */
-    body{background:linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);color:#fff;overflow-x:hidden;min-height:100vh;}
+    body{background:url('/assets/bg-neon-burst.jpg') center center / cover fixed, linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);color:#fff;overflow-x:hidden;min-height:100vh;}
 
     /* ── NEON GRID OVERLAY ── */
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -319,7 +319,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      HOW IT WORKS  –  100% bigger, stacked steps, neon
 ══════════════════════════════════════════ -->
-<section id="how-it-works" style="padding:130px 0;background:linear-gradient(180deg,#070220 0%,#0a0330 50%,#060220 100%);position:relative;z-index:1;">
+<section id="how-it-works" style="padding:130px 0;background:linear-gradient(180deg,rgba(7,2,32,0.82) 0%,rgba(10,3,48,0.82) 50%,rgba(6,2,32,0.82) 100%);position:relative;z-index:1;">
   <div style="max-width:900px;margin:0 auto;padding:0 28px;">
 
     <!-- Section header -->
@@ -617,7 +617,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      TESTIMONIALS  –  3 cards, no overlap
 ══════════════════════════════════════════ -->
-<section style="padding:130px 0;background:linear-gradient(180deg,#070318 0%,#060220 100%);position:relative;z-index:1;">
+<section style="padding:130px 0;background:linear-gradient(180deg,rgba(7,3,24,0.82) 0%,rgba(6,2,32,0.82) 100%);position:relative;z-index:1;">
   <div style="max-width:1300px;margin:0 auto;padding:0 28px;">
     <div style="text-align:center;margin-bottom:72px;">
       <h2 style="font-size:clamp(32px,4.5vw,56px);font-weight:900;margin-bottom:14px;">Loved by <span class="gt-rainbow">Thousands</span></h2>
@@ -656,7 +656,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      CTA
 ══════════════════════════════════════════ -->
-<section style="padding:130px 0;background:linear-gradient(180deg,#060220 0%,#080420 100%);position:relative;overflow:hidden;z-index:1;">
+<section style="padding:130px 0;background:linear-gradient(180deg,rgba(6,2,32,0.82) 0%,rgba(8,4,32,0.82) 100%);position:relative;overflow:hidden;z-index:1;">
   <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(0,229,255,0.10),rgba(124,58,237,0.08),transparent 70%);filter:blur(55px);pointer-events:none;"></div>
   <div style="max-width:860px;margin:0 auto;padding:0 28px;text-align:center;position:relative;">
     <div style="display:inline-block;
@@ -692,7 +692,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════ -->
-<footer style="background:linear-gradient(180deg,#080420 0%,#060010 100%);border-top:2px solid rgba(255,45,120,0.2);padding:80px 0 0;position:relative;z-index:1;">
+<footer style="background:linear-gradient(180deg,rgba(8,4,32,0.88) 0%,rgba(6,0,16,0.92) 100%);border-top:2px solid rgba(255,45,120,0.2);padding:80px 0 0;position:relative;z-index:1;">
   <div style="max-width:1300px;margin:0 auto;padding:0 32px;">
     <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px;">
 

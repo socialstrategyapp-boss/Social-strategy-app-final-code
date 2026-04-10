@@ -15,77 +15,14 @@ export function platformIcon(id: string, size: number = 18): string {
   return svg.replace('<svg ', `<svg width="${size}" height="${size}" `)
 }
 
-// SS Logo — matches the real brand image exactly:
-// Cyan/teal glossy rounded-square, black glossy circle, bold 3D white SS, hot-pink speech bubble
+// SS Logo — uses the real 3D brand image, front-on, with SOCIAL / STRATEGY text
 export function ssLogo(size: number = 44): string {
   const s = size
-  const id = `ss${s}`   // unique per size so multiple logos on same page don't clash
-  return `<svg width="${s}" height="${s}" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="sq${id}" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#a8eef5"/>
-      <stop offset="30%"  stop-color="#3dd4e8"/>
-      <stop offset="65%"  stop-color="#1ab8cc"/>
-      <stop offset="100%" stop-color="#0e8fa0"/>
-    </linearGradient>
-    <linearGradient id="ring${id}" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#e8f8fb"/>
-      <stop offset="30%"  stop-color="#9ee6f0"/>
-      <stop offset="60%"  stop-color="#d0e8ec"/>
-      <stop offset="100%" stop-color="#7accd8"/>
-    </linearGradient>
-    <radialGradient id="circ${id}" cx="38%" cy="30%" r="65%">
-      <stop offset="0%"   stop-color="#2a3d4d"/>
-      <stop offset="40%"  stop-color="#060f18"/>
-      <stop offset="100%" stop-color="#000305"/>
-    </radialGradient>
-    <radialGradient id="sheen${id}" cx="36%" cy="22%" r="50%">
-      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.28"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="bub${id}" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#ff4fa0"/>
-      <stop offset="60%"  stop-color="#e8006a"/>
-      <stop offset="100%" stop-color="#c0005a"/>
-    </linearGradient>
-    <radialGradient id="bubg${id}" cx="35%" cy="25%" r="55%">
-      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="txt${id}" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"   stop-color="#ffffff"/>
-      <stop offset="45%"  stop-color="#e0f2f6"/>
-      <stop offset="100%" stop-color="#9eccd8"/>
-    </linearGradient>
-    <filter id="dshadow${id}" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.6"/>
-    </filter>
-    <filter id="txtglow${id}" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-  <rect x="4" y="4" width="192" height="192" rx="42" ry="42"
-        fill="url(#sq${id})" filter="url(#dshadow${id})"/>
-  <rect x="4" y="4" width="192" height="192" rx="42" ry="42"
-        fill="none" stroke="url(#ring${id})" stroke-width="6" opacity="0.9"/>
-  <rect x="10" y="10" width="180" height="180" rx="38" ry="38"
-        fill="rgba(0,0,0,0.06)"/>
-  <ellipse cx="136" cy="138" rx="52" ry="42" fill="url(#bub${id})"/>
-  <polygon points="108,162  118,188  136,166" fill="url(#bub${id})"/>
-  <ellipse cx="118" cy="122" rx="30" ry="18" fill="url(#bubg${id})" opacity="0.7"/>
-  <circle cx="90" cy="90" r="74" fill="url(#circ${id})"/>
-  <circle cx="90" cy="90" r="74" fill="none" stroke="#00d8ee" stroke-width="2.5" opacity="0.5"/>
-  <circle cx="90" cy="90" r="74" fill="url(#sheen${id})"/>
-  <text x="90" y="120"
-    font-family="Arial Black, 'Arial Bold', sans-serif"
-    font-size="82"
-    font-weight="900"
-    text-anchor="middle"
-    fill="url(#txt${id})"
-    filter="url(#dshadow${id})"
-    letter-spacing="-3">SS</text>
-</svg>`
+  return `<span style="display:inline-flex;flex-direction:column;align-items:center;line-height:1;gap:1px;">
+  <span style="font-size:${Math.round(s*0.18)}px;font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;text-shadow:0 0 8px rgba(0,229,255,0.8);">SOCIAL</span>
+  <img src="/assets/ss-logo-3d.jpg" alt="SS" width="${s}" height="${s}" style="border-radius:${Math.round(s*0.22)}px;display:block;box-shadow:0 0 ${Math.round(s*0.3)}px rgba(0,229,255,0.6),0 0 ${Math.round(s*0.5)}px rgba(255,45,120,0.3);">
+  <span style="font-size:${Math.round(s*0.18)}px;font-weight:900;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">STRATEGY</span>
+</span>`
 }
 
 // ── SHARED TOP-BAR HELPER ──────────────────────────────────────────────────
@@ -159,7 +96,7 @@ export function layout(title: string, content: string, activePage: string = ''):
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     *,*::before,*::after{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;box-sizing:border-box;}
-    body{background:linear-gradient(160deg,#020c1e 0%,#030818 40%,#040a1a 70%,#020c1e 100%);margin:0;padding:0;overflow-x:hidden;color:#e2e8f0;}
+    body{background:url('/assets/bg-neon-burst.jpg') center center / cover fixed, linear-gradient(160deg,#020c1e 0%,#030818 40%,#040a1a 70%,#020c1e 100%);margin:0;padding:0;overflow-x:hidden;color:#e2e8f0;}
     ::-webkit-scrollbar{width:5px;}
     ::-webkit-scrollbar-track{background:#040a1a;}
     ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00E5FF,#7C3AED);border-radius:3px;}

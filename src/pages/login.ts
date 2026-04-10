@@ -13,16 +13,18 @@ export function loginPage(): string {
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     *, *::before, *::after { font-family: 'Inter', sans-serif; box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* BODY — INTENSE neon fluoro background */
+    /* BODY — neon burst background image */
     body {
       min-height: 100vh;
-      background: #0a1428;
+      background: url('/assets/bg-neon-burst.jpg') center center / cover fixed, #0a1428;
       background-image:
-        radial-gradient(ellipse 140% 90% at 50% -15%, rgba(32,217,255,0.65) 0%, transparent 60%),
-        radial-gradient(ellipse 100% 85% at 100% 105%, rgba(255,45,166,0.70) 0%, transparent 55%),
-        radial-gradient(ellipse 90% 70% at -10% 65%, rgba(139,92,246,0.65) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 60% at 10% 100%, rgba(0,245,155,0.45) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 50% at 100% 10%, rgba(255,214,0,0.40) 0%, transparent 50%);
+        url('/assets/bg-neon-burst.jpg'),
+        radial-gradient(ellipse 140% 90% at 50% -15%, rgba(32,217,255,0.45) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 85% at 100% 105%, rgba(255,45,166,0.50) 0%, transparent 55%),
+        radial-gradient(ellipse 90% 70% at -10% 65%, rgba(139,92,246,0.45) 0%, transparent 55%);
+      background-size: cover, auto;
+      background-position: center, center;
+      background-attachment: fixed, fixed;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -112,14 +114,15 @@ export function loginPage(): string {
     /* LOGO — INTENSE 3D neon */
     .logo-wrap {
       width: clamp(120px, 28vw, 160px);
-      height: clamp(120px, 28vw, 160px);
-      margin: 0 auto 22px;
+      height: auto;
+      margin: 0 auto 8px;
       position: relative; z-index: 1;
-      filter:
-        drop-shadow(0 0 45px rgba(32,217,255,1))
-        drop-shadow(0 0 80px rgba(255,45,166,0.80))
-        drop-shadow(0 0 110px rgba(139,92,246,0.70));
+      display: flex; flex-direction: column; align-items: center;
       animation: breathe 5s ease-in-out infinite;
+    }
+    .logo-wrap img {
+      width: 100%; border-radius: 22px;
+      box-shadow: 0 0 45px rgba(32,217,255,0.9), 0 0 80px rgba(255,45,166,0.7);
     }
     .logo-wrap svg { width: 100% !important; height: 100% !important; }
     @keyframes breathe {
@@ -426,141 +429,52 @@ export function loginPage(): string {
       justify-content: center; gap: 11px;
       flex-wrap: wrap;
     }
-    /* 3D NEON GLOWING TILES — INTENSE MULTI-COLOR GLOW */
+    /* REAL NEON ICON IMAGES — cropped from user's neon grid */
     .st {
-      width: 56px; height: 56px;
-      border-radius: 18px;
+      width: 62px; height: 62px;
+      border-radius: 16px;
       display: flex; align-items: center; justify-content: center;
       position: relative; flex-shrink: 0;
-      transition: all 0.35s;
+      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
       cursor: default;
-      transform-style: preserve-3d;
+      overflow: hidden;
     }
-    /* INTENSE glossy top shine */
-    .st::before {
-      content: '';
-      position: absolute; 
-      top: 0; left: 0; right: 0;
-      height: 55%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
-      border-radius: 18px 18px 0 0;
-      pointer-events: none;
-      z-index: 2;
+    .st img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
     }
-    /* MASSIVE outer multi-color glow halo */
+    /* Outer neon glow per brand */
+    @keyframes iconGlow {
+      0%,100% { opacity: 0.85; transform: scale(1); }
+      50%      { opacity: 1;    transform: scale(1.15); }
+    }
     .st::after {
       content: '';
       position: absolute;
-      inset: -12px;
-      border-radius: 22px;
-      opacity: 0.90;
-      filter: blur(24px);
+      inset: -10px;
+      border-radius: 20px;
+      filter: blur(18px);
+      opacity: 0.85;
       pointer-events: none;
       z-index: -1;
       animation: iconGlow 3s ease-in-out infinite;
     }
-    @keyframes iconGlow {
-      0%,100% { opacity: 0.90; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.20); }
-    }
     .st:hover {
-      transform: translateY(-10px) scale(1.22);
+      transform: translateY(-9px) scale(1.18);
     }
-    .st:hover::after {
-      opacity: 1;
-      transform: scale(1.5);
-      animation: none;
-    }
-    .st svg { 
-      width: 32px; height: 32px; 
-      position: relative; 
-      z-index: 3;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.60));
-    }
+    .st:hover::after { opacity: 1; transform: scale(1.4); animation: none; }
 
-    /* 3D BASE with INTENSE multi-color brand-specific glow */
-    .st-ig  { 
-      background: linear-gradient(145deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      box-shadow: 
-        0 3px 3px rgba(255,255,255,0.30) inset,
-        0 12px 35px rgba(0,0,0,0.75),
-        0 0 70px rgba(220,39,67,1),
-        0 0 110px rgba(188,24,136,0.85);
-    }
-    .st-ig::after { background: radial-gradient(circle, rgba(220,39,67,1), rgba(188,24,136,0.90)); }
-    
-    .st-tk  { 
-      background: linear-gradient(145deg, #000000, #1a1a1a);
-      border: 2px solid rgba(32,217,255,0.50);
-      box-shadow: 
-        0 3px 3px rgba(255,255,255,0.20) inset,
-        0 12px 35px rgba(0,0,0,0.75),
-        0 0 75px rgba(32,217,255,1),
-        0 0 120px rgba(32,217,255,0.85);
-    }
-    .st-tk::after { background: radial-gradient(circle, rgba(32,217,255,1), rgba(0,255,255,0.85)); }
-    
-    .st-fb  { 
-      background: linear-gradient(145deg, #1877F2, #0c5bcc);
-      box-shadow: 
-        0 3px 3px rgba(255,255,255,0.30) inset,
-        0 12px 35px rgba(0,0,0,0.75),
-        0 0 70px rgba(24,119,242,1),
-        0 0 115px rgba(24,119,242,0.85);
-    }
-    .st-fb::after { background: radial-gradient(circle, rgba(24,119,242,1), rgba(66,133,244,0.85)); }
-    
-    .st-yt  { 
-      background: linear-gradient(145deg, #FF0000, #cc0000);
-      box-shadow: 
-        0 3px 3px rgba(255,255,255,0.30) inset,
-        0 12px 35px rgba(0,0,0,0.75),
-        0 0 75px rgba(255,0,0,1),
-        0 0 125px rgba(255,0,0,0.90);
-    }
-    .st-yt::after { background: radial-gradient(circle, rgba(255,0,0,1), rgba(255,50,50,0.90)); }
-    
-    .st-tw  { 
-      background: linear-gradient(145deg, #000000, #1a1a1a);
-      border: 2px solid rgba(96,165,250,0.45);
-      box-shadow: 
-        0 3px 3px rgba(255,255,255,0.20) inset,
-        0 12px 35px rgba(0,0,0,0.75),
-        0 0 70px rgba(96,165,250,1),
-        0 0 115px rgba(96,165,250,0.85);
-    }
-    .st-tw::after { background: radial-gradient(circle, rgba(96,165,250,1), rgba(135,206,250,0.85)); }
-    
-    .st-li  { 
-      background: linear-gradient(145deg, #0A66C2, #084a8f);
-      box-shadow: 
-        0 3px 3px rgba(255,255,255,0.30) inset,
-        0 12px 35px rgba(0,0,0,0.75),
-        0 0 70px rgba(10,102,194,1),
-        0 0 115px rgba(10,102,194,0.85);
-    }
-    .st-li::after { background: radial-gradient(circle, rgba(10,102,194,1), rgba(66,133,244,0.85)); }
-    
-    .st-pi  { 
-      background: linear-gradient(145deg, #E60023, #bd001c);
-      box-shadow: 
-        0 3px 3px rgba(255,255,255,0.30) inset,
-        0 12px 35px rgba(0,0,0,0.75),
-        0 0 75px rgba(230,0,35,1),
-        0 0 125px rgba(230,0,35,0.90);
-    }
-    .st-pi::after { background: radial-gradient(circle, rgba(230,0,35,1), rgba(255,50,80,0.90)); }
-    
-    .st-th  { 
-      background: linear-gradient(145deg, #000000, #2a2a2a);
-      border: 2px solid rgba(139,92,246,0.45);
-      box-shadow: 
-        0 3px 3px rgba(255,255,255,0.20) inset,
-        0 12px 35px rgba(0,0,0,0.75),
-        0 0 70px rgba(139,92,246,1),
-        0 0 115px rgba(139,92,246,0.85);
-    }
-    .st-th::after { background: radial-gradient(circle, rgba(139,92,246,1), rgba(168,85,247,0.85)); }
+    /* Brand glow colours */
+    .st-fb::after  { background: radial-gradient(circle, #1877F2, #60a5fa80); }
+    .st-ig::after  { background: radial-gradient(circle, #dc2743, #bc188880); }
+    .st-tk::after  { background: radial-gradient(circle, #20D9FF, #00ffff80); }
+    .st-th::after  { background: radial-gradient(circle, #9333ea, #a855f780); }
+    .st-yt::after  { background: radial-gradient(circle, #FF0000, #ff303080); }
+    .st-tw::after  { background: radial-gradient(circle, #60a5fa, #93c5fd80); }
+    .st-pi::after  { background: radial-gradient(circle, #E60023, #ff204080); }
+    .st-li::after  { background: radial-gradient(circle, #0A66C2, #3b82f680); }
 
     .switch-link {
       text-align: center; font-size: 14px;
@@ -620,12 +534,11 @@ export function loginPage(): string {
 
       <div class="login-header">
         <div class="logo-wrap">
-          ${ssLogo(320).replace(/width="\d+"/, 'width="100%"').replace(/height="\d+"/, 'height="100%"')}
+          <span style="font-size:clamp(10px,2.2vw,14px);font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;text-shadow:0 0 8px rgba(0,229,255,0.9);margin-bottom:4px;">SOCIAL</span>
+          <img src="/assets/ss-logo-3d.jpg" alt="Social Strategy" style="border-radius:20px;display:block;">
+          <span style="font-size:clamp(10px,2.2vw,14px);font-weight:900;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-top:4px;">STRATEGY</span>
         </div>
 
-        <div class="brand-name">
-          <span class="brand-social">SOCIAL</span>&nbsp;<span class="brand-strategy">STRATEGY</span>
-        </div>
         <div class="brand-tagline">Strategy · Create · Schedule · Auto-Post</div>
 
         <div class="live-pill">
@@ -725,37 +638,21 @@ export function loginPage(): string {
           </div>
           <div class="social-row">
 
-            <div class="st st-ig" title="Instagram">
-              <svg viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </div>
+            <div class="st st-ig" title="Instagram"><img src="/assets/icon-instagram.jpg" alt="Instagram"></div>
 
-            <div class="st st-tk" title="TikTok">
-              <svg viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.79 1.54V6.78a4.85 4.85 0 0 1-1.02-.09z"/></svg>
-            </div>
+            <div class="st st-tk" title="TikTok"><img src="/assets/icon-tiktok.jpg" alt="TikTok"></div>
 
-            <div class="st st-fb" title="Facebook">
-              <svg viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </div>
+            <div class="st st-fb" title="Facebook"><img src="/assets/icon-facebook.jpg" alt="Facebook"></div>
 
-            <div class="st st-yt" title="YouTube">
-              <svg viewBox="0 0 24 24" fill="white"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-            </div>
+            <div class="st st-yt" title="YouTube"><img src="/assets/icon-youtube.jpg" alt="YouTube"></div>
 
-            <div class="st st-tw" title="X / Twitter">
-              <svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </div>
+            <div class="st st-tw" title="X / Twitter"><img src="/assets/icon-x.jpg" alt="X"></div>
 
-            <div class="st st-li" title="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </div>
+            <div class="st st-li" title="LinkedIn"><img src="/assets/icon-linkedin.jpg" alt="LinkedIn"></div>
 
-            <div class="st st-pi" title="Pinterest">
-              <svg viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-            </div>
+            <div class="st st-pi" title="Pinterest"><img src="/assets/icon-pinterest.jpg" alt="Pinterest"></div>
 
-            <div class="st st-th" title="Threads">
-              <svg viewBox="0 0 24 24" fill="white"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.3-.883-2.342-.889H12c-.876.006-1.592.086-2.117.75a2.35 2.35 0 0 0-.35.59l-1.98-.498c.45-1.511 1.55-2.37 3.447-2.44H12c1.517.007 2.74.455 3.635 1.327 1.014.987 1.517 2.418 1.494 4.26l.044.068a7.2 7.2 0 0 1 1.436 1.31c.723.888 1.18 2.09 1.29 3.385.148 1.72-.218 3.817-1.777 5.337-1.824 1.78-4.098 2.448-7.226 2.473zM10.47 15.72c.646 0 1.217-.14 1.694-.414.644-.368 1.047-.955 1.197-1.743a11.864 11.864 0 0 0-2.548-.017c-.834.049-1.498.287-1.925.688-.34.318-.506.73-.477 1.175.055.98.962 1.566 2.059 1.566z"/></svg>
-            </div>
+            <div class="st st-th" title="Threads"><img src="/assets/icon-threads.jpg" alt="Threads"></div>
 
           </div>
         </div>
