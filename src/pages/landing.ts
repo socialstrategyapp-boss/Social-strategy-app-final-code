@@ -40,9 +40,9 @@ export function landingPage(): string {
     /* ── NAVBAR ── */
     .navbar{position:fixed;top:0;left:0;right:0;z-index:100;
       background:rgba(8,4,32,0.95);backdrop-filter:blur(20px);
-      border-bottom:1px solid rgba(0,229,255,0.18);}
+      border-bottom:1px solid rgba(0,229,255,0.18);overflow:visible;}
     .navbar-inner{max-width:1400px;margin:0 auto;padding:0 20px;height:64px;
-      display:flex;align-items:center;gap:12px;}
+      display:flex;align-items:center;gap:12px;overflow:visible;}
     .navbar-logo{flex-shrink:0;display:flex;align-items:center;gap:10px;text-decoration:none;}
     .nav-links{display:flex;align-items:center;gap:4px;flex:1 1 auto;min-width:0;}
     .nav-link{font-size:13px;font-weight:700;padding:7px 12px;border-radius:999px;
@@ -55,7 +55,7 @@ export function landingPage(): string {
     .nl-platforms:hover{background:rgba(167,139,250,0.2);box-shadow:0 0 20px rgba(167,139,250,0.5);}
     .nl-pricing{color:#FFD600;border-color:rgba(255,214,0,0.3);background:rgba(255,214,0,0.08);}
     .nl-pricing:hover{background:rgba(255,214,0,0.2);box-shadow:0 0 20px rgba(255,214,0,0.5);}
-    .nav-auth{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto;overflow:hidden;}
+    .nav-auth{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto;}
     .btn-signin{display:inline-flex;align-items:center;justify-content:center;gap:6px;
       font-size:13px;font-weight:800;padding:9px 20px;border-radius:999px;
       text-decoration:none;white-space:nowrap;transition:all .25s;
@@ -72,16 +72,27 @@ export function landingPage(): string {
       transition:all .25s;}
     .btn-start-free:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(255,45,120,0.8);}
 
-    /* ── MOBILE NAVBAR (≤ 700px): hide logo & nav, show 2 compact buttons only ── */
+    /* ── MOBILE NAVBAR (≤ 700px): hide logo & nav, perfectly centred pair of buttons ── */
     @media(max-width:700px){
       .navbar-logo{ display:none!important; }
       .nav-links{ display:none!important; }
-      .navbar-inner{ justify-content:center; gap:8px; padding:0 12px; }
-      .nav-auth{ margin-left:0; gap:8px; width:100%; justify-content:center; }
-      .btn-signin{ font-size:12px!important; padding:8px 14px!important; min-width:0!important; flex:1; justify-content:center; max-width:140px; }
-      .btn-start-free{ font-size:12px!important; padding:8px 14px!important; min-width:0!important; flex:1; justify-content:center; max-width:140px; }
-      .btn-signin .btn-emoji{ display:none; }
-      .btn-start-free .btn-emoji{ display:none; }
+      /* navbar stretches full width, centred content */
+      .navbar-inner{ display:flex!important; justify-content:center!important; align-items:center!important;
+        gap:0!important; padding:0 12px!important; width:100%!important; box-sizing:border-box!important;
+        overflow:visible!important; }
+      /* auth row fills navbar and centres the two buttons equally */
+      .nav-auth{ display:flex!important; flex-direction:row!important; align-items:center!important;
+        justify-content:center!important; gap:10px!important; width:100%!important;
+        margin-left:0!important; flex-shrink:0!important; overflow:visible!important; }
+      /* each button takes equal share, never overflows */
+      .btn-signin, .btn-start-free{
+        flex:1 1 0!important; max-width:160px!important; min-width:0!important;
+        font-size:13px!important; padding:10px 0!important;
+        text-align:center!important; justify-content:center!important;
+        white-space:nowrap!important; box-sizing:border-box!important;
+      }
+      .btn-signin .btn-emoji{ display:none!important; }
+      .btn-start-free .btn-emoji{ display:none!important; }
     }
 
     /* ── CTA BUTTONS ── */
@@ -123,16 +134,16 @@ export function landingPage(): string {
     .step-card:hover{transform:translateY(-8px);}
 
     /* ── HERO RESPONSIVE ── */
-    .hero-social-text{font-size:clamp(32px,7vw,100px);font-weight:900;letter-spacing:clamp(3px,1.5vw,24px);text-transform:uppercase;line-height:1;
+    .hero-social-text{font-size:clamp(28px,7vw,100px);font-weight:900;letter-spacing:clamp(2px,0.8vw,20px);text-transform:uppercase;line-height:1;
       background:linear-gradient(135deg,#00E5FF 0%,#A78BFA 60%,#ffffff 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
       filter:drop-shadow(0 0 24px rgba(0,229,255,0.8)) drop-shadow(0 0 50px rgba(167,139,250,0.5));
-      margin-bottom:20px;overflow:hidden;max-width:100%;width:100%;text-align:center;}
-    .hero-strategy-text{font-size:clamp(32px,7vw,100px);font-weight:900;letter-spacing:clamp(3px,1.5vw,24px);text-transform:uppercase;line-height:1;
+      margin-bottom:20px;max-width:100%;width:100%;text-align:center;display:block;box-sizing:border-box;padding:0 10px;}
+    .hero-strategy-text{font-size:clamp(28px,7vw,100px);font-weight:900;letter-spacing:clamp(2px,0.8vw,20px);text-transform:uppercase;line-height:1;
       background:linear-gradient(135deg,#FF2D78 0%,#C026D3 50%,#FFD600 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
       filter:drop-shadow(0 0 24px rgba(255,45,120,0.8)) drop-shadow(0 0 50px rgba(255,214,0,0.4));
-      margin-bottom:14px;overflow:hidden;max-width:100%;width:100%;text-align:center;}
+      margin-bottom:14px;max-width:100%;width:100%;text-align:center;display:block;box-sizing:border-box;padding:0 10px;}
     .hero-logo-wrap{width:clamp(200px,30vw,300px);height:clamp(200px,30vw,300px);margin:0 auto;}
 
     /* ── PLATFORM CARD ── */
@@ -201,7 +212,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      HERO
 ══════════════════════════════════════════ -->
-<section class="hero-section" style="min-height:100vh;padding-top:72px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:clip;
+<section class="hero-section" style="min-height:100vh;padding-top:72px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;
   background:radial-gradient(ellipse at 20% 30%,rgba(255,45,120,0.25) 0%,transparent 50%),
              radial-gradient(ellipse at 80% 20%,rgba(0,229,255,0.22) 0%,transparent 50%),
              radial-gradient(ellipse at 50% 85%,rgba(124,58,237,0.28) 0%,transparent 55%),
@@ -809,8 +820,10 @@ export function landingPage(): string {
     div[style*="display:flex;align-items:flex-start;gap:28px;"]{flex-direction:column!important;gap:16px!important;padding:20px 16px!important;}
     div[style*="width:72px;height:72px"]{width:48px!important;height:48px!important;margin-left:0!important;}
     h3[style*="font-weight:900;font-size:24px"]{font-size:18px!important;}
-    /* Hero text clamp on very small phones */
-    .hero-social-text{font-size:clamp(26px,9vw,52px)!important;letter-spacing:clamp(2px,1.5vw,8px)!important;}
+    /* Hero text — phones: NO letter-spacing blowout */
+    .hero-social-text{font-size:clamp(22px,8.5vw,44px)!important;letter-spacing:clamp(1px,0.5vw,4px)!important;padding:0 8px!important;}
+    .hero-strategy-text{font-size:clamp(22px,8.5vw,44px)!important;letter-spacing:clamp(1px,0.5vw,4px)!important;padding:0 8px!important;}
+    .hero-logo-wrap{width:clamp(140px,42vw,190px)!important;height:clamp(140px,42vw,190px)!important;}
     .hero-strategy-text{font-size:clamp(26px,9vw,52px)!important;letter-spacing:clamp(2px,1.5vw,8px)!important;}
     .hero-logo-wrap{width:clamp(140px,42vw,190px)!important;height:clamp(140px,42vw,190px)!important;}
     div[style*="display:flex;gap:24px"]{flex-direction:column!important;align-items:center!important;}
