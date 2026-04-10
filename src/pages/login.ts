@@ -512,18 +512,18 @@ export function loginPage(): string {
     #errorMsg  { display: none; }
 
     @media (max-width: 540px) {
-      .login-header { padding: 38px 26px 30px; }
-      .login-body   { padding: 28px 26px 32px; }
-      .login-card   { border-radius: 28px; }
-      .logo-wrap    { width: 110px !important; height: 110px !important; }
-      .brand-name   { font-size: 20px; }
+      .login-header { padding: 28px 20px 24px; }
+      .login-body   { padding: 28px 20px 32px; }
+      .login-card   { border-radius: 24px; }
+      .logo-wrap    { width: clamp(90px, 28vw, 120px) !important; }
+      .brand-tagline { font-size: 10px; letter-spacing: 1px; }
       .form-title   { font-size: 25px; }
       .st           { width: 44px; height: 44px; border-radius: 14px; }
       .st svg       { width: 22px; height: 22px; }
     }
     @media (max-height: 740px) {
-      .login-header { padding: 30px 34px 24px; }
-      .logo-wrap    { width: 95px !important; height: 95px !important; }
+      .login-header { padding: 24px 20px 20px; }
+      .logo-wrap    { width: clamp(80px, 24vw, 110px) !important; }
     }
   </style>
 </head>

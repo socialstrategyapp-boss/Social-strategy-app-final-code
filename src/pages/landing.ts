@@ -55,7 +55,7 @@ export function landingPage(): string {
     .nl-platforms:hover{background:rgba(167,139,250,0.2);box-shadow:0 0 20px rgba(167,139,250,0.5);}
     .nl-pricing{color:#FFD600;border-color:rgba(255,214,0,0.3);background:rgba(255,214,0,0.08);}
     .nl-pricing:hover{background:rgba(255,214,0,0.2);box-shadow:0 0 20px rgba(255,214,0,0.5);}
-    .nav-auth{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto;}
+    .nav-auth{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto;overflow:hidden;}
     .btn-signin{display:inline-flex;align-items:center;justify-content:center;gap:6px;
       font-size:13px;font-weight:800;padding:9px 20px;border-radius:999px;
       text-decoration:none;white-space:nowrap;transition:all .25s;
@@ -76,10 +76,12 @@ export function landingPage(): string {
     @media(max-width:700px){
       .navbar-logo{ display:none!important; }
       .nav-links{ display:none!important; }
-      .navbar-inner{ justify-content:center; gap:12px; padding:0 16px; }
-      .nav-auth{ margin-left:0; gap:12px; }
-      .btn-signin{ font-size:13px!important; padding:9px 18px!important; min-width:0!important; }
-      .btn-start-free{ font-size:13px!important; padding:9px 18px!important; min-width:0!important; }
+      .navbar-inner{ justify-content:center; gap:8px; padding:0 12px; }
+      .nav-auth{ margin-left:0; gap:8px; width:100%; justify-content:center; }
+      .btn-signin{ font-size:12px!important; padding:8px 14px!important; min-width:0!important; flex:1; justify-content:center; max-width:140px; }
+      .btn-start-free{ font-size:12px!important; padding:8px 14px!important; min-width:0!important; flex:1; justify-content:center; max-width:140px; }
+      .btn-signin .btn-emoji{ display:none; }
+      .btn-start-free .btn-emoji{ display:none; }
     }
 
     /* ── CTA BUTTONS ── */
@@ -121,16 +123,16 @@ export function landingPage(): string {
     .step-card:hover{transform:translateY(-8px);}
 
     /* ── HERO RESPONSIVE ── */
-    .hero-social-text{font-size:clamp(36px,7vw,100px);font-weight:900;letter-spacing:clamp(6px,1.5vw,24px);text-transform:uppercase;line-height:1;
+    .hero-social-text{font-size:clamp(32px,7vw,100px);font-weight:900;letter-spacing:clamp(3px,1.5vw,24px);text-transform:uppercase;line-height:1;
       background:linear-gradient(135deg,#00E5FF 0%,#A78BFA 60%,#ffffff 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
       filter:drop-shadow(0 0 24px rgba(0,229,255,0.8)) drop-shadow(0 0 50px rgba(167,139,250,0.5));
-      margin-bottom:20px;overflow:hidden;max-width:100%;}
-    .hero-strategy-text{font-size:clamp(36px,7vw,100px);font-weight:900;letter-spacing:clamp(6px,1.5vw,24px);text-transform:uppercase;line-height:1;
+      margin-bottom:20px;overflow:hidden;max-width:100%;width:100%;text-align:center;}
+    .hero-strategy-text{font-size:clamp(32px,7vw,100px);font-weight:900;letter-spacing:clamp(3px,1.5vw,24px);text-transform:uppercase;line-height:1;
       background:linear-gradient(135deg,#FF2D78 0%,#C026D3 50%,#FFD600 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
       filter:drop-shadow(0 0 24px rgba(255,45,120,0.8)) drop-shadow(0 0 50px rgba(255,214,0,0.4));
-      margin-bottom:14px;overflow:hidden;max-width:100%;}
+      margin-bottom:14px;overflow:hidden;max-width:100%;width:100%;text-align:center;}
     .hero-logo-wrap{width:clamp(200px,30vw,300px);height:clamp(200px,30vw,300px);margin:0 auto;}
 
     /* ── PLATFORM CARD ── */
@@ -190,10 +192,8 @@ export function landingPage(): string {
 
     <!-- Auth buttons -->
     <div class="nav-auth">
-      <a href="/login" class="btn-signin">🔑 Sign In</a>
-      <a href="/login" class="btn-start-free">
-        🚀 Start Free
-      </a>
+      <a href="/login" class="btn-signin"><span class="btn-emoji">🔑 </span>Sign In</a>
+      <a href="/login" class="btn-start-free"><span class="btn-emoji">🚀 </span>Start Free</a>
     </div>
   </div>
 </nav>
@@ -810,9 +810,9 @@ export function landingPage(): string {
     div[style*="width:72px;height:72px"]{width:48px!important;height:48px!important;margin-left:0!important;}
     h3[style*="font-weight:900;font-size:24px"]{font-size:18px!important;}
     /* Hero text clamp on very small phones */
-    .hero-social-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(3px,2vw,12px)!important;}
-    .hero-strategy-text{font-size:clamp(28px,11vw,60px)!important;letter-spacing:clamp(3px,2vw,12px)!important;}
-    .hero-logo-wrap{width:clamp(150px,45vw,200px)!important;height:clamp(150px,45vw,200px)!important;}
+    .hero-social-text{font-size:clamp(26px,9vw,52px)!important;letter-spacing:clamp(2px,1.5vw,8px)!important;}
+    .hero-strategy-text{font-size:clamp(26px,9vw,52px)!important;letter-spacing:clamp(2px,1.5vw,8px)!important;}
+    .hero-logo-wrap{width:clamp(140px,42vw,190px)!important;height:clamp(140px,42vw,190px)!important;}
     div[style*="display:flex;gap:24px"]{flex-direction:column!important;align-items:center!important;}
   }
 </style>
