@@ -16,6 +16,8 @@ export function landingPage(): string {
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     *{font-family:'Inter',sans-serif;box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
+    /* ── page-level clipping so no absolute child can shift layout ── */
+    html, body{ overflow-x:hidden!important; width:100%; position:relative; }
 
     /* ── LIGHTER, RICHER BACKGROUND with purple/indigo depth ── */
     body{background:url('/assets/bg-neon-burst.jpg') center center / cover fixed, linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);color:#fff;overflow-x:hidden;min-height:100vh;}
@@ -72,26 +74,48 @@ export function landingPage(): string {
       transition:all .25s;}
     .btn-start-free:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(255,45,120,0.8);}
 
-    /* ── MOBILE NAVBAR (≤ 700px): hide logo & nav, perfectly centred pair of buttons ── */
+    /* ── MOBILE NAVBAR (≤ 700px): ONLY the two buttons, perfectly centred ── */
     @media(max-width:700px){
+      /* hide everything except auth buttons */
       .navbar-logo{ display:none!important; }
-      .nav-links{ display:none!important; }
-      /* navbar stretches full width, centred content */
-      .navbar-inner{ display:flex!important; justify-content:center!important; align-items:center!important;
-        gap:0!important; padding:0 12px!important; width:100%!important; box-sizing:border-box!important;
-        overflow:visible!important; }
-      /* auth row fills navbar and centres the two buttons equally */
-      .nav-auth{ display:flex!important; flex-direction:row!important; align-items:center!important;
-        justify-content:center!important; gap:10px!important; width:100%!important;
-        margin-left:0!important; flex-shrink:0!important; overflow:visible!important; }
-      /* each button takes equal share, never overflows */
-      .btn-signin, .btn-start-free{
-        flex:1 1 0!important; max-width:160px!important; min-width:0!important;
-        font-size:13px!important; padding:10px 0!important;
-        text-align:center!important; justify-content:center!important;
-        white-space:nowrap!important; box-sizing:border-box!important;
+      .nav-links{ display:none!important; flex:none!important; width:0!important; }
+      /* navbar bar itself: just a centred row */
+      .navbar-inner{
+        display:flex!important;
+        flex-direction:row!important;
+        justify-content:center!important;
+        align-items:center!important;
+        width:100%!important;
+        padding:0 16px!important;
+        box-sizing:border-box!important;
+        gap:0!important;
       }
-      .btn-signin .btn-emoji{ display:none!important; }
+      /* auth container: centred, full width, no auto-margin */
+      .nav-auth{
+        display:flex!important;
+        flex-direction:row!important;
+        justify-content:center!important;
+        align-items:center!important;
+        gap:12px!important;
+        width:100%!important;
+        margin:0!important;
+        padding:0!important;
+        flex:none!important;
+      }
+      /* buttons: equal halves, hard width, never overflow */
+      .btn-signin,
+      .btn-start-free{
+        display:flex!important;
+        align-items:center!important;
+        justify-content:center!important;
+        flex:0 0 140px!important;
+        width:140px!important;
+        padding:10px 0!important;
+        font-size:13px!important;
+        white-space:nowrap!important;
+        box-sizing:border-box!important;
+      }
+      .btn-signin .btn-emoji,
       .btn-start-free .btn-emoji{ display:none!important; }
     }
 
@@ -133,26 +157,26 @@ export function landingPage(): string {
     .step-card{border-radius:22px;padding:36px 28px;position:relative;overflow:hidden;transition:all .3s;cursor:default;}
     .step-card:hover{transform:translateY(-8px);}
 
-    /* ── HERO RESPONSIVE ── */
+    /* ── HERO TEXT ── */
     .hero-social-text{
       font-size:clamp(32px,6vw,90px);font-weight:900;
       letter-spacing:clamp(4px,0.5vw,14px);
       text-transform:uppercase;line-height:1;
       background:linear-gradient(135deg,#00E5FF 0%,#A78BFA 60%,#ffffff 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      filter:drop-shadow(0 0 24px rgba(0,229,255,0.8)) drop-shadow(0 0 50px rgba(167,139,250,0.5));
-      margin-bottom:20px;width:100%;text-align:center;display:block;
-      box-sizing:border-box;overflow:visible;}
+      filter:drop-shadow(0 0 24px rgba(0,229,255,0.8));
+      margin-bottom:20px;
+      display:block;text-align:center;width:100%;box-sizing:border-box;}
     .hero-strategy-text{
       font-size:clamp(32px,6vw,90px);font-weight:900;
       letter-spacing:clamp(4px,0.5vw,14px);
       text-transform:uppercase;line-height:1;
       background:linear-gradient(135deg,#FF2D78 0%,#C026D3 50%,#FFD600 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      filter:drop-shadow(0 0 24px rgba(255,45,120,0.8)) drop-shadow(0 0 50px rgba(255,214,0,0.4));
-      margin-bottom:14px;width:100%;text-align:center;display:block;
-      box-sizing:border-box;overflow:visible;}
-    .hero-logo-wrap{width:clamp(200px,30vw,300px);height:clamp(200px,30vw,300px);margin:0 auto;}
+      filter:drop-shadow(0 0 24px rgba(255,45,120,0.8));
+      margin-bottom:14px;
+      display:block;text-align:center;width:100%;box-sizing:border-box;}
+    .hero-logo-wrap{width:clamp(200px,30vw,300px);height:clamp(200px,30vw,300px);margin:0 auto;flex-shrink:0;}
 
     /* ── PLATFORM CARD ── */
     .plat-card{display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;padding:16px 8px;border-radius:18px;transition:all .25s;border:1.5px solid rgba(255,255,255,0.06);}
@@ -220,19 +244,15 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      HERO
 ══════════════════════════════════════════ -->
-<section class="hero-section" style="min-height:100vh;padding-top:72px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:visible;
-  background:radial-gradient(ellipse at 20% 30%,rgba(255,45,120,0.25) 0%,transparent 50%),
-             radial-gradient(ellipse at 80% 20%,rgba(0,229,255,0.22) 0%,transparent 50%),
-             radial-gradient(ellipse at 50% 85%,rgba(124,58,237,0.28) 0%,transparent 55%),
-             radial-gradient(ellipse at 85% 70%,rgba(192,38,211,0.16) 0%,transparent 40%),
-             radial-gradient(ellipse at 15% 75%,rgba(0,255,136,0.12) 0%,transparent 40%);">
+<section class="hero-section" style="min-height:100vh;padding-top:72px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 30%,rgba(255,45,120,0.20) 0%,transparent 60%),
+             radial-gradient(ellipse at 50% 70%,rgba(124,58,237,0.20) 0%,transparent 60%);">
 
-  <!-- Floating neon orbs -->
-  <div style="position:absolute;top:12%;left:6%;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,120,0.18),transparent 70%);filter:blur(55px);pointer-events:none;"></div>
-  <div style="position:absolute;top:8%;right:6%;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.18),transparent 70%);filter:blur(55px);pointer-events:none;"></div>
-  <div style="position:absolute;bottom:12%;left:38%;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.18),transparent 70%);filter:blur(65px);pointer-events:none;"></div>
+  <!-- Contained neon orbs — clipped inside section, cannot push page width -->
+  <div style="position:absolute;top:10%;left:5%;width:min(280px,40vw);height:min(280px,40vw);border-radius:50%;background:radial-gradient(circle,rgba(255,45,120,0.15),transparent 70%);filter:blur(50px);pointer-events:none;"></div>
+  <div style="position:absolute;top:10%;right:5%;width:min(260px,38vw);height:min(260px,38vw);border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.15),transparent 70%);filter:blur(50px);pointer-events:none;"></div>
 
-  <div style="position:relative;z-index:1;max-width:960px;width:100%;margin:0 auto;padding:60px 20px 80px;box-sizing:border-box;overflow:visible;" class="fade-in">
+  <div style="position:relative;z-index:1;width:100%;max-width:960px;margin:0 auto;padding:60px 24px 80px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;" class="fade-in">
 
     <!-- ── "SOCIAL" ABOVE LOGO ── -->
     <div class="hero-social-text">SOCIAL</div>
@@ -804,43 +824,34 @@ export function landingPage(): string {
 </footer>
 
 <style>
+  /* Hide nav links on tablet */
   @media(max-width:900px){
     .nav-links{display:none!important;}
   }
-  /* Mobile navbar is single-row (no logo) — normal padding */
+  /* Mobile hero top padding */
   @media(max-width:700px){
     .hero-section{padding-top:80px!important;}
   }
+  /* Tablet grid fixes */
   @media(max-width:768px){
     div[style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
     div[style*="grid-template-columns:1.5fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr!important;}
     div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
     div[style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important;}
-    /* How it works step cards — full width, smaller padding */
     div[style*="display:flex;align-items:flex-start;gap:28px;"]{padding:24px 18px!important;}
     div[style*="width:72px;height:72px"]{width:52px!important;height:52px!important;}
     div[style*="flex:1;min-width:0"] p{font-size:14px!important;}
   }
+  /* Phone fixes */
   @media(max-width:480px){
     div[style*="grid-template-columns:1.5fr 1fr 1fr 1fr"]{grid-template-columns:1fr!important;}
     div[style*="grid-template-columns:repeat(2,1fr)"]{grid-template-columns:1fr!important;}
-    /* Step cards even more compact */
     div[style*="display:flex;align-items:flex-start;gap:28px;"]{flex-direction:column!important;gap:16px!important;padding:20px 16px!important;}
     div[style*="width:72px;height:72px"]{width:48px!important;height:48px!important;margin-left:0!important;}
     h3[style*="font-weight:900;font-size:24px"]{font-size:18px!important;}
-    /* Hero text — hard pixel sizes on phones, NO letter-spacing, NO overflow */
-    .hero-social-text{
-      font-size:38px!important;
-      letter-spacing:6px!important;
-      padding:0!important;
-      overflow:visible!important;
-    }
-    .hero-strategy-text{
-      font-size:38px!important;
-      letter-spacing:6px!important;
-      padding:0!important;
-      overflow:visible!important;
-    }
+    /* Hero text: hard sizes, no clamp, centred */
+    .hero-social-text{font-size:36px!important;letter-spacing:5px!important;}
+    .hero-strategy-text{font-size:36px!important;letter-spacing:5px!important;}
     .hero-logo-wrap{width:160px!important;height:160px!important;}
     div[style*="display:flex;gap:24px"]{flex-direction:column!important;align-items:center!important;}
   }
