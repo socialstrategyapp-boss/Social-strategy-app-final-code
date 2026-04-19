@@ -1,4 +1,4 @@
-# SOCIAL SYNC – Web Application
+# SOCIAL STRATEGY – Web Application
 
 **One Scan. Complete Growth.**
 
