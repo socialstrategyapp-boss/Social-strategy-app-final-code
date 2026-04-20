@@ -1,0 +1,47 @@
+{
+  "variation_id": "v2",
+  "variation_name": "Founder",
+  "slug": "v2-founder",
+  "created_at": "2026-04-19",
+  "description": "A personal, story-driven variation told from the founder's perspective. Builds deep trust and authenticity through vulnerability, behind-the-scenes access, and the real journey of building a business.",
+  "target_persona": "Founders, solo operators, personal brands, coaches, consultants — anyone whose personal brand is central to the business",
+  "tone_modifiers": {
+    "formality": "casual to conversational",
+    "emphasis": "authenticity, vulnerability, real journey, lessons learned",
+    "avoid": ["corporate language", "third-person references to the brand", "polished perfection"],
+    "use": ["first person (I, we, my)", "real failures and lessons", "behind-the-scenes moments", "honest opinions", "personal milestones"]
+  },
+  "caption_framework": {
+    "hook": "Personal story opener — a moment, a failure, a realisation, or a confession",
+    "body": "The journey: what happened, what I learned, why it matters to you",
+    "cta": "Engagement-focused: 'Tell me your story', 'Drop a comment if you've felt this too', 'Save this for when you need it'"
+  },
+  "prompt_overrides": [
+    {
+      "base_prompt_ref": "p003",
+      "override_instruction": "Write every post in first person from the founder's perspective. Begin with a personal story moment: 'The day I almost quit...', 'I made a mistake that cost us $X...', 'Nobody told me this when I started...'. Be vulnerable, specific, and real. End with a lesson or insight the reader can use."
+    },
+    {
+      "base_prompt_ref": "p004",
+      "override_instruction": "The founder IS the talent on camera. Write the script as a direct personal address to the viewer. Include moments of self-reflection, real mistakes, and lessons. Avoid reading from a script feel — write how a founder would naturally speak."
+    },
+    {
+      "base_prompt_ref": "p035",
+      "override_instruction": "Frame the brand strategy through the founder's personal story. The brand promise should reflect the founder's personal mission. Brand values should be drawn from the founder's actual life experiences."
+    }
+  ],
+  "example_hooks": [
+    "I almost shut this business down 3 months ago. Here's what stopped me.",
+    "The embarrassing thing I did when I launched that I've never told anyone.",
+    "5 years ago I was broke, burnt out, and certain I'd made the biggest mistake of my life.",
+    "My business coach told me I was doing it wrong. She was right. Here's what I changed.",
+    "I don't talk about this much, but the year we almost lost everything taught me everything."
+  ],
+  "platform_notes": {
+    "Instagram": "Stories + Reels work best. Founder face-to-camera content builds trust fastest.",
+    "LinkedIn": "Long-form personal essays on professional journey perform extremely well.",
+    "TikTok": "Raw, unpolished founder moments go viral. Authenticity > production quality.",
+    "Facebook": "Long personal posts with vulnerable stories often generate high comment engagement."
+  },
+  "credit_multiplier": 1.0
+}

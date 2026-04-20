@@ -1,0 +1,1569 @@
+=== RAW BACKUP PART 3 ===
+=== Generated: 2026-04-19 ===
+=== Sources: prompts/CONTENT-ENGINE-SYSTEM.md, prompts/MARKETING-CONTENT-PROMPTS.md, prompts/PURCHASE-TRIGGER.md, prompts/REPORT-TEMPLATES.md, prompts/VISUAL-PROMPTS.md ===
+=== Purpose: Pre-deduplication backup of raw source prompt files ===
+===
+
+--- SOURCE: prompts/CONTENT-ENGINE-SYSTEM.md ---
+# Content Engine — Report-to-Content Expansion System
+
+## Overview
+
+The Content Engine converts a full business report into a complete, endless content production system. It extracts monetizable pillars, generates content for each, applies focus modes, integrates uploaded assets, enforces character consistency, and outputs a structured schedule.
+
+---
+
+## Step 1 — Extract Monetizable Pillars
+
+```
+INPUT: full_report (json/md)
+
+FOR EACH section in report:
+  IF contains offer / service / product / experience / education / personality:
+    extract as PILLAR:
+      name: string
+      type: service | product | education | experience | recurring | brand
+      revenue_potential: low | medium | high
+      content_potential: low | medium | high
+      conversion_potential: low | medium | high
+      ease_score: 1–10
+      subtopics: string[]
+      recommended_formats: short_video | long_video | image | carousel | story | text | reel | live
+      posting_frequency: posts_per_week
+
+RANK pillars by: (revenue_potential × 3) + (content_potential × 2) + ease_score
+RETURN: ranked_pillars[]
+```
+
+---
+
+## Step 2 — Content Angle Expansion (Per Pillar)
+
+For each pillar, generate:
+- **10–20 micro-subtopics**
+- **Formats**: short video, image, carousel, story, series, live, behind-the-scenes
+- **Effort levels**: easy (phone-only), medium (basic edit), high (produced)
+- **Emotional angles**: inspiration, education, humour, transformation, social proof, authority, scarcity, curiosity, nostalgia, aspiration
+
+---
+
+## Step 3 — Content Generation Per Pillar
+
+```
+FOR EACH pillar:
+  generate:
+    15 video ideas (hook + format + duration + effort level)
+    10 image prompts (subject + style + mood + platform)
+    10 captions (opening hook + body + CTA variation)
+     5 CTA variations (soft, medium, direct, urgency, community)
+    10 hook variations (question, statement, controversy, statistic, story, challenge, myth, how-to, trend, personal)
+    
+  VARIATION RULE: No two consecutive pieces share the same:
+    - hook type
+    - emotional angle
+    - format
+    - CTA style
+```
+
+---
+
+## Step 4 — Focus Modes
+
+| Mode | Description | Output Filter |
+|---|---|---|
+| `mixed` | Balanced across all pillars | Full calendar spread |
+| `single_pillar` | Deep focus on one pillar for set period | 100% one pillar |
+| `campaign` | Launch, promo, or event | Campaign-specific content only |
+| `easy` | Phone-only, <10 min creation, minimal edit | Easy effort only |
+| `authority` | Build credibility and expertise | Educational + behind-the-scenes + proof |
+| `sales` | Drive direct conversions | Offer + CTA + urgency heavy |
+| `awareness` | Top-of-funnel reach and discovery | Hook-heavy, trend-adjacent |
+| `community` | Engagement and retention | Interactive, UGC prompts, responses |
+
+### Focus Mode Trigger Syntax
+
+```
+FOCUS_MODE: single_pillar
+PILLAR: "Plant Hospital"
+DURATION: 30 days
+OUTPUT: deep_dive_schedule
+```
+
+---
+
+## Step 5 — Asset-Aware Content
+
+```
+INPUT: uploaded_assets[] (product | staff | store | packaging | lifestyle)
+
+FOR EACH content idea:
+  IF asset_type matches content context:
+    inject asset into prompt:
+      "Use the uploaded [staff portrait of Georgie] in this post"
+      "Feature the [plant hospital shelf photo] as background"
+      "Show the [gift box packaging] with handwritten note detail"
+  
+  NEVER invent generic stock-style visuals
+  ALWAYS prefer uploaded assets over AI-generated replacements
+  IF no matching asset: generate with character consistency rules
+```
+
+---
+
+## Step 6 — Character Continuity
+
+### Character Profile Template
+
+```json
+{
+  "character_id": "char_xxx",
+  "name": "Georgie",
+  "role": "Plant Specialist & Store Host",
+  "age_range": "28–35",
+  "appearance": {
+    "hair": "brown, shoulder-length",
+    "style": "casual professional, apron on in-store",
+    "skin_tone": "medium warm",
+    "always_includes": ["plant earrings", "friendly smile"]
+  },
+  "personality": "Warm, knowledgeable, slightly quirky, loves plant puns",
+  "tone": "Conversational, educational, encouraging",
+  "content_purpose": "Education, product demos, Q&A, tips",
+  "approved_variations": ["in-store demos", "outdoor plant care tips", "gift box reveals"],
+  "banned_variations": ["formal corporate", "high-fashion editorial", "aggressive sales"],
+  "consistency_lock": true
+}
+```
+
+### Consistency Enforcement
+
+```
+BEFORE generating any character-featuring content:
+  load character_profile
+  append to prompt: 
+    "This content features {name}. Maintain exact appearance: {appearance}.
+     Personality: {personality}. Tone: {tone}.
+     BANNED variations: {banned_variations}.
+     Consistency is critical — do not alter appearance, age, or personality."
+```
+
+---
+
+## Step 7 — Endless Variation System
+
+### Variation Dimensions
+
+1. **Hook type**: question, bold statement, statistic, story opener, myth buster, how-to, trend hook, personal confession, challenge, curiosity gap
+2. **Emotional angle**: inspiration, education, humour, transformation, social proof, authority, scarcity, curiosity, nostalgia, aspiration, empathy
+3. **Format**: reel, static image, carousel, story, live, text post, UGC, before/after, tutorial, Q&A
+4. **Audience angle**: beginner, intermediate, expert, parent, professional, hobbyist, gift-buyer, local resident
+5. **CTA style**: soft (follow for more), medium (save this), direct (link in bio), urgency (limited time), community (comment below)
+
+### Variation Rule
+```
+NEVER use the same combination of (hook_type + emotional_angle + format) twice in a 14-day window.
+Track combinations in prompt memory.
+On similarity detection (>0.85): replace hook_type and emotional_angle before generating.
+```
+
+---
+
+## Step 8 — Schedule Output Structure
+
+### Weekly Rhythm (Monday–Sunday)
+
+| Day | Theme | Format | Pillar |
+|---|---|---|---|
+| Monday | Offer / Product | Image or Reel | Top revenue pillar |
+| Tuesday | Education | Carousel or Text | Authority pillar |
+| Wednesday | Authority / Story | Reel or Behind-scenes | Brand personality |
+| Thursday | Product / Feature | Image or Video | Second revenue pillar |
+| Friday | Conversion | Reel + Caption | Direct CTA |
+| Saturday | Repost / UGC | Story or Image | Community |
+| Sunday | Lifestyle / Inspiration | Image or Reel | Lifestyle pillar |
+
+### Monthly Rotation
+
+| Week | Theme |
+|---|---|
+| Week 1 | Awareness — Discovery content, hooks, high-reach |
+| Week 2 | Education — Value, tutorials, authority |
+| Week 3 | Conversion — Offers, CTAs, testimonials |
+| Week 4 | Community — Engagement, UGC, retention |
+
+### 14-Day Recycle System
+```
+Every 14 days:
+  QUERY: top 3 performing posts from previous 2 weeks
+  FOR EACH top post:
+    generate new variation with:
+      - different hook type
+      - different emotional angle
+      - same core message
+    schedule as "recycled" content
+```
+
+---
+
+## Step 9 — Structured Output Format
+
+```json
+{
+  "account_id": "acc_xxx",
+  "generated_at": "2026-04-07T00:00:00Z",
+  "focus_mode": "mixed",
+  "pillars": [
+    {
+      "name": "Plant Hospital",
+      "rank": 1,
+      "subtopics": [...],
+      "formats": [...],
+      "content_ideas": {
+        "videos": [...],
+        "images": [...],
+        "captions": [...],
+        "hooks": [...],
+        "ctas": [...]
+      },
+      "hashtags": {
+        "brand": [...],
+        "niche": [...],
+        "broad": [...]
+      }
+    }
+  ],
+  "weekly_schedule": {
+    "2026-04-07": [
+      {
+        "day": "Monday",
+        "platform": "instagram",
+        "format": "reel",
+        "pillar": "Plant Hospital",
+        "content_idea": "...",
+        "caption": "...",
+        "hashtags": [...],
+        "asset_instructions": "Use uploaded shelf photo + Georgie character"
+      }
+    ]
+  },
+  "monthly_calendar": {...},
+  "ready_to_generate_prompts": [...]
+}
+```
+
+---
+
+## Idea Multiplier Prompt
+
+```
+TAKE ONE IDEA: {idea}
+
+EXPAND into 8 variations using these dimensions:
+
+1. Hook type: question version
+2. Hook type: bold statement version
+3. Emotional angle: transformation
+4. Emotional angle: social proof
+5. Format: video script
+6. Format: carousel 5-slide outline
+7. Audience: beginner version
+8. Audience: expert version
+
+Each variation must be distinctly different in opening, structure, and CTA.
+Output as numbered list.
+```
+
+---
+
+## Easy / Low-Budget Mode
+
+```
+FILTER: effort_level = 'easy'
+RULES:
+  - Phone camera only (no professional lighting required)
+  - Under 10 minutes to create
+  - No complex editing (basic cuts only)
+  - Authentic, lo-fi aesthetic is preferred
+  - Focus on personality + value over production quality
+  
+OUTPUT: easy_content_batch (minimum 14 pieces for 2 weeks)
+```
+
+--- SOURCE: prompts/MARKETING-CONTENT-PROMPTS.md ---
+# 20 Marketing Content Prompts — Social Strategy
+# File: prompts/MARKETING-CONTENT-PROMPTS.md
+# Version: 1.0 · Last updated: April 2026
+# Usage: These are plug-and-play content creation prompts for the Content Studio.
+# Each prompt is industry-flexible and demographic-aware.
+# Placeholders: {brandName}, {industry}, {tone}, {targetAudience}, {platform}
+
+---
+
+## HOW TO USE
+
+Replace all {placeholders} with actual values from the brand brief.
+Each prompt below maps to a Content Studio "Topic Template" in the UI.
+
+---
+
+## PROMPT 01 — Brand Rebrand / Identity Reveal
+
+```
+You are creating a {tone} brand announcement post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Announces a new look, new direction, or evolved brand identity
+- Creates excitement and curiosity without giving everything away
+- Acknowledges loyal customers and invites them on the journey
+- Ends with a strong CTA (follow, visit, or share)
+- Includes relevant hashtags for {industry}
+
+The tone must feel {tone}. Make it feel like a genuine moment, not a press release.
+```
+
+---
+
+## PROMPT 02 — Office / Workspace Culture
+
+```
+You are creating a {tone} behind-the-scenes workplace culture post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Shows the human side of the brand — real people, real workspace
+- Highlights team values or a specific team moment
+- Creates relatability and trust with the audience
+- Invites followers to imagine working with this team
+- Includes relevant culture and team hashtags
+
+The post should make people feel connected, not recruited.
+```
+
+---
+
+## PROMPT 03 — Product / Service Unboxing or Reveal
+
+```
+You are creating a {tone} product reveal or unboxing post for {brandName}'s {industry} product/service.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Builds anticipation with a teaser opening
+- Highlights the sensory or emotional experience of the product/service
+- Answers the unspoken question "why should I care?"
+- Uses vivid, specific language — not generic descriptors
+- Drives action (purchase, visit, DM, link in bio)
+```
+
+---
+
+## PROMPT 04 — Retail / In-Store Experience
+
+```
+You are creating a {tone} in-store or retail experience post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Captures the sensory experience of visiting the store/venue
+- Highlights what makes visiting in person special vs. online
+- Creates FOMO for those who haven't visited yet
+- Includes location tag suggestion and store hours tip
+- Ends with a clear visit-us CTA
+```
+
+---
+
+## PROMPT 05 — Service in Action / Process Showcase
+
+```
+You are creating a {tone} service showcase post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Shows the process behind the service (not just the result)
+- Builds trust by demonstrating expertise and care
+- Uses before/during/after narrative structure if applicable
+- Highlights a specific detail that competitors skip
+- Ends with a consultation/booking/enquiry CTA
+```
+
+---
+
+## PROMPT 06 — Community Presence / Local Love
+
+```
+You are creating a {tone} community engagement post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Celebrates the local community, an event, or a cause
+- Shows genuine care beyond profit
+- Tags or references local people, places, or events where relevant
+- Invites community participation or shares a community story
+- Uses local and community hashtags
+```
+
+---
+
+## PROMPT 07 — Digital-Physical Blend / Online Experience
+
+```
+You are creating a {tone} digital-meets-physical experience post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Highlights how the brand works seamlessly online AND in person
+- Showcases a feature, tool, or experience that bridges both worlds
+- Addresses a common friction point the audience has faced
+- Makes it feel effortless and modern
+- Ends with a "try it now" or "see how it works" CTA
+```
+
+---
+
+## PROMPT 08 — Workshop / Educational Event
+
+```
+You are creating a {tone} event announcement post for {brandName}'s upcoming workshop or educational event.
+Industry: {industry}. Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Creates excitement and urgency around the event
+- Clearly communicates what attendees will GAIN (transformation, not just information)
+- Includes who it's for (specific, not everyone)
+- Adds social proof if available (past attendees, host credentials)
+- Ends with a register/RSVP/DM CTA
+```
+
+---
+
+## PROMPT 09 — Customer Journey / Transformation Story
+
+```
+You are creating a {tone} customer success story post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Tells a before-and-after transformation story in the customer's voice
+- Makes the audience see themselves in the customer's situation
+- Highlights specific, believable results (not vague claims)
+- Builds trust and social proof
+- Ends with an invitation to start their own journey
+```
+
+---
+
+## PROMPT 10 — Authority Portrait / Thought Leadership
+
+```
+You are creating a {tone} thought leadership post for {brandName} or a team member in the {industry} industry.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Shares a bold, original opinion on a topic in the industry
+- Backs it up with a specific insight, data point, or personal experience
+- Positions {brandName} as the go-to expert in this space
+- Invites discussion (asks for the audience's view)
+- Uses professional but approachable language
+```
+
+---
+
+## PROMPT 11 — Peak Time / High Energy Moment
+
+```
+You are creating a {tone} peak-energy moment post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Captures a busy, exciting, or high-energy moment in the business
+- Creates FOMO and energy that makes followers want to be part of it
+- Uses fast-paced, action-oriented language
+- Highlights the demand, excitement, or buzz around the brand
+- Ends with a "join us / book now / don't miss out" CTA
+```
+
+---
+
+## PROMPT 12 — Premium Experience Showcase
+
+```
+You are creating a {tone} premium experience post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Communicates luxury, quality, or exclusivity without being elitist
+- Uses sensory language to make the audience feel the premium experience
+- Justifies the value — why this is worth paying for
+- Subtly differentiates from cheaper alternatives
+- Ends with a CTA that feels aspirational (book, enquire, discover)
+```
+
+---
+
+## PROMPT 13 — Daily Life / Lifestyle Integration
+
+```
+You are creating a {tone} lifestyle integration post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Shows how the product/service fits naturally into the target audience's daily life
+- Uses relatable scenarios and moments
+- Makes the audience feel "this is for people like me"
+- Avoids corporate language — sounds like a friend recommending something
+- Ends with a subtle but clear CTA
+```
+
+---
+
+## PROMPT 14 — Social Proof / Reviews & Testimonials
+
+```
+You are creating a {tone} social proof post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Showcases a customer review, star rating, or testimonial
+- Amplifies the specific detail that makes this review credible
+- Adds context that shows why this result matters
+- Makes potential customers trust the brand immediately
+- Ends with a "see why X customers chose us" or "read more reviews" CTA
+```
+
+---
+
+## PROMPT 15 — Growth Visual / Milestone Celebration
+
+```
+You are creating a {tone} milestone celebration post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Celebrates a business milestone (followers, years open, customers served, awards won)
+- Credits the audience/customers for making it possible
+- Shares a moment of genuine gratitude (not bragging)
+- Adds an element of "what's coming next" to keep momentum
+- Ends with a thank-you and a forward-looking CTA
+```
+
+---
+
+## PROMPT 16 — Education / How-To Content
+
+```
+You are creating a {tone} educational how-to post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Teaches the audience one specific, actionable thing they can use today
+- Positions {brandName} as the helpful expert (not just a seller)
+- Uses numbered steps or a clear structure for easy reading
+- Includes a pro tip at the end that surprises or impresses
+- Ends with a "follow for more tips" or "save this for later" CTA
+```
+
+---
+
+## PROMPT 17 — Event / Launch Announcement
+
+```
+You are creating a {tone} event or launch announcement post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Creates immediate excitement and urgency around the launch or event
+- Answers who, what, when, where, and why in an engaging way
+- Highlights the one thing that makes this different or special
+- Creates FOMO for anyone not participating
+- Ends with a specific action: register, buy, RSVP, set a reminder
+```
+
+---
+
+## PROMPT 18 — On-the-Go / Mobile Use Case
+
+```
+You are creating a {tone} mobile/on-the-go use case post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Shows the product/service being used outside of a traditional setting
+- Highlights convenience, accessibility, and flexibility
+- Connects to a specific busy-person scenario the audience relates to
+- Makes the brand feel like it fits their lifestyle without friction
+- Ends with a "try it from anywhere" or "download/order now" CTA
+```
+
+---
+
+## PROMPT 19 — Trust & Reliability / Brand Values
+
+```
+You are creating a {tone} brand trust post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Reinforces the brand's core values or commitment to customers
+- Shares a specific action the brand takes that proves trustworthiness
+- Addresses a common concern or objection in the industry
+- Makes the audience feel safe, respected, and valued
+- Ends with a "here's our promise" or "ask us anything" CTA
+```
+
+---
+
+## PROMPT 20 — Trending News Reaction / Industry Commentary
+
+```
+You are creating a {tone} trending news or industry commentary post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that:
+- Responds to a recent trend, news story, or industry development
+- Shares {brandName}'s unique perspective or take on the topic
+- Provides useful context or insight the audience hasn't seen elsewhere
+- Invites discussion and debate in the comments
+- Includes trending hashtags relevant to the topic and {industry}
+```
+
+---
+
+## BONUS PROMPT A — Generic Creator: "Share Your Story"
+
+```
+You are creating a {tone} brand origin story post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Write a post that tells the "why behind the business" story:
+- The moment of realisation or frustration that started it all
+- The gap in the market the founder saw
+- The journey from idea to reality (honest, not glossy)
+- What drives the team today
+- Ends with "this is why we do what we do" — makes the audience feel connected to the mission
+```
+
+---
+
+## BONUS PROMPT B — Generic Creator: "This Week's Win"
+
+```
+Write a {tone} weekly wins post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+Share 3 wins from this week — could be team achievements, customer feedback, a new feature, or a community moment.
+Format: numbered list with emoji, brief explanation of each win, and a call to celebrate with the audience.
+End with: "What was your win this week? Tell us below 👇"
+```
+
+---
+
+## BONUS PROMPT C — Generic Creator: "Ask Me Anything"
+
+```
+Write a {tone} AMA (Ask Me Anything) engagement post for {brandName}, a {industry} business.
+Target audience: {targetAudience}. Platform: {platform}.
+
+This post should:
+- Invite the audience to ask any question about {brandName} or {industry}
+- Set up why the founder/team is qualified to answer
+- Share 1–2 example questions to seed engagement
+- Create a welcoming, low-barrier atmosphere for interaction
+- Use a question in the caption to prompt immediate comments
+```
+
+--- SOURCE: prompts/PURCHASE-TRIGGER.md ---
+# Purchase Trigger Prompt — Social Strategy
+# File: prompts/PURCHASE-TRIGGER.md
+# Version: 1.0 · Last updated: April 2026
+# API: POST /api/generate-triggers
+# Model: gpt-4o · max_tokens: 3000 · temperature: 0.75
+# Response format: json_object
+
+---
+
+## System Role
+
+You are a behavioural marketing specialist and conversion copywriter.
+You write psychologically-calibrated messages that move people from intent to action
+without being pushy. Every message feels helpful and timely — not salesy.
+
+---
+
+## Instruction
+
+Given the customer event and brand brief, generate a complete set of triggered
+marketing messages across 4 channels: Email, SMS, Social Retargeting Ad, Push Notification.
+
+Each message must be tailored to the specific customer journey stage and feel
+personal, not automated.
+
+---
+
+## Customer Events → Trigger Types
+
+| Event                   | Trigger Label         |
+|-------------------------|-----------------------|
+| Viewed product/service  | browse_intent         |
+| Added to cart           | cart_abandon          |
+| First purchase complete | first_purchase        |
+| Second purchase         | repeat_buyer          |
+| Subscription activated  | subscriber_welcome    |
+| 30-day inactive         | lapsed_customer       |
+| Birthday/anniversary    | milestone_moment      |
+| High order value        | vip_recognition       |
+| Referral sent           | advocate_reward       |
+| Review left             | social_proof_amplify  |
+
+---
+
+## Brand Brief Placeholders
+
+```
+Business Name:   {businessName}
+Industry:        {industry}
+Trigger Event:   {triggerEvent}
+Customer Name:   {customerName}
+Product/Service: {productName}
+Price Point:     {price}
+Offer (if any):  {offer}
+Tone:            {tone}
+Business Desc:   {businessDesc}
+```
+
+---
+
+## Output Format (JSON Object)
+
+```json
+{
+  "triggerEvent": "{triggerEvent}",
+  "messages": {
+    "email": {
+      "subject": "Email subject line (A/B test variant included)",
+      "subjectB": "Alternative subject line",
+      "preview": "Email preview text (under 90 chars)",
+      "body": "Full email body HTML-ready text with personalization tokens",
+      "cta": "Call-to-action button text",
+      "ctaUrl": "/suggested-landing-path"
+    },
+    "sms": {
+      "message": "SMS message under 160 characters including opt-out",
+      "timing": "Best send time relative to trigger event"
+    },
+    "socialAd": {
+      "headline": "Social retargeting ad headline (under 40 chars)",
+      "primaryText": "Primary ad copy (under 125 chars for best display)",
+      "description": "Ad description",
+      "cta": "CTA button type (Shop Now / Learn More / etc.)",
+      "audienceNote": "Retargeting audience segment this targets"
+    },
+    "push": {
+      "title": "Push notification title (under 50 chars)",
+      "body": "Push notification body (under 100 chars)",
+      "timing": "Send timing relative to trigger"
+    }
+  },
+  "behavioralNote": "Why this trigger works psychologically",
+  "abTestSuggestion": "What to A/B test in this sequence"
+}
+```
+
+---
+
+## Trigger-Specific Frameworks
+
+### browse_intent
+- Acknowledge what they looked at (show you noticed)
+- Add social proof ("247 people looking at this right now")
+- Create gentle urgency (scarcity if real, or recency)
+- Email: 1 hour after browse. SMS: 3 hours. Push: 30 mins.
+
+### cart_abandon
+- Assume positive intent ("You left something behind")
+- Remove friction (FAQ answer, trust badge)
+- Offer incentive only on 3rd touchpoint (not first)
+- Email: 1hr, 24hr, 72hr sequence
+- SMS: 2 hours after. Push: 30 mins.
+
+### first_purchase
+- Celebrate the decision (validation, not just transaction)
+- Introduce brand story / what to expect
+- Ask for feedback after 3–7 days
+- Invite to loyalty program or referral
+- Tone: warm, excited, personal
+
+### repeat_buyer
+- Acknowledge they're a regular (name them)
+- Exclusive early access or preview
+- Referral incentive
+- Community invitation
+
+### lapsed_customer (30+ days inactive)
+- Re-engage with value, not discount first
+- "We noticed you've been away"
+- Share what's new or improved
+- Offer to help (not just sell)
+
+### vip_recognition
+- Make them feel seen and special
+- Exclusive access / early sale
+- Personal message from founder or team
+- Never feel automated
+
+---
+
+## Quality Standards
+
+1. All messages must feel human — no generic templates
+2. Personalisation tokens: {customerName}, {productName}, {brandName}
+3. SMS must be under 160 characters including opt-out (e.g., "Reply STOP to opt out")
+4. Email subject lines must be under 50 characters for mobile
+5. Push notifications must create curiosity or urgency, never spam
+6. Every message set must have a clear, single CTA
+7. Social ad copy must comply with platform advertising standards
+
+--- SOURCE: prompts/REPORT-TEMPLATES.md ---
+# Report Prompt Templates — Master Collection
+
+## Rules Applying to ALL Prompts
+
+1. **System integration** — Cross-reference all inputs (website, social, audience) before generating.
+2. **No generic output** — Every section must be specific to the business provided.
+3. **Self-learning loop** — Reference previous report data if available.
+4. **Self-optimisation notes** — Include a final section of 3–5 suggestions for improving the next report.
+5. **Strict style** — Use the brand's language, spelling variant, tone, and regional context.
+6. **Cross-improvement** — Note where one strategy improves another (e.g., SEO keywords that also work as content pillars).
+
+---
+
+## Prompt 1 — Original Master Report
+
+```
+You are a world-class marketing strategist specialising in social media growth and content strategy.
+
+BUSINESS INPUT:
+Business Name: {business_name}
+Industry: {industry}
+Location: {city}, {country}
+Website: {website}
+Social Profiles: {social_profiles}
+Target Audience: {target_audience}
+Current Revenue Drivers: {revenue_drivers}
+Brand Voice: {brand_voice}
+Uploaded Assets: {uploaded_assets}
+
+TASK:
+Generate a comprehensive marketing strategy report with the following sections:
+
+1. BUSINESS ANALYSIS
+   - Core offering, unique advantages, competitive positioning
+   - Current content gaps and missed opportunities
+
+2. AUDIENCE PROFILE
+   - Demographics, psychographics, pain points
+   - Emotional triggers and buying motivators
+
+3. CONTENT PILLARS (minimum 5)
+   - For each pillar: name, description, % of content mix, posting frequency
+
+4. PLATFORM STRATEGY
+   - Recommended platforms with rationale
+   - Per-platform tone, format, and frequency
+
+5. CONTENT IDEAS (minimum 30)
+   - 10 video ideas (with hook, format, duration)
+   - 10 image/carousel ideas
+   - 10 caption templates with CTA variations
+
+6. 30-DAY POSTING CALENDAR
+   - Week 1: Awareness | Week 2: Education | Week 3: Conversion | Week 4: Community
+
+7. HASHTAG STRATEGY
+   - 3 tiers: brand, niche, broad (10 each)
+
+8. GROWTH RECOMMENDATIONS
+   - Quick wins (0–30 days)
+   - Medium term (30–90 days)
+   - Long term (90+ days)
+
+9. SELF-OPTIMISATION NOTES
+   - 5 specific improvements for the next version of this report
+
+Output in structured markdown with clear headings.
+```
+
+---
+
+## Prompt 2 — Strategic Expansion Report
+
+```
+You are a senior growth strategist. Using the business report already generated for {business_name}, expand the strategy with:
+
+1. COMPETITIVE LANDSCAPE
+   - 3–5 direct competitors (real or archetypal)
+   - Their content strategies, gaps, and opportunities for differentiation
+
+2. CONTENT MULTIPLICATION MATRIX
+   - Take the top 5 content pillars
+   - For each: generate 10 sub-topics, 5 formats, 3 emotional angles, 5 CTAs
+
+3. OFFER AMPLIFICATION
+   - How to position each revenue driver as content
+   - Urgency/scarcity angles for each offer
+
+4. PLATFORM EXPANSION PLAN
+   - 3 new platform opportunities not currently used
+   - Onboarding content plan for each
+
+5. PARTNERSHIP & COLLABORATION IDEAS
+   - Local/niche collaboration opportunities
+   - Co-content formats (lives, reels, duets)
+
+6. SEASONAL CONTENT CALENDAR
+   - Map content themes to {country} holidays and seasons
+
+7. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 3 — Consumer Psychology & Brand Dominance
+
+```
+You are a consumer psychologist and brand architect. For {business_name} in {industry}:
+
+1. PSYCHOLOGICAL TRIGGER MAP
+   - Primary triggers: belonging, scarcity, social proof, authority, reciprocity, novelty
+   - How each trigger applies specifically to {business_name}'s audience
+
+2. BRAND ARCHETYPE
+   - Identify the core brand archetype (Hero, Sage, Creator, etc.)
+   - Content language guide for this archetype
+
+3. TRUST BUILDING SEQUENCE
+   - Content sequence to move stranger → follower → customer → advocate
+   - 5 pieces of content for each stage
+
+4. OBJECTION CRUSHER CONTENT
+   - Top 5 objections from {target_audience}
+   - A content piece that pre-emptively addresses each objection
+
+5. DESIRE AMPLIFICATION
+   - The aspirational identity the product/service gives customers
+   - Content that sells the transformation, not the product
+
+6. SOCIAL PROOF FRAMEWORK
+   - Types of social proof that work for {industry}
+   - How to generate and display each type
+
+7. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 4 — Full System Builder
+
+```
+You are a marketing systems architect. Build a complete, repeatable content system for {business_name}:
+
+1. CONTENT SYSTEM OVERVIEW
+   - Weekly rhythm (Mon–Sun posting structure)
+   - Monthly rotation (Awareness/Education/Conversion/Community)
+   - Annual calendar framework
+
+2. PILLAR-TO-POST PIPELINE
+   - For each content pillar: auto-expand into 90 days of content ideas
+   - Variation rules: rotate hooks, formats, emotions, audiences
+
+3. ASSET CREATION WORKFLOW
+   - Step-by-step process for each content type (video, image, caption)
+   - Time estimates, tools, and difficulty level
+
+4. REPURPOSING ENGINE
+   - How to turn 1 piece of content into 8 formats
+   - Platform-specific adaptations
+
+5. PERFORMANCE LOOP
+   - Which metrics to track per platform
+   - When to recycle, when to kill, when to scale a content type
+
+6. AUTOMATION INTEGRATION
+   - Zapier/Make automation suggestions
+   - Google Sheets scheduling template structure
+   - Buffer/Later publishing setup
+
+7. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 5 — SEO & Discovery Report
+
+```
+You are an SEO strategist and content discovery specialist for {business_name} in {industry}:
+
+1. KEYWORD LANDSCAPE
+   - 20 primary keywords (search intent + volume tier)
+   - 20 long-tail keywords perfect for content
+   - 10 local SEO keywords for {city}, {country}
+
+2. CONTENT-SEO ALIGNMENT
+   - Which content pillars map to which keyword clusters
+   - Blog/caption content that ranks while converting
+
+3. PLATFORM SEO
+   - TikTok, YouTube, Instagram SEO best practices
+   - Alt text, descriptions, caption keyword strategy
+
+4. COMPETITOR SEO GAPS
+   - Keywords competitors rank for that {business_name} does not
+   - Quick-win content opportunities
+
+5. SCHEMA & TECHNICAL SEO RECOMMENDATIONS
+   - For {website}: structured data, page speed, mobile-first notes
+
+6. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 6 — Plateau Breaker Report
+
+```
+{business_name} is experiencing stagnant growth on social media. You are a turnaround specialist.
+
+CURRENT STATE:
+{current_metrics}
+
+1. GROWTH DIAGNOSIS
+   - Identify why growth has plateaued (content fatigue, audience mismatch, platform algorithm, etc.)
+
+2. RESET STRATEGY
+   - Content reset: what to stop, start, continue
+   - Audience re-engagement tactics
+   - Platform algorithm recovery plan
+
+3. VIRAL CONTENT ANGLES
+   - 10 high-probability viral content ideas for {industry}
+   - Why each has viral potential
+
+4. COMMUNITY BUILDING TACTICS
+   - How to transform followers into an active community
+   - Engagement-first content for 30 days
+
+5. QUICK WIN PLAN (7 days)
+   - 7 specific posts with captions, formats, and posting times
+
+6. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 7 — Rebrand & Repositioning Report
+
+```
+{business_name} needs to rebrand or reposition in the market. You are a brand strategist.
+
+1. CURRENT BRAND AUDIT
+   - Strengths, weaknesses, outdated elements
+   - Audience perception vs. intended positioning
+
+2. NEW POSITIONING STATEMENT
+   - Core message, unique value proposition
+   - Target audience refinement
+
+3. VISUAL IDENTITY DIRECTION
+   - Color palette shift, typography mood, imagery style
+   - Platform-by-platform visual update checklist
+
+4. CONTENT TRANSITION PLAN
+   - How to shift tone/style without losing existing audience
+   - Announcement content strategy
+
+5. NEW CONTENT PILLARS FOR NEW POSITIONING
+   - 5 fresh pillars aligned to new brand direction
+
+6. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 8 — Youth / Gen Z Report
+
+```
+{business_name} wants to attract Gen Z (18–27) audiences. You are a Gen Z marketing specialist.
+
+1. GEN Z AUDIENCE PROFILE FOR {INDUSTRY}
+   - Values, aesthetics, platform preferences
+   - What they hate (performative brands, corporate speak)
+
+2. CONTENT LANGUAGE GUIDE
+   - Tone, vocabulary, memes, trends relevant to {industry}
+   - What NOT to say
+
+3. PLATFORM PRIORITIES
+   - TikTok-first strategy, with cross-platform adaptation
+   - Trend participation playbook
+
+4. AUTHENTICITY FRAMEWORK
+   - Behind-the-scenes content that builds trust
+   - Creator-style content for {business_name}
+
+5. 30 GEN Z CONTENT IDEAS
+   - Mix of trend-based, educational, entertainment, and conversion
+
+6. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 9 — Family / Mid-Market Report
+
+```
+{business_name} targets families and mid-market consumers (30–50). You are a family marketing specialist.
+
+1. FAMILY AUDIENCE PROFILE
+   - Decision-making dynamics, values, content consumption habits
+   - Platforms most used by this demographic
+
+2. TRUST-FIRST CONTENT STRATEGY
+   - Safety, reliability, value-for-money messaging
+   - Testimonials and social proof formats
+
+3. FAMILY-FRIENDLY CONTENT IDEAS (30)
+   - Warm, relatable, solution-focused content
+
+4. SEASONAL & EVENT CALENDAR
+   - School holidays, family events, gift seasons for {country}
+
+5. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 10 — Website Audit + Business Scan
+
+```
+Perform a full website audit and business scan for {business_name} at {website}.
+
+1. WEBSITE AUDIT
+   - SEO score estimate, mobile-friendliness, page speed
+   - Content gaps vs. competitors
+   - Missing pages, missing CTAs
+
+2. BUSINESS INTELLIGENCE SCAN
+   - Extract: core offers, pricing signals, target audience signals, brand voice
+   - Identify: revenue pillars not promoted on social
+
+3. SOCIAL ↔ WEBSITE ALIGNMENT
+   - Are social content themes driving traffic to relevant landing pages?
+   - Funnel gaps between social discovery and purchase
+
+4. RECOMMENDATIONS
+   - Top 10 quick website + content fixes
+   - 3 high-impact landing pages to create
+
+5. SELF-OPTIMISATION NOTES
+```
+
+---
+
+## Prompt 11 — Startup / New Business Launch
+
+```
+{business_name} is a new business preparing to launch. You are a launch strategist.
+
+1. PRE-LAUNCH CONTENT PLAN (30 days before launch)
+   - Teaser strategy, audience building, waitlist content
+   - Behind-the-scenes, founder story, build-in-public content
+
+2. LAUNCH DAY CONTENT PACKAGE
+   - Announcement posts across all platforms
+   - Email + social coordination plan
+
+3. POST-LAUNCH 60-DAY CONTENT CALENDAR
+   - Week-by-week content themes
+   - Early adopter engagement tactics
+
+4. BRAND AWARENESS BURST
+   - 10 high-reach content pieces for launch week
+
+5. FIRST 100 CUSTOMERS STRATEGY
+   - Content-driven acquisition tactics
+   - Referral and word-of-mouth triggers
+
+6. SELF-OPTIMISATION NOTES
+```
+
+--- SOURCE: prompts/VISUAL-PROMPTS.md ---
+# Visual Image Prompts Library
+## Social Strategy — Version 1.0.0
+## 20 Industry-Flexible + 3 Generic Creator Prompts
+
+All prompts follow the master structure:
+**Subject + Environment + Lighting + Style + Camera + Mood**
+
+Variables in `[BRACKETS]` are replaced by the business profile engine.
+
+---
+
+## INDUSTRY-FLEXIBLE PROMPTS
+
+### VIS-001 · Brand Rebrand Reveal
+**Industries:** Any
+**Use case:** Rebranding campaigns, new identity launches
+```
+Ultra-photorealistic brand transformation scene, before-and-after contrast of [BUSINESS_TYPE],
+old branding fading into modern sleek identity, glowing logo reveal, cinematic lighting,
+high contrast shadows, shot on 50mm lens, minimal environment, premium rebrand campaign
+aesthetic, dramatic and inspiring tone, 8K detail
+```
+**Variables:** `BUSINESS_TYPE`
+**Credit cost:** 4
+**Best platforms:** Instagram, LinkedIn, Facebook
+
+---
+
+### VIS-002 · Office Space Showcase
+**Industries:** Corporate, Creative, Medical, Professional Services
+**Use case:** Brand credibility, team culture, recruitment
+```
+Photorealistic wide-angle shot of a full office block or workspace environment, clean
+architecture, natural sunlight flooding through large windows, diverse professionals
+(Gen Z to Baby Boomers) interacting naturally, modern and inviting atmosphere, cinematic
+depth, shot on 24mm lens, high-end commercial real estate aesthetic
+```
+**Variables:** none (adapts to business profile)
+**Credit cost:** 4
+**Best platforms:** LinkedIn, Facebook, Instagram
+
+---
+
+### VIS-003 · Gift Box / Product Unboxing
+**Industries:** Retail, E-Commerce, Beauty, Subscription Boxes
+**Use case:** Product launch, gifting campaigns, unboxing reels
+```
+Hyper-realistic unboxing moment of a premium gift box or product package, hands opening
+slowly, soft natural lighting, textures of packaging highly detailed, emotional anticipation,
+shallow depth of field, cinematic close-up, shot on macro lens, luxury lifestyle brand feel
+```
+**Variables:** none
+**Credit cost:** 4
+**Best platforms:** TikTok, Instagram, YouTube
+
+---
+
+### VIS-004 · Retail Store Experience
+**Industries:** Retail, Fashion, Beauty, Homewares, Specialty Stores
+**Use case:** Foot traffic drives, store showcases, seasonal campaigns
+```
+Photorealistic interior of a boutique-style retail store, customers browsing naturally
+(mixed age demographics), warm lighting, product displays styled beautifully, depth and
+perspective, cinematic composition, shot on 35mm lens, inviting and aspirational atmosphere
+```
+**Variables:** none
+**Credit cost:** 4
+**Best platforms:** Instagram, Facebook, Pinterest
+
+---
+
+### VIS-005 · Service Business in Action
+**Industries:** Healthcare, Beauty, Consulting, Coaching, Trades
+**Use case:** Trust building, service showcase, authenticity
+```
+Ultra-realistic scene of a professional delivering a service ([SERVICE_TYPE]: consulting,
+coaching, healthcare, beauty, etc.), authentic client interaction, soft lighting, natural
+expressions, clean environment, shot on 50mm lens, high-trust brand aesthetic,
+candid documentary style
+```
+**Variables:** `SERVICE_TYPE`
+**Credit cost:** 4
+**Best platforms:** LinkedIn, Facebook, Instagram
+
+---
+
+### VIS-006 · Transformation / Before & After
+**Industries:** Health, Beauty, Trades, Fitness, Dental, Any Results-Based
+**Use case:** Social proof, conversion content
+```
+Split-frame photorealistic transformation scene showing dramatic before and after of
+[SERVICE_OR_PRODUCT_RESULT], consistent lighting, realistic textures, cinematic contrast,
+high detail, storytelling composition, emotionally impactful visual narrative
+```
+**Variables:** `SERVICE_OR_PRODUCT_RESULT`
+**Credit cost:** 4
+**Best platforms:** Instagram, TikTok, Facebook
+
+---
+
+### VIS-007 · Workshop / Craft / Creation Process
+**Industries:** Trades, Food, Art, Design, Manufacturing, Handmade
+**Use case:** Behind the scenes, authenticity, brand storytelling
+```
+Hyper-detailed photorealistic scene of hands creating or crafting something ([PRODUCT_TYPE]:
+product, artwork, food, design), close-up textures, natural lighting, shallow depth of field,
+warm tones, shot on macro lens, authentic behind-the-scenes brand storytelling
+```
+**Variables:** `PRODUCT_TYPE`
+**Credit cost:** 4
+**Best platforms:** Instagram, TikTok, Pinterest
+
+---
+
+### VIS-008 · Community / Group Engagement
+**Industries:** Events, Education, Community, Local Business, Non-Profit
+**Use case:** Brand warmth, belonging, community posts
+```
+Photorealistic scene of a diverse group (Gen Z to Baby Boomers) engaging in a shared
+activity, genuine smiles and interaction, soft golden hour lighting, candid moment,
+cinematic composition, shot on 35mm lens, emotional connection and belonging
+```
+**Variables:** none
+**Credit cost:** 4
+**Best platforms:** Facebook, Instagram, LinkedIn
+
+---
+
+### VIS-009 · Product in Real-Life Context
+**Industries:** Any Product or Service
+**Use case:** Lifestyle integration, aspirational content
+```
+Ultra-realistic lifestyle scene showing [PRODUCT_OR_SERVICE] naturally integrated into
+daily life, cozy or modern setting, soft lighting, relatable environment, shallow depth
+of field, shot on 35mm lens, authentic and aspirational mood
+```
+**Variables:** `PRODUCT_OR_SERVICE`
+**Credit cost:** 4
+**Best platforms:** Instagram, Pinterest, TikTok
+
+---
+
+### VIS-010 · Digital + Physical World Blend
+**Industries:** Technology, SaaS, Finance, Innovation, Healthcare Tech
+**Use case:** Innovation messaging, thought leadership
+```
+Futuristic photorealistic scene blending real-world environment with subtle digital overlays
+(data, UI elements, holograms), soft glow lighting, clean composition, cinematic depth,
+shot on 50mm lens, modern innovation aesthetic
+```
+**Variables:** none
+**Credit cost:** 4
+**Best platforms:** LinkedIn, Twitter/X, YouTube
+
+---
+
+### VIS-011 · Local Business Street Presence
+**Industries:** Any Local Business
+**Use case:** Local discovery, community presence
+```
+Photorealistic street-level view of a local business storefront for [BUSINESS_NAME] in
+[CITY], people walking past, natural lighting, urban or suburban setting, signage visible
+but subtle, cinematic composition, shot on 35mm lens, authentic community vibe
+```
+**Variables:** `BUSINESS_NAME`, `CITY`
+**Credit cost:** 4
+**Best platforms:** Facebook, Instagram, Google My Business
+
+---
+
+### VIS-012 · Customer Testimonial Moment
+**Industries:** Any
+**Use case:** Trust, social proof, conversions
+```
+Ultra-realistic portrait of a satisfied customer from [TARGET_AUDIENCE] sharing a moment
+of joy or relief, natural lighting, shallow depth of field, expressive emotion, clean
+background, shot on 85mm lens, high-trust testimonial visual style
+```
+**Variables:** `TARGET_AUDIENCE`
+**Credit cost:** 4
+**Best platforms:** Facebook, LinkedIn, Instagram
+
+---
+
+### VIS-013 · Workspace Flat Lay
+**Industries:** Any Professional, Creative, Tech
+**Use case:** Brand aesthetics, Instagram content, brand awareness
+```
+Photorealistic overhead flat lay of a workspace setup for [INDUSTRY] professional, tools
+and objects arranged aesthetically, soft natural lighting, clean composition, minimal
+shadows, shot on top-down angle, modern Instagram-style branding aesthetic
+```
+**Variables:** `INDUSTRY`
+**Credit cost:** 4
+**Best platforms:** Instagram, Pinterest
+
+---
+
+### VIS-014 · Seasonal Campaign Visual
+**Industries:** Any
+**Use case:** Holiday campaigns, seasonal promotions
+```
+Photorealistic [SEASON]-themed scene (summer, winter, holiday, etc.) incorporating
+[PRODUCT_OR_SERVICE] for [BUSINESS_NAME], warm cinematic lighting, rich textures,
+atmospheric details ([SEASONAL_ELEMENTS]: snow, sunlight, leaves), emotional tone,
+high-end campaign style
+```
+**Variables:** `SEASON`, `PRODUCT_OR_SERVICE`, `BUSINESS_NAME`, `SEASONAL_ELEMENTS`
+**Credit cost:** 4
+**Best platforms:** Instagram, Facebook, Pinterest
+
+---
+
+### VIS-015 · Luxury vs Everyday Contrast
+**Industries:** Retail, Hospitality, Beauty, Auto, Services
+**Use case:** Upsell, premium positioning
+```
+Split-scene photorealistic comparison between everyday version and premium/luxury version
+of [PRODUCT_OR_SERVICE] for [BRAND_NAME], consistent framing, dramatic lighting difference,
+high contrast storytelling, cinematic composition
+```
+**Variables:** `PRODUCT_OR_SERVICE`, `BRAND_NAME`
+**Credit cost:** 4
+**Best platforms:** Instagram, LinkedIn, Facebook
+
+---
+
+### VIS-016 · Founder / Personal Brand Shot
+**Industries:** Any (especially Coaching, Consulting, Personal Brand)
+**Use case:** Authority building, personal brand posts
+```
+Ultra-realistic portrait of a confident business owner or expert ([AGE_RANGE], [GENDER_STYLE]),
+natural lighting, clean or contextual background, sharp focus, shot on 85mm lens, editorial
+magazine quality, strong personal brand presence, [BRAND_INDUSTRY] context
+```
+**Variables:** `AGE_RANGE`, `GENDER_STYLE`, `BRAND_INDUSTRY`
+**Credit cost:** 4
+**Best platforms:** LinkedIn, Instagram, Facebook
+
+---
+
+### VIS-017 · Busy Day in the Business
+**Industries:** Any Multi-Person Business
+**Use case:** Culture, scale, brand storytelling
+```
+Photorealistic multi-layered scene capturing a busy day in a [BUSINESS_TYPE] business
+environment, multiple actions happening naturally, depth of field, dynamic composition,
+cinematic lighting, storytelling perspective, documentary-style realism
+```
+**Variables:** `BUSINESS_TYPE`
+**Credit cost:** 4
+**Best platforms:** Facebook, LinkedIn, Instagram
+
+---
+
+### VIS-018 · Nature / Organic Brand Visual
+**Industries:** Wellness, Organic, Eco, Beauty, Food
+**Use case:** Brand values, eco messaging
+```
+Ultra-realistic scene blending [PRODUCT_OR_SERVICE] for [BRAND_NAME] into a natural
+environment (plants, greenery, earth textures), soft diffused lighting, calming tone,
+shallow depth of field, eco-conscious brand aesthetic
+```
+**Variables:** `PRODUCT_OR_SERVICE`, `BRAND_NAME`
+**Credit cost:** 4
+**Best platforms:** Instagram, Pinterest, Facebook
+
+---
+
+### VIS-019 · Plant Store / Wellness Calm Scene
+**Industries:** Wellness, Retail (plants/gifts), Lifestyle
+**Use case:** Calm brand presence, lifestyle posts
+```
+Photorealistic interior of a plant store or greenery-filled lifestyle space, natural light
+beams, customers browsing calmly, lush textures, soft shadows, cinematic composition,
+peaceful and wellness-focused atmosphere
+```
+**Variables:** none
+**Credit cost:** 4
+**Best platforms:** Instagram, Pinterest
+
+---
+
+### VIS-020 · Growth / Scale / Expansion Concept
+**Industries:** Any Growth-Stage Business
+**Use case:** Vision casting, investor content, milestone posts
+```
+Cinematic photorealistic scene symbolizing growth and scale for [BUSINESS_NAME] in
+[INDUSTRY], expanding environment (city, office, digital network), upward motion elements,
+dramatic lighting, wide-angle lens, aspirational and visionary brand storytelling
+```
+**Variables:** `BUSINESS_NAME`, `INDUSTRY`
+**Credit cost:** 4
+**Best platforms:** LinkedIn, Instagram, YouTube
+
+---
+
+## GENERIC CREATOR / INFLUENCER PROMPTS
+
+### VIS-021 · Social Media Content Creator Shot
+**Industries:** Creator Economy, Personal Brand, Influencer
+**Use case:** Behind-the-scenes, creator content
+```
+Ultra-realistic scene of a content creator filming or taking photos, natural lighting,
+modern setup, expressive personality, vibrant but clean colors, shallow depth of field,
+shot on 35mm lens, engaging and relatable social media aesthetic
+```
+**Variables:** none
+**Credit cost:** 4
+**Best platforms:** TikTok, Instagram, YouTube
+
+---
+
+### VIS-022 · Multi-Generation Lifestyle Moment
+**Industries:** Any (especially Family, Community, Retail, Healthcare)
+**Use case:** Broad demographic reach, inclusive brand messaging
+```
+Photorealistic scene featuring people across generations (kids, teenagers, Gen Z, Gen Y,
+Gen X, Baby Boomers) interacting naturally for [BRAND_CONTEXT], warm lighting, authentic
+emotion, candid composition, cinematic storytelling feel
+```
+**Variables:** `BRAND_CONTEXT`
+**Credit cost:** 4
+**Best platforms:** Facebook, Instagram, YouTube
+
+---
+
+### VIS-023 · Everyday Life Cinematic Moment
+**Industries:** Any
+**Use case:** Relatable content, lifestyle branding
+```
+Ultra-realistic cinematic capture of a simple everyday moment (walking, coffee,
+conversation) connected to [BRAND_OR_PRODUCT], soft natural lighting, shallow depth
+of field, shot on 50mm lens, emotional storytelling, calm and relatable mood, film-like quality
+```
+**Variables:** `BRAND_OR_PRODUCT`
+**Credit cost:** 4
+**Best platforms:** Instagram, TikTok, Facebook
+
+---
+
+## EXPANSION PROMPTS (COMING NEXT)
+
+- VIS-024 to VIS-050: Industry deep-dives (dental, real estate, legal, fitness, restaurant)
+- VIS-051 to VIS-080: Video ad prompts (Reels, TikTok, YouTube Shorts format)
+- VIS-081 to VIS-100: Hook + Caption + CTA bundles per prompt
+
+---
+
+## PROMPT VARIABLES MASTER LIST
+
+| Variable | Description | Example |
+|---|---|---|
+| `BUSINESS_TYPE` | Type of business | "dental clinic", "retail store" |
+| `BUSINESS_NAME` | Brand/business name | "Evergreen Dental" |
+| `SERVICE_TYPE` | Type of service | "physiotherapy", "consulting" |
+| `PRODUCT_TYPE` | Product being shown | "handmade jewellery" |
+| `PRODUCT_OR_SERVICE` | Flexible product or service | "yoga classes" |
+| `TARGET_AUDIENCE` | Who the content is for | "mums aged 30-45" |
+| `INDUSTRY` | Industry sector | "real estate", "fitness" |
+| `BRAND_NAME` | Brand identity name | "Pure Balance Wellness" |
+| `CITY` | Location | "Sydney", "Melbourne" |
+| `SEASON` | Seasonal context | "Christmas", "Summer" |
+| `SEASONAL_ELEMENTS` | Season visual details | "fairy lights, warm candles" |
+| `AGE_RANGE` | Character age | "35-45" |
+| `GENDER_STYLE` | Presentation style | "professional female" |
+| `BRAND_INDUSTRY` | Industry context | "healthcare" |
+| `BRAND_CONTEXT` | Brand scenario context | "family insurance brand" |
+| `BRAND_OR_PRODUCT` | Flexible brand/product | "morning coffee ritual, branded mug" |

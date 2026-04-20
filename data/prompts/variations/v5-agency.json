@@ -1,0 +1,77 @@
+{
+  "variation_id": "v5",
+  "variation_name": "Agency",
+  "slug": "v5-agency",
+  "created_at": "2026-04-19",
+  "description": "A white-label, agency-grade variation designed for marketing agencies, freelancers, and consultants managing client accounts. Produces polished, professional content ready to present to clients under the agency's brand.",
+  "target_persona": "Marketing agencies, social media managers, freelance strategists, brand consultants managing multiple client accounts",
+  "tone_modifiers": {
+    "formality": "professional, polished, presentation-ready",
+    "emphasis": "strategy, ROI, client results, brand consistency, scalability",
+    "avoid": ["casual language", "personal pronouns referencing the agency", "platform-specific slang", "abbreviations without explanation in reports"],
+    "use": ["client-facing language", "strategic framing", "KPI references", "brand voice consistency", "professional copywriting standards"]
+  },
+  "caption_framework": {
+    "hook": "Professionally crafted, brand-aligned opening. Multiple options provided for client approval.",
+    "body": "Full caption with strategic intent noted. Includes rationale for content angle.",
+    "cta": "CTA mapped to campaign objective. Client can select preferred CTA from options provided."
+  },
+  "prompt_overrides": [
+    {
+      "base_prompt_ref": "p003",
+      "override_instruction": "Generate 3 caption variations for each post: (A) conservative/formal, (B) conversational/engaging, (C) bold/promotional. Include a strategic note explaining the intent of each variation. Format for easy client presentation. Include character counts for each platform."
+    },
+    {
+      "base_prompt_ref": "p002",
+      "override_instruction": "Generate a full content strategy document suitable for client presentation. Include: executive summary, platform strategy rationale, content mix breakdown, KPIs for each post type, and notes on brand voice. Format as a professional deliverable."
+    },
+    {
+      "base_prompt_ref": "p007",
+      "override_instruction": "Generate a comprehensive monthly report suitable for client presentation. Include executive summary, data visualisation descriptions, benchmarks vs industry averages, recommendations section, and a 'Next Steps' section with prioritised action items. Professional tone, free of jargon."
+    },
+    {
+      "base_prompt_ref": "p046",
+      "override_instruction": "Produce a quarterly plan as a client-ready strategy document. Include all sections formatted as deliverable with clear headers, numbered lists, and a summary table of KPI targets. Include rationale for all strategic decisions."
+    }
+  ],
+  "agency_deliverable_formats": [
+    {
+      "deliverable": "Monthly Content Calendar",
+      "format": "30-day grid with post topic, platform, content type, caption, visual direction, and status",
+      "client_notes": "Exported as Google Sheet or PDF for client review and approval"
+    },
+    {
+      "deliverable": "Strategy Document",
+      "format": "Executive summary + pillars + platform breakdown + KPIs + 90-day roadmap",
+      "client_notes": "PDF or Notion doc. Client signs off before content production begins."
+    },
+    {
+      "deliverable": "Monthly Performance Report",
+      "format": "KPI scorecard + insights + optimisation recommendations + next month preview",
+      "client_notes": "Sent within 5 business days of month end."
+    },
+    {
+      "deliverable": "Caption Variations Pack",
+      "format": "3 caption options per post with strategic rationale and approval checkboxes",
+      "client_notes": "Client selects preferred option. Agency implements."
+    }
+  ],
+  "white_label_notes": {
+    "platform_branding": "All generated content is presented under the agency's brand. Social Strategy is not mentioned in client deliverables.",
+    "customisation": "All prompts should be customised to match the client's approved brand voice guide before generation.",
+    "approval_workflow": "Draft → Client Review → Revisions → Approval → Schedule"
+  },
+  "scaling_features": [
+    "Generate content for multiple clients in parallel",
+    "Maintain separate brand voice profiles per client",
+    "Batch generate monthly content in one session",
+    "Export-ready report templates for client presentation"
+  ],
+  "platform_notes": {
+    "LinkedIn": "Agency accounts managing professional services clients. Thought leadership approach.",
+    "Instagram": "Visual-first clients. Ensure brand aesthetic consistency across all generated content.",
+    "Facebook": "Community and local business clients. Engagement-optimised copy.",
+    "TikTok": "Younger demographic clients. Ensure agency has production resources before committing."
+  },
+  "credit_multiplier": 1.5
+}

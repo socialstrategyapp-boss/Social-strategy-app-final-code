@@ -1,0 +1,31 @@
+{
+  "industry": "trades_home_services",
+  "label": "Trades & Home Services",
+  "created_at": "2026-04-19",
+  "triggers": ["plumber", "electrician", "builder", "tradie", "contractor", "handyman", "landscaper", "cleaner"],
+  "platform_priority": ["Facebook", "Google Business", "Instagram", "TikTok"],
+  "margin_benchmark": "40-60% gross margin",
+  "repurchase_cycle": "6-24 months",
+  "prompts": [
+    {
+      "ref": "p015",
+      "title": "Trades & Home Services Content Pack",
+      "tags": ["trades", "home-services", "tradie", "local-business", "reviews"]
+    }
+  ],
+  "content_angles": [
+    "Before & after project transformations",
+    "Time-lapse of work in progress",
+    "Did you know? home maintenance tips",
+    "Local job showcase (tagged by suburb)",
+    "Team introductions & certifications",
+    "Customer reviews & star ratings",
+    "Seasonal service reminders",
+    "Safety & compliance education"
+  ],
+  "hashtag_groups": {
+    "broad": ["#tradie", "#homeimprovement", "#[trade]services"],
+    "local": ["#[city][trade]", "#[suburb]trades", "#localtradie"],
+    "trust": ["#licensed", "#insured", "#qualityworkmanship"]
+  }
+}

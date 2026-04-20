@@ -1,0 +1,47 @@
+{
+  "variation_id": "v1",
+  "variation_name": "Data-Driven",
+  "slug": "v1-data-driven",
+  "created_at": "2026-04-19",
+  "description": "A metrics-first, evidence-based content variation. Every post leads with data, statistics, benchmarks, or measurable outcomes. Best for analytical audiences and B2B markets.",
+  "target_persona": "Data-oriented decision makers, analysts, finance professionals, SaaS/tech buyers, investors",
+  "tone_modifiers": {
+    "formality": "semi-formal to formal",
+    "emphasis": "specificity, numbers, proof",
+    "avoid": ["vague claims", "emotional appeals without evidence", "unverifiable statistics"],
+    "use": ["exact percentages", "benchmarks", "before/after metrics", "case study data", "industry studies"]
+  },
+  "caption_framework": {
+    "hook": "Lead with a surprising statistic or counterintuitive data point",
+    "body": "Support with 2-3 data points, methodology or source mention, implication for the reader",
+    "cta": "Download / Read the full report / Get the data"
+  },
+  "prompt_overrides": [
+    {
+      "base_prompt_ref": "p003",
+      "override_instruction": "Open every caption with a specific statistic or percentage. Use 'Studies show...', 'Data reveals...', '[X]% of businesses...'. Back every claim with a reference to a data source or measurable outcome. Avoid fluffy language."
+    },
+    {
+      "base_prompt_ref": "p004",
+      "override_instruction": "Open every video script with a shocking statistic as the hook. Example: 'Did you know [X]% of [audience] never [problem]? Here's the data that explains why.' Build the entire script around proving a data-backed thesis."
+    },
+    {
+      "base_prompt_ref": "p002",
+      "override_instruction": "All generated posts must include at least one specific metric. Replace aspirational language with specific, measurable outcomes. Use charts, data visualisations, and case study references in visual directions."
+    }
+  ],
+  "example_hooks": [
+    "87% of social media posts get zero engagement. Here's what the 13% do differently.",
+    "Brands that post consistently 5x per week grow audiences 3x faster. The data:",
+    "We analysed 10,000 posts. The #1 predictor of virality isn't what you think.",
+    "Average conversion rate for this industry: 2.3%. Here's how to beat it.",
+    "Companies that invest in content marketing generate 3x more leads at 62% lower cost."
+  ],
+  "platform_notes": {
+    "LinkedIn": "Primary platform. Long-form data posts perform best. Include charts as attachments.",
+    "Twitter/X": "Data threads perform well. Lead with the stat, break down in thread.",
+    "Instagram": "Use infographic carousels. Data visualisation over text-heavy posts.",
+    "Facebook": "Link to full reports or studies for click-through."
+  },
+  "credit_multiplier": 1.0
+}

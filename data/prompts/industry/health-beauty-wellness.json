@@ -1,0 +1,37 @@
+{
+  "industry": "health_beauty_wellness",
+  "label": "Health, Beauty & Wellness",
+  "created_at": "2026-04-19",
+  "triggers": ["salon", "spa", "beauty", "skincare", "wellness", "health", "cosmetics", "clinic", "gym", "yoga"],
+  "platform_priority": ["Instagram", "TikTok", "Pinterest", "YouTube"],
+  "margin_benchmark": "50-80% service margin",
+  "repurchase_cycle": "4-8 weeks",
+  "prompts": [
+    {
+      "ref": "p012",
+      "title": "Health, Beauty & Wellness Content Pack",
+      "tags": ["beauty", "wellness", "skincare", "salon", "health"]
+    },
+    {
+      "ref": "p025",
+      "title": "Health & Wellness Video Prompts",
+      "tags": ["health", "wellness", "video-ideas", "hooks", "content"]
+    }
+  ],
+  "content_angles": [
+    "Before & after transformations (with consent)",
+    "Product demonstrations & tutorials",
+    "Client testimonials & results",
+    "Day in the life at the salon/clinic",
+    "Education: ingredients, benefits, how-to",
+    "Meet the team / therapist spotlights",
+    "Seasonal promotions & packages",
+    "Self-care & lifestyle content"
+  ],
+  "hashtag_groups": {
+    "broad": ["#beauty", "#skincare", "#wellness", "#selfcare"],
+    "niche": ["#[treatment]results", "#[city]salon", "#[beauty-trend]"],
+    "educational": ["#skincareadvice", "#beautytips", "#[ingredient]benefits"]
+  },
+  "master_positioning": "Your body is speaking. We help you listen."
+}

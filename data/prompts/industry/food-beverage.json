@@ -1,0 +1,31 @@
+{
+  "industry": "food_beverage",
+  "label": "Food & Beverage / Restaurant",
+  "created_at": "2026-04-19",
+  "triggers": ["restaurant", "cafe", "food", "menu", "chef", "dining", "bistro", "eatery", "takeaway"],
+  "platform_priority": ["Instagram", "TikTok", "Facebook", "Google Business"],
+  "margin_benchmark": "60-75% food cost margin, 10-15% net",
+  "repurchase_cycle": "7-21 days",
+  "prompts": [
+    {
+      "ref": "p011",
+      "title": "Food & Beverage / Restaurant Content Pack",
+      "tags": ["food", "restaurant", "cafe", "hospitality", "menu"]
+    }
+  ],
+  "content_angles": [
+    "Food photography & plating artistry",
+    "Chef/team introductions",
+    "Behind-the-scenes kitchen footage",
+    "Daily specials & seasonal menus",
+    "Customer reviews & UGC",
+    "Recipe reveals & how we make it",
+    "Local sourcing & sustainability story",
+    "Events & private dining"
+  ],
+  "hashtag_groups": {
+    "broad": ["#foodie", "#instafood", "#restaurant"],
+    "niche": ["#[city]eats", "#[cuisine]food", "#[city]foodie"],
+    "branded": ["#[restaurantname]", "#[signatureDish]"]
+  }
+}

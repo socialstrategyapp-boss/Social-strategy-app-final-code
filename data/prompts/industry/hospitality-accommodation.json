@@ -1,0 +1,31 @@
+{
+  "industry": "hospitality_accommodation",
+  "label": "Hospitality & Accommodation",
+  "created_at": "2026-04-19",
+  "triggers": ["hotel", "resort", "airbnb", "accommodation", "stay", "booking", "tourism", "getaway"],
+  "platform_priority": ["Instagram", "Pinterest", "Facebook", "TikTok"],
+  "margin_benchmark": "60-75% RevPAR efficiency target",
+  "repurchase_cycle": "3-18 months",
+  "prompts": [
+    {
+      "ref": "p017",
+      "title": "Hospitality & Accommodation Content Pack",
+      "tags": ["hospitality", "accommodation", "hotel", "tourism", "airbnb"]
+    }
+  ],
+  "content_angles": [
+    "Room & amenity showcases",
+    "Local area guides & hidden gems",
+    "Guest experience stories",
+    "Seasonal packages & promotions",
+    "Behind-the-scenes: housekeeping, chef, events",
+    "A day at [property] content",
+    "Review highlights & testimonials",
+    "Local event tie-ins"
+  ],
+  "hashtag_groups": {
+    "broad": ["#travel", "#hotel", "#accommodation", "#getaway"],
+    "niche": ["#[city]hotel", "#[region]travel", "#boutiquehotel"],
+    "experience": ["#luxurytravel", "#travelblogger", "#staycation"]
+  }
+}

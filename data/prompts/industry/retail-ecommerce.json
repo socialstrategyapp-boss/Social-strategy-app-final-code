@@ -1,0 +1,41 @@
+{
+  "industry": "retail_ecommerce",
+  "label": "Retail & E-Commerce",
+  "created_at": "2026-04-19",
+  "triggers": ["shop", "store", "buy", "cart", "ecommerce", "shopify", "product", "sale", "shipping"],
+  "platform_priority": ["Instagram", "Pinterest", "TikTok", "Facebook"],
+  "margin_benchmark": "40-65% gross margin",
+  "repurchase_cycle": "30-90 days",
+  "prompts": [
+    {
+      "ref": "p010",
+      "title": "Retail & E-Commerce Content Pack",
+      "tags": ["retail", "ecommerce", "product-launch", "sale", "unboxing"]
+    },
+    {
+      "ref": "p028",
+      "title": "E-Commerce Video & Caption Prompts",
+      "tags": ["ecommerce", "retail", "product", "video-ideas", "unboxing"]
+    }
+  ],
+  "content_angles": [
+    "Product showcase & styling",
+    "Behind-the-scenes packing/fulfilment",
+    "Customer unboxing & reviews",
+    "Sale announcements & urgency",
+    "How-to styling tutorials",
+    "New arrivals & drops",
+    "Abandoned cart recovery hooks",
+    "Seasonal campaigns (EOFY, Christmas, BFCM)"
+  ],
+  "hashtag_groups": {
+    "broad": ["#onlineshopping", "#shopsmall", "#retailtherapy"],
+    "niche": ["#shoplocal", "#newstock", "#limitedstock"],
+    "conversion": ["#sale", "#flashsale", "#dealsoftheday"]
+  },
+  "seo_targets": [
+    "[product] buy online",
+    "[product] Australia",
+    "best [product] for [use-case]"
+  ]
+}
