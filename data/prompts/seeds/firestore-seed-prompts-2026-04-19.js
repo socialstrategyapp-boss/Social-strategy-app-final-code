@@ -1,0 +1,1 @@
+[insert firestore-seed-prompts JS content here]
