@@ -146,6 +146,46 @@ async function deductCredits(db: D1Database, action: string, email: string | nul
   ).bind(account.id, action, cost, description).run()
 }
 
+// Returns the OpenAI API key: checks account_settings in DB first, then env fallback
+async function getOpenAIKey(db: D1Database | undefined, email: string | null, envKey: string | undefined): Promise<string | null> {
+  if (db) {
+    const account = await getAccount(db, email)
+    if (account) {
+      const row = await db.prepare('SELECT openai_api_key FROM account_settings WHERE account_id=?')
+        .bind(account.id).first<{ openai_api_key: string | null }>()
+      if (row?.openai_api_key) return row.openai_api_key
+    }
+  }
+  return envKey || null
+}
+
+// ─── Settings – Integrations endpoints ───────────────────────────────────────
+app.get('/api/settings/integrations', async (c) => {
+  if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
+  const email = c.req.query('email') || 'demo@socialstrategy.ai'
+  const account = await getAccount(c.env.DB, email)
+  if (!account) return c.json({ success: false, error: 'Account not found' }, 404)
+  const row = await c.env.DB.prepare('SELECT openai_api_key FROM account_settings WHERE account_id=?')
+    .bind(account.id).first<{ openai_api_key: string | null }>()
+  const key = row?.openai_api_key || null
+  return c.json({ success: true, openaiKeySet: !!key, openaiKeyHint: key ? `sk-...${key.slice(-4)}` : null })
+})
+
+app.post('/api/settings/integrations', async (c) => {
+  if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
+  const body = await c.req.json()
+  const email = (body.email as string) || 'demo@socialstrategy.ai'
+  const openaiApiKey = ((body.openaiApiKey as string) || '').trim()
+  const account = await getAccount(c.env.DB, email)
+  if (!account) return c.json({ success: false, error: 'Account not found' }, 404)
+  await c.env.DB.prepare(
+    `INSERT INTO account_settings (account_id, openai_api_key, updated_at)
+     VALUES (?, ?, CURRENT_TIMESTAMP)
+     ON CONFLICT(account_id) DO UPDATE SET openai_api_key=excluded.openai_api_key, updated_at=excluded.updated_at`
+  ).bind(account.id, openaiApiKey || null).run()
+  return c.json({ success: true })
+})
+
 // ─── Account info endpoint ────────────────────────────────────────────────────
 app.get('/api/account', async (c) => {
   if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
@@ -202,7 +242,7 @@ app.post('/api/analyze', async (c) => {
   const url = body.url || ''
   const clientId = body.clientId || null
   const accountEmail = body.accountEmail || null
-  const apiKey = c.env?.OPENAI_API_KEY
+  const apiKey = await getOpenAIKey(c.env?.DB, accountEmail, c.env?.OPENAI_API_KEY)
 
   if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured. Add your key in Settings → Integrations to enable real analysis.' }, 500)
 
@@ -421,7 +461,7 @@ function generateDemoPosts(brandName: string, industry: string, tone: string, to
 app.post('/api/generate-content', async (c) => {
   const body = await c.req.json()
   const { brandName, industry, tone, topic, platforms, clientId = null, characterId = null, accountEmail = null, websiteUrl = '', businessDesc = '' } = body
-  const apiKey = c.env?.OPENAI_API_KEY
+  const apiKey = await getOpenAIKey(c.env?.DB, accountEmail, c.env?.OPENAI_API_KEY)
 
   // ── DEMO MODE: No API key — generate rich sample posts ───────────────────
   if (!apiKey) {
@@ -580,7 +620,7 @@ CRITICAL QUALITY CHECK before returning: Re-read every post. If any post sounds 
 app.post('/api/generate-image', async (c) => {
   const body = await c.req.json()
   const { prompt, style = 'vivid', size = '1024x1024', clientId = null, characterId = null, saveToLibrary = true, accountEmail = null } = body
-  const apiKey = c.env?.OPENAI_API_KEY
+  const apiKey = await getOpenAIKey(c.env?.DB, accountEmail, c.env?.OPENAI_API_KEY)
 
   if (!apiKey) {
     // Demo mode: return a placeholder image
@@ -651,7 +691,7 @@ app.post('/api/generate-image', async (c) => {
 app.post('/api/generate-video-script', async (c) => {
   const body = await c.req.json()
   const { brandName, industry, tone, topic, platform = 'TikTok', duration = '30', clientId = null, characterId = null, accountEmail = null } = body
-  const apiKey = c.env?.OPENAI_API_KEY
+  const apiKey = await getOpenAIKey(c.env?.DB, accountEmail, c.env?.OPENAI_API_KEY)
 
   if (!apiKey) {
     // Demo video script
@@ -777,9 +817,9 @@ app.post('/api/generate-report', async (c) => {
     reportMonth = '',
     location = '',
   } = body
-  const apiKey = c.env?.OPENAI_API_KEY
+  const apiKey = await getOpenAIKey(c.env?.DB, accountEmail, c.env?.OPENAI_API_KEY)
 
-  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured. Add your key in Settings → Integrations to enable real analysis.' }, 500)
 
   // ── Credit gate ──────────────────────────────────────────────────────────
   if (c.env?.DB) {
@@ -1194,8 +1234,8 @@ app.delete('/api/characters/:id', async (c) => {
 // Generate avatar for a character using DALL-E 3
 app.post('/api/characters/:id/generate-avatar', async (c) => {
   if (!c.env?.DB) return c.json({ success: false, error: 'DB not available' }, 500)
-  const apiKey = c.env?.OPENAI_API_KEY
-  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured' }, 500)
+  const apiKey = await getOpenAIKey(c.env?.DB, null, c.env?.OPENAI_API_KEY)
+  if (!apiKey) return c.json({ success: false, error: 'OpenAI API key not configured. Add your key in Settings → Integrations.' }, 500)
 
   const char = await c.env.DB.prepare(
     'SELECT * FROM characters WHERE id=?'

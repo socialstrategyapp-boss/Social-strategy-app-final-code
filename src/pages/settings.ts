@@ -72,6 +72,44 @@ export function settingsPage(): string {
       </div>
     </div>
 
+    <!-- Integrations -->
+    <div class="glass-dark" style="border-radius:18px;padding:24px;margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0 0 20px;display:flex;align-items:center;gap:10px;">
+        <i class="fas fa-plug" style="color:#A78BFA;"></i> Integrations
+      </h3>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- OpenAI -->
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#10A37F,#07784E);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-robot" style="color:#fff;font-size:16px;"></i>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#fff;">OpenAI</div>
+              <div id="openaiStatus" style="font-size:12px;color:#6b7280;">Loading…</div>
+            </div>
+          </div>
+          <label style="font-size:11px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:6px;">API Key</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 14px;transition:border-color 0.2s;" onfocusin="this.style.borderColor='#A78BFA'" onfocusout="this.style.borderColor='rgba(255,255,255,0.1)'">
+              <i class="fas fa-key" style="color:#6b7280;font-size:13px;flex-shrink:0;"></i>
+              <input id="openaiApiKey" type="password" placeholder="sk-…" autocomplete="off" style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px;font-family:monospace;">
+            </div>
+            <button onclick="saveIntegrations()" style="background:linear-gradient(135deg,#A78BFA,#7C3AED);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;border:none;cursor:pointer;white-space:nowrap;">
+              <i class="fas fa-save" style="margin-right:6px;"></i>Save Key
+            </button>
+          </div>
+          <div style="font-size:12px;color:#6b7280;margin-top:10px;">
+            <i class="fas fa-info-circle" style="margin-right:4px;color:#A78BFA;"></i>
+            Your key is stored securely and used to power AI content generation, website analysis, and image creation.
+            Get your key at <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" style="color:#A78BFA;text-decoration:underline;">platform.openai.com/api-keys</a>.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Notifications -->
     <div class="glass-dark" style="border-radius:18px;padding:24px;margin-bottom:24px;">
       <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0 0 20px;display:flex;align-items:center;gap:10px;">
@@ -197,6 +235,47 @@ export function settingsPage(): string {
         alert('Account deletion request submitted. You will receive a confirmation email.');
       }
     }
+
+    // ── Integrations ─────────────────────────────────────────────────────────
+    async function loadIntegrations() {
+      try {
+        const res = await fetch('/api/settings/integrations');
+        const data = await res.json();
+        const statusEl = document.getElementById('openaiStatus');
+        if (data.success) {
+          if (data.openaiKeySet) {
+            statusEl.textContent = 'Connected · ' + data.openaiKeyHint;
+            statusEl.style.color = '#4ade80';
+          } else {
+            statusEl.textContent = 'Not configured';
+            statusEl.style.color = '#6b7280';
+          }
+        }
+      } catch (_) {}
+    }
+
+    async function saveIntegrations() {
+      const key = document.getElementById('openaiApiKey').value.trim();
+      const statusEl = document.getElementById('openaiStatus');
+      try {
+        const res = await fetch('/api/settings/integrations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ openaiApiKey: key }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('openaiApiKey').value = '';
+          statusEl.textContent = key ? 'Connected · sk-...' + key.slice(-4) : 'Not configured';
+          statusEl.style.color = key ? '#4ade80' : '#6b7280';
+          const toast = document.getElementById('saveToast');
+          toast.style.display = 'flex';
+          setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+      } catch (_) {}
+    }
+
+    loadIntegrations();
   </script>
   `
   return layout('Settings', content, 'settings')
