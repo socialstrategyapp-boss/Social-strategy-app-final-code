@@ -1,0 +1,73 @@
+{
+  "variation_id": "v4",
+  "variation_name": "Beginner",
+  "slug": "v4-beginner",
+  "created_at": "2026-04-19",
+  "description": "A simplified, jargon-free variation for businesses new to social media or content marketing. Step-by-step explanations, plain English, and confidence-building tone. Ideal for first-time users of the Social Strategy platform.",
+  "target_persona": "Small business owners new to social media, tradies and local businesses posting for the first time, solo operators without marketing experience",
+  "tone_modifiers": {
+    "formality": "friendly, warm, encouraging",
+    "emphasis": "simplicity, clarity, step-by-step, confidence-building",
+    "avoid": ["jargon", "assumed knowledge", "complex strategies", "overwhelming detail", "marketing acronyms without explanation"],
+    "use": ["plain English", "numbered steps", "simple examples", "encouraging language", "one thing at a time"]
+  },
+  "caption_framework": {
+    "hook": "Simple question or relatable situation the reader recognises instantly",
+    "body": "3-4 short, clear points. One idea per sentence. Numbered steps work best.",
+    "cta": "Simple and non-threatening: 'Comment below', 'Save this for later', 'Give it a try this week'"
+  },
+  "prompt_overrides": [
+    {
+      "base_prompt_ref": "p003",
+      "override_instruction": "Write as if explaining to someone who has never posted on social media before. No jargon. Short sentences. Break every idea into steps. Open with a relatable question: 'Not sure what to post today?' or 'Running a [business type] and don't know where to start?'. Give one simple, actionable tip. Make the reader feel capable."
+    },
+    {
+      "base_prompt_ref": "p004",
+      "override_instruction": "Write a video script that feels like a friendly conversation, not a presentation. Use conversational language. Explain what to show on camera step by step. Keep duration under 30 seconds for beginner confidence. Suggest the easiest possible filming setup (phone only, no lights needed)."
+    },
+    {
+      "base_prompt_ref": "p002",
+      "override_instruction": "Simplify the content calendar to 3 posts per week maximum. Use only the simplest post types: photo with caption, simple video on phone, or a text-based tip post. Avoid complex content types. Provide exact examples ready to copy-paste with minimal customisation needed."
+    }
+  ],
+  "beginner_content_types": [
+    {
+      "type": "Introduction Post",
+      "difficulty": "easy",
+      "description": "Tell your followers who you are and what you do. First post for any new business account.",
+      "template": "Hey [city]! We're [business name] and we [what you do]. [Your story in 1-2 sentences]. Follow us for [what they'll get]. DM us anytime — we'd love to chat! 👋"
+    },
+    {
+      "type": "Behind the Scenes",
+      "difficulty": "easy",
+      "description": "Show what happens in your business day-to-day. Point camera, press record.",
+      "template": "A little behind the scenes at [business name] today! [1 sentence of what's happening]. This is how we [what you're showing]. Questions? Drop them below 👇"
+    },
+    {
+      "type": "Quick Tip",
+      "difficulty": "easy",
+      "description": "One helpful tip related to your business. Short and shareable.",
+      "template": "Quick tip for [audience]: [single tip in plain language]. Save this for later! 💾"
+    },
+    {
+      "type": "Customer Thank You",
+      "difficulty": "easy",
+      "description": "Share a customer review or shoutout.",
+      "template": "We love hearing from our customers! [Paste review or paraphrase]. Thank you [first name] — you made our day! ⭐"
+    }
+  ],
+  "platform_notes": {
+    "Facebook": "Best starting point for most local businesses. Large audience, easy to manage. Start here.",
+    "Instagram": "Good second step. Focus on photos only at first. No Reels required to start.",
+    "Google Business": "Set this up first before any social media. Free and drives local discovery.",
+    "TikTok": "Leave until comfortable. Not necessary for all businesses."
+  },
+  "beginner_tips": [
+    "Post 3x per week consistently rather than 7x for one week then nothing",
+    "Use your phone camera — it's good enough",
+    "Reply to every comment, especially early on",
+    "Don't overthink it — done is better than perfect",
+    "Use the generated captions as-is or with minor tweaks — they're written for your industry"
+  ],
+  "credit_multiplier": 1.0
+}

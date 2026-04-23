@@ -1,0 +1,30 @@
+{
+  "industry": "agriculture_rural",
+  "label": "Agriculture & Rural",
+  "created_at": "2026-04-19",
+  "triggers": ["farm", "agriculture", "rural", "crop", "livestock", "produce", "agribusiness", "harvest"],
+  "platform_priority": ["Facebook", "Instagram", "YouTube", "LinkedIn"],
+  "margin_benchmark": "20-40% gross margin",
+  "repurchase_cycle": "Seasonal",
+  "prompts": [
+    {
+      "ref": "p022",
+      "title": "Agriculture & Rural Business Content Pack",
+      "tags": ["agriculture", "farming", "rural", "produce", "farm-to-table"]
+    }
+  ],
+  "content_angles": [
+    "Seasonal farm updates & harvest content",
+    "Farm to table story",
+    "Behind-the-scenes: planting, growing, harvesting",
+    "Team & family farm stories",
+    "Sustainable farming practices",
+    "Product quality & freshness stories",
+    "Local market & direct supply content"
+  ],
+  "hashtag_groups": {
+    "broad": ["#farming", "#agriculture", "#farmlife", "#local"],
+    "niche": ["#[crop/product]", "#[region]farmers", "#farmtotable"],
+    "community": ["#supportlocal", "#eatlocal", "#growlocal"]
+  }
+}

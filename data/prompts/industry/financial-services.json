@@ -1,0 +1,47 @@
+{
+  "industry": "financial_services",
+  "label": "Financial Services",
+  "created_at": "2026-04-19",
+  "triggers": ["finance", "wealth", "investment", "super", "tax", "mortgage", "loan", "insurance", "broker"],
+  "platform_priority": ["LinkedIn", "Facebook", "YouTube", "Instagram"],
+  "margin_benchmark": "1-3% AUM or fixed fee structures",
+  "repurchase_cycle": "Annual reviews, ongoing advisory",
+  "compliance": {
+    "framework": "ASIC / RG 234",
+    "notes": [
+      "General advice vs personal advice distinction must be clear",
+      "Include appropriate disclaimers on all content",
+      "No guaranteed return claims",
+      "Licensee and authorised representative details where required",
+      "Follow RG 234 guidelines for advertising"
+    ],
+    "required_disclaimer": "General advice only. Not personal financial advice. Consider your personal circumstances before acting. [AFSL/ACL details]."
+  },
+  "prompts": [
+    {
+      "ref": "p023",
+      "title": "Financial Services Content Pack",
+      "tags": ["financial-services", "wealth", "mortgage", "compliance", "asic"]
+    },
+    {
+      "ref": "p026",
+      "title": "Finance & Wealth Video Prompts",
+      "tags": ["finance", "wealth", "money", "video-ideas", "education"]
+    }
+  ],
+  "content_angles": [
+    "X financial mistakes people make in their 30s/40s",
+    "Market commentary & economic updates",
+    "Tax planning tips by season",
+    "Client milestone stories (retirement, first home, etc.)",
+    "Plain-English explainers of complex topics",
+    "Team expertise & credentials",
+    "Regulatory updates that affect clients"
+  ],
+  "hashtag_groups": {
+    "broad": ["#finance", "#money", "#investing", "#wealth"],
+    "niche": ["#personalfinance", "#[service]advice", "#financialfreedom"],
+    "local": ["#[city]financialadviser", "#[city]mortgage"]
+  },
+  "master_positioning": "Money is a tool. We teach you to use it."
+}

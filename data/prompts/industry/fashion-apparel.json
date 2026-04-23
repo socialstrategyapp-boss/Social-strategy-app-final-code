@@ -1,0 +1,31 @@
+{
+  "industry": "fashion_apparel",
+  "label": "Fashion & Apparel",
+  "created_at": "2026-04-19",
+  "triggers": ["fashion", "clothing", "apparel", "boutique", "designer", "streetwear", "style", "outfit"],
+  "platform_priority": ["Instagram", "TikTok", "Pinterest", "YouTube"],
+  "margin_benchmark": "50-70% gross margin",
+  "repurchase_cycle": "Monthly (fast fashion), quarterly (premium)",
+  "prompts": [
+    {
+      "ref": "p019",
+      "title": "Fashion & Apparel Content Pack",
+      "tags": ["fashion", "apparel", "clothing", "style", "ootd"]
+    }
+  ],
+  "content_angles": [
+    "Outfit-of-the-day (OOTD) inspiration",
+    "Styling tips for different body types",
+    "Behind-the-scenes design & production",
+    "New collection drops & previews",
+    "How to style one piece 5 ways",
+    "Sustainable fashion / ethical sourcing story",
+    "Influencer & UGC reposts",
+    "Size-inclusive content"
+  ],
+  "hashtag_groups": {
+    "broad": ["#fashion", "#style", "#ootd", "#outfit"],
+    "niche": ["#[style]fashion", "#[brand]style", "#sustainablefashion"],
+    "community": ["#fashionblogger", "#fashionista", "#streetstyle"]
+  }
+}

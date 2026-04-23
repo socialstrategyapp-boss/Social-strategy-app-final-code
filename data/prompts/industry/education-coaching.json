@@ -1,0 +1,31 @@
+{
+  "industry": "education_coaching",
+  "label": "Education & Coaching",
+  "created_at": "2026-04-19",
+  "triggers": ["coach", "trainer", "educator", "course", "learning", "tutor", "mentor", "academy", "school"],
+  "platform_priority": ["Instagram", "LinkedIn", "YouTube", "TikTok", "Facebook"],
+  "margin_benchmark": "70-90% gross margin (digital), 50-65% (in-person)",
+  "repurchase_cycle": "3-12 months course cycles",
+  "prompts": [
+    {
+      "ref": "p016",
+      "title": "Education & Coaching Content Pack",
+      "tags": ["coaching", "education", "course", "transformation", "funnel"]
+    }
+  ],
+  "content_angles": [
+    "Transformation stories from students/clients",
+    "What I wish I knew when I started [topic]",
+    "Quick tip videos (60 seconds of value)",
+    "Behind-the-scenes course creation",
+    "Live session previews",
+    "Student spotlights & milestones",
+    "Authority content: publications, speaking, media",
+    "Free value → paid offer funnel content"
+  ],
+  "hashtag_groups": {
+    "broad": ["#coaching", "#learning", "#education", "#[niche]coach"],
+    "niche": ["#[topic]tips", "#[audience]transformation", "#[course-name]"],
+    "engagement": ["#askme", "#[topic]community", "#growthmindset"]
+  }
+}

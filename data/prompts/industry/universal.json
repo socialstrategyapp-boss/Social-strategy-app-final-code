@@ -1,0 +1,50 @@
+{
+  "industry": "universal",
+  "label": "Universal (Fallback)",
+  "created_at": "2026-04-19",
+  "triggers": [],
+  "description": "Used when industry cannot be determined from URL analysis or user selection. Applies broad but effective content strategies applicable to any business type.",
+  "platform_priority": ["Instagram", "Facebook", "LinkedIn", "TikTok"],
+  "prompts": [
+    {
+      "ref": "p001",
+      "title": "Website & Brand Analysis",
+      "tags": ["analysis", "brand", "seo", "strategy", "audit"]
+    },
+    {
+      "ref": "p002",
+      "title": "Social Media Content Generation",
+      "tags": ["content", "social-media", "copywriting", "calendar"]
+    },
+    {
+      "ref": "p003",
+      "title": "Generic Social Post Caption",
+      "tags": ["caption", "copywriting", "social-post"]
+    },
+    {
+      "ref": "p004",
+      "title": "Video Script — Hook-Driven Short Form",
+      "tags": ["video-script", "short-form", "hook"]
+    },
+    {
+      "ref": "p024",
+      "title": "Universal Fallback Content Pack",
+      "tags": ["universal", "general", "fallback", "small-business"]
+    }
+  ],
+  "content_angles": [
+    "Origin story & founder journey",
+    "Product/service demonstration",
+    "Customer success & reviews",
+    "Educational tips in your space",
+    "Behind-the-scenes culture",
+    "Community involvement",
+    "Limited offers & urgency",
+    "Team introductions & trust-building"
+  ],
+  "hashtag_groups": {
+    "core": ["#smallbusiness", "#supportlocal", "#entrepreneur", "#business", "#branding"],
+    "marketing": ["#marketing", "#socialmedia", "#growth"],
+    "local": ["#[location]", "#[service]"]
+  }
+}

@@ -1,0 +1,479 @@
+{
+  "version": "1.0.0",
+  "created_at": "2026-04-19",
+  "description": "Social Strategy — Master prompt library. All unique prompts, cleaned and deduplicated. Identical and >=90% similar entries merged into single canonical records.",
+  "total_prompts": 47,
+  "deduplication_notes": "Identical and >=90% similar prompts merged. No ambiguous near-duplicates found. Source files: prompts/PROMPTS.md, prompts/INDUSTRY-LIBRARY.md, prompts/INDUSTRY-CONTENT-LIBRARY.md, prompts/CONTENT-ENGINE-SYSTEM.md, prompts/MARKETING-CONTENT-PROMPTS.md, prompts/VIDEO-SCRIPT.md, prompts/VISUAL-PROMPTS.md, prompts/PURCHASE-TRIGGER.md, prompts/REPORT-TEMPLATES.md.",
+  "prompts": [
+    {
+      "id": "p001",
+      "title": "Website & Brand Analysis",
+      "prompt_text": "You are a senior digital marketing consultant, business strategist, and brand analyst with 20+ years experience. You are conducting a COMPREHENSIVE, PAID-LEVEL audit of this business.\n\nWebsite to analyse: {url}\n\nConduct a THOROUGH, SPECIFIC analysis of this real business. Research the URL deeply and provide a detailed, actionable report. Do NOT use placeholder text or generic advice — every point must be specific to THIS business.\n\nReturn ONLY valid JSON:\n{\n  \"businessName\": \"<actual business name from website>\",\n  \"industry\": \"<specific industry/niche>\",\n  \"seoScore\": <0-100>,\n  \"brandScore\": <0-100>,\n  \"usabilityScore\": <0-100>,\n  \"contentScore\": <0-100>,\n  \"overallScore\": <0-100>,\n  \"websiteSummary\": \"<3-4 sentences: what they do, who they serve, what makes them unique, market position>\",\n  \"businessStrengths\": [\"<strength 1>\",\"<strength 2>\",\"<strength 3>\"],\n  \"recommendations\": [\"<SPECIFIC SEO recommendation>\",\"<SPECIFIC branding recommendation>\",\"<SPECIFIC content recommendation>\",\"<SPECIFIC conversion optimisation recommendation>\",\"<SPECIFIC social media recommendation>\",\"<SPECIFIC technical/UX recommendation>\"],\n  \"strategy\": {\n    \"pricing\": \"<recommended pricing model with specific price points>\",\n    \"revenue\": \"<specific 12-month revenue growth projection>\",\n    \"actions\": [\"<do this week>\",\"<do this month>\",\"<do this quarter>\"],\n    \"competitorGap\": \"<specific exploitable gap vs competitors>\"\n  },\n  \"contentPillars\": [\"<pillar 1>\",\"<pillar 2>\",\"<pillar 3>\",\"<pillar 4>\",\"<pillar 5>\"],\n  \"targetAudience\": {\n    \"primary\": \"<age, demographics, psychographics, pain points>\",\n    \"secondary\": \"<secondary audience>\",\n    \"painPoints\": [\"<pain 1>\",\"<pain 2>\",\"<pain 3>\"]\n  },\n  \"socialMediaStrategy\": {\n    \"bestPlatforms\": [\"<platform 1>\",\"<platform 2>\",\"<platform 3>\"],\n    \"postingFrequency\": \"<recommended frequency per platform>\",\n    \"contentTypes\": [\"<type 1>\",\"<type 2>\",\"<type 3>\"],\n    \"bestHashtags\": [\"#tag1\",\"#tag2\",\"#tag3\",\"#tag4\",\"#tag5\"]\n  },\n  \"topOpportunity\": \"<single BIGGEST growth opportunity — specific and bold>\",\n  \"quickWins\": [\"<24-hour win>\",\"<1-week win>\",\"<1-month win>\"]\n}",
+      "tags": ["analysis", "brand", "seo", "strategy", "audit"],
+      "industry": "universal",
+      "example_use_case": "User submits their business URL; system returns a full brand + SEO + social strategy audit in JSON format.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p002",
+      "title": "Social Media Content Generation",
+      "prompt_text": "You are an elite social media strategist and copywriter for {brandName}, a {industry} business.\n\nBRAND BRIEF:\n- Brand: {brandName}\n- Industry: {industry}\n- Website: {websiteUrl}\n- Description: {businessDesc}\n- Tone of Voice: {tone}\n- Target Audience: {targetAudience}\n- Content Pillars: {contentPillars}\n- Top Hashtags: {hashtags}\n\nGenerate a COMPLETE social media content pack. Return ONLY valid JSON with:\n{\n  \"posts\": [\n    {\n      \"platform\": \"Instagram\",\n      \"type\": \"carousel|reel|static\",\n      \"hook\": \"<attention-grabbing opening line>\",\n      \"caption\": \"<full caption with line breaks, emojis, CTA>\",\n      \"hashtags\": [\"#tag1\",\"#tag2\",\"#tag3\"],\n      \"visualDirection\": \"<specific visual description for designer/photographer>\",\n      \"bestPostTime\": \"<day and time recommendation>\"\n    }\n  ],\n  \"contentCalendar\": {\n    \"week1\": [\"<post idea 1>\",\"<post idea 2>\",\"<post idea 3>\"],\n    \"week2\": [\"<post idea 1>\",\"<post idea 2>\",\"<post idea 3>\"],\n    \"week3\": [\"<post idea 1>\",\"<post idea 2>\",\"<post idea 3>\"],\n    \"week4\": [\"<post idea 1>\",\"<post idea 2>\",\"<post idea 3>\"]\n  }\n}",
+      "tags": ["content", "social-media", "copywriting", "calendar", "instagram", "tiktok"],
+      "industry": "universal",
+      "example_use_case": "After brand analysis, generate a full month of platform-specific social content with captions, hashtags, and visual directions.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p003",
+      "title": "Generic Social Post Caption",
+      "prompt_text": "You are an expert social media copywriter. Write a high-converting social media post for {brandName}, a {industry} business.\n\nPost details:\n- Platform: {platform}\n- Tone: {tone}\n- Topic: {topic}\n- Target audience: {audience}\n- Goal: {goal}\n\nRequirements:\n1. Open with a scroll-stopping hook (question, bold statement, or surprising fact)\n2. Body: 3-5 lines of value (educate, entertain, or inspire)\n3. Clear CTA (comment, save, click link, book, buy)\n4. 5-10 relevant hashtags mixed broad + niche\n5. 1-3 relevant emojis (not excessive)\n\nReturn as plain text, ready to copy-paste.",
+      "tags": ["caption", "copywriting", "social-post", "hashtags", "cta"],
+      "industry": "universal",
+      "example_use_case": "Quick single-post generation for any platform and business type.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p004",
+      "title": "Video Script — Hook-Driven Short Form",
+      "prompt_text": "You are an expert short-form video scriptwriter. Write a compelling script for {brandName}.\n\nVideo details:\n- Platform: {platform} (TikTok/Reels/Shorts)\n- Duration: {duration} seconds\n- Topic: {topic}\n- Tone: {tone}\n- Goal: {goal}\n\nScript structure:\n[HOOK — 0-3 seconds]: <pattern interrupt line that stops the scroll>\n[PROBLEM — 3-8 seconds]: <relatable pain point or situation>\n[VALUE — 8-{duration-10} seconds]: <education, story, or demonstration>\n[CTA — last 5 seconds]: <single clear action>\n\nInclude:\n- On-screen text suggestions [in brackets]\n- B-roll/visual notes (in parentheses)\n- Exact words to speak\n\nTarget: high completion rate + shares",
+      "tags": ["video-script", "short-form", "tiktok", "reels", "hook"],
+      "industry": "universal",
+      "example_use_case": "Generate a ready-to-film short-form video script for any business topic.",
+      "source": "prompts/VIDEO-SCRIPT.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p005",
+      "title": "Visual/Image Prompt Generator",
+      "prompt_text": "You are a creative director and visual strategist for {brandName}, a {industry} brand.\n\nGenerate {count} distinct visual content prompts for social media.\n\nFor each visual prompt include:\n- Scene description (what's in frame)\n- Lighting direction (natural/studio/golden hour/etc.)\n- Color palette (2-3 hex codes or descriptions)\n- Mood/emotion target\n- Platform optimisation (aspect ratio, focal point)\n- Props or elements needed\n- Photographer/creator direction note\n\nBrand aesthetic: {aesthetic}\nColor palette: {brandColors}\nContent pillars: {pillars}\n\nMake each prompt specific, actionable, and ready to brief a photographer or content creator.",
+      "tags": ["visual", "image-prompt", "creative-direction", "photography", "content"],
+      "industry": "universal",
+      "example_use_case": "Generate a visual content brief pack for a photographer or content creator shoot.",
+      "source": "prompts/VISUAL-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p006",
+      "title": "Purchase Trigger & Urgency Copy",
+      "prompt_text": "You are a direct-response copywriter specialising in conversion psychology. Write high-converting purchase trigger copy for {brandName}.\n\nProduct/Service: {productName}\nPrice: {price}\nKey benefit: {mainBenefit}\nTarget customer: {customer}\nOffer type: {offerType} (limited time / limited stock / bonus / guarantee)\n\nGenerate:\n1. HEADLINE (max 10 words, benefit-led)\n2. SUBHEADLINE (max 20 words, specificity)\n3. BULLET POINTS (5 benefits using \"You'll...\" or \"Get...\" format)\n4. URGENCY BLOCK (scarcity/deadline/consequence of inaction)\n5. CTA BUTTON TEXT (2-5 words)\n6. OBJECTION HANDLER (1 line addressing top objection)\n7. GUARANTEE STATEMENT (if applicable)\n\nTone: {tone}\nPlatform: {platform}",
+      "tags": ["conversion", "urgency", "copywriting", "cta", "sales", "direct-response"],
+      "industry": "universal",
+      "example_use_case": "Generate high-converting sales copy for a product launch, limited-time offer, or promotional campaign.",
+      "source": "prompts/PURCHASE-TRIGGER.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p007",
+      "title": "Marketing Report Template",
+      "prompt_text": "You are a senior marketing analyst. Generate a comprehensive monthly performance report for {brandName}.\n\nReporting period: {period}\nPlatforms: {platforms}\nKey metrics provided: {metrics}\n\nReport structure:\n1. EXECUTIVE SUMMARY (3-4 sentences, top-line results)\n2. PERFORMANCE BY PLATFORM\n   - Reach & impressions\n   - Engagement rate vs benchmark\n   - Follower growth\n   - Top performing content\n3. CONTENT ANALYSIS\n   - Best performing post types\n   - Worst performing (and why)\n   - Content themes that resonated\n4. AUDIENCE INSIGHTS\n   - Demographics shift\n   - Peak engagement times\n   - Audience sentiment\n5. NEXT MONTH RECOMMENDATIONS\n   - Top 3 focus areas\n   - Content adjustments\n   - Testing opportunities\n6. KPI SCORECARD (table format)\n\nTone: professional, data-led, actionable.",
+      "tags": ["report", "analytics", "marketing", "kpi", "performance"],
+      "industry": "universal",
+      "example_use_case": "Generate a monthly social media performance report for a client or internal team.",
+      "source": "prompts/REPORT-TEMPLATES.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p008",
+      "title": "Content Engine — Pillar Extraction",
+      "prompt_text": "You are a content strategist. Analyse this business report and extract all monetizable content pillars.\n\nBusiness Report:\n{full_report}\n\nFor each pillar identify:\n- name: string\n- type: service | product | education | experience | recurring | brand\n- revenue_potential: low | medium | high\n- content_potential: low | medium | high\n- conversion_potential: low | medium | high\n- ease_score: 1-10\n- subtopics: string[] (10-15 specific subtopics)\n- recommended_formats: short_video | long_video | image | carousel | story | text | reel | live\n- posting_frequency: posts_per_week\n\nRank pillars by: (revenue_potential × 3) + (content_potential × 2) + ease_score\n\nReturn as JSON array of ranked pillars.",
+      "tags": ["content-engine", "pillars", "strategy", "planning"],
+      "industry": "universal",
+      "example_use_case": "Extract and rank monetizable content pillars from a completed business brand analysis report.",
+      "source": "prompts/CONTENT-ENGINE-SYSTEM.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p009",
+      "title": "Content Engine — Per-Pillar Content Generation",
+      "prompt_text": "You are an elite content creator and strategist. Generate a complete content pack for this business pillar.\n\nBusiness: {brandName}\nPillar: {pillarName}\nPillar type: {pillarType}\nTarget audience: {audience}\nTone: {tone}\n\nGenerate:\n1. 15 video ideas (each with: hook + format + duration + effort level: easy/medium/high)\n2. 10 image prompts (each with: subject + style + mood + platform)\n3. 10 captions (each with: opening hook + body + CTA variation)\n4. 5 CTA variations: soft, medium, direct, urgency, community\n5. 10 hook variations across: question, statement, controversy, statistic, story, challenge, myth, how-to, trend, personal\n\nVARIATION RULE: No two consecutive pieces share the same hook type, emotional angle, format, or CTA style.\n\nReturn as structured JSON.",
+      "tags": ["content-engine", "video-ideas", "captions", "hooks", "cta"],
+      "industry": "universal",
+      "example_use_case": "Generate 50+ pieces of content for a single business pillar, ready for scheduling.",
+      "source": "prompts/CONTENT-ENGINE-SYSTEM.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p010",
+      "title": "Retail & E-Commerce Content Pack",
+      "prompt_text": "You are a social media strategist specialising in retail and e-commerce brands.\n\nBrand: {brandName}\nProducts: {productCategories}\nPlatforms: {platforms}\nTarget customer: {customer}\nCurrent promotions: {promotions}\n\nGenerate a complete retail content pack including:\n1. PRODUCT LAUNCH SEQUENCE (5 posts: tease → reveal → social proof → urgency → last chance)\n2. FLASH SALE COPY (countdown-style, urgency-driven)\n3. UNBOXING SCRIPT (60-second video script)\n4. CUSTOMER REVIEW REPURPOSE TEMPLATES (3 formats)\n5. ABANDONED CART RECOVERY HOOKS (email subject + first line)\n6. SEASONAL CAMPAIGN IDEAS (next 3 months)\n7. HASHTAG STRATEGY:\n   - Broad: #onlineshopping #shopsmall #retailtherapy\n   - Niche: [product-specific]\n   - Conversion: #sale #newstock #limitedstock\n\nFocus on: Instagram → Pinterest → TikTok → Facebook",
+      "tags": ["retail", "ecommerce", "product-launch", "sale", "unboxing"],
+      "industry": "retail_ecommerce",
+      "example_use_case": "Generate a full content pack for an e-commerce brand including product launches, sales, and seasonal campaigns.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p011",
+      "title": "Food & Beverage / Restaurant Content Pack",
+      "prompt_text": "You are a hospitality and food marketing specialist.\n\nVenue: {venueName}\nCuisine/Type: {cuisineType}\nLocation: {location}\nUnique selling point: {usp}\nAverage spend: {avgSpend}\n\nGenerate:\n1. FOOD PHOTOGRAPHY DIRECTION (5 hero shots with exact staging notes)\n2. CHEF/TEAM STORY CONTENT (3 posts introducing the people behind the food)\n3. DAILY SPECIALS TEMPLATE (reusable caption framework)\n4. SEASONAL MENU ANNOUNCEMENT (reveal sequence: tease → launch → feature dishes)\n5. UGC ENCOURAGEMENT CAMPAIGN (how to get customers posting)\n6. LOCAL EVENT TIE-IN IDEAS (5 local events to leverage)\n7. REVIEW RESPONSE TEMPLATES (positive + negative)\n8. HASHTAG GROUPS:\n   - Broad: #foodie #instafood #restaurant\n   - Niche: #[city]eats #[cuisine]food #[city]foodie\n   - Branded: #[restaurantname] #[signatureDish]\n\nPlatform priority: Instagram → TikTok → Facebook → Google Business",
+      "tags": ["food", "restaurant", "cafe", "hospitality", "menu"],
+      "industry": "food_beverage",
+      "example_use_case": "Generate a restaurant/cafe content pack with food photography direction, team stories, and seasonal promotions.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p012",
+      "title": "Health, Beauty & Wellness Content Pack",
+      "prompt_text": "You are a beauty and wellness marketing expert.\n\nBusiness: {businessName}\nServices/Products: {offerings}\nPlatforms: {platforms}\nTarget client: {targetClient}\nBrand positioning: {positioning}\n\nGenerate:\n1. TRANSFORMATION CONTENT PLAN (before/after framework with consent-conscious language)\n2. PRODUCT DEMONSTRATION SCRIPTS (3 × 60-second Reel scripts)\n3. CLIENT TESTIMONIAL TEMPLATES (written + video formats)\n4. EDUCATIONAL SERIES (5-part series on: ingredients, benefits, process, results, FAQs)\n5. SEASONAL PROMOTIONS (4 campaigns mapped to seasons)\n6. SELF-CARE LIFESTYLE CONTENT (aspirational, non-salesy)\n7. TEAM SPOTLIGHT FRAMEWORK\n8. HASHTAG STRATEGY:\n   - Broad: #beauty #skincare #wellness #selfcare\n   - Niche: #[treatment]results #[city]salon #[beauty-trend]\n   - Educational: #skincareadvice #beautytips #[ingredient]benefits\n\nPlatform priority: Instagram → TikTok → Pinterest → YouTube",
+      "tags": ["beauty", "wellness", "skincare", "salon", "health"],
+      "industry": "health_beauty_wellness",
+      "example_use_case": "Generate a beauty/wellness brand content pack including transformation content, educational series, and seasonal promotions.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p013",
+      "title": "Professional Services Content Pack",
+      "prompt_text": "You are a B2B content strategist specialising in professional services firms.\n\nFirm: {firmName}\nService type: {serviceType} (legal/accounting/consulting/financial advisory)\nTarget clients: {targetClients}\nGeography: {geography}\nKey differentiator: {differentiator}\n\nGenerate:\n1. AUTHORITY POSITIONING SERIES (5 posts: \"X things you didn't know about [topic]\")\n2. CLIENT SUCCESS STORY FRAMEWORK (anonymised case study template)\n3. FAQ CONTENT PLAN (10 common client questions + post formats)\n4. INDUSTRY NEWS COMMENTARY TEMPLATES (how to react to news professionally)\n5. TEAM EXPERTISE SHOWCASE (credentials, process, culture)\n6. LEAD GENERATION HOOKS (free resource offers, consultations)\n7. LINKEDIN-SPECIFIC CONTENT (articles, polls, thought leadership)\n8. COMPLIANCE-SAFE LANGUAGE GUIDE (disclaimers, general vs specific advice)\n9. HASHTAG STRATEGY:\n   - Broad: #business #entrepreneur #[profession]\n   - Authority: #[industry]advice #[profession]tips #businessgrowth\n   - Local: #[city][profession] #[city]business\n\nPlatform priority: LinkedIn → Facebook → Google Business → YouTube",
+      "tags": ["professional-services", "b2b", "authority", "linkedin", "consulting"],
+      "industry": "professional_services",
+      "example_use_case": "Generate a professional services firm content strategy focused on authority positioning and lead generation.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p014",
+      "title": "Real Estate Content Pack",
+      "prompt_text": "You are a real estate marketing specialist.\n\nAgent/Agency: {agentName}\nMarket: {market}\nSpecialisation: {specialisation} (residential/commercial/investment/first-home buyer)\nCurrent listings: {listingCount}\nKey areas: {suburbs}\n\nGenerate:\n1. LISTING LAUNCH SEQUENCE (6-post sequence: tease → open home → feature video → lifestyle → final week → SOLD)\n2. MARKET UPDATE TEMPLATE (monthly suburb report format)\n3. BUYER EDUCATION SERIES (5 posts for first-home buyers)\n4. INVESTMENT INSIGHT CONTENT (ROI explainers, yield calculations)\n5. LOCAL AREA GUIDE FORMAT (suburb highlight post framework)\n6. AGENT TRUST BUILDING CONTENT (personal brand, track record, local knowledge)\n7. VIRTUAL TOUR SCRIPT (2-minute walkthrough script)\n8. JUST SOLD ANNOUNCEMENT TEMPLATES (social proof posts)\n9. HASHTAG STRATEGY:\n   - Broad: #realestate #property #newhome #househunting\n   - Local: #[suburb]realestate #[city]property #[suburb]homes\n   - Niche: #investmentproperty #firsthomebuyer #[city]realestate\n\nPlatform priority: Instagram → Facebook → LinkedIn → YouTube",
+      "tags": ["real-estate", "property", "listings", "agent", "market"],
+      "industry": "real_estate",
+      "example_use_case": "Generate a real estate agent content pack including listing sequences, market updates, and buyer education.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p015",
+      "title": "Trades & Home Services Content Pack",
+      "prompt_text": "You are a trades and home services marketing expert.\n\nBusiness: {businessName}\nTrade type: {tradeType} (plumber/electrician/builder/landscaper/cleaner/etc.)\nService area: {serviceArea}\nYears in business: {yearsInBusiness}\nLicences/certifications: {credentials}\n\nGenerate:\n1. BEFORE & AFTER PROJECT SERIES (5 job showcase formats)\n2. EDUCATIONAL TIP CONTENT (10 \"did you know?\" home maintenance tips)\n3. LOCAL AREA TARGETING POSTS (suburb-tagged job showcases)\n4. TEAM INTRODUCTION SERIES (owner + crew trust-building)\n5. REVIEW CAPTURE CAMPAIGN (how to systematically get Google/Facebook reviews)\n6. SEASONAL SERVICE REMINDERS (4 seasons × 3 posts each)\n7. SAFETY & COMPLIANCE EDUCATION CONTENT\n8. QUOTE/BOOKING CTA TEMPLATES\n9. HASHTAG STRATEGY:\n   - Broad: #tradie #homeimprovement #[trade]services\n   - Local: #[city][trade] #[suburb]trades #localtradie\n   - Trust: #licensed #insured #qualityworkmanship\n\nPlatform priority: Facebook → Google Business → Instagram → TikTok",
+      "tags": ["trades", "home-services", "tradie", "local-business", "reviews"],
+      "industry": "trades_home_services",
+      "example_use_case": "Generate a trades business content pack with project showcases, educational content, and review campaigns.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p016",
+      "title": "Education & Coaching Content Pack",
+      "prompt_text": "You are an education and coaching marketing specialist.\n\nCoach/Educator: {name}\nNiche: {niche}\nTarget student: {targetStudent}\nOffer: {offer} (course/program/1-on-1/group/membership)\nPrice point: {price}\nTransformation promise: {transformation}\n\nGenerate:\n1. TRANSFORMATION STORY CONTENT (client results showcase framework)\n2. AUTHORITY CONTENT SERIES (credentials, media, speaking, publications)\n3. FREE VALUE FUNNEL (5-post value ladder leading to offer)\n4. STUDENT SPOTLIGHT TEMPLATES (milestone celebrations)\n5. LIVE/WEBINAR PROMOTION SEQUENCE (announce → remind → last chance)\n6. \"WHAT I WISH I KNEW\" CONTENT (relatable, shareable educational posts)\n7. COURSE BEHIND-THE-SCENES (builds anticipation and trust)\n8. OBJECTION-HANDLING CONTENT (top 5 objections → post for each)\n9. HASHTAG STRATEGY:\n   - Broad: #coaching #learning #education #[niche]coach\n   - Niche: #[topic]tips #[audience]transformation #[course-name]\n   - Engagement: #askme #[topic]community #growthmindset\n\nPlatform priority: Instagram → LinkedIn → YouTube → TikTok → Facebook",
+      "tags": ["coaching", "education", "course", "transformation", "funnel"],
+      "industry": "education_coaching",
+      "example_use_case": "Generate a coach or educator content pack including transformation stories, authority content, and offer promotion sequences.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p017",
+      "title": "Hospitality & Accommodation Content Pack",
+      "prompt_text": "You are a hospitality and tourism marketing expert.\n\nProperty: {propertyName}\nType: {propertyType} (hotel/resort/B&B/Airbnb/boutique lodge)\nLocation: {location}\nUnique experiences: {experiences}\nCapacity: {capacity}\nStar rating / positioning: {positioning}\n\nGenerate:\n1. ROOM & AMENITY SHOWCASE SERIES (photography direction + captions)\n2. LOCAL AREA GUIDE CONTENT (hidden gems, must-do activities)\n3. GUEST EXPERIENCE STORIES (testimonial framework with permission guide)\n4. SEASONAL PACKAGE PROMOTIONS (4 seasons × launch sequence)\n5. \"A DAY AT [PROPERTY]\" ITINERARY CONTENT\n6. BEHIND-THE-SCENES (housekeeping, chef, event setup — human interest)\n7. REVIEW RESPONSE GUIDE (TripAdvisor, Google, Booking.com templates)\n8. EVENT TIE-IN CONTENT (weddings, conferences, retreats)\n9. BOOKING URGENCY COPY (peak season, limited availability)\n\nPlatform priority: Instagram → Pinterest → Facebook → TikTok",
+      "tags": ["hospitality", "accommodation", "hotel", "tourism", "airbnb"],
+      "industry": "hospitality_accommodation",
+      "example_use_case": "Generate a hotel or accommodation content pack with room showcases, local guides, and seasonal promotions.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p018",
+      "title": "Technology & SaaS Content Pack",
+      "prompt_text": "You are a B2B tech and SaaS content strategist.\n\nProduct: {productName}\nCategory: {category}\nTarget user: {targetUser}\nKey features: {keyFeatures}\nPrimary value prop: {valueProp}\nPricing model: {pricingModel}\nCompetitors: {competitors}\n\nGenerate:\n1. FEATURE RELEASE ANNOUNCEMENT TEMPLATES (major + minor release formats)\n2. USE-CASE WALKTHROUGH SCRIPTS (3 × demo video scripts for different user types)\n3. CUSTOMER SUCCESS METRIC POSTS (\"Company X saved $X / Y hours using...\")\n4. INTEGRATION ANNOUNCEMENT TEMPLATES\n5. ENGINEERING/TEAM CULTURE CONTENT (builds trust + hiring)\n6. INDUSTRY TREND COMMENTARY SERIES (positions as thought leader)\n7. FREE TOOL / RESOURCE LEAD MAGNETS (5 ideas with copy)\n8. FOUNDER STORY & VISION CONTENT\n9. BUILD-IN-PUBLIC CONTENT (progress updates, lessons learned)\n10. HASHTAG STRATEGY:\n    - Broad: #saas #startup #tech #software\n    - Niche: #[feature-category] #productlaunch #[industry]tech\n    - Community: #buildinpublic #indiehacker #producthunt\n\nPlatform priority: LinkedIn → Twitter/X → YouTube → Reddit → Product Hunt",
+      "tags": ["saas", "tech", "b2b", "startup", "product-marketing"],
+      "industry": "technology_saas",
+      "example_use_case": "Generate a SaaS/tech company content pack with feature launches, case studies, and thought leadership.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p019",
+      "title": "Fashion & Apparel Content Pack",
+      "prompt_text": "You are a fashion and lifestyle brand content strategist.\n\nBrand: {brandName}\nStyle/positioning: {style} (fast-fashion/premium/sustainable/streetwear/designer)\nTarget customer: {customer}\nPrice range: {priceRange}\nKey values: {values}\n\nGenerate:\n1. COLLECTION DROP SEQUENCE (tease → reveal → styling → sell → restock)\n2. OUTFIT-OF-THE-DAY CONTENT FRAMEWORK (daily OOTD templates)\n3. STYLING TUTORIAL SCRIPTS (\"5 ways to wear one piece\" format)\n4. SUSTAINABLE/ETHICAL STORY CONTENT (brand values posts)\n5. SIZE-INCLUSIVE CONTENT STRATEGY\n6. INFLUENCER COLLABORATION BRIEF TEMPLATE\n7. UGC REPOST FRAMEWORK (customer photos strategy)\n8. SALE EVENT COPY (EOFY, BFCM, seasonal)\n9. BEHIND-THE-SCENES PRODUCTION CONTENT\n10. HASHTAG STRATEGY:\n    - Platform-specific fashion hashtags\n    - Branded hashtag strategy\n    - Niche style community hashtags\n\nPlatform priority: Instagram → TikTok → Pinterest → YouTube",
+      "tags": ["fashion", "apparel", "clothing", "style", "ootd"],
+      "industry": "fashion_apparel",
+      "example_use_case": "Generate a fashion brand content pack with collection drops, styling content, and influencer strategies.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p020",
+      "title": "Automotive Content Pack",
+      "prompt_text": "You are an automotive industry marketing specialist.\n\nBusiness: {businessName}\nType: {businessType} (dealership/mechanic/detailing/tyres/restoration)\nBrands: {brands}\nLocation: {location}\nSpecialisation: {specialisation}\n\nGenerate:\n1. VEHICLE SHOWCASE SERIES (new stock walk-around format)\n2. BEFORE & AFTER CONTENT (detailing/restoration transformations)\n3. MAINTENANCE TIP SERIES (seasonal reminders + evergreen content)\n4. CUSTOMER DELIVERY DAY CONTENT (emotional moments)\n5. \"CAR OF THE WEEK\" FEATURE TEMPLATE\n6. WORKSHOP BEHIND-THE-SCENES (builds trust in service quality)\n7. FINANCE & DEALS PROMOTION COPY\n8. STAFF INTRODUCTION SERIES (certifications + expertise)\n9. TESTIMONIAL & REVIEW TEMPLATES\n10. HASHTAG STRATEGY:\n    - Broad: #cars #automotive #[make/model]\n    - Local: #[city]cars #[city]mechanic #[city]detailing\n    - Niche: #[brand]community #carsofinstagram\n\nPlatform priority: Facebook → Instagram → YouTube → TikTok",
+      "tags": ["automotive", "cars", "dealership", "mechanic", "detailing"],
+      "industry": "automotive",
+      "example_use_case": "Generate an automotive business content pack with vehicle showcases, maintenance tips, and customer stories.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p021",
+      "title": "Healthcare & Medical Content Pack",
+      "prompt_text": "You are a healthcare communications specialist with expertise in TGA/AHPRA-compliant content.\n\nPractice: {practiceName}\nSpecialty: {specialty}\nLocation: {location}\nPatient demographic: {demographic}\n\nCOMPLIANCE FRAMEWORK:\n- No before/after claims without proper consent and qualifying statements\n- No testimonials implying guaranteed outcomes\n- Distinguish general health information from personal medical advice\n- Include appropriate disclaimers on all clinical content\n- Follow AHPRA advertising guidelines strictly\n\nGenerate:\n1. PATIENT EDUCATION SERIES (condition explainers in plain English)\n2. TEAM INTRODUCTION CONTENT (qualifications, expertise, approachable tone)\n3. FAQ VIDEO SCRIPTS (3 × 60-second common question answers)\n4. HEALTH TIP CALENDAR (seasonal preventive care reminders)\n5. NEW SERVICE/TECHNOLOGY ANNOUNCEMENTS\n6. COMMUNITY HEALTH EVENT PROMOTION TEMPLATES\n7. APPOINTMENT REMINDER HOOKS (SMS/email/social formats)\n8. MYTH VS FACT CONTENT SERIES\n9. COMPLIANT REVIEW RESPONSE TEMPLATES\n\nPlatform priority: Facebook → Google Business → Instagram → LinkedIn\n\nAll content must include: [General information only. Not a substitute for professional medical advice. Consult your healthcare provider.]",
+      "tags": ["healthcare", "medical", "clinic", "compliance", "patient-education"],
+      "industry": "healthcare_medical",
+      "example_use_case": "Generate AHPRA/TGA-compliant healthcare content including patient education, team profiles, and community health posts.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p022",
+      "title": "Agriculture & Rural Business Content Pack",
+      "prompt_text": "You are an agribusiness and rural marketing specialist.\n\nFarm/Business: {businessName}\nType: {businessType} (cropping/livestock/horticulture/agribusiness/produce)\nLocation: {location}\nProducts/services: {products}\nSelling channels: {channels} (direct/wholesale/markets/online)\n\nGenerate:\n1. SEASONAL FARM UPDATE SERIES (planting → growing → harvest cycle)\n2. FARM-TO-TABLE STORY CONTENT (provenance and quality narrative)\n3. BEHIND-THE-SCENES DAILY LIFE (authentic rural lifestyle content)\n4. PRODUCT QUALITY & FRESHNESS SHOWCASE\n5. SUSTAINABLE FARMING PRACTICES CONTENT\n6. FAMILY FARM STORY SERIES (personal brand + trust building)\n7. LOCAL MARKET / DIRECT SUPPLY PROMOTION\n8. TEAM & SEASONAL WORKER INTRODUCTIONS\n9. WEATHER & SEASONAL CHALLENGES (authentic, relatable content)\n10. HASHTAG STRATEGY:\n    - Broad: #farming #agriculture #farmlife #local\n    - Niche: #[crop/product] #[region]farmers #farmtotable\n    - Community: #supportlocal #eatlocal #growlocal\n\nPlatform priority: Facebook → Instagram → YouTube → LinkedIn",
+      "tags": ["agriculture", "farming", "rural", "produce", "farm-to-table"],
+      "industry": "agriculture_rural",
+      "example_use_case": "Generate an agribusiness or farm content pack with seasonal updates, farm stories, and direct sales promotion.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p023",
+      "title": "Financial Services Content Pack",
+      "prompt_text": "You are a financial services content specialist with ASIC compliance expertise.\n\nFirm: {firmName}\nServices: {services} (wealth management/mortgage broking/accounting/insurance/SMSF)\nTarget client: {targetClient}\nLicence type: {licenceType}\n\nASIC COMPLIANCE FRAMEWORK:\n- General advice vs personal advice distinction must be clear\n- Include appropriate disclaimers on all content\n- No guaranteed return claims\n- Licensee and authorised representative details where required\n- Follow RG 234 guidelines for advertising\n\nGenerate:\n1. FINANCIAL EDUCATION SERIES (10 plain-English explainers)\n2. MARKET COMMENTARY TEMPLATES (monthly economic update format)\n3. TAX TIP SEASONAL CALENDAR (EOFY + quarterly content)\n4. CLIENT MILESTONE STORIES (first home, retirement, wealth goals — with consent)\n5. \"X FINANCIAL MISTAKES\" SERIES (engaging, shareable educational content)\n6. TEAM EXPERTISE SHOWCASE\n7. LEAD MAGNET CONTENT (calculators, guides, checklists)\n8. COMPLIANT DISCLAIMER TEMPLATES\n9. HASHTAG STRATEGY:\n    - Broad: #finance #money #investing #wealth\n    - Niche: #personalfinance #[service]advice #financialfreedom\n    - Local: #[city]financialadviser #[city]mortgage\n\nPlatform priority: LinkedIn → Facebook → YouTube → Instagram\n\nAll content must include appropriate ASIC disclaimer.",
+      "tags": ["financial-services", "wealth", "mortgage", "compliance", "asic"],
+      "industry": "financial_services",
+      "example_use_case": "Generate ASIC-compliant financial services content including education series, market commentary, and tax tip calendars.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p024",
+      "title": "Universal Fallback Content Pack",
+      "prompt_text": "You are a versatile marketing strategist. Generate a universal content pack for any business type.\n\nBusiness: {businessName}\nDescription: {description}\nLocation: {location}\nTarget audience: {audience}\nKey offer: {offer}\n\nGenerate a comprehensive content strategy including:\n1. ORIGIN STORY SERIES (founder journey + why we exist)\n2. PRODUCT/SERVICE DEMONSTRATION CONTENT\n3. CUSTOMER SUCCESS & REVIEW SHOWCASES\n4. EDUCATIONAL TIPS IN YOUR SPACE (5 posts)\n5. BEHIND-THE-SCENES CULTURE CONTENT\n6. COMMUNITY INVOLVEMENT POSTS\n7. LIMITED OFFERS & URGENCY CAMPAIGNS\n8. TEAM INTRODUCTIONS & TRUST BUILDING\n9. UNIVERSAL HASHTAG STRATEGY:\n   - Core: #smallbusiness #supportlocal #entrepreneur #business\n   - Industry: #[relevant-industry-tags]\n   - Location: #[city] #[suburb] #[region]\n\nPlatform: Optimise for whichever platforms the audience uses most.",
+      "tags": ["universal", "general", "fallback", "small-business", "entrepreneur"],
+      "industry": "universal",
+      "example_use_case": "Generate a content pack for any business when industry cannot be determined from analysis.",
+      "source": "prompts/INDUSTRY-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p025",
+      "title": "Health & Wellness Video Prompts",
+      "prompt_text": "Generate 5 high-performing video prompts for a health and wellness brand.\n\nBrand: {brandName}\nFocus: {focus}\n\nVideo ideas:\n1. \"The #1 morning habit doctors won't tell you about (3-min explanation)\"\n2. \"Watch what happens when I replace [common bad habit] for 30 days\"\n3. \"The truth about [popular health claim] — we tested it\"\n4. \"Inside a day in the life of someone who [desired transformation]\"\n5. \"3 signs your body is telling you [problem] — and what to do\"\n\nFor each idea provide:\n- Hook (exact opening line)\n- B-roll suggestions\n- On-screen text\n- CTA\n- Estimated completion rate: high/medium/low\n\nPositioning: \"Your body is speaking. We help you listen.\"",
+      "tags": ["health", "wellness", "video-ideas", "hooks", "content"],
+      "industry": "health_beauty_wellness",
+      "example_use_case": "Generate engaging video content ideas for a health and wellness brand focused on transformation and education.",
+      "source": "prompts/INDUSTRY-CONTENT-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p026",
+      "title": "Finance & Wealth Video Prompts",
+      "prompt_text": "Generate high-performing video and caption content for a finance or wealth management brand.\n\nBrand: {brandName}\nFocus: {focus}\n\nVideo ideas:\n1. \"I tracked every dollar for 90 days. Here's what shocked me.\"\n2. \"The 3 money moves I wish I made in my 20s (brutal honesty)\"\n3. \"Stop doing THIS with your savings — here's what to do instead\"\n4. \"How [average person] built [result] without a huge income\"\n5. \"Breaking down [financial concept] in under 60 seconds\"\n\nTop captions:\n- \"The richest people I know all do this one thing. It's not what you think. [Read more ↓]\"\n- \"Your spending isn't the problem. Your system is. Here's how to fix it in 10 minutes.\"\n- \"Financial freedom isn't a salary. It's a skill. And skills can be learned.\"\n\nPositioning: \"Money is a tool. We teach you to use it.\"",
+      "tags": ["finance", "wealth", "money", "video-ideas", "education"],
+      "industry": "financial_services",
+      "example_use_case": "Generate finance brand video scripts and captions that educate and build authority without giving personal advice.",
+      "source": "prompts/INDUSTRY-CONTENT-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p027",
+      "title": "Real Estate Video & Caption Prompts",
+      "prompt_text": "Generate high-performing video and caption content for a real estate agent or agency.\n\nAgent/Agency: {name}\nMarket: {market}\n\nVideo ideas:\n1. \"Tour: [property type] under $[price] — what does it actually look like?\"\n2. \"The biggest mistake first-home buyers make (and how to avoid it)\"\n3. \"I asked 10 property experts the same question. Their answers will surprise you.\"\n4. \"Market update: What's REALLY happening in [suburb] right now\"\n5. \"The 3 things every seller does that cost them money\"\n\nCaption frameworks:\n- Market authority: \"[Suburb] update: [specific data point]. What this means for buyers/sellers → [insight]\"\n- Social proof: \"[X] properties sold this quarter. [Testimonial hook]. Here's how we do it.\"\n- Education: \"First home? Read this. [5 key points]. Save it for later.\"\n\nPositioning: \"The right property at the right time changes everything.\"",
+      "tags": ["real-estate", "property", "video-ideas", "agent", "market-update"],
+      "industry": "real_estate",
+      "example_use_case": "Generate real estate agent video content and captions for buyer education, market updates, and social proof.",
+      "source": "prompts/INDUSTRY-CONTENT-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p028",
+      "title": "E-Commerce Video & Caption Prompts",
+      "prompt_text": "Generate high-performing video and caption content for an e-commerce or retail brand.\n\nBrand: {brandName}\nProduct category: {category}\n\nVideo ideas:\n1. \"Rate my [product] haul — honest review\"\n2. \"I ordered from [competitor] vs us — here's the difference\"\n3. \"Watch this before you buy [product type] online\"\n4. \"Packing your order ASMR — satisfying fulfilment video\"\n5. \"[Product] before and after — real customer results\"\n\nCaption frameworks:\n- Product launch: \"New drop. Limited stock. [Product name] just landed → link in bio\"\n- Social proof: \"[X] customers can't be wrong. Here's what they're saying about [product].\"\n- Urgency: \"[X] left in stock. Once it's gone, it's gone. Tap to grab yours.\"\n- Education: \"Why [product benefit]. The science behind [feature]. Shop now → [link]\"\n\nPositioning: \"Quality that speaks for itself.\"",
+      "tags": ["ecommerce", "retail", "product", "video-ideas", "unboxing"],
+      "industry": "retail_ecommerce",
+      "example_use_case": "Generate e-commerce brand video content and captions for product launches, social proof, and urgency campaigns.",
+      "source": "prompts/INDUSTRY-CONTENT-LIBRARY.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p029",
+      "title": "Marketing Content Prompt — Instagram Carousel",
+      "prompt_text": "You are an Instagram content specialist. Create a high-engagement carousel post for {brandName}.\n\nTopic: {topic}\nGoal: {goal} (educate/inspire/convert/entertain)\nAudience: {audience}\n\nCarousel structure (7-10 slides):\n- Slide 1: HOOK — bold headline that makes them swipe (use curiosity gap or bold claim)\n- Slides 2-6: VALUE — one insight per slide, clean visual hierarchy\n- Slide 7: SUMMARY/RECAP — \"Save this for later\" prompt\n- Slide 8: CTA — single clear action (comment/follow/link)\n\nFor each slide provide:\n- Headline (max 8 words)\n- Supporting text (max 25 words)\n- Visual direction\n- Colour/design notes\n\nCaption:\n- Opening hook (2 lines max)\n- Teaser of content (\"Swipe to learn...\")\n- Hashtags (15-20, mixed)\n- CTA",
+      "tags": ["instagram", "carousel", "education", "engagement", "design"],
+      "industry": "universal",
+      "example_use_case": "Create a save-worthy Instagram carousel post for any topic, optimised for shares and saves.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p030",
+      "title": "Marketing Content Prompt — LinkedIn Article",
+      "prompt_text": "You are a LinkedIn content strategist. Write a high-performing LinkedIn article for {authorName}, a {profession}.\n\nTopic: {topic}\nAngle: {angle}\nTarget reader: {reader}\nGoal: {goal}\n\nArticle structure:\n- HEADLINE: Specific, benefit-driven or contrarian (avoid clickbait)\n- OPENING HOOK: Bold statement, surprising statistic, or personal story (2-3 sentences)\n- BODY (800-1,200 words):\n  - Problem/context\n  - 3-5 key insights with real examples\n  - Counterintuitive angle or fresh perspective\n  - Actionable takeaways\n- CLOSING: Reinforce main point + gentle CTA (comment question or share prompt)\n- TAGS: 3-5 relevant LinkedIn hashtags\n\nTone: {tone} (thought leader/educator/storyteller)\nAvoid: excessive self-promotion, generic advice, listicle fatigue",
+      "tags": ["linkedin", "article", "thought-leadership", "b2b", "writing"],
+      "industry": "professional_services",
+      "example_use_case": "Generate a LinkedIn long-form article for a professional or executive to establish thought leadership.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p031",
+      "title": "Marketing Content Prompt — Email Newsletter",
+      "prompt_text": "You are an email marketing specialist. Write a high-open-rate newsletter for {brandName}.\n\nEdition: {edition}\nTopic: {topic}\nList type: {listType} (warm leads/existing customers/prospects)\nGoal: {goal}\n\nNewsletter structure:\n- SUBJECT LINE (3 options: curiosity/benefit/urgency)\n- PREVIEW TEXT (1-2 lines extending the subject line hook)\n- OPENING: Personal greeting + hook sentence\n- BODY:\n  - Main value section (news/tips/story/offer)\n  - Supporting section (secondary content)\n- CTA BLOCK: Single primary CTA button\n- FOOTER: Unsubscribe link, social links, company info\n\nTone: {tone}\nLength: {length} (short 200-400 words / medium 400-700 words / long 700+ words)\nPersonalisation tokens: {firstName}, {companyName}",
+      "tags": ["email", "newsletter", "email-marketing", "open-rate", "subject-line"],
+      "industry": "universal",
+      "example_use_case": "Generate a complete email newsletter including subject lines, body content, and CTA optimised for conversions.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p032",
+      "title": "Marketing Content Prompt — Google Ads Copy",
+      "prompt_text": "You are a Google Ads copywriting specialist. Write high-converting ad copy for {businessName}.\n\nProduct/Service: {offer}\nTarget keyword: {keyword}\nUSP: {usp}\nAudience intent: {intent} (informational/commercial/transactional)\nLanding page: {landingPage}\n\nGenerate:\n1. RESPONSIVE SEARCH AD\n   - 15 headlines (max 30 characters each)\n   - 4 descriptions (max 90 characters each)\n   - Pinning recommendations\n\n2. PERFORMANCE MAX ASSET SUGGESTIONS\n   - 5 short headlines\n   - 5 long headlines\n   - 5 descriptions\n   - CTA text options\n\n3. SITELINK EXTENSIONS (4)\n4. CALLOUT EXTENSIONS (8)\n5. STRUCTURED SNIPPET SUGGESTIONS\n\nKeyword integration: Include {keyword} naturally in at least 3 headlines.",
+      "tags": ["google-ads", "ppc", "search-ads", "copywriting", "sem"],
+      "industry": "universal",
+      "example_use_case": "Generate complete Google Ads RSA copy including headlines, descriptions, and all ad extensions.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p033",
+      "title": "Marketing Content Prompt — Facebook/Meta Ad Copy",
+      "prompt_text": "You are a Meta Ads (Facebook/Instagram) copywriting specialist.\n\nBusiness: {businessName}\nOffer: {offer}\nAudience: {audience}\nObjective: {objective} (awareness/traffic/leads/conversions)\nBudget type: {budgetType} (testing/scaling)\n\nGenerate complete ad sets:\n1. COLD AUDIENCE AD (problem-aware, educational hook)\n   - Primary text (3 versions: short/medium/long)\n   - Headline (5 options)\n   - Description\n   - CTA button\n\n2. WARM AUDIENCE AD (retargeting, objection-handling)\n   - Primary text (2 versions)\n   - Headline (3 options)\n   - Social proof angle\n\n3. HOT AUDIENCE AD (cart abandonment / past customer)\n   - Urgency-driven copy\n   - Offer-specific messaging\n\n4. VIDEO AD SCRIPT (30-second: hook + body + CTA)\n5. CREATIVE DIRECTION (image + video concepts)\n\nTesting framework: Which to A/B test first and why.",
+      "tags": ["facebook-ads", "meta-ads", "paid-social", "retargeting", "conversion"],
+      "industry": "universal",
+      "example_use_case": "Generate a complete Meta Ads campaign copy suite for cold, warm, and hot audiences.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p034",
+      "title": "Marketing Content Prompt — TikTok/Reels Hook Generator",
+      "prompt_text": "You are a short-form video hook specialist. Generate 20 high-performing hooks for {brandName} in the {industry} space.\n\nContent theme: {theme}\nTarget emotion: {emotion} (curiosity/shock/desire/fear/inspiration)\n\nHook categories (4 per category):\n1. QUESTION HOOKS: Start with a question that creates immediate curiosity\n2. STATEMENT HOOKS: Bold, contrarian, or surprising claim\n3. STORY HOOKS: \"I ___. Then ___. Everything changed.\"\n4. STATISTIC HOOKS: Surprising number or data point\n5. CHALLENGE HOOKS: Direct challenge or bet to the viewer\n\nFor each hook:\n- The hook line (first 3 seconds of video)\n- Why it works (psychology principle)\n- Suggested visual for first frame\n- Expected completion rate: high/medium\n\nAvoid: generic, overused hooks. Be specific and bold.",
+      "tags": ["tiktok", "reels", "hooks", "short-form", "viral"],
+      "industry": "universal",
+      "example_use_case": "Generate 20 diverse, high-performing video hooks for short-form content across TikTok and Instagram Reels.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p035",
+      "title": "Brand Strategy Deep-Dive",
+      "prompt_text": "You are a senior brand strategist. Conduct a comprehensive brand strategy session for {brandName}.\n\nCurrent state:\n- Business description: {description}\n- Current positioning: {positioning}\n- Target market: {targetMarket}\n- Main competitors: {competitors}\n- Current brand perception: {perception}\n\nDeliver:\n1. BRAND ARCHITECTURE\n   - Brand promise (1 sentence)\n   - Brand purpose (why we exist beyond profit)\n   - Brand values (5, with behavioural examples)\n   - Brand personality (3 adjectives + archetype)\n\n2. POSITIONING STATEMENT\n   For [target customer] who [need], [brand] is the [category] that [unique benefit] because [reason to believe].\n\n3. MESSAGING HIERARCHY\n   - Primary message (tagline level)\n   - Secondary messages (3-5 supporting claims)\n   - Proof points (evidence for each claim)\n\n4. COMPETITIVE DIFFERENTIATION\n   - Unique value proposition matrix\n   - Where to compete / where to avoid\n\n5. BRAND VOICE GUIDE\n   - Tone descriptors\n   - Do/don't examples\n   - Vocabulary list",
+      "tags": ["brand-strategy", "positioning", "messaging", "identity", "differentiation"],
+      "industry": "universal",
+      "example_use_case": "Develop a complete brand strategy framework including positioning, messaging hierarchy, and competitive differentiation.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p036",
+      "title": "Competitor Analysis Prompt",
+      "prompt_text": "You are a competitive intelligence analyst. Analyse the top competitors for {businessName} in the {industry} space.\n\nBusiness to analyse: {businessName}\nKnown competitors: {competitors}\nMarket: {market}\n\nFor each competitor provide:\n1. DIGITAL PRESENCE AUDIT\n   - Website: UX, messaging, conversion optimisation\n   - Social media: platforms, posting frequency, engagement rate\n   - SEO: estimated traffic, top keywords\n   - Advertising: any visible ad spend\n\n2. CONTENT STRATEGY ANALYSIS\n   - Content pillars they focus on\n   - What performs well for them\n   - Gaps in their content\n\n3. OFFER & PRICING ANALYSIS\n   - Their offer structure\n   - Pricing model (if visible)\n   - Positioning in market\n\n4. SWOT FROM COMPETITOR PERSPECTIVE\n\n5. OPPORTUNITY GAPS\n   - Where they are weak\n   - Underserved audience segments\n   - Content angles they miss\n\n6. COMPETITIVE STRATEGY RECOMMENDATIONS\n   - How to position against each competitor\n   - Content differentiation tactics\n   - Platform-specific competitive advantages",
+      "tags": ["competitor-analysis", "research", "strategy", "positioning", "swot"],
+      "industry": "universal",
+      "example_use_case": "Analyse competitors across digital presence, content strategy, and offer structure to identify market opportunities.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p037",
+      "title": "Launch Campaign Strategy",
+      "prompt_text": "You are a product and campaign launch strategist. Create a full launch plan for {productName} by {brandName}.\n\nProduct details:\n- Name: {productName}\n- Category: {category}\n- Price: {price}\n- Launch date: {launchDate}\n- Target audience: {audience}\n- Key benefit: {mainBenefit}\n- Budget: {budget}\n\nDeliver a 30-day launch plan:\n\nPRE-LAUNCH (Days 1-14):\n- Teaser content sequence\n- List/audience building tactics\n- Influencer/partner outreach\n- PR angles\n- Email warm-up sequence\n\nLAUNCH WEEK (Days 15-21):\n- Day-by-day content plan\n- Email sequence (7 emails)\n- Paid media activation\n- PR push\n- Affiliate/partner posts\n\nPOST-LAUNCH (Days 22-30):\n- Momentum content\n- Social proof amplification\n- Objection handling\n- Last-chance urgency\n- Review collection\n\nKPIs to track:\n- Pre-launch: waitlist size, social engagement, PR coverage\n- Launch week: sales, conversion rate, ROAS\n- Post-launch: reviews, repeat purchase, referrals",
+      "tags": ["launch", "campaign", "product-launch", "go-to-market", "strategy"],
+      "industry": "universal",
+      "example_use_case": "Create a complete 30-day product or service launch campaign strategy with content, email, and paid media plans.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p038",
+      "title": "Customer Avatar Deep Dive",
+      "prompt_text": "You are a customer psychology and market research specialist. Create a detailed customer avatar for {businessName}.\n\nBusiness: {businessName}\nIndustry: {industry}\nProduct/service: {offer}\nPrice point: {price}\n\nCreate 3 distinct customer avatars:\n\nFor each avatar:\n1. DEMOGRAPHICS\n   - Age range, gender, location\n   - Income level, occupation\n   - Education level\n   - Family situation\n\n2. PSYCHOGRAPHICS\n   - Core values and beliefs\n   - Lifestyle and interests\n   - Media consumption habits\n   - Brands they already love\n\n3. PAIN POINTS & FRUSTRATIONS (specific, emotional)\n4. DESIRES & ASPIRATIONS (what they want their life to look like)\n5. BUYING BEHAVIOUR\n   - How they research purchases\n   - What triggers buying decisions\n   - Objections they have\n   - What builds trust for them\n\n6. CONTENT PREFERENCES\n   - Platform preferences\n   - Content format preferences\n   - Tone that resonates\n   - Topics they engage with\n\n7. MESSAGING FOR THIS AVATAR\n   - Opening hook\n   - Key message\n   - CTA that converts",
+      "tags": ["customer-avatar", "persona", "market-research", "psychology", "targeting"],
+      "industry": "universal",
+      "example_use_case": "Create detailed customer avatars with psychographics, buying behaviour, and messaging for targeting and content creation.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p039",
+      "title": "Content Repurposing System",
+      "prompt_text": "You are a content repurposing strategist. Take this single piece of content and repurpose it into 10+ formats.\n\nOriginal content:\n{originalContent}\n\nContent type: {contentType}\nBrand: {brandName}\nIndustry: {industry}\n\nRepurpose into:\n1. Instagram carousel (7 slides)\n2. Twitter/X thread (8-12 tweets)\n3. LinkedIn article (800 words)\n4. 3 × TikTok/Reels hooks + scripts (60 sec each)\n5. Email newsletter section\n6. 5 × standalone quote graphics\n7. YouTube video outline\n8. Pinterest pin description\n9. Facebook group post\n10. Blog post outline (H1, H2s, key points)\n11. Podcast episode talking points\n12. SMS/push notification (160 chars)\n\nFor each format:\n- Platform-specific formatting\n- Tone adjustment\n- CTA optimised for platform\n- Character count where relevant",
+      "tags": ["repurposing", "content-strategy", "multi-platform", "efficiency", "distribution"],
+      "industry": "universal",
+      "example_use_case": "Take a single piece of content (blog, video, podcast) and repurpose it into 12 platform-specific formats.",
+      "source": "prompts/CONTENT-ENGINE-SYSTEM.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p040",
+      "title": "Community Building & Engagement Strategy",
+      "prompt_text": "You are a community building and social media engagement specialist. Create an engagement strategy for {brandName}.\n\nPlatforms: {platforms}\nCurrent audience size: {audienceSize}\nEngagement rate: {currentEngagementRate}\nGoal: {goal}\n\nGenerate:\n1. ENGAGEMENT TRIGGERS (10 post types that reliably generate comments)\n2. QUESTION POST TEMPLATES (polls, this-or-that, open questions)\n3. COMMUNITY CHALLENGE FRAMEWORK (hashtag challenge design)\n4. RESPONSE TEMPLATES (comment, DM, review responses)\n5. UGC CAMPAIGN DESIGN (how to get followers posting)\n6. GIVEAWAY STRUCTURE (rules, mechanics, promotion plan)\n7. LIVE SESSION IDEAS (10 topics + format for each)\n8. STORY ENGAGEMENT MECHANICS (polls, sliders, quizzes)\n9. DM AUTOMATION FLOW (lead nurture via DMs)\n10. COMMUNITY MILESTONE CELEBRATIONS (follower count, anniversaries)\n\nEngagement ladder: Lurker → Liker → Commenter → Sharer → Brand advocate",
+      "tags": ["community", "engagement", "ugc", "giveaway", "followers"],
+      "industry": "universal",
+      "example_use_case": "Create a community engagement strategy to move followers up the engagement ladder from lurkers to brand advocates.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p041",
+      "title": "Hashtag Research & Strategy",
+      "prompt_text": "You are a hashtag research and strategy specialist. Create a comprehensive hashtag strategy for {brandName} in the {industry} space.\n\nPlatforms: {platforms}\nContent themes: {themes}\nAudience size: {audienceSize}\nLocation focus: {location}\n\nDeliver:\n1. HASHTAG TIERS\n   - Mega (1M+ posts): 5 hashtags — for discovery\n   - Large (100K-1M): 10 hashtags — for reach\n   - Medium (10K-100K): 15 hashtags — for relevance\n   - Niche (1K-10K): 10 hashtags — for engagement\n   - Branded: 3 hashtags — for community\n\n2. CONTENT-SPECIFIC SETS (5 ready-to-use groups)\n   - Educational content set\n   - Product/service set\n   - Behind-the-scenes set\n   - Community/engagement set\n   - Promotional set\n\n3. LOCATION-BASED HASHTAGS (10 local tags)\n4. TRENDING HASHTAGS TO MONITOR (5 rising trends)\n5. HASHTAGS TO AVOID (banned, overused, or irrelevant)\n6. PLATFORM-SPECIFIC OPTIMISATION\n   - Instagram: 20-30 in caption or first comment\n   - TikTok: 3-5 in caption\n   - LinkedIn: 3-5 in post\n   - Twitter/X: 1-2 in tweet",
+      "tags": ["hashtags", "research", "instagram", "seo", "discovery"],
+      "industry": "universal",
+      "example_use_case": "Build a comprehensive tiered hashtag strategy across content categories, audience sizes, and platforms.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p042",
+      "title": "Crisis Communication & Reputation Management",
+      "prompt_text": "You are a crisis communications specialist. Help {brandName} manage this situation professionally.\n\nSituation: {situation}\nSeverity: {severity} (low/medium/high/critical)\nPlatforms affected: {platforms}\nAudience size: {audienceSize}\nTimeline: {timeline}\n\nGenerate:\n1. INITIAL RESPONSE STATEMENT (post within 1 hour)\n   - Acknowledge\n   - Empathise\n   - Commit to action\n   - Avoid blame\n\n2. HOLDING STATEMENT (while investigating)\n3. FULL RESPONSE (once facts confirmed)\n4. PLATFORM-SPECIFIC RESPONSES\n   - Instagram caption + comment responses\n   - Facebook post + comment templates\n   - Twitter/X thread\n   - Email to affected customers\n   - Google review response\n\n5. INTERNAL COMMUNICATION TEMPLATE\n6. MEDIA STATEMENT (if press involvement)\n7. RECOVERY CONTENT PLAN (7 days post-crisis)\n8. MONITORING CHECKLIST\n\nTone principles: Accountable, empathetic, solution-focused, transparent.\nAvoid: Defensiveness, over-promising, legalese, dismissiveness.",
+      "tags": ["crisis", "reputation", "pr", "communication", "recovery"],
+      "industry": "universal",
+      "example_use_case": "Manage a brand reputation crisis with structured response templates across all platforms and stakeholder groups.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p043",
+      "title": "SEO Content Strategy",
+      "prompt_text": "You are an SEO content strategist. Develop a complete SEO content plan for {businessName}.\n\nWebsite: {website}\nIndustry: {industry}\nLocation: {location}\nTarget keywords: {seedKeywords}\nCompetitors: {competitors}\nCurrent traffic: {currentTraffic}\n\nDeliver:\n1. KEYWORD RESEARCH CLUSTERS\n   - Primary keywords (high volume, high intent)\n   - Secondary keywords (supporting topics)\n   - Long-tail opportunities (low competition, high conversion)\n   - Local SEO terms (location + service combinations)\n\n2. CONTENT PILLAR STRUCTURE\n   - Pillar pages (topic clusters)\n   - Supporting blog posts for each pillar\n   - Internal linking strategy\n\n3. 3-MONTH BLOG CALENDAR\n   - Week-by-week topic plan\n   - Target keyword per post\n   - Estimated search volume\n   - Content format recommendation\n\n4. ON-PAGE SEO CHECKLIST\n5. TECHNICAL SEO QUICK WINS\n6. LOCAL SEO OPTIMISATION\n   - Google Business Profile optimisation tips\n   - Local citation opportunities\n   - Review generation strategy\n\n7. CONTENT BRIEF TEMPLATE (for each blog post)",
+      "tags": ["seo", "content-marketing", "keywords", "blog", "organic-traffic"],
+      "industry": "universal",
+      "example_use_case": "Develop a comprehensive SEO content strategy with keyword clusters, content pillars, and a 3-month content calendar.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p044",
+      "title": "Influencer Marketing Brief",
+      "prompt_text": "You are an influencer marketing manager. Create a comprehensive influencer brief for {brandName}.\n\nCampaign: {campaignName}\nProduct/service: {offer}\nBudget per creator: {budget}\nTarget creator tier: {tier} (nano/micro/mid/macro/mega)\nPlatforms: {platforms}\nTimeline: {timeline}\n\nDeliver:\n1. CAMPAIGN BRIEF DOCUMENT\n   - Brand overview\n   - Campaign objectives\n   - Target audience\n   - Key messages (what to communicate)\n   - Content requirements\n   - Dos and don'ts\n   - Brand voice guide\n\n2. CONTENT DELIVERABLES SPEC\n   - Platform-specific deliverables\n   - Number of posts\n   - Story vs feed vs Reels requirements\n   - Caption requirements\n   - Hashtag requirements\n   - Disclosure requirements (#ad #sponsored)\n\n3. CREATOR OUTREACH TEMPLATES\n   - Initial DM/email pitch\n   - Follow-up message\n   - Rate negotiation approach\n   - Contract key points\n\n4. PERFORMANCE TRACKING\n   - KPIs to measure\n   - Reporting template\n   - UTM structure\n\n5. CREATOR SELECTION CRITERIA\n   - Audience quality checklist\n   - Engagement rate benchmarks\n   - Brand alignment checklist",
+      "tags": ["influencer", "creator", "partnership", "ugc", "brand-ambassador"],
+      "industry": "universal",
+      "example_use_case": "Create a complete influencer marketing brief and campaign management toolkit for a creator partnership.",
+      "source": "prompts/MARKETING-CONTENT-PROMPTS.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p045",
+      "title": "Conversion Rate Optimisation (CRO) Copy",
+      "prompt_text": "You are a conversion rate optimisation specialist. Audit and rewrite the copy for {businessName}'s key conversion page.\n\nPage type: {pageType} (landing page/product page/homepage/checkout)\nCurrent conversion rate: {currentCR}\nTarget conversion rate: {targetCR}\nTraffic source: {trafficSource}\nOffer: {offer}\nPrice: {price}\n\nProvide:\n1. COPY AUDIT\n   - Above-the-fold audit (what visitor sees in first 3 seconds)\n   - Value proposition clarity score (1-10)\n   - Trust signals present/missing\n   - CTA effectiveness assessment\n   - Objection handling gaps\n\n2. OPTIMISED COPY\n   - Hero headline (3 variations)\n   - Hero subheadline\n   - Value proposition bullets (5)\n   - Social proof section copy\n   - FAQ section (10 Q&As)\n   - CTA button text (5 options)\n   - Urgency elements\n   - Guarantee copy\n\n3. A/B TEST RECOMMENDATIONS\n   - Test 1: Headline variation\n   - Test 2: CTA button text + colour\n   - Test 3: Social proof placement\n   - Test 4: Pricing presentation\n\n4. HEATMAP INSIGHTS TO LOOK FOR\n5. EXIT INTENT POPUP COPY",
+      "tags": ["cro", "landing-page", "conversion", "copywriting", "ab-testing"],
+      "industry": "universal",
+      "example_use_case": "Audit and optimise a conversion page's copy with specific rewrites, A/B test recommendations, and CRO best practices.",
+      "source": "prompts/PURCHASE-TRIGGER.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p046",
+      "title": "Social Strategy Quarterly Planning",
+      "prompt_text": "You are a social media director. Create a comprehensive quarterly social media plan for {brandName}.\n\nQuarter: {quarter}\nPlatforms: {platforms}\nBudget: {budget}\nTeam size: {teamSize}\nPrimary goal: {goal} (brand awareness/lead generation/community/sales)\nKey campaigns this quarter: {campaigns}\n\nDeliver:\n1. QUARTERLY CONTENT PILLARS\n   - 5 core pillars with weekly posting cadence\n   - Content mix % (educational/entertaining/promotional/UGC)\n\n2. MONTHLY CAMPAIGN CALENDAR\n   - Month 1: {month1Theme}\n   - Month 2: {month2Theme}\n   - Month 3: {month3Theme}\n   - Key dates and tie-ins\n\n3. PLATFORM STRATEGY BY CHANNEL\n   - Goals per platform\n   - Content format breakdown\n   - Posting frequency\n   - Budget allocation\n\n4. CONTENT PRODUCTION WORKFLOW\n   - Creation → Review → Scheduling → Publishing → Reporting\n   - Tools and systems recommended\n   - Team roles and responsibilities\n\n5. KPI TARGETS\n   - Reach: X\n   - Engagement rate: X%\n   - Follower growth: X\n   - Leads generated: X\n   - Revenue attributed: $X\n\n6. REPORTING CADENCE\n   - Weekly check-in metrics\n   - Monthly full report\n   - Quarterly review framework",
+      "tags": ["quarterly-planning", "strategy", "campaign-calendar", "kpi", "social-media"],
+      "industry": "universal",
+      "example_use_case": "Create a structured quarterly social media plan with pillars, campaigns, platform strategy, and KPI targets.",
+      "source": "prompts/REPORT-TEMPLATES.md",
+      "created_at": "2026-04-19"
+    },
+    {
+      "id": "p047",
+      "title": "AI Persona & Tone of Voice Generator",
+      "prompt_text": "You are a brand personality and AI persona designer. Create a complete tone of voice guide and AI persona for {brandName}.\n\nBrand: {brandName}\nIndustry: {industry}\nTarget audience: {audience}\nBrand archetype: {archetype} (Hero/Sage/Jester/Lover/Ruler/Caregiver/Explorer/Creator/Innocent/Outlaw/Magician/Regular Guy)\n\nDeliver:\n1. BRAND PERSONALITY PROFILE\n   - 5 personality traits with behavioural examples\n   - Brand archetype explanation\n   - Tone spectrum: formal ←→ casual, serious ←→ playful\n\n2. TONE OF VOICE GUIDE\n   - DO: 10 examples of on-brand language\n   - DON'T: 10 examples of off-brand language\n   - Vocabulary: preferred words and phrases\n   - Vocabulary: words to avoid\n\n3. AI CONTENT PERSONA\n   - Name for the AI persona (optional)\n   - Persona backstory\n   - How the persona speaks\n   - What the persona values\n   - How the persona responds to criticism\n\n4. PLATFORM TONE VARIATIONS\n   - LinkedIn tone (professional but warm)\n   - Instagram tone (visual, aspirational)\n   - TikTok tone (authentic, entertaining)\n   - Email tone (personal, direct)\n\n5. SAMPLE CONTENT IN BRAND VOICE\n   - 3 Instagram captions\n   - 1 LinkedIn post\n   - 1 email opening paragraph\n   - 5 comment response templates",
+      "tags": ["brand-voice", "tone-of-voice", "persona", "ai", "copywriting"],
+      "industry": "universal",
+      "example_use_case": "Define a brand's complete tone of voice and AI persona for consistent, on-brand content generation across all platforms.",
+      "source": "prompts/PROMPTS.md",
+      "created_at": "2026-04-19"
+    }
+  ]
+}

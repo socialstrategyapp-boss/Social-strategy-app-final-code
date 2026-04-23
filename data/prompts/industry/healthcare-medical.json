@@ -1,0 +1,41 @@
+{
+  "industry": "healthcare_medical",
+  "label": "Healthcare & Medical",
+  "created_at": "2026-04-19",
+  "triggers": ["medical", "clinic", "doctor", "dentist", "physiotherapy", "allied health", "hospital"],
+  "platform_priority": ["Facebook", "Google Business", "Instagram", "LinkedIn"],
+  "margin_benchmark": "Varies widely by service type",
+  "repurchase_cycle": "3-6 months (ongoing care), annual (checkups)",
+  "compliance": {
+    "framework": "AHPRA / TGA",
+    "notes": [
+      "No before/after claims without proper consent and qualifying statements",
+      "No testimonials that imply guaranteed outcomes",
+      "All clinical content must include appropriate disclaimers",
+      "Follow AHPRA advertising guidelines strictly"
+    ],
+    "required_disclaimer": "General information only. Not a substitute for professional medical advice. Consult your healthcare provider."
+  },
+  "prompts": [
+    {
+      "ref": "p021",
+      "title": "Healthcare & Medical Content Pack",
+      "tags": ["healthcare", "medical", "clinic", "compliance", "patient-education"]
+    }
+  ],
+  "content_angles": [
+    "Patient education (condition explanations)",
+    "Team introductions & qualifications",
+    "FAQ videos answering common questions",
+    "Health tips by season",
+    "New service/technology announcements",
+    "Community health events",
+    "Appointment reminder hooks",
+    "Myth vs fact content"
+  ],
+  "hashtag_groups": {
+    "broad": ["#health", "#wellness", "#healthcare", "#medicine"],
+    "niche": ["#[specialty]", "#[city]health", "#patienteducation"],
+    "education": ["#healthtips", "#[condition]awareness", "#preventivehealth"]
+  }
+}

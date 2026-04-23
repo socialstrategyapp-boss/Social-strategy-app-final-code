@@ -1,0 +1,31 @@
+{
+  "industry": "technology_saas",
+  "label": "Technology & SaaS",
+  "created_at": "2026-04-19",
+  "triggers": ["software", "app", "platform", "saas", "tech", "startup", "digital", "cloud", "api", "dashboard"],
+  "platform_priority": ["LinkedIn", "Twitter/X", "YouTube", "Reddit", "Product Hunt"],
+  "margin_benchmark": "70-85% gross margin",
+  "repurchase_cycle": "Monthly/annual subscriptions",
+  "prompts": [
+    {
+      "ref": "p018",
+      "title": "Technology & SaaS Content Pack",
+      "tags": ["saas", "tech", "b2b", "startup", "product-marketing"]
+    }
+  ],
+  "content_angles": [
+    "Feature releases & product updates",
+    "Use-case walkthroughs & demos",
+    "Customer success metrics (Company X saved $X using...)",
+    "Integration announcements",
+    "Engineering/team culture content",
+    "Industry trend commentary",
+    "Free tools & resources as lead magnets",
+    "Founder story & vision content"
+  ],
+  "hashtag_groups": {
+    "broad": ["#saas", "#startup", "#tech", "#software"],
+    "niche": ["#[feature-category]", "#productlaunch", "#[industry]tech"],
+    "community": ["#buildinpublic", "#indiehacker", "#producthunt"]
+  }
+}

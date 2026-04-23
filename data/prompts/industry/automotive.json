@@ -1,0 +1,31 @@
+{
+  "industry": "automotive",
+  "label": "Automotive",
+  "created_at": "2026-04-19",
+  "triggers": ["car", "vehicle", "auto", "dealership", "mechanic", "detailing", "tyres", "workshop"],
+  "platform_priority": ["Facebook", "Instagram", "YouTube", "TikTok"],
+  "margin_benchmark": "20-40% (vehicles), 50-65% (service)",
+  "repurchase_cycle": "3-7 years (purchase), 6-12 months (service)",
+  "prompts": [
+    {
+      "ref": "p020",
+      "title": "Automotive Content Pack",
+      "tags": ["automotive", "cars", "dealership", "mechanic", "detailing"]
+    }
+  ],
+  "content_angles": [
+    "New vehicle showcases & walk-arounds",
+    "Before & after detailing/restoration",
+    "Maintenance tips & seasonal reminders",
+    "Customer delivery day moments",
+    "Car of the week features",
+    "Behind-the-scenes workshop content",
+    "Staff introductions & certifications",
+    "Finance & deals promotions"
+  ],
+  "hashtag_groups": {
+    "broad": ["#cars", "#automotive", "#[make/model]"],
+    "local": ["#[city]cars", "#[city]mechanic", "#[city]detailing"],
+    "niche": ["#[brand]community", "#carsofinstagram", "#detailing"]
+  }
+}

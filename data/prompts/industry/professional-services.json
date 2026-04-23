@@ -1,0 +1,36 @@
+{
+  "industry": "professional_services",
+  "label": "Professional Services",
+  "created_at": "2026-04-19",
+  "triggers": ["lawyer", "accountant", "financial", "consultant", "adviser", "firm", "agency", "broker"],
+  "platform_priority": ["LinkedIn", "Facebook", "Google Business", "YouTube"],
+  "margin_benchmark": "65-85% gross margin",
+  "repurchase_cycle": "Monthly retainers or annual engagements",
+  "prompts": [
+    {
+      "ref": "p013",
+      "title": "Professional Services Content Pack",
+      "tags": ["professional-services", "b2b", "authority", "linkedin", "consulting"]
+    },
+    {
+      "ref": "p030",
+      "title": "Marketing Content Prompt — LinkedIn Article",
+      "tags": ["linkedin", "article", "thought-leadership", "b2b", "writing"]
+    }
+  ],
+  "content_angles": [
+    "Authority positioning: X things you didn't know about [topic]",
+    "Client success stories (anonymised if needed)",
+    "Industry news commentary",
+    "FAQ: answers to common client questions",
+    "Process transparency: How we [service clients]",
+    "Team expertise & credentials",
+    "Legislative/industry updates",
+    "Case studies with results"
+  ],
+  "hashtag_groups": {
+    "broad": ["#business", "#entrepreneur", "#[profession]"],
+    "authority": ["#[industry]advice", "#[profession]tips", "#businessgrowth"],
+    "local": ["#[city][profession]", "#[city]business"]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "industry": "real_estate",
+  "label": "Real Estate",
+  "created_at": "2026-04-19",
+  "triggers": ["property", "real estate", "realty", "agent", "home", "house", "apartment", "land", "mortgage"],
+  "platform_priority": ["Instagram", "Facebook", "LinkedIn", "YouTube"],
+  "margin_benchmark": "2.5-3.5% commission",
+  "repurchase_cycle": "5-10 years (buyer), 1-2 years (investor)",
+  "prompts": [
+    {
+      "ref": "p014",
+      "title": "Real Estate Content Pack",
+      "tags": ["real-estate", "property", "listings", "agent", "market"]
+    },
+    {
+      "ref": "p027",
+      "title": "Real Estate Video & Caption Prompts",
+      "tags": ["real-estate", "property", "video-ideas", "agent", "market-update"]
+    }
+  ],
+  "content_angles": [
+    "Property listings with professional photography",
+    "Market updates & suburb reports",
+    "Just sold social proof",
+    "Buyer/seller education content",
+    "Virtual tours & walkthrough videos",
+    "Investment insights & ROI calculations",
+    "Local area guides",
+    "Agent introduction & trust-building"
+  ],
+  "hashtag_groups": {
+    "broad": ["#realestate", "#property", "#newhome", "#househunting"],
+    "local": ["#[suburb]realestate", "#[city]property", "#[suburb]homes"],
+    "niche": ["#investmentproperty", "#firsthomebuyer", "#[city]realestate"]
+  },
+  "master_positioning": "The right property at the right time changes everything."
+}

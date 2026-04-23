@@ -1,0 +1,55 @@
+{
+  "variation_id": "v3",
+  "variation_name": "Aggressive",
+  "slug": "v3-aggressive",
+  "created_at": "2026-04-19",
+  "description": "A bold, direct-response variation designed for maximum conversion. Uses urgency, scarcity, strong CTAs, and direct challenges to the reader. Best for promotional campaigns, limited offers, and product launches.",
+  "target_persona": "Motivated buyers already aware of the problem. Works best for retargeting, promotional campaigns, product launches, and high-intent audiences.",
+  "tone_modifiers": {
+    "formality": "direct, punchy, urgent",
+    "emphasis": "urgency, scarcity, outcome, action",
+    "avoid": ["hedging language", "long explanations", "soft CTAs", "passive voice"],
+    "use": ["short sentences", "power words (NOW, STOP, CLAIM, LAST CHANCE)", "countdown language", "direct imperatives", "bold claims backed by proof"]
+  },
+  "caption_framework": {
+    "hook": "Bold claim, challenge, or urgent statement that demands attention",
+    "body": "3-5 bullet points of core value or offer details. No waffle. Just facts and outcomes.",
+    "cta": "Single, specific, urgent action. 'Click NOW', 'Book TODAY', 'DM OFFER', 'Link in bio — grab it before it's gone'"
+  },
+  "prompt_overrides": [
+    {
+      "base_prompt_ref": "p006",
+      "override_instruction": "Maximise urgency and scarcity. Use real or realistic constraints: limited spots, time-sensitive pricing, closing dates. Every sentence should push the reader toward action. Use power words: STOP wasting money on X. CLAIM your spot NOW. This CLOSES [day/date]. No soft language. Direct imperative voice throughout."
+    },
+    {
+      "base_prompt_ref": "p003",
+      "override_instruction": "Use aggressive direct-response copywriting. Open with a bold challenge or claim: 'Stop [doing X] if you want [result]'. Body: 3 bullet points of specific outcomes. Close with ONE clear urgent CTA. Short sentences. No paragraphs. Punch hard."
+    },
+    {
+      "base_prompt_ref": "p004",
+      "override_instruction": "Video hook must create immediate pattern interrupt. Use challenging openers: 'If you're still [doing X], you're losing money.' Script should build urgency throughout and end with a hard CTA with clear deadline or scarcity element."
+    }
+  ],
+  "urgency_templates": [
+    "⚠️ [X] spots left. [Offer] closes [date/day]. Don't say we didn't warn you.",
+    "LAST CHANCE: [Offer] expires in [timeframe]. After that, full price. Simple.",
+    "If you've been sitting on the fence — today is the day. Here's why.",
+    "We're not running this offer again. This is it. [Link/action].",
+    "72 hours left. [X] people already claimed theirs. Will you?"
+  ],
+  "scarcity_tactics": [
+    "Limited spots (cap client intake)",
+    "Time-limited pricing (price increases after date)",
+    "Bonus expiry (extra bonuses only until date)",
+    "Stock limitation (only X units remaining)",
+    "Cohort closing (next intake not until date)"
+  ],
+  "platform_notes": {
+    "Instagram": "Stories with countdown stickers. Swipe-up or link sticker CTAs. DM automation.",
+    "Facebook": "Paid ads. Retargeting sequences. Event-based urgency posts.",
+    "Email": "Subject lines with urgency: 'Last warning:', '[CLOSING] — your spot expires today'.",
+    "TikTok": "Aggressive hooks work on TikTok. Bold claims in first 2 seconds."
+  },
+  "warning": "This variation is designed for promotional use. Do not apply to evergreen content or brand awareness campaigns. Best used sparingly (max 20-30% of content mix) to avoid audience fatigue.",
+  "credit_multiplier": 1.0
+}
