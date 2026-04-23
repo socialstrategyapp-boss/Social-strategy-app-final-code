@@ -16,15 +16,16 @@ export function loginPage(): string {
     /* BODY — neon burst background image */
     body {
       min-height: 100vh;
-      background: url('/assets/bg-neon-burst.jpg') center center / cover fixed, #0a1428;
+      background: linear-gradient(rgba(2,8,22,0.72),rgba(3,8,24,0.72)), url('/assets/bg-neon-burst.jpg') center center / cover fixed, #0a1428;
       background-image:
+        linear-gradient(rgba(2,8,22,0.72),rgba(3,8,24,0.72)),
         url('/assets/bg-neon-burst.jpg'),
         radial-gradient(ellipse 140% 90% at 50% -15%, rgba(32,217,255,0.45) 0%, transparent 60%),
         radial-gradient(ellipse 100% 85% at 100% 105%, rgba(255,45,166,0.50) 0%, transparent 55%),
         radial-gradient(ellipse 90% 70% at -10% 65%, rgba(139,92,246,0.45) 0%, transparent 55%);
-      background-size: cover, auto;
-      background-position: center, center;
-      background-attachment: fixed, fixed;
+      background-size: auto, cover, auto, auto, auto;
+      background-position: center, center, center, center, center;
+      background-attachment: fixed, fixed, fixed, fixed, fixed;
       display: flex;
       align-items: center;
       justify-content: center;
