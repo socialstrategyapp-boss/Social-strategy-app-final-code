@@ -20,7 +20,8 @@ export function landingPage(): string {
     html, body{ overflow-x:hidden!important; width:100%; position:relative; }
 
     /* ── LIGHTER, RICHER BACKGROUND with purple/indigo depth ── */
-    body{background:url('/assets/bg-neon-burst.jpg') center center / cover fixed, linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);color:#fff;overflow-x:hidden;min-height:100vh;}
+    /* NOTE: body is transparent so the fixed bg div below is visible on ALL browsers (incl. iOS Safari) */
+    body{background:transparent;color:#fff;overflow-x:hidden;min-height:100vh;}
 
     /* ── NEON GRID OVERLAY ── */
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -204,6 +205,15 @@ export function landingPage(): string {
 <body>
 
 <!-- ══════════════════════════════════════════
+     FIXED BACKGROUND LAYER
+     Uses position:fixed div instead of background-attachment:fixed so it works
+     correctly on iOS Safari and all mobile browsers.
+══════════════════════════════════════════ -->
+<div aria-hidden="true" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;
+  background:url('/assets/bg-neon-burst.jpg') center center/cover no-repeat,
+             linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);"></div>
+
+<!-- ══════════════════════════════════════════
      NAVBAR
 ══════════════════════════════════════════ -->
 <nav class="navbar">
@@ -258,7 +268,10 @@ export function landingPage(): string {
     <div class="hero-social-text">SOCIAL</div>
 
     <!-- ── LOGO with neon border ── -->
-    <div style="display:flex;justify-content:center;margin-bottom:16px;">
+    <!-- margin-bottom:56px — gives 56px clearance below the logo wrap; the neon halo
+         extends ~43px below the logo boundary (inset:-25px + blur:18px), so we need
+         at least 43px+ here to ensure the STRATEGY text below isn't covered by the glow. -->
+    <div style="display:flex;justify-content:center;margin-bottom:56px;">
       <div class="hero-logo-wrap" style="position:relative;">
         <!-- outer neon border ring -->
         <div style="position:absolute;inset:-6px;border-radius:52px;
@@ -411,7 +424,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      FEATURES / TILES  –  3-col, neon treatment
 ══════════════════════════════════════════ -->
-<section id="features" style="padding:130px 0;background:linear-gradient(180deg,#0a0330 0%,#080220 100%);position:relative;z-index:1;">
+<section id="features" style="padding:130px 0;background:linear-gradient(180deg,rgba(10,3,48,0.82) 0%,rgba(8,2,32,0.82) 100%);position:relative;z-index:1;">
   <div style="position:absolute;top:30%;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(124,58,237,0.12),transparent 70%);filter:blur(70px);pointer-events:none;"></div>
   <div style="max-width:1300px;margin:0 auto;padding:0 28px;position:relative;">
     <div style="text-align:center;margin-bottom:80px;">
@@ -451,7 +464,7 @@ export function landingPage(): string {
 <!-- ══════════════════════════════════════════
      PLATFORMS  –  2 rows of 4, brand neon colours, no cutoff
 ══════════════════════════════════════════ -->
-<section id="platforms" style="padding:130px 0;background:linear-gradient(180deg,#080220 0%,#070318 100%);position:relative;z-index:1;">
+<section id="platforms" style="padding:130px 0;background:linear-gradient(180deg,rgba(8,2,32,0.82) 0%,rgba(7,3,24,0.82) 100%);position:relative;z-index:1;">
   <div style="max-width:1100px;margin:0 auto;padding:0 40px;text-align:center;">
     <div style="display:inline-block;background:rgba(0,229,255,0.09);border:2px solid rgba(0,229,255,0.35);border-radius:999px;padding:12px 28px;font-size:15px;color:#00E5FF;font-weight:800;margin-bottom:22px;
       box-shadow:0 0 22px rgba(0,229,255,0.2);">📱 Supported Platforms</div>

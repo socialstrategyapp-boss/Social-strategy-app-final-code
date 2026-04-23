@@ -13,18 +13,10 @@ export function loginPage(): string {
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     *, *::before, *::after { font-family: 'Inter', sans-serif; box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* BODY — neon burst background image */
+    /* BODY — transparent so the fixed bg div below handles the background (iOS Safari compatible) */
     body {
       min-height: 100vh;
-      background: url('/assets/bg-neon-burst.jpg') center center / cover fixed, #0a1428;
-      background-image:
-        url('/assets/bg-neon-burst.jpg'),
-        radial-gradient(ellipse 140% 90% at 50% -15%, rgba(32,217,255,0.45) 0%, transparent 60%),
-        radial-gradient(ellipse 100% 85% at 100% 105%, rgba(255,45,166,0.50) 0%, transparent 55%),
-        radial-gradient(ellipse 90% 70% at -10% 65%, rgba(139,92,246,0.45) 0%, transparent 55%);
-      background-size: cover, auto;
-      background-position: center, center;
-      background-attachment: fixed, fixed;
+      background: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -541,6 +533,11 @@ export function loginPage(): string {
   </style>
 </head>
 <body>
+
+  <!-- Fixed background layer — works on all browsers including iOS Safari -->
+  <div aria-hidden="true" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;
+    background:url('/assets/bg-neon-burst.jpg') center center/cover no-repeat,
+               #0a1428;"></div>
 
   <div class="page-wrap">
     <div class="login-card">

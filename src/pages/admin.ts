@@ -23,7 +23,7 @@ export function adminPage(): string {
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     *,*::before,*::after{font-family:'Inter',sans-serif;box-sizing:border-box;}
-    body{margin:0;padding:0;min-height:100vh;background:url('/assets/bg-neon-burst.jpg') center center / cover fixed, #030818;color:#fff;position:relative;overflow-x:hidden;}
+    body{margin:0;padding:0;min-height:100vh;background:transparent;color:#fff;position:relative;overflow-x:hidden;}
     /* ── bokeh ── */
     .bokeh-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;}
     .bokeh{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.13;}
@@ -115,6 +115,8 @@ export function adminPage(): string {
   </style>
 </head>
 <body>
+<div aria-hidden="true" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;
+  background:url('/assets/bg-neon-burst.jpg') center center/cover no-repeat,#030818;"></div>
 <div class="bokeh-wrap"><div class="bokeh b1"></div><div class="bokeh b2"></div><div class="bokeh b3"></div></div>
 
 <!-- ══════════════════════════════════════════════════════════
