@@ -176,6 +176,9 @@ app.post('/api/settings/integrations', async (c) => {
   const body = await c.req.json()
   const email = (body.email as string) || 'demo@socialstrategy.ai'
   const openaiApiKey = ((body.openaiApiKey as string) || '').trim()
+  if (openaiApiKey && !openaiApiKey.startsWith('sk-')) {
+    return c.json({ success: false, error: 'Invalid API key format. OpenAI keys must start with "sk-".' }, 400)
+  }
   const account = await getAccount(c.env.DB, email)
   if (!account) return c.json({ success: false, error: 'Account not found' }, 404)
   await c.env.DB.prepare(

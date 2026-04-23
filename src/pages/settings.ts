@@ -94,7 +94,7 @@ export function settingsPage(): string {
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <div style="flex:1;min-width:200px;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 14px;transition:border-color 0.2s;" onfocusin="this.style.borderColor='#A78BFA'" onfocusout="this.style.borderColor='rgba(255,255,255,0.1)'">
               <i class="fas fa-key" style="color:#6b7280;font-size:13px;flex-shrink:0;"></i>
-              <input id="openaiApiKey" type="password" placeholder="sk-…" autocomplete="off" style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px;font-family:monospace;">
+              <input id="openaiApiKey" type="password" placeholder="sk-…" autocomplete="off" aria-label="OpenAI API Key" style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px;font-family:monospace;">
             </div>
             <button onclick="saveIntegrations()" style="background:linear-gradient(135deg,#A78BFA,#7C3AED);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;border:none;cursor:pointer;white-space:nowrap;">
               <i class="fas fa-save" style="margin-right:6px;"></i>Save Key
@@ -255,8 +255,14 @@ export function settingsPage(): string {
     }
 
     async function saveIntegrations() {
-      const key = document.getElementById('openaiApiKey').value.trim();
+      const inputEl = document.getElementById('openaiApiKey');
+      if (!inputEl) return;
+      const key = inputEl.value.trim();
       const statusEl = document.getElementById('openaiStatus');
+      if (key && !key.startsWith('sk-')) {
+        alert('Invalid API key format. OpenAI keys start with "sk-".');
+        return;
+      }
       try {
         const res = await fetch('/api/settings/integrations', {
           method: 'POST',
@@ -265,8 +271,9 @@ export function settingsPage(): string {
         });
         const data = await res.json();
         if (data.success) {
-          document.getElementById('openaiApiKey').value = '';
-          statusEl.textContent = key ? 'Connected · sk-...' + key.slice(-4) : 'Not configured';
+          inputEl.value = '';
+          const hint = key.length > 4 ? 'sk-...' + key.slice(-4) : key;
+          statusEl.textContent = key ? 'Connected · ' + hint : 'Not configured';
           statusEl.style.color = key ? '#4ade80' : '#6b7280';
           const toast = document.getElementById('saveToast');
           toast.style.display = 'flex';
