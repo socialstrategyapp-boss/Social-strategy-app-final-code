@@ -2,7 +2,7 @@ import { layout, topBar } from './layout'
 
 export function analysisPage(): string {
   const content = `
-  ${topBar('Website Analysis', 'AI-powered business intelligence in 2 minutes', '<span style="display:flex;align-items:center;gap:5px;font-size:11px;color:#00E5FF;font-weight:700;background:rgba(0,229,255,0.07);border:1px solid rgba(0,229,255,0.18);border-radius:20px;padding:5px 12px;"><i class="fas fa-bolt"></i> GPT-4o</span>')}
+  ${topBar('Website Analysis', 'AI-powered business intelligence in 2 minutes', '<a href="/pricing" style="display:flex;align-items:center;gap:5px;font-size:11px;color:#00E5FF;font-weight:700;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.35);border-radius:20px;padding:6px 13px;cursor:pointer;text-decoration:none;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.background=\'rgba(0,229,255,0.18)\'" onmouseout="this.style.background=\'rgba(0,229,255,0.1)\'">⚡ GPT-4o — Upgrade</a>')}
 
   <div style="padding:24px;max-width:920px;">
 
