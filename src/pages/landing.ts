@@ -1,9 +1,9 @@
-import { ssLogo } from './layout'
+import { ssLogoImg } from './layout'
 
 export function landingPage(): string {
-  const heroLogo   = ssLogo(300)
-  const navLogo    = ssLogo(46)
-  const footerLogo = ssLogo(60)
+  const heroLogo   = ssLogoImg(300)
+  const navLogo    = ssLogoImg(46)
+  const footerLogo = ssLogoImg(60)
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -126,11 +126,11 @@ export function landingPage(): string {
       box-shadow:0 0 32px rgba(0,229,255,0.6),0 0 60px rgba(0,112,243,0.3);transition:all .25s;}
     .btn-scan:hover{transform:translateY(-3px);box-shadow:0 0 52px rgba(0,229,255,0.85);}
     .btn-demo{display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      background:linear-gradient(135deg,rgba(0,255,136,0.18),rgba(0,229,255,0.12));
+      background:linear-gradient(135deg,rgba(0,30,18,0.95),rgba(0,25,30,0.95));
       color:#00ff88;font-weight:900;font-size:18px;
       padding:20px 44px;border-radius:16px;text-decoration:none;
       border:2.5px solid #00ff88;
-      box-shadow:0 0 28px rgba(0,255,136,0.5),0 0 55px rgba(0,255,136,0.2),inset 0 1px 0 rgba(255,255,255,0.15);
+      box-shadow:0 0 28px rgba(0,255,136,0.5),0 0 55px rgba(0,255,136,0.2),inset 0 1px 0 rgba(255,255,255,0.1);
       text-shadow:0 0 12px rgba(0,255,136,0.8);
       transition:all .25s;}
     .btn-demo:hover{background:linear-gradient(135deg,#00ff88,#00E5FF);color:#000;border-color:transparent;box-shadow:0 0 55px rgba(0,255,136,0.9),0 0 90px rgba(0,255,136,0.4);transform:translateY(-3px);}

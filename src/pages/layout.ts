@@ -25,20 +25,22 @@ export function ssLogo(size: number = 44): string {
 </span>`
 }
 
+// SS Logo image only — no text labels, for use where surrounding context already has SOCIAL / STRATEGY text
+export function ssLogoImg(size: number = 44): string {
+  const s = size
+  return `<img src="/assets/ss-logo-new.jpg" alt="Social Strategy Logo" width="${s}" height="${s}" style="border-radius:${Math.round(s*0.22)}px;display:block;box-shadow:0 0 ${Math.round(s*0.3)}px rgba(0,229,255,0.6),0 0 ${Math.round(s*0.5)}px rgba(255,45,120,0.3);">`
+}
+
 // ── SHARED TOP-BAR HELPER ──────────────────────────────────────────────────
 // Generates the standard page header: title left | SS logo centered | action right
 export function topBar(title: string, subtitle: string, actionHtml: string = ''): string {
-  return `<div style="position:sticky;top:0;z-index:30;background:rgba(2,6,20,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,229,255,0.15);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;min-height:60px;position:relative;">
+  return `<div id="pageTopbar" style="position:sticky;top:0;z-index:30;background:rgba(2,6,20,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,229,255,0.15);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;min-height:60px;">
   <div>
     <h1 style="font-size:17px;font-weight:800;color:#fff;margin:0;">${title}</h1>
     <p style="color:#6a8aaa;font-size:11px;margin:2px 0 0;">${subtitle}</p>
   </div>
-  <a href="/" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;text-decoration:none;pointer-events:auto;">
+  <a href="/" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;text-decoration:none;pointer-events:auto;">
     <div style="filter:drop-shadow(0 0 6px rgba(0,229,255,0.35)) drop-shadow(0 0 12px rgba(255,45,120,0.18));">${ssLogo(38)}</div>
-    <div style="display:flex;flex-direction:column;line-height:1.1;">
-      <span style="font-size:10px;font-weight:900;color:#fff;letter-spacing:1.5px;">SOCIAL</span>
-      <span style="font-size:10px;font-weight:900;letter-spacing:1.5px;background:linear-gradient(135deg,#00E5FF,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">STRATEGY</span>
-    </div>
   </a>
   <div style="display:flex;align-items:center;gap:8px;">
     ${actionHtml}
@@ -339,6 +341,11 @@ export function layout(title: string, content: string, activePage: string = ''):
     }
     #menuToggle{display:none;}
 
+    /* ── MOBILE TOPBAR: leave room for hamburger button ── */
+    @media(max-width:900px){
+      #pageTopbar{padding-left:60px!important;}
+    }
+
     /* ── TOP BAR ── */
     .top-bar{position:sticky;top:0;z-index:30;
       background:rgba(2,6,20,0.97);backdrop-filter:blur(16px);
@@ -373,7 +380,7 @@ export function layout(title: string, content: string, activePage: string = ''):
     .blue-text-bright{color:#bfdbfe!important;}
     .blue-text-dim{color:#60a5fa!important;}
     label{color:rgba(180,210,255,0.85)!important;}
-    input::placeholder,textarea::placeholder{color:rgba(100,160,220,0.35)!important;}
+    input::placeholder,textarea::placeholder{color:rgba(100,160,220,0.55)!important;}
 
     /* ── GRID HELPERS ── */
     .grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
@@ -385,7 +392,7 @@ export function layout(title: string, content: string, activePage: string = ''):
     @media(max-width:700px){.grid-6{grid-template-columns:repeat(2,1fr)!important;}}
   </style>
 </head>
-<body style="background:#030818;color:#fff;min-height:100vh;">
+<body style="color:#fff;min-height:100vh;">
 
   <!-- SIDEBAR -->
   <div class="sidebar" id="mainSidebar">
@@ -393,10 +400,6 @@ export function layout(title: string, content: string, activePage: string = ''):
       <!-- SS Logo centered with gentle glow animation -->
       <div class="sidebar-logo-img">
         ${ssLogo(70)}
-      </div>
-      <div class="sidebar-brand">
-        <span class="b1">SOCIAL</span>
-        <span class="b2">STRATEGY</span>
       </div>
     </a>
     <nav style="flex:1;overflow-y:auto;padding:6px 0;">
