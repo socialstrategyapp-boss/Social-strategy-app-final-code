@@ -98,7 +98,7 @@ export function layout(title: string, content: string, activePage: string = ''):
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     *,*::before,*::after{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;box-sizing:border-box;}
-    body{background:url('/assets/bg-neon-burst.jpg') center center / cover fixed, linear-gradient(160deg,#020c1e 0%,#030818 40%,#040a1a 70%,#020c1e 100%);margin:0;padding:0;overflow-x:hidden;color:#e2e8f0;}
+    body{background:linear-gradient(rgba(2,8,22,0.74),rgba(3,9,24,0.74)),url('/assets/bg-neon-burst.jpg') center center / cover fixed,linear-gradient(160deg,#020c1e 0%,#030818 40%,#040a1a 70%,#020c1e 100%);margin:0;padding:0;overflow-x:hidden;color:#e2e8f0;}
     ::-webkit-scrollbar{width:5px;}
     ::-webkit-scrollbar-track{background:#040a1a;}
     ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00E5FF,#7C3AED);border-radius:3px;}

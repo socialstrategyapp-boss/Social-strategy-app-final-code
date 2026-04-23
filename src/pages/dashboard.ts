@@ -8,12 +8,12 @@ export function dashboardPage(): string {
     { label: 'Scheduled Queue', value: '24', change: '4 today', up: true, icon: 'fas fa-calendar-check', bg: 'rgba(124,58,237,0.12)', border: 'rgba(124,58,237,0.25)', iconColor: '#7C3AED' },
   ]
   const platforms = [
-    { name: 'Instagram', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)', followers: '12.4K', posts: 45, growth: '+8%' },
-    { name: 'TikTok', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)', followers: '34.5K', posts: 32, growth: '+22%' },
-    { name: 'Facebook', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)', followers: '8.2K', posts: 28, growth: '+3%' },
-    { name: 'YouTube', icon: 'fab fa-youtube', bg: 'linear-gradient(135deg,#FF0000,#cc0000)', followers: '5.6K', posts: 12, growth: '+15%' },
-    { name: 'X / Twitter', icon: 'fab fa-twitter', bg: 'linear-gradient(135deg,#1DA1F2,#0d7abc)', followers: '9.8K', posts: 67, growth: '+5%' },
-    { name: 'LinkedIn', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', followers: '4.2K', posts: 18, growth: '+11%' },
+    { name: 'Instagram', iconId: 'ig', icon: 'fab fa-instagram', bg: 'linear-gradient(135deg,#E1306C,#F77737)', followers: '12.4K', posts: 45, growth: '+8%' },
+    { name: 'TikTok', iconId: 'tk', icon: 'fab fa-tiktok', bg: 'linear-gradient(135deg,#010101,#69C9D0)', followers: '34.5K', posts: 32, growth: '+22%' },
+    { name: 'Facebook', iconId: 'fb', icon: 'fab fa-facebook', bg: 'linear-gradient(135deg,#1877F2,#0d5fcc)', followers: '8.2K', posts: 28, growth: '+3%' },
+    { name: 'YouTube', iconId: 'yt', icon: 'fab fa-youtube', bg: 'linear-gradient(135deg,#FF0000,#cc0000)', followers: '5.6K', posts: 12, growth: '+15%' },
+    { name: 'X / Twitter', iconId: 'tw', icon: 'fab fa-twitter', bg: 'linear-gradient(135deg,#1DA1F2,#0d7abc)', followers: '9.8K', posts: 67, growth: '+5%' },
+    { name: 'LinkedIn', iconId: 'li', icon: 'fab fa-linkedin', bg: 'linear-gradient(135deg,#0A66C2,#084c8f)', followers: '4.2K', posts: 18, growth: '+11%' },
   ]
   const posts = [
     { caption: '🔥 5 Morning Routines That Changed My Life...', platform: 'Instagram', iconId: 'ig', bg: 'linear-gradient(145deg,#E1306C,#F77737)', likes: 1240, time: '2h ago', status: 'published' },

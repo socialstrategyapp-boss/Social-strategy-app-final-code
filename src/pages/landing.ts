@@ -20,7 +20,7 @@ export function landingPage(): string {
     html, body{ overflow-x:hidden!important; width:100%; position:relative; }
 
     /* ── LIGHTER, RICHER BACKGROUND with purple/indigo depth ── */
-    body{background:url('/assets/bg-neon-burst.jpg') center center / cover fixed, linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);color:#fff;overflow-x:hidden;min-height:100vh;}
+    body{background:linear-gradient(rgba(4,6,22,0.70),rgba(5,4,28,0.70)),url('/assets/bg-neon-burst.jpg') center center / cover fixed,linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);color:#fff;overflow-x:hidden;min-height:100vh;}
 
     /* ── NEON GRID OVERLAY ── */
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
