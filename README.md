@@ -1,4 +1,6 @@
-# SOCIAL STRATEGY – Web Application
+npm install
+npm run build
+npx wrangler pages dev dist --ip 0.0.0.0 --port 3000# SOCIAL STRATEGY – Web Application
 
 **One Scan. Complete Growth.**
 
