@@ -1,5 +1,4 @@
-npm install
-npm run build
+
 npx wrangler pages dev dist --ip 0.0.0.0 --port 3000# SOCIAL STRATEGY – Web Application
 
 **One Scan. Complete Growth.**
@@ -126,7 +125,7 @@ npx wrangler pages dev dist --ip 0.0.0.0 --port 3000
 
 ## 📞 Support
 
-- Email: support@socialsync.ai
+- Email: contact_team@socialstrategy.com
 - Platform: Cloudflare Pages
 - Status: ✅ Active
-- Last Updated: March 2025
+- Last Updated: March 2026
