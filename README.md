@@ -129,3 +129,4 @@ npx wrangler pages dev dist --ip 0.0.0.0 --port 3000
 - Platform: Cloudflare Pages
 - Status: ✅ Active
 - Last Updated: March 2026
+- dash.cloudflare.com
