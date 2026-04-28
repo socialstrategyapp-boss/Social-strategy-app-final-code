@@ -12,7 +12,7 @@ function pageShell(title: string, content: string): string {
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     *{font-family:'Inter',sans-serif;box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
-    body{background:linear-gradient(rgba(4,6,22,0.72),rgba(5,4,28,0.72)),url('/assets/bg-neon-burst.jpg') center center / cover fixed,linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);color:#fff;overflow-x:hidden;min-height:100vh;}
+    body{background:transparent;color:#fff;overflow-x:hidden;min-height:100vh;}
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       background-image:linear-gradient(rgba(0,229,255,0.04) 1px,transparent 1px),
         linear-gradient(90deg,rgba(0,229,255,0.04) 1px,transparent 1px);
@@ -93,6 +93,9 @@ function pageShell(title: string, content: string): string {
   </style>
 </head>
 <body>
+<div aria-hidden="true" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(rgba(4,6,22,0.72),rgba(5,4,28,0.72)),url('/assets/bg-neon-burst.jpg') center center/cover no-repeat,
+             linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);"></div>
 <nav class="navbar">
   <div class="navbar-inner">
     <a href="/" class="navbar-logo">
