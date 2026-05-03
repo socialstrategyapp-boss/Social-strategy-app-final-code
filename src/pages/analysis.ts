@@ -362,6 +362,60 @@ export function analysisPage(): string {
       }
     });
 
+    // ── Restore last analysis result from localStorage ────────────────────
+    (function restoreLastReport() {
+      try {
+        const raw = localStorage.getItem('ss_last_report_v1');
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        if (!data || !data.success) return;
+
+        const profile = JSON.parse(localStorage.getItem('ss_profile_v1') || '{}');
+        const url = profile.pUrl || '';
+
+        document.getElementById('analyzedUrl').textContent = url ? '📊 ' + url : '📊 Last Report';
+        document.getElementById('overallScore').textContent = data.overallScore + '/100';
+        if (data.websiteSummary) document.getElementById('websiteSummary').textContent = data.websiteSummary;
+        if (data.targetAudience) document.getElementById('targetAudience').textContent = data.targetAudience;
+        if (data.topOpportunity) document.getElementById('topOpportunity').textContent = data.topOpportunity;
+
+        [['seoScore', data.seoScore], ['brandScore', data.brandScore], ['usabilityScore', data.usabilityScore]].forEach(([id, val]) => {
+          document.getElementById(id).textContent = val + '/100';
+          setTimeout(() => { document.getElementById(id + 'Bar').style.width = val + '%'; }, 100);
+        });
+
+        const recList = document.getElementById('recommendationsList');
+        recList.innerHTML = (data.recommendations || []).map((r, i) => \`
+          <div style="display:flex;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:10px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:rgba(251,146,60,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;color:#fb923c;">\${i+1}</div>
+            <p style="font-size:13px;color:#d1d5db;line-height:1.5;margin:0;">\${r}</p>
+          </div>
+        \`).join('');
+
+        if (data.strategy) {
+          document.getElementById('pricingStrategy').textContent = data.strategy.pricing || '';
+          document.getElementById('revenueOutlook').textContent = data.strategy.revenue || '';
+          document.getElementById('actionPlan').innerHTML = (data.strategy.actions || []).map(a => \`
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#d1d5db;">
+              <i class="fas fa-arrow-right" style="color:#4ade80;font-size:11px;flex-shrink:0;"></i>\${a}
+            </div>
+          \`).join('');
+        }
+
+        if (data.contentPillars) {
+          const colors = ['rgba(0,229,255,0.12)','rgba(167,139,250,0.12)','rgba(255,45,120,0.12)','rgba(74,222,128,0.12)'];
+          const textColors = ['#00E5FF','#A78BFA','#FF2D78','#4ade80'];
+          document.getElementById('contentPillars').innerHTML = data.contentPillars.map((p, i) => \`
+            <div style="padding:10px 16px;border-radius:10px;background:\${colors[i%4]};border:1px solid \${textColors[i%4]}33;font-size:13px;font-weight:700;color:\${textColors[i%4]};">
+              <i class="fas fa-hashtag" style="margin-right:6px;font-size:11px;"></i>\${p}
+            </div>
+          \`).join('');
+        }
+
+        document.getElementById('resultsSection').style.display = 'flex';
+      } catch (err) { console.error('Failed to restore last report:', err); }
+    })();
+
     // ── Auto-fill URL & show credit limit from profile ─────────────────────
     (function initFromProfile() {
       try {
