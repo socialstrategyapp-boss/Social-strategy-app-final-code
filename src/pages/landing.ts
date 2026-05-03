@@ -20,7 +20,8 @@ export function landingPage(): string {
     html, body{ overflow-x:hidden!important; width:100%; position:relative; }
 
     /* ── LIGHTER, RICHER BACKGROUND with purple/indigo depth ── */
-    body{background:linear-gradient(rgba(4,6,22,0.70),rgba(5,4,28,0.70)),url('/assets/bg-neon-burst.jpg') center center / cover fixed,linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);color:#fff;overflow-x:hidden;min-height:100vh;}
+    /* NOTE: body is transparent so the fixed bg div below is visible on ALL browsers (incl. iOS Safari) */
+    body{background:transparent;color:#fff;overflow-x:hidden;min-height:100vh;}
 
     /* ── NEON GRID OVERLAY ── */
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -204,6 +205,15 @@ export function landingPage(): string {
 <body>
 
 <!-- ══════════════════════════════════════════
+     FIXED BACKGROUND LAYER
+     Uses position:fixed div instead of background-attachment:fixed so it works
+     correctly on iOS Safari and all mobile browsers.
+══════════════════════════════════════════ -->
+<div aria-hidden="true" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(rgba(4,6,22,0.70),rgba(5,4,28,0.70)),url('/assets/bg-neon-burst.jpg') center center/cover no-repeat,
+             linear-gradient(145deg,#080420 0%,#0d0530 25%,#06122a 50%,#100525 75%,#080420 100%);"></div>
+
+<!-- ══════════════════════════════════════════
      NAVBAR
 ══════════════════════════════════════════ -->
 <nav class="navbar">
@@ -258,7 +268,10 @@ export function landingPage(): string {
     <div class="hero-social-text">SOCIAL</div>
 
     <!-- ── LOGO with neon border ── -->
-    <div style="display:flex;justify-content:center;margin-bottom:16px;">
+    <!-- margin-bottom:56px — gives 56px clearance below the logo wrap; the neon halo
+         extends ~43px below the logo boundary (inset:-25px + blur:18px), so we need
+         at least 43px+ here to ensure the STRATEGY text below isn't covered by the glow. -->
+    <div style="display:flex;justify-content:center;margin-bottom:56px;">
       <div class="hero-logo-wrap" style="position:relative;">
         <!-- outer neon border ring -->
         <div style="position:absolute;inset:-6px;border-radius:52px;
