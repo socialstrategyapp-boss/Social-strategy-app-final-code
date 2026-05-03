@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 'copilot/**'
   workflow_dispatch:
 
 jobs:
