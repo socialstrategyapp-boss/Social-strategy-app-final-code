@@ -30,6 +30,10 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Inject D1 database UUID
+        run: |
+          sed -i 's/"database_id": "local-dev-placeholder"/"database_id": "${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}"/' wrangler.jsonc
+
       - name: Create Cloudflare Pages project (if not exists)
         uses: cloudflare/wrangler-action@v3
         continue-on-error: true
