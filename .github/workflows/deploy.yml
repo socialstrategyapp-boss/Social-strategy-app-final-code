@@ -30,6 +30,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Inject production D1 database ID
+        run: |
+          set -euo pipefail
+          db_id=$(npx wrangler d1 list --json | node -e "const fs=require('fs');const input=fs.readFileSync(0,'utf8');const dbs=JSON.parse(input);const found=dbs.find((db)=>db.name==='socialstrategy-db');if(!found?.uuid){console.error('Error: Database socialstrategy-db not found or missing uuid');process.exit(1)}process.stdout.write(found.uuid)")
+          grep -q 'local-dev-placeholder' wrangler.jsonc || { echo 'Error: local-dev-placeholder not found in wrangler.jsonc'; exit 1; }
+          sed -i "s/local-dev-placeholder/${db_id}/g" wrangler.jsonc
+          grep -q "${db_id}" wrangler.jsonc || { echo "Error: failed to inject database ID into wrangler.jsonc"; exit 1; }
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Create Cloudflare Pages project (if not exists)
         run: |
           output=$(npx wrangler pages project create webapp --production-branch=main 2>&1) && echo "$output" || {
@@ -40,46 +51,12 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      - name: Inject production D1 database ID
-        run: |
-          test -n "$CLOUDFLARE_D1_DATABASE_ID" || {
-            echo "Missing required secret: CLOUDFLARE_D1_DATABASE_ID"
-            exit 1
-          }
-          python - <<'PY'
-          import json
-          import os
-          import re
-          UUID_PATTERN = r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-          path = "wrangler.jsonc"
-          db_id = os.environ["CLOUDFLARE_D1_DATABASE_ID"]
-          if not re.fullmatch(UUID_PATTERN, db_id):
-              raise SystemExit("CLOUDFLARE_D1_DATABASE_ID is not a valid UUID format")
-          try:
-              with open(path, "r", encoding="utf-8") as f:
-                  content = f.read()
-          except OSError as error:
-              raise SystemExit(f"Unable to read {path}: {error}") from error
-          placeholder = '"database_id": "local-dev-placeholder"'
-          placeholder_count = content.count(placeholder)
-          if placeholder_count != 1:
-              raise SystemExit(f"Expected exactly one local-dev-placeholder database_id in wrangler.jsonc, found: {placeholder_count}")
-          content = content.replace(
-              placeholder,
-              f'"database_id": {json.dumps(db_id)}',
-          )
-          try:
-              with open(path, "w", encoding="utf-8") as f:
-                  f.write(content)
-          except OSError as error:
-              raise SystemExit(f"Unable to write {path}: {error}") from error
-          PY
-        env:
-          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
-
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=webapp
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
