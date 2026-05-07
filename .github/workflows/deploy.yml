@@ -30,6 +30,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Inject production D1 database ID
+        run: |
+          set -euo pipefail
+          db_id=$(npx wrangler d1 list --json | node -e "const fs=require('fs');const input=fs.readFileSync(0,'utf8');const dbs=JSON.parse(input);const found=dbs.find((db)=>db.name==='socialstrategy-db');if(!found?.uuid){process.exit(1)}process.stdout.write(found.uuid)")
+          DB_ID="$db_id" node -e "const fs=require('fs');const p='wrangler.jsonc';const cfg=JSON.parse(fs.readFileSync(p,'utf8'));if(!Array.isArray(cfg.d1_databases)||cfg.d1_databases.length===0){throw new Error('Missing d1_databases in wrangler.jsonc')}cfg.d1_databases=cfg.d1_databases.map((db)=>db.binding==='DB'?{...db,database_id:process.env.DB_ID}:db);fs.writeFileSync(p,JSON.stringify(cfg,null,2)+'\n')"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Create Cloudflare Pages project (if not exists)
         run: |
           output=$(npx wrangler pages project create webapp --production-branch=main 2>&1) && echo "$output" || {
@@ -49,4 +58,3 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
