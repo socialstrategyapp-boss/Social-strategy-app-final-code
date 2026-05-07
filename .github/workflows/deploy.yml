@@ -53,7 +53,7 @@ jobs:
           try {
             cfg = JSON.parse(fs.readFileSync(path, "utf8"));
           } catch (error) {
-            console.error("wrangler.jsonc must be valid JSON in CI (comments/trailing commas are not supported by this step)");
+            console.error("This CI step parses wrangler.jsonc with JSON.parse, so comments and trailing commas must be removed");
             console.error(error.message);
             process.exit(1);
           }
@@ -70,10 +70,7 @@ jobs:
             console.error("No D1 database entry with binding 'DB' found in wrangler.jsonc");
             process.exit(1);
           }
-          cfg.d1_databases[dbIndex] = {
-            ...cfg.d1_databases[dbIndex],
-            database_id: process.env.CLOUDFLARE_D1_DATABASE_ID
-          };
+          cfg.d1_databases[dbIndex].database_id = process.env.CLOUDFLARE_D1_DATABASE_ID;
           fs.writeFileSync(path, `${JSON.stringify(cfg, null, 2)}\n`);
           EOF
         env:
