@@ -46,7 +46,20 @@ jobs:
             echo "Missing required secret: CLOUDFLARE_D1_DATABASE_ID"
             exit 1
           }
-          node -e 'const fs=require("fs");const path="wrangler.jsonc";const cfg=JSON.parse(fs.readFileSync(path,"utf8"));if(!Array.isArray(cfg.d1_databases)||cfg.d1_databases.length===0){console.error("No d1_databases found in wrangler.jsonc");process.exit(1);}cfg.d1_databases=cfg.d1_databases.map(db=>({...db,database_id:process.env.CLOUDFLARE_D1_DATABASE_ID}));fs.writeFileSync(path,JSON.stringify(cfg,null,2)+"\n");'
+          node <<'EOF'
+          const fs = require("fs");
+          const path = "wrangler.jsonc";
+          const cfg = JSON.parse(fs.readFileSync(path, "utf8"));
+          if (!Array.isArray(cfg.d1_databases) || cfg.d1_databases.length === 0) {
+            console.error("No d1_databases entries found in wrangler.jsonc - at least one database configuration is required");
+            process.exit(1);
+          }
+          cfg.d1_databases = cfg.d1_databases.map((db) => ({
+            ...db,
+            database_id: process.env.CLOUDFLARE_D1_DATABASE_ID
+          }));
+          fs.writeFileSync(path, `${JSON.stringify(cfg, null, 2)}\n`);
+          EOF
         env:
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
 
