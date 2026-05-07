@@ -30,6 +30,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Inject production D1 database ID
+        run: |
+          set -euo pipefail
+          db_id=$(npx wrangler d1 list --json | node -e "const fs=require('fs');const input=fs.readFileSync(0,'utf8');const dbs=JSON.parse(input);const found=dbs.find((db)=>db.name==='socialstrategy-db');if(!found?.uuid){console.error('Error: Database socialstrategy-db not found or missing uuid');process.exit(1)}process.stdout.write(found.uuid)")
+          grep -q 'local-dev-placeholder' wrangler.jsonc || { echo 'Error: local-dev-placeholder not found in wrangler.jsonc'; exit 1; }
+          sed -i "s/local-dev-placeholder/${db_id}/g" wrangler.jsonc
+          grep -q "${db_id}" wrangler.jsonc || { echo "Error: failed to inject database ID into wrangler.jsonc"; exit 1; }
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Create Cloudflare Pages project (if not exists)
         run: |
           output=$(npx wrangler pages project create webapp --production-branch=main 2>&1) && echo "$output" || {
@@ -49,4 +60,3 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
