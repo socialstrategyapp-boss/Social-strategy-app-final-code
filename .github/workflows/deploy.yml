@@ -40,13 +40,19 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
+      - name: Inject production D1 database ID
+        run: |
+          test -n "$CLOUDFLARE_D1_DATABASE_ID" || {
+            echo "Missing required secret: CLOUDFLARE_D1_DATABASE_ID"
+            exit 1
+          }
+          node -e 'const fs=require("fs");const path="wrangler.jsonc";const cfg=JSON.parse(fs.readFileSync(path,"utf8"));if(!Array.isArray(cfg.d1_databases)||cfg.d1_databases.length===0){console.error("No d1_databases found in wrangler.jsonc");process.exit(1);}cfg.d1_databases=cfg.d1_databases.map(db=>({...db,database_id:process.env.CLOUDFLARE_D1_DATABASE_ID}));fs.writeFileSync(path,JSON.stringify(cfg,null,2)+"\n");'
+        env:
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=webapp
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
