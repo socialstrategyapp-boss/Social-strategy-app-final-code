@@ -50,12 +50,16 @@ jobs:
           import json
           import os
           import re
+          UUID_PATTERN = r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
           path = "wrangler.jsonc"
           db_id = os.environ["CLOUDFLARE_D1_DATABASE_ID"]
-          if not re.fullmatch(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", db_id):
+          if not re.fullmatch(UUID_PATTERN, db_id):
               raise SystemExit("CLOUDFLARE_D1_DATABASE_ID is not a valid UUID format")
-          with open(path, "r", encoding="utf-8") as f:
-              content = f.read()
+          try:
+              with open(path, "r", encoding="utf-8") as f:
+                  content = f.read()
+          except OSError as error:
+              raise SystemExit(f"Unable to read {path}: {error}") from error
           placeholder = '"database_id": "local-dev-placeholder"'
           placeholder_count = content.count(placeholder)
           if placeholder_count != 1:
@@ -64,8 +68,11 @@ jobs:
               placeholder,
               f'"database_id": {json.dumps(db_id)}',
           )
-          with open(path, "w", encoding="utf-8") as f:
-              f.write(content)
+          try:
+              with open(path, "w", encoding="utf-8") as f:
+                  f.write(content)
+          except OSError as error:
+              raise SystemExit(f"Unable to write {path}: {error}") from error
           PY
         env:
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
