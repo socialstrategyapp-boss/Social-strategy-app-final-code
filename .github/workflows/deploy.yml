@@ -51,7 +51,18 @@ jobs:
             echo "No local-dev-placeholder database_id found in wrangler.jsonc"
             exit 1
           fi
-          sed -i "s/\"database_id\": \"local-dev-placeholder\"/\"database_id\": \"$CLOUDFLARE_D1_DATABASE_ID\"/" wrangler.jsonc
+          python - <<'PY'
+          import os
+          path = "wrangler.jsonc"
+          with open(path, "r", encoding="utf-8") as f:
+              content = f.read()
+          content = content.replace(
+              '"database_id": "local-dev-placeholder"',
+              f'"database_id": "{os.environ["CLOUDFLARE_D1_DATABASE_ID"]}"',
+          )
+          with open(path, "w", encoding="utf-8") as f:
+              f.write(content)
+          PY
         env:
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
 
