@@ -46,11 +46,6 @@ jobs:
             echo "Missing required secret: CLOUDFLARE_D1_DATABASE_ID"
             exit 1
           }
-          placeholder_count=$(grep -c '"database_id": "local-dev-placeholder"' wrangler.jsonc || true)
-          if [ "$placeholder_count" -ne 1 ]; then
-            echo "Expected exactly one local-dev-placeholder database_id in wrangler.jsonc, found: $placeholder_count"
-            exit 1
-          fi
           python - <<'PY'
           import json
           import os
@@ -61,8 +56,12 @@ jobs:
               raise SystemExit("CLOUDFLARE_D1_DATABASE_ID is not a valid UUID format")
           with open(path, "r", encoding="utf-8") as f:
               content = f.read()
+          placeholder = '"database_id": "local-dev-placeholder"'
+          placeholder_count = content.count(placeholder)
+          if placeholder_count != 1:
+              raise SystemExit(f"Expected exactly one local-dev-placeholder database_id in wrangler.jsonc, found: {placeholder_count}")
           content = content.replace(
-              '"database_id": "local-dev-placeholder"',
+              placeholder,
               f'"database_id": {json.dumps(db_id)}',
           )
           with open(path, "w", encoding="utf-8") as f:
