@@ -46,33 +46,12 @@ jobs:
             echo "Missing required secret: CLOUDFLARE_D1_DATABASE_ID"
             exit 1
           }
-          node <<'EOF'
-          const fs = require("fs");
-          const path = "wrangler.jsonc";
-          let cfg;
-          try {
-            cfg = JSON.parse(fs.readFileSync(path, "utf8"));
-          } catch (error) {
-            console.error("This CI step parses wrangler.jsonc with JSON.parse, so comments and trailing commas must be removed");
-            console.error(error.message);
-            process.exit(1);
-          }
-          if (!Array.isArray(cfg.d1_databases)) {
-            console.error("Missing d1_databases array in wrangler.jsonc");
-            process.exit(1);
-          }
-          if (cfg.d1_databases.length === 0) {
-            console.error("d1_databases array is empty in wrangler.jsonc");
-            process.exit(1);
-          }
-          const dbIndex = cfg.d1_databases.findIndex((db) => db.binding === "DB");
-          if (dbIndex === -1) {
-            console.error("No D1 database entry with binding 'DB' found in wrangler.jsonc");
-            process.exit(1);
-          }
-          cfg.d1_databases[dbIndex].database_id = process.env.CLOUDFLARE_D1_DATABASE_ID;
-          fs.writeFileSync(path, `${JSON.stringify(cfg, null, 2)}\n`);
-          EOF
+          placeholder_count=$(grep -c '"database_id": "local-dev-placeholder"' wrangler.jsonc || true)
+          if [ "$placeholder_count" -eq 0 ]; then
+            echo "No local-dev-placeholder database_id found in wrangler.jsonc"
+            exit 1
+          fi
+          sed -i "s/\"database_id\": \"local-dev-placeholder\"/\"database_id\": \"$CLOUDFLARE_D1_DATABASE_ID\"/" wrangler.jsonc
         env:
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
 
