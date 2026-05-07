@@ -49,15 +49,31 @@ jobs:
           node <<'EOF'
           const fs = require("fs");
           const path = "wrangler.jsonc";
-          const cfg = JSON.parse(fs.readFileSync(path, "utf8"));
-          if (!Array.isArray(cfg.d1_databases) || cfg.d1_databases.length === 0) {
-            console.error("No d1_databases entries found in wrangler.jsonc - at least one database configuration is required");
+          let cfg;
+          try {
+            cfg = JSON.parse(fs.readFileSync(path, "utf8"));
+          } catch (error) {
+            console.error("wrangler.jsonc must be valid JSON in CI (comments/trailing commas are not supported by this step)");
+            console.error(error.message);
             process.exit(1);
           }
-          cfg.d1_databases = cfg.d1_databases.map((db) => ({
-            ...db,
+          if (!Array.isArray(cfg.d1_databases)) {
+            console.error("Missing d1_databases array in wrangler.jsonc");
+            process.exit(1);
+          }
+          if (cfg.d1_databases.length === 0) {
+            console.error("d1_databases array is empty in wrangler.jsonc");
+            process.exit(1);
+          }
+          const dbIndex = cfg.d1_databases.findIndex((db) => db.binding === "DB");
+          if (dbIndex === -1) {
+            console.error("No D1 database entry with binding 'DB' found in wrangler.jsonc");
+            process.exit(1);
+          }
+          cfg.d1_databases[dbIndex] = {
+            ...cfg.d1_databases[dbIndex],
             database_id: process.env.CLOUDFLARE_D1_DATABASE_ID
-          }));
+          };
           fs.writeFileSync(path, `${JSON.stringify(cfg, null, 2)}\n`);
           EOF
         env:
