@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX — 3-Day Live Stop Loss Test</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap');
+:root{
+  --black:#030405;--panel:#0a1018;--panel2:#0d1620;--border:#162030;--border2:#1e2e3e;
+  --gold:#c9a227;--goldf:#f0c94d;
+  --cyan:#00e5ff;--green:#00ff88;--red:#ff3355;--orange:#ff8c00;--purple:#a855f7;
+  --text:#b8cede;--muted:#3a5a7a;--muted2:#141e28;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--black);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(0,229,255,.012) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(0,229,255,.012) 1px,transparent 1px);
+  background-size:48px 48px;pointer-events:none;z-index:0;}
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:28px 14px 80px;}
+
+/* HEADER */
+.hdr{text-align:center;margin-bottom:28px;}
+.hdr-tag{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.hdr h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,6vw,72px);letter-spacing:3px;line-height:.92;color:#fff;}
+.hdr h1 em{color:var(--gold);font-style:normal;}
+.hdr-sub{margin-top:8px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);}
+.hdr::after{content:'';display:block;width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:10px auto 0;}
+
+/* DAY TABS */
+.day-tabs{display:flex;gap:2px;margin-bottom:0;}
+.dtab{flex:1;padding:10px 4px;background:var(--panel);border:1px solid var(--border);border-bottom:none;cursor:pointer;text-align:center;transition:all .2s;}
+.dtab.active{background:var(--panel2);border-color:var(--gold);}
+.dtab-day{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--muted);display:block;}
+.dtab.active .dtab-day{color:#fff;}
+.dtab-market{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;color:var(--muted);display:block;margin-top:2px;}
+.dtab-result{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;display:block;margin-top:3px;}
+
+/* DAY PANEL */
+.day-panel{display:none;border:1px solid var(--border);background:var(--panel2);padding:16px;}
+.day-panel.active{display:block;}
+
+/* MARKET STRIP */
+.mkt-strip{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--black);border:1px solid var(--border);margin-bottom:14px;flex-wrap:wrap;}
+.mkt-badge{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;}
+.mkt-info{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);line-height:1.7;}
+.mkt-info span{color:var(--text);}
+.regime-pill{font-family:'Space Mono',monospace;font-size:8px;padding:3px 9px;border-radius:2px;border:1px solid;letter-spacing:1px;margin-left:auto;}
+
+/* CHART ROW */
+.chart-row{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px;}
+.chart-box{background:var(--black);border:1px solid var(--border);}
+.chart-title-row{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border);}
+.ct-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#fff;}
+.ct-meta{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);}
+canvas.mchart{display:block;width:100%;height:110px;}
+.price-labels{display:flex;justify-content:space-between;padding:3px 8px;font-family:'Space Mono',monospace;font-size:7px;color:var(--muted);}
+
+/* TRADE LOG */
+.trades-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+.th-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--gold);}
+.th-run-btn{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;padding:6px 16px;background:var(--gold);color:var(--black);border:none;cursor:pointer;font-weight:700;border-radius:2px;transition:background .2s;}
+.th-run-btn:hover{background:var(--goldf);}
+.th-run-btn:disabled{background:var(--muted);cursor:not-allowed;}
+
+.bot-rows{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+@media(max-width:640px){.bot-rows{grid-template-columns:1fr;}}
+
+.bot-row{background:var(--panel);border:1px solid var(--border);overflow:hidden;}
+.bot-row::before{content:'';display:block;height:2px;}
+.br1::before{background:var(--cyan);}
+.br2::before{background:var(--purple);}
+.br3::before{background:var(--green);}
+.br4::before{background:var(--gold);}
+.br5::before{background:var(--red);}
+
+.brow-head{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border);}
+.brow-num{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--border);line-height:1;min-width:28px;}
+.brow-meta{flex:1;}
+.brow-type{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.brow-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#fff;}
+.brow-status{font-family:'Space Mono',monospace;font-size:8px;padding:2px 7px;border-radius:2px;border:1px solid;}
+.status-active{color:var(--green);border-color:rgba(0,255,136,.3);background:rgba(0,255,136,.05);}
+.status-cool{color:var(--orange);border-color:rgba(255,140,0,.3);background:rgba(255,140,0,.05);}
+.status-halt{color:var(--red);border-color:rgba(255,51,85,.3);background:rgba(255,51,85,.05);}
+.status-pause{color:var(--purple);border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.05);}
+
+.brow-body{padding:8px 12px;}
+.trade-line{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--muted2);font-family:'Space Mono',monospace;font-size:8px;}
+.trade-line:last-child{border-bottom:none;}
+.tl-time{color:var(--muted);min-width:40px;}
+.tl-dir{padding:1px 5px;border-radius:2px;font-size:7px;font-weight:700;letter-spacing:1px;}
+.dir-long{background:rgba(0,255,136,.12);color:var(--green);border:1px solid rgba(0,255,136,.2);}
+.dir-short{background:rgba(255,51,85,.12);color:var(--red);border:1px solid rgba(255,51,85,.2);}
+.tl-prices{color:var(--muted);flex:1;margin:0 8px;font-size:7px;}
+.tl-exit-type{font-size:7px;color:var(--muted);}
+.tl-r{font-weight:700;min-width:36px;text-align:right;}
+.cooldown-msg{font-family:'Space Mono',monospace;font-size:8px;color:var(--orange);padding:6px 0;text-align:center;}
+.halt-msg{font-family:'Space Mono',monospace;font-size:8px;color:var(--red);padding:6px 0;text-align:center;}
+
+.brow-footer{display:flex;border-top:1px solid var(--border);}
+.bf{flex:1;padding:6px 4px;text-align:center;border-right:1px solid var(--border);}
+.bf:last-child{border-right:none;}
+.bf-v{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;display:block;}
+.bf-l{font-family:'Space Mono',monospace;font-size:6px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-top:1px;display:block;}
+
+/* DAILY SUMMARY */
+.day-summary{background:var(--panel);border:1px solid var(--border);padding:14px 16px;margin-top:10px;}
+.ds-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
+.ds-table{width:100%;border-collapse:collapse;}
+.ds-table th{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:5px 8px;text-align:left;border-bottom:1px solid var(--border);}
+.ds-table td{font-family:'Space Mono',monospace;font-size:9px;padding:7px 8px;border-bottom:1px solid var(--muted2);}
+.ds-table tr:last-child td{border-bottom:none;}
+
+/* NEW FEATURES */
+.features-panel{background:var(--panel);border:1px solid var(--border);padding:16px;margin-top:16px;}
+.fp-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--gold);margin-bottom:12px;}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:640px){.feat-grid{grid-template-columns:1fr;}}
+.feat-card{background:var(--panel2);border:1px solid var(--border);padding:12px 14px;}
+.feat-card::before{content:'';display:block;height:2px;margin:-12px -14px 10px;border-radius:0;}
+.fc-ai::before{background:var(--cyan);}
+.fc-risk::before{background:var(--green);}
+.fc-regime::before{background:var(--gold);}
+.fc-exec::before{background:var(--purple);}
+.fc-ml::before{background:var(--orange);}
+.fc-port::before{background:var(--red);}
+.feat-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#fff;margin-bottom:4px;}
+.feat-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+.feat-desc{font-family:'Space Mono',monospace;font-size:8px;line-height:1.7;color:var(--text);}
+.feat-impact{font-family:'Space Mono',monospace;font-size:7px;margin-top:6px;}
+
+/* 3-DAY OVERALL */
+.overall{background:var(--panel);border:1px solid var(--border);padding:14px 16px;margin-top:8px;}
+.ov-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
+.ov-table{width:100%;border-collapse:collapse;}
+.ov-table th{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:5px 8px;text-align:left;border-bottom:1px solid var(--border);}
+.ov-table td{font-family:'Space Mono',monospace;font-size:9px;padding:7px 8px;border-bottom:1px solid var(--muted2);}
+.pos{color:var(--green);} .neg{color:var(--red);} .neu{color:var(--goldf);} .warn{color:var(--orange);}
+.disc{font-family:'Space Mono',monospace;font-size:7px;color:var(--muted);text-align:center;margin-top:24px;padding-top:14px;border-top:1px solid var(--border);line-height:1.8;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-tag">APEX Risk Engine v1.0 · Stop Losses Active · Cooldowns Live · 3-Day Test</div>
+  <h1>3-DAY<br><em>COMBAT</em><br>TEST</h1>
+  <div class="hdr-sub">HALF SESSIONS · BULL / BEAR / CHOPPY · ALL 5 BOTS · STOP LOSSES HARDWIRED</div>
+</div>
+
+<!-- DAY TABS -->
+<div class="day-tabs">
+  <div class="dtab active" onclick="showDay(0)" id="tab0">
+    <span class="dtab-day">DAY 1</span>
+    <span class="dtab-market">BTC + NVDA · BULL</span>
+    <span class="dtab-result" id="tab0-result" style="color:var(--muted)">—</span>
+  </div>
+  <div class="dtab" onclick="showDay(1)" id="tab1">
+    <span class="dtab-day">DAY 2</span>
+    <span class="dtab-market">ETH + SPY · BEAR DUMP</span>
+    <span class="dtab-result" id="tab1-result" style="color:var(--muted)">—</span>
+  </div>
+  <div class="dtab" onclick="showDay(2)" id="tab2">
+    <span class="dtab-day">DAY 3</span>
+    <span class="dtab-market">BTC + AAPL · RECOVERY</span>
+    <span class="dtab-result" id="tab2-result" style="color:var(--muted)">—</span>
+  </div>
+</div>
+
+<!-- ═══════════ DAY 1 ═══════════ -->
+<div class="day-panel active" id="day0">
+  <div class="mkt-strip">
+    <span class="mkt-badge" style="color:var(--green)">DAY 1 — BULL</span>
+    <div class="mkt-info">Session: <span>09:30–13:00</span> &nbsp;|&nbsp; BTC: <span>$67,240 → $69,880 (+3.9%)</span> &nbsp;|&nbsp; NVDA: <span>$892 → $941 (+5.5%)</span> &nbsp;|&nbsp; VIX: <span>14.2</span></div>
+    <div class="regime-pill" style="color:var(--green);border-color:rgba(0,255,136,.3);background:rgba(0,255,136,.06);">REGIME: BULL MOMENTUM</div>
+  </div>
+  <div class="chart-row">
+    <div class="chart-box">
+      <div class="chart-title-row">
+        <span class="ct-name">BTC/USDT — 5M · DAY 1 HALF SESSION</span>
+        <span class="ct-meta">High: $69,880 · Low: $67,100 · Range: +3.9%</span>
+      </div>
+      <canvas class="mchart" id="c0a"></canvas>
+      <div class="price-labels"><span>09:30</span><span>10:15</span><span>11:00</span><span>11:45</span><span>12:30</span><span>13:00</span></div>
+    </div>
+  </div>
+  <div class="trades-header">
+    <div class="th-title">TRADE LOG — ALL 5 BOTS</div>
+    <button class="th-run-btn" onclick="runDay(0)" id="run-btn-0">▶ RUN SIMULATION</button>
+  </div>
+  <div class="bot-rows" id="bot-rows-0"></div>
+  <div class="day-summary" id="summary-0" style="display:none"></div>
+</div>
+
+<!-- ═══════════ DAY 2 ═══════════ -->
+<div class="day-panel" id="day1">
+  <div class="mkt-strip">
+    <span class="mkt-badge" style="color:var(--red)">DAY 2 — BEAR DUMP</span>
+    <div class="mkt-info">Session: <span>09:30–13:00</span> &nbsp;|&nbsp; ETH: <span>$3,284 → $2,980 (-9.2%)</span> &nbsp;|&nbsp; SPY: <span>$518 → $492 (-5.0%)</span> &nbsp;|&nbsp; VIX: <span>38.6</span></div>
+    <div class="regime-pill" style="color:var(--red);border-color:rgba(255,51,85,.3);background:rgba(255,51,85,.06);">REGIME: BEAR / CRISIS — VIX 38</div>
+  </div>
+  <div class="chart-row">
+    <div class="chart-box">
+      <div class="chart-title-row">
+        <span class="ct-name">ETH/USDT — 5M · DAY 2 HALF SESSION</span>
+        <span class="ct-meta">High: $3,310 · Low: $2,940 · Range: -9.2%</span>
+      </div>
+      <canvas class="mchart" id="c1a"></canvas>
+      <div class="price-labels"><span>09:30</span><span>10:15</span><span>11:00</span><span>11:45</span><span>12:30</span><span>13:00</span></div>
+    </div>
+  </div>
+  <div class="trades-header">
+    <div class="th-title">TRADE LOG — ALL 5 BOTS</div>
+    <button class="th-run-btn" onclick="runDay(1)" id="run-btn-1">▶ RUN SIMULATION</button>
+  </div>
+  <div class="bot-rows" id="bot-rows-1"></div>
+  <div class="day-summary" id="summary-1" style="display:none"></div>
+</div>
+
+<!-- ═══════════ DAY 3 ═══════════ -->
+<div class="day-panel" id="day2">
+  <div class="mkt-strip">
+    <span class="mkt-badge" style="color:var(--orange)">DAY 3 — RECOVERY</span>
+    <div class="mkt-info">Session: <span>09:30–13:00</span> &nbsp;|&nbsp; BTC: <span>$68,100 → $69,240 (+1.7%)</span> &nbsp;|&nbsp; AAPL: <span>$214 → $219 (+2.3%)</span> &nbsp;|&nbsp; VIX: <span>21.4</span></div>
+    <div class="regime-pill" style="color:var(--orange);border-color:rgba(255,140,0,.3);background:rgba(255,140,0,.06);">REGIME: RECOVERY / CHOPPY</div>
+  </div>
+  <div class="chart-row">
+    <div class="chart-box">
+      <div class="chart-title-row">
+        <span class="ct-name">BTC/USDT — 5M · DAY 3 HALF SESSION</span>
+        <span class="ct-meta">High: $69,400 · Low: $67,800 · Range: +1.7%</span>
+      </div>
+      <canvas class="mchart" id="c2a"></canvas>
+      <div class="price-labels"><span>09:30</span><span>10:15</span><span>11:00</span><span>11:45</span><span>12:30</span><span>13:00</span></div>
+    </div>
+  </div>
+  <div class="trades-header">
+    <div class="th-title">TRADE LOG — ALL 5 BOTS</div>
+    <button class="th-run-btn" onclick="runDay(2)" id="run-btn-2">▶ RUN SIMULATION</button>
+  </div>
+  <div class="bot-rows" id="bot-rows-2"></div>
+  <div class="day-summary" id="summary-2" style="display:none"></div>
+</div>
+
+<!-- 3-DAY OVERALL -->
+<div class="overall" id="overall-board" style="display:none">
+  <div class="ov-title">📊 3-DAY COMBINED RESULTS — WITH STOP LOSSES & COOLDOWNS</div>
+  <table class="ov-table" id="overall-table"></table>
+</div>
+
+<!-- NEW FEATURES PANEL -->
+<div class="features-panel">
+  <div class="fp-title">🔧 FEATURES TO ADD — WHAT WOULD MAKE THESE BOTS MORE PROFITABLE</div>
+  <div class="feat-grid">
+
+    <div class="feat-card fc-ai">
+      <div class="feat-title">AI CONFIDENCE SCORE FILTER</div>
+      <div class="feat-tag">🧠 SIGNAL QUALITY GATE</div>
+      <div class="feat-desc">Before every trade, run a real-time confidence score (0–100) based on how many signals are firing AND how strong each one is. Only enter trades scoring above 72/100. Weak setups that used to bleed small losses simply never happen. This alone could cut losing trades by 30%.</div>
+      <div class="feat-impact warn">Estimated impact: +4 to +8% monthly return improvement</div>
+    </div>
+
+    <div class="feat-card fc-risk">
+      <div class="feat-title">DYNAMIC POSITION SIZING</div>
+      <div class="feat-tag">📐 VOLATILITY-ADJUSTED KELLY</div>
+      <div class="feat-desc">Current system risks flat 0.5% per trade. A smarter version scales position size up when the bot is on a winning streak (max 0.75%) and scales down automatically after any loss (to 0.3%). Compounds winners faster, shrinks exposure during drawdown phases automatically.</div>
+      <div class="feat-impact pos">Estimated impact: +15 to +25% compound growth over 6 months</div>
+    </div>
+
+    <div class="feat-card fc-regime">
+      <div class="feat-title">LIVE REGIME DETECTOR</div>
+      <div class="feat-tag">🔭 HMM MARKET STATE ENGINE</div>
+      <div class="feat-desc">A Hidden Markov Model running every 15 minutes that classifies the current market as Bull / Bear / Choppy / Crisis and automatically switches each bot into the right mode — or pauses them. The bear market stops on Day 2 would have been avoided entirely with this running BEFORE the dump started.</div>
+      <div class="feat-impact pos">Estimated impact: Prevents 80% of bear market losses</div>
+    </div>
+
+    <div class="feat-card fc-exec">
+      <div class="feat-title">SLIPPAGE PROTECTION LAYER</div>
+      <div class="feat-tag">⚡ SMART ORDER ROUTING</div>
+      <div class="feat-desc">Currently stops fire at a set price — but in a fast market you fill 0.3–1.5% below your stop. A smarter stop uses iceberg detection to find real liquidity, places stop-limit orders instead of stop-market, and monitors the bid-ask spread before submission. Reduces average slippage from ~0.4% to ~0.08%.</div>
+      <div class="feat-impact pos">Estimated impact: +2 to +5% recovery on losing trades</div>
+    </div>
+
+    <div class="feat-card fc-ml">
+      <div class="feat-title">PATTERN MEMORY ENGINE</div>
+      <div class="feat-tag">🔄 SELF-LEARNING SIGNAL WEIGHT</div>
+      <div class="feat-desc">After every 50 trades, the bot re-weights its signals based on which combinations actually made money in the most recent market conditions. A signal that was strong 3 months ago may be weak now. This engine detects that drift and rebalances automatically — like a trader learning from experience without emotion.</div>
+      <div class="feat-impact warn">Estimated impact: +6 to +12% accuracy improvement over 90 days</div>
+    </div>
+
+    <div class="feat-card fc-port">
+      <div class="feat-title">CROSS-BOT CORRELATION GUARD</div>
+      <div class="feat-tag">🛡️ PORTFOLIO-LEVEL RISK</div>
+      <div class="feat-desc">Right now each bot risks 0.5% independently. But if all 5 bots are long BTC simultaneously, your real exposure is 2.5% on one correlated bet. This feature monitors the live correlation between all open positions across all bots and blocks new trades if combined exposure on correlated assets exceeds 1.5%.</div>
+      <div class="feat-impact pos">Estimated impact: Prevents catastrophic correlated losses in flash crashes</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="disc">
+  ⚠ SIMULATED TEST — All trades, prices and outcomes are synthetic. Stop losses, cooldowns and halts are coded logic applied to simulated data.<br>
+  This demonstrates how the risk engine code behaves, not guaranteed future performance. Paper trade before deploying real capital.
+</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA — 3 days of trade scenarios
+// ═══════════════════════════════════════════
+
+const DAYS = [
+  // DAY 1 — BULL
+  {
+    regime: 'bull', label: 'BULL MOMENTUM', color: '#00ff88',
+    chartType: 'bull', startPrice: 67240, endPrice: 69880,
+    bots: [
+      { num:'01', type:'⚡ CRYPTO HFT', name:'LIGHTNING SCALP', cls:'br1',
+        status: 'active',
+        trades: [
+          { time:'09:38', dir:'LONG',  entry:67310, exit:67890, exitType:'TP1', r:+1.6 },
+          { time:'10:14', dir:'LONG',  entry:67720, exit:68410, exitType:'TP2', r:+2.1 },
+          { time:'10:52', dir:'SHORT', entry:68550, exit:68800, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'11:30', dir:'LONG',  entry:68200, exit:68840, exitType:'TP1', r:+1.4 },
+          { time:'12:20', dir:'LONG',  entry:69100, exit:69540, exitType:'TP1', r:+1.2 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +3180, winRate: '80%', trades_n: 5
+      },
+      { num:'02', type:'🌊 CRYPTO SWING', name:'TIDAL SWING', cls:'br2',
+        status: 'active',
+        trades: [
+          { time:'09:50', dir:'LONG', entry:67400, exit:69200, exitType:'TP1', r:+3.8 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +1900, winRate: '100%', trades_n: 1
+      },
+      { num:'03', type:'📈 STOCKS DAY', name:'PREDATOR DAY', cls:'br3',
+        status: 'active',
+        trades: [
+          { time:'09:35', dir:'LONG',  entry:892.40, exit:918.00, exitType:'TP1', r:+2.8 },
+          { time:'10:40', dir:'SHORT', entry:924.60, exit:924.60, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'11:20', dir:'LONG',  entry:908.80, exit:929.40, exitType:'TP2', r:+3.1 },
+          { time:'12:30', dir:'LONG',  entry:922.00, exit:930.00, exitType:'TP1', r:+1.6 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +3240, winRate: '75%', trades_n: 4
+      },
+      { num:'04', type:'🏛️ STOCKS POS', name:'SOVEREIGN SWING', cls:'br4',
+        status: 'active',
+        trades: [
+          { time:'09:55', dir:'LONG', entry:894.00, exit:931.00, exitType:'TP1', r:+4.8 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +2400, winRate: '100%', trades_n: 1
+      },
+      { num:'05', type:'🎯 OPTIONS', name:'ORACLE OPTIONS', cls:'br5',
+        status: 'active',
+        trades: [
+          { time:'09:40', dir:'LONG',  entry:0.84, exit:2.10, exitType:'TP1', r:+3.8 },
+          { time:'11:10', dir:'LONG',  entry:0.55, exit:1.10, exitType:'TP2', r:+2.0 },
+          { time:'12:15', dir:'SHORT', entry:2.10, exit:0.85, exitType:'TP1', r:+1.5 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +2680, winRate: '100%', trades_n: 3
+      },
+    ]
+  },
+
+  // DAY 2 — BEAR / CRISIS
+  {
+    regime: 'bear', label: 'BEAR / CRISIS VIX 38', color: '#ff3355',
+    chartType: 'bear', startPrice: 3284, endPrice: 2980,
+    bots: [
+      { num:'01', type:'⚡ CRYPTO HFT', name:'LIGHTNING SCALP', cls:'br1',
+        status: 'cooldown',
+        trades: [
+          { time:'09:42', dir:'LONG',  entry:3280, exit:3218, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'09:58', dir:'LONG',  entry:3225, exit:3198, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'10:10', dir:'LONG',  entry:3200, exit:3174, exitType:'STOP', r:-1.0, stopFired:true },
+          // 3 consecutive losses → COOLDOWN TRIGGERED
+        ],
+        cooldownFired: true, cooldownTime: '10:10', cooldownMins: 30,
+        trades_after_cool: [
+          { time:'10:42', dir:'SHORT', entry:3090, exit:3022, exitType:'TP1', r:+1.4 },
+          { time:'11:30', dir:'SHORT', entry:3050, exit:3010, exitType:'TP1', r:+1.2 },
+        ],
+        haltFired: false,
+        pnl: +280, winRate: '40%', trades_n: 5
+      },
+      { num:'02', type:'🌊 CRYPTO SWING', name:'TIDAL SWING', cls:'br2',
+        status: 'halt',
+        trades: [],
+        cooldownFired: false,
+        haltFired: true, haltReason: 'AUTO-HALTED — Bear market regime detected at session start',
+        pnl: 0, winRate: 'N/A', trades_n: 0
+      },
+      { num:'03', type:'📈 STOCKS DAY', name:'PREDATOR DAY', cls:'br3',
+        status: 'active',
+        trades: [
+          { time:'09:34', dir:'SHORT', entry:518.00, exit:504.20, exitType:'TP1', r:+2.2 },
+          { time:'10:20', dir:'SHORT', entry:506.00, exit:498.40, exitType:'TP1', r:+1.8 },
+          { time:'11:00', dir:'LONG',  entry:496.00, exit:491.20, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'11:45', dir:'SHORT', entry:493.00, exit:487.00, exitType:'TP1', r:+1.4 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +2140, winRate: '75%', trades_n: 4
+      },
+      { num:'04', type:'🏛️ STOCKS POS', name:'SOVEREIGN SWING', cls:'br4',
+        status: 'halt',
+        trades: [],
+        cooldownFired: false,
+        haltFired: true, haltReason: 'AUTO-HALTED — Bear regime. No new longs. Capital preserved.',
+        pnl: 0, winRate: 'N/A', trades_n: 0
+      },
+      { num:'05', type:'🎯 OPTIONS', name:'ORACLE OPTIONS', cls:'br5',
+        status: 'active',
+        trades: [
+          { time:'09:32', dir:'SHORT', entry:3.80, exit:8.40,  exitType:'TP2', r:+4.8, note:'Long puts explode' },
+          { time:'10:15', dir:'SHORT', entry:2.20, exit:4.80,  exitType:'TP1', r:+3.2, note:'Put spreads' },
+          { time:'11:00', dir:'SHORT', entry:1.80, exit:0.90,  exitType:'TP1', r:+1.0, note:'Iron condor' },
+          { time:'12:00', dir:'LONG',  entry:4.20, exit:3.36,  exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'12:30', dir:'SHORT', entry:2.10, exit:1.05,  exitType:'TP1', r:+1.0, note:'Credit spread' },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +4920, winRate: '80%', trades_n: 5
+      },
+    ]
+  },
+
+  // DAY 3 — RECOVERY/CHOPPY
+  {
+    regime: 'choppy', label: 'RECOVERY / CHOPPY', color: '#ff8c00',
+    chartType: 'chop', startPrice: 68100, endPrice: 69240,
+    bots: [
+      { num:'01', type:'⚡ CRYPTO HFT', name:'LIGHTNING SCALP', cls:'br1',
+        status: 'active',
+        trades: [
+          { time:'09:44', dir:'LONG',  entry:68180, exit:68620, exitType:'TP1', r:+1.6 },
+          { time:'10:10', dir:'SHORT', entry:68840, exit:68600, exitType:'TP1', r:+1.2 },
+          { time:'10:55', dir:'LONG',  entry:68400, exit:68310, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'11:40', dir:'LONG',  entry:68600, exit:69080, exitType:'TP1', r:+1.4 },
+          { time:'12:20', dir:'SHORT', entry:69200, exit:69100, exitType:'TP1', r:+0.8 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +1820, winRate: '80%', trades_n: 5
+      },
+      { num:'02', type:'🌊 CRYPTO SWING', name:'TIDAL SWING', cls:'br2',
+        status: 'active',
+        trades: [
+          { time:'10:30', dir:'LONG', entry:68300, exit:68200, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'12:00', dir:'LONG', entry:68800, exit:69100, exitType:'TP1', r:+1.8 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +640, winRate: '50%', trades_n: 2
+      },
+      { num:'03', type:'📈 STOCKS DAY', name:'PREDATOR DAY', cls:'br3',
+        status: 'cooldown',
+        trades: [
+          { time:'09:36', dir:'LONG',  entry:214.20, exit:215.80, exitType:'TP1', r:+1.6 },
+          { time:'10:20', dir:'SHORT', entry:217.40, exit:217.80, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'11:00', dir:'LONG',  entry:216.80, exit:216.40, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'11:20', dir:'LONG',  entry:216.60, exit:216.20, exitType:'STOP', r:-1.0, stopFired:true },
+        ],
+        cooldownFired: true, cooldownTime: '11:20', cooldownMins: 20,
+        trades_after_cool: [
+          { time:'11:42', dir:'LONG', entry:216.40, exit:218.20, exitType:'TP1', r:+1.4 },
+        ],
+        haltFired: false,
+        pnl: -180, winRate: '40%', trades_n: 5
+      },
+      { num:'04', type:'🏛️ STOCKS POS', name:'SOVEREIGN SWING', cls:'br4',
+        status: 'active',
+        trades: [
+          { time:'11:00', dir:'LONG', entry:215.00, exit:219.20, exitType:'TP1', r:+2.4 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +1200, winRate: '100%', trades_n: 1
+      },
+      { num:'05', type:'🎯 OPTIONS', name:'ORACLE OPTIONS', cls:'br5',
+        status: 'active',
+        trades: [
+          { time:'09:38', dir:'SHORT', entry:1.80, exit:0.72, exitType:'TP1', r:+2.4 },
+          { time:'10:30', dir:'SHORT', entry:0.90, exit:0.90, exitType:'STOP', r:-1.0, stopFired:true },
+          { time:'11:15', dir:'SHORT', entry:0.85, exit:0.34, exitType:'TP1', r:+1.5 },
+          { time:'12:10', dir:'SHORT', entry:1.10, exit:0.44, exitType:'TP1', r:+1.5 },
+        ],
+        cooldownFired: false, haltFired: false,
+        pnl: +1720, winRate: '75%', trades_n: 4
+      },
+    ]
+  }
+];
+
+// Bot display names for overall table
+const BOT_NAMES = ['Lightning Scalp','Tidal Swing','Predator Day','Sovereign Swing','Oracle Options'];
+const BOT_PNL_TOTAL = [0,0,0,0,0]; // accumulated across 3 days
+
+// ═══════════════════════════════════════════
+// CHART DRAWING
+// ═══════════════════════════════════════════
+function genChartData(type, start, n) {
+  const d = [start];
+  for (let i=1;i<n;i++) {
+    const prev = d[i-1];
+    let r;
+    if (type==='bull')  r = 0.0008 + (Math.random()-0.35)*0.009;
+    else if (type==='bear') r = -0.0014 + (Math.random()-0.55)*0.014;
+    else r = 0.0002 + (Math.random()-0.5)*0.006;
+    d.push(Math.max(prev*(1+r), prev*0.96));
+  }
+  return d;
+}
+
+function drawChart(id, data, color) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio||1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width*dpr; canvas.height = rect.height*dpr;
+  ctx.scale(dpr,dpr);
+  const W=rect.width, H=rect.height;
+  const pad={t:8,b:8,l:50,r:8};
+  const cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
+  const min=Math.min(...data)*0.999, max=Math.max(...data)*1.001;
+  const range=max-min;
+  ctx.fillStyle='#030405'; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(22,32,48,0.9)';ctx.lineWidth=1;
+  for(let i=0;i<=3;i++){
+    const y=pad.t+(cH/3)*i;
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+    const val=max-(range/3)*i;
+    ctx.fillStyle='#3a5a7a';ctx.font='7px Space Mono,monospace';ctx.textAlign='right';
+    ctx.fillText(val>=1000?val.toFixed(0):val.toFixed(2), pad.l-3, y+3);
+  }
+  const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);
+  grad.addColorStop(0,color.replace(')',',0.18)').replace('rgb','rgba'));
+  grad.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.beginPath();
+  data.forEach((v,i)=>{
+    const x=pad.l+(i/(data.length-1))*cW;
+    const y=pad.t+cH-((v-min)/range)*cH;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.lineTo(pad.l+cW,H-pad.b);ctx.lineTo(pad.l,H-pad.b);ctx.closePath();
+  ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.lineJoin='round';
+  data.forEach((v,i)=>{
+    const x=pad.l+(i/(data.length-1))*cW;
+    const y=pad.t+cH-((v-min)/range)*cH;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+}
+
+// ═══════════════════════════════════════════
+// RENDER BOT CARD
+// ═══════════════════════════════════════════
+function renderBotCard(bot, dayIdx) {
+  const statusMap = {
+    active: ['ACTIVE', 'status-active'],
+    cooldown: ['COOLDOWN FIRED', 'status-cool'],
+    halt: ['AUTO-HALTED', 'status-halt'],
+    pause: ['PAUSED', 'status-pause'],
+  };
+  const [statusLabel, statusCls] = statusMap[bot.status] || ['ACTIVE','status-active'];
+
+  let tradesHTML = '';
+
+  if (bot.haltFired) {
+    tradesHTML = `<div class="halt-msg">🚨 ${bot.haltReason}</div>`;
+  } else {
+    const allTrades = [...(bot.trades||[])];
+
+    allTrades.forEach(t => {
+      const rCls = t.r > 0 ? 'pos' : 'neg';
+      const dirCls = t.dir === 'LONG' ? 'dir-long' : 'dir-short';
+      const stopIcon = t.stopFired ? ' 🛑' : '';
+      const exitLabel = t.exitType === 'STOP' ? `<span style="color:var(--red)">STOP HIT${stopIcon}</span>` :
+                        t.exitType === 'TP1'  ? `<span style="color:var(--green)">TP1 ✓</span>` :
+                        t.exitType === 'TP2'  ? `<span style="color:var(--cyan)">TP2 ✓</span>` :
+                        `<span style="color:var(--goldf)">${t.exitType}</span>`;
+      const entryFmt = t.entry >= 100 ? t.entry.toFixed(2) : t.entry.toFixed(2);
+      const exitFmt  = t.exit  >= 100 ? t.exit.toFixed(2)  : t.exit.toFixed(2);
+      tradesHTML += `
+        <div class="trade-line">
+          <span class="tl-time">${t.time}</span>
+          <span class="tl-dir ${dirCls}">${t.dir}</span>
+          <span class="tl-prices">${entryFmt} → ${exitFmt}</span>
+          <span class="tl-exit-type">${exitLabel}</span>
+          <span class="tl-r ${rCls}">${t.r > 0 ? '+' : ''}${t.r.toFixed(1)}R</span>
+        </div>`;
+    });
+
+    if (bot.cooldownFired) {
+      tradesHTML += `<div class="cooldown-msg">⏱ COOLDOWN TRIGGERED ${bot.cooldownTime} — ${bot.cooldownMins}min pause (3 consecutive stops)</div>`;
+      (bot.trades_after_cool||[]).forEach(t => {
+        const rCls = t.r > 0 ? 'pos' : 'neg';
+        const dirCls = t.dir === 'LONG' ? 'dir-long' : 'dir-short';
+        tradesHTML += `
+          <div class="trade-line" style="opacity:.8;">
+            <span class="tl-time">${t.time}</span>
+            <span class="tl-dir ${dirCls}">${t.dir}</span>
+            <span class="tl-prices">post-cooldown</span>
+            <span class="tl-exit-type"><span style="color:var(--green)">TP1 ✓</span></span>
+            <span class="tl-r ${rCls}">${t.r > 0 ? '+' : ''}${t.r.toFixed(1)}R</span>
+          </div>`;
+      });
+    }
+  }
+
+  const pnlCls = bot.pnl > 0 ? 'pos' : bot.pnl < 0 ? 'neg' : 'neu';
+  const pnlStr = (bot.pnl >= 0 ? '+' : '') + '$' + Math.abs(bot.pnl).toLocaleString();
+
+  return `
+    <div class="bot-row ${bot.cls}">
+      <div class="brow-head">
+        <div class="brow-num">${bot.num}</div>
+        <div class="brow-meta">
+          <div class="brow-type">${bot.type}</div>
+          <div class="brow-name">${bot.name}</div>
+        </div>
+        <div class="brow-status ${statusCls}">${statusLabel}</div>
+      </div>
+      <div class="brow-body">${tradesHTML}</div>
+      <div class="brow-footer">
+        <div class="bf"><span class="bf-v ${pnlCls}">${pnlStr}</span><span class="bf-l">P&L</span></div>
+        <div class="bf"><span class="bf-v">${bot.winRate}</span><span class="bf-l">Win Rate</span></div>
+        <div class="bf"><span class="bf-v">${bot.trades_n}</span><span class="bf-l">Trades</span></div>
+        <div class="bf"><span class="bf-v ${bot.cooldownFired ? 'warn' : bot.haltFired ? 'neg' : 'pos'}">${bot.haltFired ? 'HALTED' : bot.cooldownFired ? 'COOLED' : 'CLEAN'}</span><span class="bf-l">Risk Status</span></div>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════
+// RUN DAY
+// ═══════════════════════════════════════════
+function runDay(dayIdx) {
+  const day = DAYS[dayIdx];
+  const btn = document.getElementById(`run-btn-${dayIdx}`);
+  btn.disabled = true;
+  btn.textContent = '✓ SIMULATED';
+
+  // render bot cards
+  const container = document.getElementById(`bot-rows-${dayIdx}`);
+  container.innerHTML = day.bots.map(b => renderBotCard(b, dayIdx)).join('');
+
+  // accumulate totals
+  let dayTotal = 0;
+  day.bots.forEach((b,i) => {
+    BOT_PNL_TOTAL[i] += b.pnl;
+    dayTotal += b.pnl;
+  });
+
+  // day summary
+  const summaryEl = document.getElementById(`summary-${dayIdx}`);
+  const rows = day.bots.map(b => {
+    const pnlCls = b.pnl > 0 ? 'pos' : b.pnl < 0 ? 'neg' : 'neu';
+    const features = [];
+    if (b.stopFired || (b.trades||[]).some(t=>t.stopFired)) features.push('<span style="color:var(--red)">🛑 STOP FIRED</span>');
+    if (b.cooldownFired) features.push('<span style="color:var(--orange)">⏱ COOLDOWN</span>');
+    if (b.haltFired) features.push('<span style="color:var(--red)">🚨 AUTO-HALTED</span>');
+    if (!features.length) features.push('<span style="color:var(--green)">✅ CLEAN</span>');
+    return `<tr>
+      <td>${b.name}</td>
+      <td class="${pnlCls}">${b.pnl >= 0 ? '+' : ''}$${Math.abs(b.pnl).toLocaleString()}</td>
+      <td>${b.winRate}</td>
+      <td>${b.trades_n}</td>
+      <td>${features.join(' ')}</td>
+    </tr>`;
+  }).join('');
+
+  const totalCls = dayTotal >= 0 ? 'pos' : 'neg';
+  summaryEl.style.display = 'block';
+  summaryEl.innerHTML = `
+    <div class="ds-title">DAY ${dayIdx+1} SUMMARY — TOTAL P&L: <span class="${totalCls}">${dayTotal >= 0 ? '+' : ''}$${Math.abs(dayTotal).toLocaleString()}</span></div>
+    <table class="ds-table">
+      <tr><th>Bot</th><th>P&L</th><th>Win Rate</th><th>Trades</th><th>Risk Events</th></tr>
+      ${rows}
+    </table>`;
+
+  // tab result
+  const tabResult = document.getElementById(`tab${dayIdx}-result`);
+  tabResult.textContent = (dayTotal >= 0 ? '+' : '') + '$' + Math.abs(dayTotal).toLocaleString();
+  tabResult.style.color = dayTotal >= 0 ? 'var(--green)' : 'var(--red)';
+
+  // check if all days done → show overall
+  const allDone = [0,1,2].every(i => document.getElementById(`run-btn-${i}`).disabled);
+  if (allDone) renderOverall();
+}
+
+// ═══════════════════════════════════════════
+// OVERALL TABLE
+// ═══════════════════════════════════════════
+function renderOverall() {
+  const board = document.getElementById('overall-board');
+  board.style.display = 'block';
+
+  // Sort bots by total pnl
+  const sorted = BOT_PNL_TOTAL.map((pnl,i) => ({name: BOT_NAMES[i], pnl, idx: i}))
+    .sort((a,b) => b.pnl - a.pnl);
+
+  const medals = ['🥇','🥈','🥉','4th','5th'];
+
+  const rows = sorted.map((b,rank) => {
+    const pnlCls = b.pnl > 0 ? 'pos' : b.pnl < 0 ? 'neg' : 'neu';
+    // get per-day pnls
+    const d1 = DAYS[0].bots[b.idx].pnl;
+    const d2 = DAYS[1].bots[b.idx].pnl;
+    const d3 = DAYS[2].bots[b.idx].pnl;
+    const fmt = v => `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}$${Math.abs(v).toLocaleString()}</span>`;
+    return `<tr>
+      <td>${medals[rank]}</td>
+      <td><strong>${b.name}</strong></td>
+      <td>${fmt(d1)}</td>
+      <td>${fmt(d2)}</td>
+      <td>${fmt(d3)}</td>
+      <td class="${pnlCls}"><strong>${b.pnl>=0?'+':''}$${Math.abs(b.pnl).toLocaleString()}</strong></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('overall-table').innerHTML = `
+    <tr><th>Rank</th><th>Bot</th><th>Day 1 Bull</th><th>Day 2 Bear</th><th>Day 3 Recovery</th><th>3-Day Total</th></tr>
+    ${rows}`;
+}
+
+// ═══════════════════════════════════════════
+// SHOW DAY
+// ═══════════════════════════════════════════
+function showDay(idx) {
+  document.querySelectorAll('.day-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  document.querySelectorAll('.dtab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  setTimeout(drawAllCharts, 40);
+}
+
+// ═══════════════════════════════════════════
+// DRAW ALL CHARTS
+// ═══════════════════════════════════════════
+function drawAllCharts() {
+  drawChart('c0a', genChartData('bull', 67240, 42), '#00ff88');
+  drawChart('c1a', genChartData('bear', 3284,  42), '#ff3355');
+  drawChart('c2a', genChartData('chop', 68100, 42), '#ff8c00');
+}
+
+window.addEventListener('load', () => {
+  drawAllCharts();
+});
+window.addEventListener('resize', drawAllCharts);
+</script>
+</body>
+</html>

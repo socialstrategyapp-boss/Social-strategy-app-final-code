@@ -6,7 +6,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [
     build({
-      staticPaths: ['/static/*', '/assets/*']
+      staticPaths: ['/static/*', '/assets/*', '/apex-stop-loss-test.html']
     }),
     devServer({
       adapter,
